@@ -1,0 +1,17 @@
+{
+  "factor": "alcohol | smoking | sleep | stress | nutrition | activity | pollution",
+  "system": "nervous | respiratory | cardiovascular | immune | reproductive | musculoskeletal | oral | vision | hearing | endocrine | gut | cancer",
+  "organ": "brain",
+  "region": "prefrontal_cortex",
+  "mechanism": "vascular_effects | inflammation | oxidative_stress | neuroadaptation | toxic_exposure",
+  "function": "attention | memory | executive_control | learning | emotional_regulation | coordination",
+  "effect": "increased_risk | reduced_function | structural_difference | insufficient_data",
+  "evidence_level": "HIGH | MODERATE | LIMITED | CONFLICTING | INSUFFICIENT",
+  "causality": "ESTABLISHED | LIKELY | SUGGESTIVE | NOT_ESTABLISHED",
+  "population": "string",
+  "study_type": "meta_analysis | systematic_review | cohort | case_control | trial | imaging | experimental",
+  "limitations": "string",
+  "what_it_does_not_prove": "string",
+  "source": "string",
+  "url": "https://..."
+}
