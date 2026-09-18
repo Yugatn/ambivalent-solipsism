@@ -1,0 +1,2916 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0,
+        maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>АМБИВАЛЕНТНЫЙ СОЛИПСИЗМ · PSY-TOOLS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =====================================================
+           ROOT
+        ===================================================== */
+
+        :root {
+            --bg: #02050a;
+            --text: #eef7f5;
+            --muted: #91a7a7;
+            --accent: #45f0c3;
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        html {
+            width: 100%;
+            min-height: 100%;
+
+            overflow-x: hidden;
+
+            background: var(--bg);
+        }
+
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+
+            overflow-x: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 50% 10%,
+                    rgba(69, 240, 195, .055),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 15% 80%,
+                    rgba(0, 180, 255, .035),
+                    transparent 28%
+                ),
+                var(--bg);
+
+            color: var(--text);
+
+            font-family: "Manrope", sans-serif;
+        }
+
+
+        /* =====================================================
+           BACKGROUND — NEURAL NETWORK
+        ===================================================== */
+
+        #neuralCanvas {
+            position: fixed;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            z-index: 0;
+
+            pointer-events: none;
+
+            opacity: .48;
+        }
+
+
+        /* =====================================================
+           MATRIX GRID BACKGROUND
+        ===================================================== */
+
+        .grid-background {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 1;
+
+            pointer-events: none;
+
+            overflow: hidden;
+
+            opacity: .17;
+
+            background-image:
+                linear-gradient(
+                    rgba(69, 240, 195, .055) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(69, 240, 195, .055) 1px,
+                    transparent 1px
+                );
+
+            background-size: 42px 42px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    transparent 0%,
+                    black 18%,
+                    black 80%,
+                    transparent 100%
+                );
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+            position: relative;
+
+            z-index: 5;
+
+            width: 100%;
+            max-width: 1500px;
+
+            margin-left: auto;
+            margin-right: auto;
+
+            padding:
+                clamp(35px, 6vw, 75px)
+                0
+                110px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+            width: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            text-align: center;
+        }
+
+
+        .logo {
+            font-family: "Unbounded", sans-serif;
+
+            font-size:
+                clamp(26px, 4vw, 48px);
+
+            font-weight: 600;
+
+            letter-spacing: .16em;
+
+            color: var(--text);
+
+            text-shadow:
+                0 0 15px rgba(69, 240, 195, .18),
+                0 0 35px rgba(69, 240, 195, .08);
+        }
+
+
+        .logo span {
+            color: var(--accent);
+        }
+
+
+        .subtitle {
+            margin-top: 13px;
+
+            font-family:
+                "JetBrains Mono",
+                monospace;
+
+            font-size:
+                clamp(10px, 1.3vw, 13px);
+
+            letter-spacing: .22em;
+
+            text-transform: uppercase;
+
+            color: var(--muted);
+        }
+
+
+        .header-line {
+            width:
+                min(650px, 72vw);
+
+            height: 1px;
+
+            margin-top: 28px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(69, 240, 195, .4),
+                    transparent
+                );
+
+            box-shadow:
+                0 0 15px
+                rgba(69, 240, 195, .08);
+        }
+
+
+        /* =====================================================
+           SECTIONS
+        ===================================================== */
+
+        .section {
+            width: 100%;
+
+            margin-top:
+                clamp(75px, 8vw, 110px);
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            text-align: center;
+        }
+
+
+        .section:first-of-type {
+            margin-top:
+                clamp(60px, 7vw, 85px);
+        }
+
+
+        .section-title {
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            margin-bottom: 34px;
+        }
+
+
+        .section-number {
+            font-family:
+                "JetBrains Mono",
+                monospace;
+
+            font-size: 10px;
+
+            letter-spacing: .18em;
+
+            color:
+                rgba(69, 240, 195, .55);
+
+            margin-bottom: 10px;
+        }
+
+
+        .section-title h2 {
+            font-family:
+                "Unbounded",
+                sans-serif;
+
+            font-size:
+                clamp(16px, 2vw, 22px);
+
+            font-weight: 500;
+
+            letter-spacing: .03em;
+        }
+
+
+        .section-title::after {
+            content: "";
+
+            width: 48px;
+
+            height: 1px;
+
+            margin-top: 13px;
+
+            background: var(--accent);
+
+            opacity: .5;
+
+            box-shadow:
+                0 0 8px
+                rgba(69, 240, 195, .35);
+        }
+
+
+        /* =====================================================
+           CARDS GRID
+        ===================================================== */
+
+        .cards {
+            --tile-size: 220px;
+            --tile-gap: 55px;
+
+            width: 100%;
+
+            max-width: 100%;
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, var(--tile-size));
+
+            grid-auto-rows:
+                var(--tile-size);
+
+            gap: var(--tile-gap);
+
+            justify-content: center;
+
+            align-content: start;
+
+            overflow: visible;
+        }
+
+
+        /* 2 карточки */
+
+        .cards:has(.card:nth-child(2)):not(
+            :has(.card:nth-child(3))
+        ) {
+            grid-template-columns:
+                repeat(2, var(--tile-size));
+        }
+
+
+        /* 1 карточка */
+
+        .cards:has(.card:nth-child(1)):not(
+            :has(.card:nth-child(2))
+        ) {
+            grid-template-columns:
+                var(--tile-size);
+        }
+
+
+        /* 4 карточки */
+
+        .cards:has(.card:nth-child(4)) {
+            grid-template-columns:
+                repeat(4, var(--tile-size));
+        }
+
+
+        /* =====================================================
+           CARD
+        ===================================================== */
+
+        .card {
+            position: relative;
+
+            width: var(--tile-size);
+
+            height: var(--tile-size);
+
+            min-width: 0;
+
+            text-decoration: none;
+
+            color: var(--text);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(10, 22, 28, .92),
+                    rgba(3, 8, 12, .86)
+                );
+
+            border:
+                1px solid
+                rgba(69, 240, 195, .14);
+
+            border-radius: 22px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            isolation: isolate;
+
+            top: 0;
+
+            transition:
+                top .35s ease,
+                border-color .35s ease,
+                box-shadow .35s ease,
+                background .35s ease;
+        }
+
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            border-radius: inherit;
+
+            background:
+                radial-gradient(
+                    circle at 50% 45%,
+                    rgba(69, 240, 195, .08),
+                    transparent 58%
+                );
+
+            opacity: .45;
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+
+        .card::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 1px;
+
+            border-radius: 21px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.025);
+
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
+           CARD HOVER
+        ===================================================== */
+
+        .card:hover,
+        .card.active,
+        .card:focus-visible {
+            top: -5px;
+
+            border-color:
+                rgba(69, 240, 195, .48);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(10, 26, 30, .97),
+                    rgba(3, 10, 14, .94)
+                );
+
+            box-shadow:
+                0 0 0 1px
+                rgba(69, 240, 195, .05),
+
+                0 15px 45px
+                rgba(0, 0, 0, .35),
+
+                0 0 28px
+                rgba(69, 240, 195, .08);
+        }
+
+
+        .card:focus-visible {
+            outline:
+                2px solid
+                rgba(69, 240, 195, .65);
+
+            outline-offset: 4px;
+        }
+
+
+        /* =====================================================
+           CARD CONTENT
+        ===================================================== */
+
+        .card-content {
+            position: relative;
+
+            z-index: 5;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            padding: 20px;
+
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
+           ICON
+        ===================================================== */
+
+        .icon {
+            position: relative;
+
+            width: 54px;
+
+            height: 54px;
+
+            margin-bottom: 16px;
+
+            border-radius: 16px;
+
+            border:
+                1px solid
+                rgba(69, 240, 195, .18);
+
+            background:
+                rgba(69, 240, 195, .035);
+
+            color: var(--accent);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 24px;
+
+            overflow: hidden;
+
+            isolation: isolate;
+
+            box-shadow:
+                inset 0 0 20px
+                rgba(69, 240, 195, .025),
+
+                0 0 20px
+                rgba(69, 240, 195, .025);
+
+            transition:
+                transform .35s ease,
+                border-color .35s ease,
+                box-shadow .35s ease;
+        }
+
+
+        /* =====================================================
+           MATRIX CODE INSIDE ICON
+        ===================================================== */
+
+        .icon-matrix {
+            position: absolute;
+
+            inset: -30px;
+
+            z-index: 1;
+
+            overflow: hidden;
+
+            opacity: 0;
+
+            font-family:
+                "JetBrains Mono",
+                monospace;
+
+            font-size: 7px;
+
+            line-height: 1.25;
+
+            letter-spacing: 1px;
+
+            word-break: break-all;
+
+            text-align: center;
+
+            color:
+                rgba(69, 240, 195, .8);
+
+            transform:
+                rotate(0deg)
+                scale(1.05);
+
+            transition:
+                opacity .4s ease;
+
+            pointer-events: none;
+
+            mask-image:
+                radial-gradient(
+                    circle,
+                    black 20%,
+                    rgba(0,0,0,.8) 55%,
+                    transparent 75%
+                );
+        }
+
+
+        .icon-matrix::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    transparent 20%,
+                    rgba(2,5,10,.15) 55%,
+                    rgba(2,5,10,.7) 100%
+                );
+
+            pointer-events: none;
+        }
+
+
+        .icon-symbol {
+            position: relative;
+
+            z-index: 3;
+
+            transition:
+                opacity .3s ease,
+                transform .3s ease;
+        }
+
+
+        .card:hover .icon,
+        .card.active .icon,
+        .card:focus-visible .icon {
+            transform: scale(1.07);
+
+            border-color:
+                rgba(69, 240, 195, .48);
+
+            box-shadow:
+                0 0 20px
+                rgba(69, 240, 195, .12),
+
+                inset 0 0 20px
+                rgba(69, 240, 195, .05);
+        }
+
+
+        .card:hover .icon-matrix,
+        .card.active .icon-matrix,
+        .card:focus-visible .icon-matrix {
+            opacity: .72;
+
+            animation:
+                matrixSpin 12s linear infinite;
+        }
+
+
+        .card:hover .icon-symbol,
+        .card.active .icon-symbol,
+        .card:focus-visible .icon-symbol {
+            opacity: .85;
+
+            transform: scale(.9);
+
+            text-shadow:
+                0 0 8px
+                rgba(69, 240, 195, .8);
+        }
+
+
+        @keyframes matrixSpin {
+
+            from {
+                transform:
+                    rotate(0deg)
+                    scale(1.05);
+            }
+
+            to {
+                transform:
+                    rotate(360deg)
+                    scale(1.05);
+            }
+        }
+
+
+        /* =====================================================
+           CARD TEXT
+        ===================================================== */
+
+        .card-title {
+            font-family:
+                "Manrope",
+                sans-serif;
+
+            font-size: 15px;
+
+            line-height: 1.3;
+
+            font-weight: 600;
+
+            max-width: 175px;
+        }
+
+
+        .card-index {
+            margin-top: 9px;
+
+            font-family:
+                "JetBrains Mono",
+                monospace;
+
+            font-size: 9px;
+
+            letter-spacing: .12em;
+
+            color:
+                rgba(145, 167, 167, .55);
+        }
+
+
+        /* =====================================================
+           DESCRIPTION
+        ===================================================== */
+
+        .description {
+            position: fixed;
+
+            left: 50%;
+            top: 50%;
+
+            width:
+                min(360px, calc(100vw - 32px));
+
+            max-width:
+                calc(100vw - 32px);
+
+            padding:
+                18px 20px;
+
+            border-radius: 16px;
+
+            border:
+                1px solid
+                rgba(69, 240, 195, .28);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(5, 15, 20, .985),
+                    rgba(2, 8, 12, .985)
+                );
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, .62),
+
+                0 0 35px
+                rgba(69, 240, 195, .08);
+
+            color:
+                #c3d3d2;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+            text-align: center;
+
+            transform:
+                translate(-50%, calc(-50% + 15px))
+                scale(.94);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+
+            transition:
+                opacity .25s ease,
+                transform .25s ease,
+                visibility .25s ease;
+
+            z-index: 10000;
+        }
+
+
+        .description::before {
+            content: "";
+
+            position: absolute;
+
+            left: 50%;
+
+            top: -5px;
+
+            width: 9px;
+
+            height: 9px;
+
+            transform:
+                translateX(-50%)
+                rotate(45deg);
+
+            background:
+                #061016;
+
+            border-left:
+                1px solid
+                rgba(69, 240, 195, .28);
+
+            border-top:
+                1px solid
+                rgba(69, 240, 195, .28);
+        }
+
+
+        .card:hover .description,
+        .card.active .description,
+        .card:focus-visible .description {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transform:
+                translate(-50%, -50%)
+                scale(1);
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+            width: 100%;
+
+            margin-top: 105px;
+
+            display: flex;
+
+            justify-content: center;
+
+            text-align: center;
+
+            font-family:
+                "JetBrains Mono",
+                monospace;
+
+            font-size: 9px;
+
+            letter-spacing: .12em;
+
+            color:
+                rgba(145, 167, 167, .4);
+        }
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media (max-width: 1150px)
+        and (min-width: 761px) {
+
+            .cards {
+                --tile-size:
+                    min(200px, 25vw);
+
+                --tile-gap:
+                    clamp(25px, 4vw, 45px);
+            }
+
+
+            .cards:has(.card:nth-child(4)) {
+                grid-template-columns:
+                    repeat(3, var(--tile-size));
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 760px) {
+
+            .main {
+                width: 100%;
+
+                padding:
+                    30px
+                    12px
+                    75px;
+            }
+
+
+            .logo {
+                font-size: 24px;
+
+                letter-spacing: .11em;
+            }
+
+
+            .subtitle {
+                font-size: 9px;
+
+                letter-spacing: .14em;
+            }
+
+
+            .header-line {
+                width: 78vw;
+
+                margin-top: 22px;
+            }
+
+
+            .section {
+                width: 100%;
+
+                margin-top: 65px;
+            }
+
+
+            .section:first-of-type {
+                margin-top: 50px;
+            }
+
+
+            .section-title {
+                margin-bottom: 25px;
+            }
+
+
+            .section-title h2 {
+                font-size: 15px;
+            }
+
+
+            /* ================================================
+               MOBILE GRID
+            ================================================ */
+
+            .cards {
+                --mobile-gap: 12px;
+
+                width: 100%;
+
+                max-width: 390px;
+
+                margin: 0 auto;
+
+                padding: 0;
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0, 1fr)
+                    );
+
+                grid-auto-rows: auto;
+
+                gap: var(--mobile-gap);
+
+                justify-content: center;
+
+                align-items: start;
+            }
+
+
+            .card {
+                width: 100%;
+
+                height: auto;
+
+                aspect-ratio: 1 / 1;
+
+                min-width: 0;
+
+                border-radius: 18px;
+            }
+
+
+            /*
+             * Если три карточки:
+             *
+             * □ □
+             *  □
+             */
+
+            .card:last-child:nth-child(odd) {
+
+                grid-column: 1 / -1;
+
+                justify-self: center;
+
+                width:
+                    calc(
+                        (100% - var(--mobile-gap))
+                        / 2
+                    );
+            }
+
+
+            .card-content {
+                padding: 12px;
+            }
+
+
+            /* ================================================
+               MOBILE ICON
+            ================================================ */
+
+            .icon {
+                width: 44px;
+
+                height: 44px;
+
+                margin-bottom: 12px;
+
+                border-radius: 13px;
+
+                font-size: 20px;
+            }
+
+
+            .icon-matrix {
+                font-size: 6px;
+
+                letter-spacing: .8px;
+            }
+
+
+            .card-title {
+                font-size: 12px;
+
+                line-height: 1.25;
+
+                max-width: 120px;
+            }
+
+
+            .card-index {
+                font-size: 8px;
+
+                margin-top: 7px;
+            }
+
+
+            /* ================================================
+               MOBILE POPUP
+            ================================================ */
+
+            .description {
+
+                width:
+                    calc(100vw - 24px);
+
+                max-width:
+                    calc(100vw - 24px);
+
+                padding:
+                    16px 17px;
+
+                border-radius: 15px;
+
+                font-size: 12px;
+
+                line-height: 1.55;
+
+                left: 50%;
+                top: 50%;
+            }
+
+
+            .footer {
+                margin-top: 75px;
+            }
+        }
+
+
+        /* =====================================================
+           VERY SMALL PHONES
+        ===================================================== */
+
+        @media (max-width: 390px) {
+
+            .main {
+                padding-left: 9px;
+
+                padding-right: 9px;
+            }
+
+
+            .cards {
+                max-width: 360px;
+
+                --mobile-gap: 10px;
+            }
+
+
+            .card-title {
+                font-size: 11px;
+            }
+
+
+            .icon {
+                width: 40px;
+
+                height: 40px;
+
+                font-size: 18px;
+            }
+
+
+            .icon-matrix {
+                font-size: 5.5px;
+            }
+
+
+            .description {
+                width:
+                    calc(100vw - 20px);
+
+                max-width:
+                    calc(100vw - 20px);
+
+                padding:
+                    15px 15px;
+
+                font-size: 11px;
+            }
+        }
+
+
+        /* =====================================================
+           REDUCE MOTION
+        ===================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                animation-duration:
+                    .01ms !important;
+
+                animation-iteration-count:
+                    1 !important;
+
+                transition-duration:
+                    .01ms !important;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         BACKGROUND
+    ===================================================== -->
+
+    <canvas id="neuralCanvas"></canvas>
+
+    <div class="grid-background"></div>
+
+
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
+    <main class="main">
+
+        <!-- =================================================
+             HEADER — AMBIVALENT SOLIPSISM
+        ================================================== -->
+
+        <header class="header">
+
+            <div class="logo">
+                АМБИВАЛЕНТНЫЙ <span>СОЛИПСИЗМ</span>
+            </div>
+
+            <div class="subtitle">
+                сложность — не ошибка · другой — реален
+            </div>
+
+            <div class="header-line"></div>
+
+        </header>
+
+
+        <!-- =================================================
+             01 — ФИЛОСОФИЯ
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                <div class="section-number">01 / PHILOSOPHY</div>
+                <h2>Амбивалентный солипсизм</h2>
+            </div>
+
+            <div class="cards">
+
+                <a class="card" href="./philosophy/" data-card="philosophy">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">∞</div>
+                        </div>
+                        <div class="card-title">Ядро AS</div>
+                        <div class="card-index">AS / 01</div>
+                    </div>
+                    <div class="description">
+                        Базовая философская рамка: приватность переживания
+                        реальности, общий мир взаимодействия и
+                        принципиальная неполнота знания о другом.
+                    </div>
+                </a>
+
+                <a class="card" href="./philosophy/subject.html" data-card="subject">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">Ψ</div>
+                        </div>
+                        <div class="card-title">Субъект восприятия</div>
+                        <div class="card-index">AS / 02</div>
+                    </div>
+                    <div class="description">
+                        Субъект как исходная точка опыта: восприятие,
+                        сознание, тело, интерпретация и границы
+                        доступного знания.
+                    </div>
+                </a>
+
+                <a class="card" href="./philosophy/reality-model-residual.html" data-card="reality">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">◈</div>
+                        </div>
+                        <div class="card-title">Модель + Остаток</div>
+                        <div class="card-index">AS / 03</div>
+                    </div>
+                    <div class="description">
+                        Реальность описывается как Модель + Остаток:
+                        модель организует доступное знание, а остаток
+                        сохраняет необратимую непрозрачность.
+                    </div>
+                </a>
+
+                <a class="card" href="./philosophy/social-superposition.html" data-card="superposition">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">◉</div>
+                        </div>
+                        <div class="card-title">Социальная суперпозиция</div>
+                        <div class="card-index">AS / 04</div>
+                    </div>
+                    <div class="description">
+                        Субъект одновременно переживает себя главным
+                        в собственной перспективе и может быть объектом
+                        восприятия другого субъекта.
+                    </div>
+                </a>
+
+                <a class="card" href="./philosophy/neurocommunism.html" data-card="neurocommunism">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">⌁</div>
+                        </div>
+                        <div class="card-title">Нейрокоммунизм</div>
+                        <div class="card-index">AS / 05</div>
+                    </div>
+                    <div class="description">
+                        Социально-политическая проекция концепции:
+                        общество мыслится как сеть взаимосвязанных
+                        элементов по аналогии с организмом и ЦНС.
+                    </div>
+                </a>
+
+                <a class="card" href="./philosophy/individuality.html" data-card="individuality">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">◇</div>
+                        </div>
+                        <div class="card-title">Индивидуальность</div>
+                        <div class="card-index">AS / 06</div>
+                    </div>
+                    <div class="description">
+                        Принцип принятия индивидуальности другого:
+                        право субъекта на существование и собственную
+                        версию реальности без уничтожения собственной.
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- =================================================
+             02 — ЗАКОНЫ И РАЗВИТИЕ
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                <div class="section-number">02 / DEVELOPMENT</div>
+                <h2>Законы и развитие</h2>
+            </div>
+
+            <div class="cards">
+
+                <a class="card" href="./development-law/" data-card="development-law">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">Δ</div>
+                        </div>
+                        <div class="card-title">Закон развития</div>
+                        <div class="card-index">LAW / 01</div>
+                    </div>
+                    <div class="description">
+                        Формула проекта: можно лишь то, что не вредит
+                        здоровью и развитию другого субъекта восприятия.
+                        В архитектуре проекта это также рассматривается
+                        как ограничение для ИИ.
+                    </div>
+                </a>
+
+                <a class="card" href="./development-law/small-plus.html" data-card="small-plus">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">+</div>
+                        </div>
+                        <div class="card-title">Закон маленького плюса</div>
+                        <div class="card-index">LAW / 02</div>
+                    </div>
+                    <div class="description">
+                        Малый положительный вклад рассматривается как
+                        элемент масштабируемого взаимодействия:
+                        множество небольших плюсов могут складываться
+                        в значимый общий результат.
+                    </div>
+                </a>
+
+                <a class="card" href="./development-law/system-law.html" data-card="system-law">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">Σ</div>
+                        </div>
+                        <div class="card-title">Системная устойчивость</div>
+                        <div class="card-index">LAW / 03</div>
+                    </div>
+                    <div class="description">
+                        Гипотеза проекта: система, развивающая свои
+                        элементы, обладает большей долгосрочной
+                        устойчивостью, чем система, подавляющая часть
+                        собственных элементов.
+                    </div>
+                </a>
+
+                <a class="card" href="./development-law/right-to-exit.html" data-card="exit">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">↗</div>
+                        </div>
+                        <div class="card-title">Право на выход</div>
+                        <div class="card-index">LAW / 04</div>
+                    </div>
+                    <div class="description">
+                        Возможность добровольно выйти из взаимодействия
+                        или системы рассматривается как ограничитель
+                        необратимой власти и принуждения.
+                    </div>
+                </a>
+
+                <a class="card" href="./development-law/non-finalization.html" data-card="non-finalization">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">∞</div>
+                        </div>
+                        <div class="card-title">Нефинализация</div>
+                        <div class="card-index">LAW / 05</div>
+                    </div>
+                    <div class="description">
+                        Ни одна модель не объявляется окончательной:
+                        сохраняется возможность пересмотра,
+                        критики и обнаружения нового остатка.
+                    </div>
+                </a>
+
+                <a class="card" href="./development-law/principles.html" data-card="principles">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">§</div>
+                        </div>
+                        <div class="card-title">Свод принципов</div>
+                        <div class="card-index">LAW / 06</div>
+                    </div>
+                    <div class="description">
+                        Рабочий набор принципов, связывающий развитие,
+                        автономию, индивидуальность, взаимное ограничение
+                        вреда и возможность пересмотра.
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- =================================================
+             03 — ЧЕЛОВЕК / PSY-TOOLS
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                <div class="section-number">03 / HUMAN</div>
+                <h2>Человек</h2>
+            </div>
+
+            <div class="cards">
+
+                <a class="card" href="./wheel/" data-card="wheel">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">◉</div>
+                        </div>
+                        <div class="card-title">Колесо баланса</div>
+                        <div class="card-index">HUMAN / 01</div>
+                    </div>
+                    <div class="description">
+                        Оцените основные сферы своей жизни,
+                        определите зоны внимания и сформируйте
+                        направление дальнейшего развития.
+                    </div>
+                </a>
+
+                <a class="card" href="./skills/" data-card="skills">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">◇</div>
+                        </div>
+                        <div class="card-title">Рефлексия навыков</div>
+                        <div class="card-index">HUMAN / 02</div>
+                    </div>
+                    <div class="description">
+                        Проанализируйте знания, навыки, опыт и сильные
+                        стороны. Результат может использоваться
+                        для формирования профессионального профиля.
+                    </div>
+                </a>
+
+                <a class="card" href="./career/" data-card="career">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">⌘</div>
+                        </div>
+                        <div class="card-title">Профориентация</div>
+                        <div class="card-index">HUMAN / 03</div>
+                    </div>
+                    <div class="description">
+                        Исследуйте интересы, способности,
+                        профессиональные склонности и возможные
+                        направления развития карьеры.
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- =================================================
+             04 — ПСИХОДИАГНОСТИКА
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                <div class="section-number">04 / DIAGNOSTICS</div>
+                <h2>Психодиагностика</h2>
+            </div>
+
+            <div class="cards">
+
+                <a class="card" href="./cattell/" data-card="cattell">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">Ψ</div>
+                        </div>
+                        <div class="card-title">Оценка личностных свойств</div>
+                        <div class="card-index">PSY / 01</div>
+                    </div>
+                    <div class="description">
+                        Исследование личностных особенностей
+                        с использованием многомерного
+                        психодиагностического подхода.
+                    </div>
+                </a>
+
+                <a class="card" href="./luscher/" data-card="luscher">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">◈</div>
+                        </div>
+                        <div class="card-title">Тест Люшера</div>
+                        <div class="card-index">PSY / 02</div>
+                    </div>
+                    <div class="description">
+                        Цветовой тест для исследования субъективного
+                        отношения к цветам и особенностей
+                        актуального состояния.
+                    </div>
+                </a>
+
+                <a class="card" href="./gerchikov/" data-card="gerchikov">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">△</div>
+                        </div>
+                        <div class="card-title">Мотивация по Герчикову</div>
+                        <div class="card-index">PSY / 03</div>
+                    </div>
+                    <div class="description">
+                        Исследование ведущего типа трудовой мотивации
+                        и особенностей отношения человека
+                        к профессиональной деятельности.
+                    </div>
+                </a>
+
+                <a class="card" href="./dellinger/" data-card="dellinger">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">◬</div>
+                        </div>
+                        <div class="card-title">Психогеометрический тест Деллингер</div>
+                        <div class="card-index">PSY / 04</div>
+                    </div>
+                    <div class="description">
+                        Психогеометрическая методика выбора
+                        геометрических фигур для ориентировочного
+                        исследования особенностей личности.
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- =================================================
+             05 — ТИХАЯ КОМНАТА
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                <div class="section-number">05 / QUIET ROOM</div>
+                <h2>Тихая комната</h2>
+            </div>
+
+            <div class="cards">
+
+                <a class="card" href="./quiet-room/" data-card="quiet-room">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">○</div>
+                        </div>
+                        <div class="card-title">Тихая комната</div>
+                        <div class="card-index">QUIET / 01</div>
+                    </div>
+                    <div class="description">
+                        Пространство, в котором субъект контролирует
+                        входящие сигналы. Физическая, цифровая или
+                        нейрокогнитивная модель тишины и согласия.
+                    </div>
+                </a>
+
+                <a class="card" href="./quiet-room/information-policy.html" data-card="information-policy">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">≋</div>
+                        </div>
+                        <div class="card-title">Информационная политика</div>
+                        <div class="card-index">QUIET / 02</div>
+                    </div>
+                    <div class="description">
+                        Принципы информационной среды, в которой
+                        воздействие на внимание и поведение должно
+                        быть максимально прозрачным и оспоримым.
+                    </div>
+                </a>
+
+                <a class="card" href="./quiet-room/dissent-and-quiet-room.html" data-card="dissent">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">≠</div>
+                        </div>
+                        <div class="card-title">Несогласие</div>
+                        <div class="card-index">QUIET / 03</div>
+                    </div>
+                    <div class="description">
+                        Право сохранять собственную позицию,
+                        не превращая различие во враждебность
+                        и не уничтожая пространство другого.
+                    </div>
+                </a>
+
+                <a class="card" href="./quiet-room/anti-dogma-protocol.html" data-card="anti-dogma">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">?</div>
+                        </div>
+                        <div class="card-title">Антидогматический протокол</div>
+                        <div class="card-index">QUIET / 04</div>
+                    </div>
+                    <div class="description">
+                        Механизм защиты самой концепции от превращения
+                        в окончательную и непроверяемую догму.
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- =================================================
+             06 — ОБЩЕСТВО
+        ================================================== -->
+
+        <!-- =================================================
+             06 — ОБЩЕСТВО
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                <div class="section-number">06 / SOCIETY</div>
+                <h2>Общество</h2>
+            </div>
+
+            <div class="cards">
+
+                <a class="card" href="./society/" data-card="society">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">◎</div>
+                        </div>
+                        <div class="card-title">Сетевая модель</div>
+                        <div class="card-index">SOC / 01</div>
+                    </div>
+                    <div class="description">
+                        Исследование общества как сети субъектов
+                        и взаимодействий, где автономия одного
+                        связана с реальностью других.
+                    </div>
+                </a>
+
+                <a class="card" href="./society/human-network.html" data-card="network">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">⌁</div>
+                        </div>
+                        <div class="card-title">Человек ↔ человек</div>
+                        <div class="card-index">SOC / 02</div>
+                    </div>
+                    <div class="description">
+                        Взаимодействие субъектов, взаимная зависимость,
+                        границы автономии и возможность конструктивного
+                        сотрудничества без стирания различий.
+                    </div>
+                </a>
+
+                <a class="card" href="./society/information-ecology.html" data-card="information">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">≋</div>
+                        </div>
+                        <div class="card-title">Информационная среда</div>
+                        <div class="card-index">SOC / 03</div>
+                    </div>
+                    <div class="description">
+                        Информационные потоки, медиа и рекомендательные
+                        системы как среда, способная влиять
+                        на поведение и развитие субъектов.
+                    </div>
+                </a>
+
+                <a class="card" href="./society/media.html" data-card="media">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">▣</div>
+                        </div>
+                        <div class="card-title">Медиа</div>
+                        <div class="card-index">SOC / 04</div>
+                    </div>
+                    <div class="description">
+                        Принципы информационной экологии,
+                        прозрачности воздействия и защиты
+                        субъектной автономии.
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- =================================================
+             07 — СОЛИДАРНОСТЬ
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                <div class="section-number">07 / SOLIDARITY</div>
+                <h2>Солидарность</h2>
+            </div>
+
+            <div class="cards">
+
+                <a class="card" href="./solidarity-fund/" data-card="solidarity-fund">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">+</div>
+                        </div>
+                        <div class="card-title">Фонд солидарности</div>
+                        <div class="card-index">SOL / 01</div>
+                    </div>
+                    <div class="description">
+                        Концепция горизонтальной циркуляции малых плюсов:
+                        множество вкладов формируют ресурс, который
+                        может направляться на поддержку субъектов в кризисе.
+                    </div>
+                </a>
+
+                <a class="card" href="./solidarity-fund/mechanics.html" data-card="fund-mechanics">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">↻</div>
+                        </div>
+                        <div class="card-title">Механика распределения</div>
+                        <div class="card-index">SOL / 02</div>
+                    </div>
+                    <div class="description">
+                        Рабочая модель заявок, критериев, распределения
+                        и защиты фонда от захвата. Конкретные правила
+                        остаются предметом дальнейшего проектирования.
+                    </div>
+                </a>
+
+                <a class="card" href="./solidarity-fund/open-questions.html" data-card="fund-questions">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">?</div>
+                        </div>
+                        <div class="card-title">Открытые узлы</div>
+                        <div class="card-index">SOL / 03</div>
+                    </div>
+                    <div class="description">
+                        Нерешённые вопросы о критериях помощи,
+                        автономии, зависимости, проверке и
+                        недопущении коллективной ответственности.
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- =================================================
+             08 — ИИ
+        ================================================== -->
+
+        <!-- =================================================
+             08 — ИИ
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                <div class="section-number">08 / ARTIFICIAL INTELLIGENCE</div>
+                <h2>Искусственный интеллект</h2>
+            </div>
+
+            <div class="cards">
+
+                <a class="card" href="./ai/" data-card="ai">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">AI</div>
+                        </div>
+                        <div class="card-title">ИИ и субъект</div>
+                        <div class="card-index">AI / 01</div>
+                    </div>
+                    <div class="description">
+                        Место искусственного интеллекта в системе
+                        субъектов, инструментов, решений и
+                        человеческой автономии.
+                    </div>
+                </a>
+
+                <a class="card" href="./ai/development-law-kernel.html" data-card="ai-law">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">Δ</div>
+                        </div>
+                        <div class="card-title">Закон развития для ИИ</div>
+                        <div class="card-index">AI / 02</div>
+                    </div>
+                    <div class="description">
+                        Архитектурная идея: действия ИИ должны
+                        проверяться на соответствие принципу
+                        ненанесения вреда здоровью и развитию других.
+                    </div>
+                </a>
+
+                <a class="card" href="./ai/ai-safety.html" data-card="ai-safety">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">◇</div>
+                        </div>
+                        <div class="card-title">Безопасность ИИ</div>
+                        <div class="card-index">AI / 03</div>
+                    </div>
+                    <div class="description">
+                        Аудит, ограничения действий, проверяемость
+                        решений и механизмы самокоррекции
+                        в системах ИИ.
+                    </div>
+                </a>
+
+                <a class="card" href="./ai/human-ai-symbiosis.html" data-card="symbiosis">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">∞</div>
+                        </div>
+                        <div class="card-title">Человек ↔ ИИ</div>
+                        <div class="card-index">AI / 04</div>
+                    </div>
+                    <div class="description">
+                        Модель сотрудничества человека и ИИ,
+                        в которой развитие одного не должно
+                        уничтожать автономию другого.
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+                <a class="card" href="./ai/AI_GUARDIAN_LAYER.html" data-card="guardian">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">G</div>
+                        </div>
+                        <div class="card-title">AI_GUARDIAN_LAYER</div>
+                        <div class="card-index">AI / 05</div>
+                    </div>
+                    <div class="description">
+                        Предлагаемый архитектурный слой, который
+                        сверяет действия ИИ с Законом развития.
+                        В проекте он задуман как прозрачный,
+                        оспоримый и защищённый от захвата механизм.
+                    </div>
+                </a>
+
+
+        <!-- =================================================
+             09 — SYMBIONTOS
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                <div class="section-number">09 / SYSTEM</div>
+                <h2>SymbiontOS</h2>
+            </div>
+
+            <div class="cards">
+
+                <a class="card" href="./symbiontos/" data-card="symbiontos">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">Σ</div>
+                        </div>
+                        <div class="card-title">Архитектура</div>
+                        <div class="card-index">SYS / 01</div>
+                    </div>
+                    <div class="description">
+                        Инженерное продолжение принципов AS:
+                        события, идентичность, контекст, политика,
+                        транспорт и адаптивные агенты.
+                    </div>
+                </a>
+
+                <a class="card" href="./symbiontos/constitutional-kernel.html" data-card="kernel">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">Λ</div>
+                        </div>
+                        <div class="card-title">Constitutional Kernel</div>
+                        <div class="card-index">SYS / 02</div>
+                    </div>
+                    <div class="description">
+                        Формальный слой ограничений и состояний,
+                        предназначенный для проверки допустимых
+                        переходов системы.
+                    </div>
+                </a>
+
+                <a class="card" href="./symbiontos/event-log.html" data-card="event-log">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">◌</div>
+                        </div>
+                        <div class="card-title">Event Fabric</div>
+                        <div class="card-index">SYS / 03</div>
+                    </div>
+                    <div class="description">
+                        Событийная инфраструктура, позволяющая
+                        фиксировать изменения состояния и
+                        делать действия системы проверяемыми.
+                    </div>
+                </a>
+
+                <a class="card" href="./symbiontos/audit.html" data-card="audit">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">✓</div>
+                        </div>
+                        <div class="card-title">Audit</div>
+                        <div class="card-index">SYS / 04</div>
+                    </div>
+                    <div class="description">
+                        Аудит действий и решений системы:
+                        трассируемость, проверяемость и возможность
+                        обнаружения нарушения ограничений.
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+                <a class="card" href="./st-network/" data-card="st-network">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">ST</div>
+                        </div>
+                        <div class="card-title">СТ-сеть</div>
+                        <div class="card-index">SYS / 05</div>
+                    </div>
+                    <div class="description">
+                        Цифровая инфраструктура учёта вкладов,
+                        микро-задач и взаимодействий. Отдельный
+                        модуль проекта, который может развиваться
+                        независимо от ядра философии.
+                    </div>
+                </a>
+
+
+        <!-- =================================================
+             10 — СИМУЛЯЦИИ
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                <div class="section-number">10 / SIMULATIONS</div>
+                <h2>Симуляции</h2>
+            </div>
+
+            <div class="cards">
+
+                <a class="card" href="./simulations/" data-card="simulations">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">∑</div>
+                        </div>
+                        <div class="card-title">Модели взаимодействия</div>
+                        <div class="card-index">SIM / 01</div>
+                    </div>
+                    <div class="description">
+                        Экспериментальная среда для моделирования
+                        субъектов, решений, взаимодействий
+                        и последствий различных правил.
+                    </div>
+                </a>
+
+                <a class="card" href="./simulations/agent-conflict.html" data-card="agent-conflict">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">↔</div>
+                        </div>
+                        <div class="card-title">Конфликт субъектов</div>
+                        <div class="card-index">SIM / 02</div>
+                    </div>
+                    <div class="description">
+                        Моделирование конфликтных взаимодействий
+                        и поиск условий, при которых развитие
+                        не требует разрушения другого субъекта.
+                    </div>
+                </a>
+
+                <a class="card" href="./simulations/media-impact.html" data-card="media-impact">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">≋</div>
+                        </div>
+                        <div class="card-title">Влияние среды</div>
+                        <div class="card-index">SIM / 03</div>
+                    </div>
+                    <div class="description">
+                        Экспериментальные модели воздействия
+                        информационной среды на поведение
+                        и динамику системы.
+                    </div>
+                </a>
+
+                <a class="card" href="./simulations/civilization-model.html" data-card="civilization">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">◎</div>
+                        </div>
+                        <div class="card-title">Модель цивилизации</div>
+                        <div class="card-index">SIM / 04</div>
+                    </div>
+                    <div class="description">
+                        Долгосрочные сценарии развития сети субъектов,
+                        институтов, технологий и информационной среды.
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- =================================================
+             11 — ГОРИЗОНТЫ
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                <div class="section-number">11 / HORIZONS</div>
+                <h2>Горизонты</h2>
+            </div>
+
+            <div class="cards">
+
+                <a class="card" href="./future/1-year.html" data-card="1-year">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">1</div>
+                        </div>
+                        <div class="card-title">1 год</div>
+                        <div class="card-index">TIME / 01</div>
+                    </div>
+                    <div class="description">
+                        Ближайший горизонт: развитие проекта,
+                        прототипирование и проверка основных
+                        архитектурных гипотез.
+                    </div>
+                </a>
+
+                <a class="card" href="./future/5-years.html" data-card="5-years">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">5</div>
+                        </div>
+                        <div class="card-title">5 лет</div>
+                        <div class="card-index">TIME / 02</div>
+                    </div>
+                    <div class="description">
+                        Среднесрочный сценарий развития инструментов,
+                        сообщества, исследований и программной
+                        инфраструктуры.
+                    </div>
+                </a>
+
+                <a class="card" href="./future/10-years.html" data-card="10-years">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">10</div>
+                        </div>
+                        <div class="card-title">10 лет</div>
+                        <div class="card-index">TIME / 03</div>
+                    </div>
+                    <div class="description">
+                        Долгосрочный сценарий: масштабирование
+                        принципов и технологий при сохранении
+                        автономии и возможности пересмотра.
+                    </div>
+                </a>
+
+                <a class="card" href="./future/50-years.html" data-card="50-years">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">50</div>
+                        </div>
+                        <div class="card-title">50 лет</div>
+                        <div class="card-index">TIME / 04</div>
+                    </div>
+                    <div class="description">
+                        Сценарный горизонт для исследования
+                        трансформации общества, технологий
+                        и моделей взаимодействия.
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- =================================================
+             12 — ИССЛЕДОВАНИЯ И ОТКРЫТЫЕ ВОПРОСЫ
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                <div class="section-number">12 / RESEARCH</div>
+                <h2>Исследования</h2>
+            </div>
+
+            <div class="cards">
+
+                <a class="card" href="./research/alcohol-and-brain.html" data-card="alcohol">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">Ψ</div>
+                        </div>
+                        <div class="card-title">Алкоголь и мозг</div>
+                        <div class="card-index">RES / 01</div>
+                    </div>
+                    <div class="description">
+                        Архив научных материалов и тезисов проекта
+                        о воздействии алкоголя на мозг, восприятие,
+                        когнитивные функции и социальное поведение.
+                    </div>
+                </a>
+
+                <a class="card" href="./research/addiction-as-disease.html" data-card="addiction">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">↺</div>
+                        </div>
+                        <div class="card-title">Зависимость как болезнь</div>
+                        <div class="card-index">RES / 02</div>
+                    </div>
+                    <div class="description">
+                        Открытый узел проекта о границе между
+                        ответственностью, помощью, лечением,
+                        автономией и вмешательством.
+                    </div>
+                </a>
+
+                <a class="card" href="./research/cannabis-status.html" data-card="cannabis">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">?</div>
+                        </div>
+                        <div class="card-title">Статус каннабиса</div>
+                        <div class="card-index">RES / 03</div>
+                    </div>
+                    <div class="description">
+                        Нерешённый вопрос проекта: на каком основании
+                        отличать каннабис от других веществ и как
+                        согласовать это с научными данными.
+                    </div>
+                </a>
+
+                <a class="card" href="./research/cognitive-rigidity.html" data-card="rigidity">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">Δ</div>
+                        </div>
+                        <div class="card-title">Когнитивная ригидность</div>
+                        <div class="card-index">RES / 04</div>
+                    </div>
+                    <div class="description">
+                        Исследовательское направление о гибкости
+                        когнитивных процессов, адаптации и
+                        социальном взаимодействии.
+                    </div>
+                </a>
+
+                <a class="card" href="./open-questions.html" data-card="open-questions">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">?</div>
+                        </div>
+                        <div class="card-title">Открытые вопросы</div>
+                        <div class="card-index">RES / 05</div>
+                    </div>
+                    <div class="description">
+                        Вопросы, которые проект пока не закрывает:
+                        статус идеологии, границы деструктивного,
+                        проверка без слежки, право на саморазрушение,
+                        коллективная ответственность и защита фонда.
+                    </div>
+                </a>
+
+                <a class="card" href="./IDEOLOGY_STATUS.html" data-card="ideology-status">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">∞</div>
+                        </div>
+                        <div class="card-title">Статус идеологии</div>
+                        <div class="card-index">RES / 06</div>
+                    </div>
+                    <div class="description">
+                        Отдельная ветка для вопроса: AS — рамка
+                        развития, философская гипотеза или претензия
+                        на единственную истину? Ответ должен оставаться
+                        открытым для критики.
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- =================================================
+             13 — КОНСТИТУЦИЯ
+        ================================================== -->
+
+        <!-- =================================================
+             13 — КОНСТИТУЦИЯ
+             Extension point for future modules
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                <div class="section-number">13 / CONSTITUTION</div>
+                <h2>Конституция системы</h2>
+            </div>
+
+            <div class="cards">
+
+                <a class="card" href="./constitution/" data-card="constitution">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">§</div>
+                        </div>
+                        <div class="card-title">Конституция AS</div>
+                        <div class="card-index">LAW / 01</div>
+                    </div>
+                    <div class="description">
+                        Формализация основных принципов, прав субъекта,
+                        ограничений власти, прозрачности и
+                        возможности пересмотра системы.
+                    </div>
+                </a>
+
+                <a class="card" href="./constitution/subject-rights.html" data-card="rights">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">◉</div>
+                        </div>
+                        <div class="card-title">Права субъекта</div>
+                        <div class="card-index">LAW / 02</div>
+                    </div>
+                    <div class="description">
+                        Автономия, право на выход, защита развития,
+                        доступ к информации о воздействии системы
+                        и другие проектируемые гарантии.
+                    </div>
+                </a>
+
+                <a class="card" href="./constitution/ai-constitution.html" data-card="ai-constitution">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">AI</div>
+                        </div>
+                        <div class="card-title">Конституция ИИ</div>
+                        <div class="card-index">LAW / 03</div>
+                    </div>
+                    <div class="description">
+                        Проект формальных ограничений для ИИ-систем:
+                        аудит, непричинение вреда, автономия человека
+                        и контролируемость действий.
+                    </div>
+                </a>
+
+                <a class="card" href="./constitution/anti-tyranny.html" data-card="anti-tyranny">
+                    <div class="card-content">
+                        <div class="icon">
+                            <div class="icon-matrix"></div>
+                            <div class="icon-symbol">⊕</div>
+                        </div>
+                        <div class="card-title">Ограничение власти</div>
+                        <div class="card-index">LAW / 04</div>
+                    </div>
+                    <div class="description">
+                        Архитектурные механизмы против концентрации
+                        необратимой власти: прозрачность, проверки,
+                        распределение полномочий и право на выход.
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="footer">
+            AMBIVALENT SOLIPSISM · DEVELOPMENT · SOCIETY · AI · SYMBIONTOS
+        </footer>
+
+    </main>
+
+
+    <script>
+
+        /* =====================================================
+           MATRIX CHARACTERS
+        ===================================================== */
+
+        const matrixCharacters =
+            "01アイウエオカキクケコサシスセソ" +
+            "タチツテトナニヌネノハヒフヘホ" +
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+            "ΨΣΔΩΦΛ";
+
+
+        const cards =
+            document.querySelectorAll(".card");
+
+
+        const matrixIcons =
+            document.querySelectorAll(
+                ".icon-matrix"
+            );
+
+
+        /* =====================================================
+           CREATE MATRIX CODE
+        ===================================================== */
+
+        function createMatrixCode() {
+
+            matrixIcons.forEach(icon => {
+
+                let result = "";
+
+
+                for (
+                    let i = 0;
+                    i < 180;
+                    i++
+                ) {
+
+                    const character =
+                        matrixCharacters[
+                            Math.floor(
+                                Math.random() *
+                                matrixCharacters.length
+                            )
+                        ];
+
+
+                    result += character;
+
+
+                    if (i % 12 === 0) {
+                        result += " ";
+                    }
+
+                }
+
+
+                icon.textContent = result;
+
+            });
+
+        }
+
+
+        createMatrixCode();
+
+
+        /* =====================================================
+           TOUCH INTERACTION
+        ===================================================== */
+
+        let activeCard = null;
+
+
+        cards.forEach(card => {
+
+            card.addEventListener(
+                "touchstart",
+                function(event) {
+
+                    /*
+                     * Первое касание:
+                     * показываем описание.
+                     */
+
+                    if (
+                        activeCard !== this
+                    ) {
+
+                        event.preventDefault();
+
+
+                        if (activeCard) {
+
+                            activeCard.classList.remove(
+                                "active"
+                            );
+
+                        }
+
+
+                        activeCard = this;
+
+
+                        this.classList.add(
+                            "active"
+                        );
+
+                    }
+
+                    /*
+                     * Второе касание:
+                     * переход по ссылке.
+                     */
+
+                    else {
+
+                        this.classList.remove(
+                            "active"
+                        );
+
+                        activeCard = null;
+
+                    }
+
+                },
+                {
+                    passive: false
+                }
+            );
+
+        });
+
+
+        /* =====================================================
+           CLOSE DESCRIPTION OUTSIDE CARD
+        ===================================================== */
+
+        document.addEventListener(
+            "touchstart",
+            function(event) {
+
+                if (
+                    activeCard &&
+                    !activeCard.contains(
+                        event.target
+                    )
+                ) {
+
+                    activeCard.classList.remove(
+                        "active"
+                    );
+
+                    activeCard = null;
+
+                }
+
+            },
+            {
+                passive: true
+            }
+        );
+
+
+        /* =====================================================
+           NEURAL NETWORK
+        ===================================================== */
+
+        const canvas =
+            document.getElementById(
+                "neuralCanvas"
+            );
+
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        let nodes = [];
+
+
+        /* =====================================================
+           RESIZE CANVAS
+        ===================================================== */
+
+        function resizeCanvas() {
+
+            const dpr =
+                Math.min(
+                    window.devicePixelRatio || 1,
+                    2
+                );
+
+
+            canvas.width =
+                window.innerWidth * dpr;
+
+
+            canvas.height =
+                window.innerHeight * dpr;
+
+
+            canvas.style.width =
+                window.innerWidth + "px";
+
+
+            canvas.style.height =
+                window.innerHeight + "px";
+
+
+            ctx.setTransform(
+                dpr,
+                0,
+                0,
+                dpr,
+                0,
+                0
+            );
+
+
+            createNodes();
+
+
+            drawNetwork();
+
+        }
+
+
+        /* =====================================================
+           CREATE NODES
+        ===================================================== */
+
+        function createNodes() {
+
+            const width =
+                window.innerWidth;
+
+
+            const height =
+                window.innerHeight;
+
+
+            const count =
+                width < 760
+
+                    ? 24
+
+                    : Math.min(
+                        48,
+                        Math.floor(
+                            width *
+                            height /
+                            26000
+                        )
+                    );
+
+
+            nodes = [];
+
+
+            for (
+                let i = 0;
+                i < count;
+                i++
+            ) {
+
+                nodes.push({
+
+                    x:
+                        Math.random() *
+                        width,
+
+                    y:
+                        Math.random() *
+                        height,
+
+                    radius:
+                        Math.random() *
+                        1.4 +
+                        .45
+
+                });
+
+            }
+
+        }
+
+
+        /* =====================================================
+           DRAW NETWORK
+        ===================================================== */
+
+        function drawNetwork() {
+
+            const width =
+                window.innerWidth;
+
+
+            const height =
+                window.innerHeight;
+
+
+            ctx.clearRect(
+                0,
+                0,
+                width,
+                height
+            );
+
+
+            /* -----------------------------------------------
+               CONNECTIONS
+            ------------------------------------------------ */
+
+            for (
+                let i = 0;
+                i < nodes.length;
+                i++
+            ) {
+
+                const distances = [];
+
+
+                for (
+                    let j = 0;
+                    j < nodes.length;
+                    j++
+                ) {
+
+                    if (i === j) {
+                        continue;
+                    }
+
+
+                    const dx =
+                        nodes[i].x -
+                        nodes[j].x;
+
+
+                    const dy =
+                        nodes[i].y -
+                        nodes[j].y;
+
+
+                    const distance =
+                        Math.sqrt(
+                            dx * dx +
+                            dy * dy
+                        );
+
+
+                    distances.push({
+                        index: j,
+                        distance
+                    });
+
+                }
+
+
+                distances.sort(
+                    (a, b) =>
+                        a.distance -
+                        b.distance
+                );
+
+
+                const nearest =
+                    distances.slice(0, 2);
+
+
+                nearest.forEach(item => {
+
+                    if (
+                        item.distance > 240
+                    ) {
+                        return;
+                    }
+
+
+                    const node =
+                        nodes[item.index];
+
+
+                    const alpha =
+                        Math.max(
+                            0,
+                            .085 -
+                            item.distance /
+                            4000
+                        );
+
+
+                    ctx.beginPath();
+
+
+                    ctx.moveTo(
+                        nodes[i].x,
+                        nodes[i].y
+                    );
+
+
+                    ctx.lineTo(
+                        node.x,
+                        node.y
+                    );
+
+
+                    ctx.strokeStyle =
+                        `rgba(
+                            69,
+                            240,
+                            195,
+                            ${alpha}
+                        )`;
+
+
+                    ctx.lineWidth = .55;
+
+
+                    ctx.stroke();
+
+                });
+
+            }
+
+
+            /* -----------------------------------------------
+               NODES
+            ------------------------------------------------ */
+
+            nodes.forEach(node => {
+
+                ctx.beginPath();
+
+
+                ctx.arc(
+                    node.x,
+                    node.y,
+                    node.radius,
+                    0,
+                    Math.PI * 2
+                );
+
+
+                ctx.fillStyle =
+                    "rgba(69,240,195,.28)";
+
+
+                ctx.fill();
+
+            });
+
+        }
+
+
+        /* =====================================================
+           EVENTS
+        ===================================================== */
+
+        window.addEventListener(
+            "resize",
+            resizeCanvas
+        );
+
+
+        window.addEventListener(
+            "scroll",
+            drawNetwork,
+            {
+                passive: true
+            }
+        );
+
+
+        /* =====================================================
+           START
+        ===================================================== */
+
+        resizeCanvas();
+
+    </script>
+
+</body>
+</html>
