@@ -1,48 +1,117 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Perception Atlas · Амбивалентный солипсизм</title>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="PERCEPTION ATLAS — открытый научно-образовательный атлас факторов, механизмов, функций и доказательств.">
+<title>PERCEPTION ATLAS — Ambivalent Solipsism</title>
 <style>
-:root{--bg:#020306;--fg:#f4f7f6;--muted:#8e9997;--line:rgba(255,255,255,.18);--glow:#eafff8;--accent:#9fffe0}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--fg)}body{font:15px/1.6 system-ui,sans-serif;background:radial-gradient(circle at 50% 15%,rgba(255,255,255,.05),transparent 32%),#020306}
-main{width:min(1200px,calc(100% - 32px));margin:auto;padding:30px 0 70px}a{color:inherit;text-decoration:none}.nav{display:flex;gap:18px;font:11px monospace;letter-spacing:.12em;color:var(--muted)}h1{font-size:clamp(34px,7vw,72px);font-weight:300;letter-spacing:-.04em;margin:55px 0 10px}.kicker{font:11px monospace;letter-spacing:.25em;color:var(--muted)}.lead{max-width:780px;color:var(--muted);font-size:17px}.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:35px 0}.toolbar button{background:transparent;color:var(--fg);border:1px solid var(--line);border-radius:999px;padding:9px 14px;cursor:pointer}.toolbar button[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 18px rgba(220,255,240,.12)}
-.layout{display:grid;grid-template-columns:1fr 390px;gap:24px}.panel{border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.025);padding:22px}.body{min-height:540px;position:relative;overflow:hidden}.brain{width:100%;height:500px}.region{fill:rgba(255,255,255,.015);stroke:rgba(255,255,255,.5);stroke-width:1;cursor:pointer;transition:.2s}.region:hover,.region.active{fill:rgba(220,255,240,.1);stroke:var(--glow);filter:drop-shadow(0 0 8px rgba(230,255,245,.65))}.wire{fill:none;stroke:rgba(255,255,255,.13);stroke-width:1}.node{fill:#fff;opacity:.65}.detail h2{font-size:27px;font-weight:400;margin:0 0 5px}.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 8px;margin:4px 4px 12px 0;font:10px monospace;color:var(--muted)}.detail p{color:var(--muted)}.fact{border-top:1px solid var(--line);padding:13px 0}.fact b{display:block;color:var(--fg);font-size:12px}.small{font-size:12px;color:var(--muted)}.sources{margin-top:30px}.sources a{color:var(--fg);text-decoration:underline;text-underline-offset:3px}@media(max-width:800px){.layout{grid-template-columns:1fr}.body{min-height:390px}.brain{height:390px}h1{margin-top:40px}}
-</style></head>
-<body><main>
-<nav class="nav"><a href="../">← НАЗАД</a><a href="../">⌂ AS</a><a href="./">RESEARCH</a></nav>
-<div class="kicker">PERCEPTION ATLAS // NEURO MAP</div>
-<h1>Мозг как карта восприятия</h1>
-<p class="lead">Интерактивная карта связывает область мозга, функцию, фактор воздействия и уровень доказательности. Это образовательный атлас, а не диагностический инструмент.</p>
-<div class="toolbar" aria-label="Режимы"><button data-mode="visual" aria-pressed="true">ВИЗУАЛЬНЫЙ</button><button data-mode="evidence" aria-pressed="false">ДОКАЗАТЕЛЬСТВА</button><button data-mode="quiet" aria-pressed="false">QUIET ROOM</button></div>
-<div class="layout"><section class="panel body">
-<svg class="brain" viewBox="0 0 700 500" role="img" aria-label="Схематическая интерактивная карта мозга">
-<path class="wire" d="M130 255 C100 130 190 45 330 65 C470 35 605 125 570 265 C590 375 470 445 345 420 C215 450 100 370 130 255Z"/>
-<path class="wire" d="M350 68 C320 150 330 350 345 420M150 230 C260 190 440 190 565 250M165 320 C270 285 445 290 555 330"/>
-<path class="region" data-id="pfc" d="M135 210 C125 130 195 80 275 85 L265 205 C220 215 175 230 135 210Z"/>
-<path class="region" data-id="ofc" d="M145 215 C185 215 230 210 270 205 L275 260 C220 270 175 260 145 240Z"/>
-<path class="region" data-id="acc" d="M270 120 C315 105 350 110 385 130 L375 220 C340 205 305 205 270 215Z"/>
-<ellipse class="region" data-id="hippocampus" cx="315" cy="290" rx="55" ry="27"/>
-<ellipse class="region" data-id="amygdala" cx="265" cy="325" rx="27" ry="20"/>
-<ellipse class="region" data-id="insula" cx="390" cy="260" rx="34" ry="55"/>
-<path class="region" data-id="striatum" d="M395 145 C445 135 485 160 480 205 C465 230 425 230 395 215Z"/>
-<path class="region" data-id="cerebellum" d="M470 300 C540 280 585 325 555 380 C520 420 450 390 435 350Z"/>
-<g class="node"><circle cx="205" cy="145" r="2"/><circle cx="315" cy="180" r="2"/><circle cx="400" cy="185" r="2"/><circle cx="490" cy="335" r="2"/></g>
-</svg></section><aside class="panel detail" id="detail" aria-live="polite"></aside></div>
-<section class="sources small"><strong>Метод:</strong> фактор ≠ механизм ≠ эффект ≠ доказательство. Для каждого утверждения различаются ассоциация и причинность, популяция, метод, ограничения и то, чего исследование не доказывает.
-<br><br>Источники: <a href="https://www.niaaa.nih.gov/publications/alcohol-and-brain-overview" target="_blank" rel="noopener">NIAAA · Alcohol and the Brain</a> · <a href="https://www.who.int/europe/ru/news/item/04-01-2023-no-level-of-alcohol-consumption-is-safe-for-our-health" target="_blank" rel="noopener">WHO Europe · alcohol</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/30502351/" target="_blank" rel="noopener">PubMed · tobacco smoking meta-analysis</a>.</section>
-</main>
+:root{--bg:#030508;--panel:#080c10;--fg:#f4f7f6;--muted:#8d9897;--line:rgba(255,255,255,.16);--line2:rgba(255,255,255,.28);--light:#fff;--cyan:#b9ffe9;--warn:#ffe5a6;--bad:#ffb5b5}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{min-height:100vh;background:radial-gradient(circle at 50% 15%,rgba(255,255,255,.06),transparent 34%),#030508}
+button{font:inherit;color:inherit}.shell{max-width:1500px;margin:auto;min-height:100vh;display:grid;grid-template-rows:auto 1fr}
+header{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:16px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(3,5,8,.9);backdrop-filter:blur(12px);z-index:20}
+.brand{font:11px monospace;letter-spacing:.22em}.brand small{color:var(--muted);letter-spacing:.08em}
+.nav{display:flex;gap:14px;flex-wrap:wrap}.nav a,.ctrl{font:10px monospace;letter-spacing:.12em;color:var(--muted);text-decoration:none;background:none;border:1px solid transparent;padding:7px 9px;cursor:pointer}.nav a:hover,.ctrl:hover{color:var(--fg);border-color:var(--line)}
+.layout{display:grid;grid-template-columns:220px minmax(400px,1fr) 390px;min-height:calc(100vh - 62px)}
+aside,section.stage{min-width:0}.factors{border-right:1px solid var(--line);padding:22px 0;background:linear-gradient(180deg,rgba(255,255,255,.025),transparent)}
+.kicker{font:9px monospace;letter-spacing:.2em;color:var(--muted);padding:0 18px 13px}.factor{width:100%;border:0;border-left:2px solid transparent;background:transparent;text-align:left;padding:13px 18px;color:var(--muted);cursor:pointer}.factor:hover{background:rgba(255,255,255,.035);color:var(--fg)}.factor.active{border-left-color:var(--cyan);color:var(--fg);background:rgba(220,255,240,.045)}.dot{display:inline-block;width:5px;height:5px;border:1px solid currentColor;border-radius:50%;margin-right:9px;vertical-align:2px}
+.stage{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.035),transparent 55%);min-height:650px}.stage-head{position:absolute;top:20px;left:24px;right:24px;display:flex;justify-content:space-between;z-index:3}.stage-title{font:10px monospace;letter-spacing:.15em;color:var(--muted)}.stage-title strong{color:var(--fg)}
+svg{width:min(92%,760px);height:auto;max-height:78vh}.construction{fill:none;stroke:rgba(255,255,255,.08);stroke-width:1}.outline{fill:none;stroke:rgba(255,255,255,.72);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.detail{fill:none;stroke:rgba(255,255,255,.22);stroke-width:1}
+.region{fill:rgba(255,255,255,.015);stroke:rgba(255,255,255,.42);stroke-width:1.3;cursor:pointer;transition:fill .2s,stroke .2s,filter .2s}.region:hover,.region:focus-visible,.region.active{fill:rgba(220,255,240,.11);stroke:var(--light);filter:drop-shadow(0 0 8px rgba(235,255,248,.65))}.region.impact{stroke:rgba(255,255,255,.7)}.pulse{fill:#fff;opacity:.7}.quiet .pulse{display:none}
+.data{border-left:1px solid var(--line);padding:25px 23px;overflow:auto;background:linear-gradient(180deg,rgba(255,255,255,.025),transparent)}.data h1{font-size:28px;font-weight:350;line-height:1.15;margin:0 0 5px}.sub{color:var(--muted);margin-bottom:18px}.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 20px}.chip{border:1px solid var(--line);padding:4px 8px;font:9px monospace;color:var(--muted);letter-spacing:.08em}.block{border-top:1px solid var(--line);padding:15px 0}.label{font:9px monospace;letter-spacing:.18em;color:var(--muted);margin-bottom:7px}.badge{display:inline-block;border:1px solid var(--line2);padding:5px 8px;font:10px monospace}.fact{margin:0 0 8px}.fact b{font-size:12px}.muted{color:var(--muted)}.caveat{border-left:2px solid var(--warn);padding:9px 11px;background:rgba(255,229,166,.035);color:#e8dfc9}.source{display:block;color:var(--fg);padding:9px 0;border-bottom:1px solid rgba(255,255,255,.08);text-decoration:none}.source:hover{text-decoration:underline}.source small{display:block;color:var(--muted)}.empty{height:100%;display:grid;place-items:center;text-align:center;color:var(--muted);padding:40px}.legend{position:absolute;bottom:16px;left:24px;right:24px;color:var(--muted);font:9px monospace;letter-spacing:.06em}
+.mode-evidence .region{stroke-width:2}.mode-evidence .construction{opacity:.2}.mode-quiet *{animation:none!important;transition:none!important}
+footer{padding:25px 20px;border-top:1px solid var(--line);color:var(--muted);font:10px monospace}
+@media(max-width:1050px){.layout{grid-template-columns:180px 1fr}.data{grid-column:1/-1;border-left:0;border-top:1px solid var(--line);min-height:360px}.stage{grid-column:2;grid-row:1;min-height:560px}.factors{grid-column:1;grid-row:1}.layout{align-content:start}}
+@media(max-width:700px){header{align-items:flex-start}.brand small{display:none}.layout{display:block}.factors{display:flex;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:0}.kicker{display:none}.factor{white-space:nowrap;border-left:0;border-bottom:2px solid transparent;width:auto;padding:13px 15px}.factor.active{border-bottom-color:var(--cyan)}.stage{min-height:430px}.stage-head{top:12px;left:14px}.data{padding:20px 16px}.legend{left:14px;right:14px}svg{width:96%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <div class="brand">PERCEPTION ATLAS <small>// MAP OF EVIDENCE</small></div>
+  <nav class="nav"><a href="../">← НАЗАД</a><a href="../">⌂ AS</a><a href="./">RESEARCH</a><button class="ctrl" id="quiet">QUIET ROOM</button><button class="ctrl" id="clear">CLEAR</button></nav>
+</header>
+<div class="layout">
+<aside class="factors" aria-label="Факторы">
+  <div class="kicker">FACTORS</div>
+  <div id="factors"></div>
+</aside>
+<section class="stage" id="stage">
+  <div class="stage-head"><div class="stage-title"><strong id="modeTitle">BODY</strong> // INTERACTIVE MAP</div><button class="ctrl" id="toggleView">МОЗГ / ТЕЛО</button></div>
+  <svg id="body" viewBox="0 0 420 760" aria-label="Схема тела" role="img">
+    <circle class="construction" cx="210" cy="380" r="290"/><line class="construction" x1="210" y1="35" x2="210" y2="725"/><line class="construction" x1="35" y1="380" x2="385" y2="380"/>
+    <path class="outline" d="M210 35c-35 0-52 25-52 58 0 25 13 44 30 53v28c-30 3-67 17-78 38-12 25-5 58 3 92l10 45c4 19 2 35-6 53-9 20-8 35 2 45 11 10 25 4 32-10 8-17 10-34 8-54l-4-48c-2-25 1-47 9-64v90c0 35 3 75 5 116 2 42 4 83 4 122l-24 17c-12 8-18 17-10 23 11 7 31-4 43-15l28-25 28 25c12 11 32 22 43 15 8-6 2-15-10-23l-24-17c0-39 2-80 4-122 2-41 5-81 5-116v-90c8 17 11 39 9 64l-4 48c-2 20 0 37 8 54 7 14 21 20 32 10 10-10 11-25 2-45-8-18-10-34-6-53l10-45c8-34 15-67 3-92-11-21-48-35-78-38v-28c17-9 30-28 30-53 0-33-17-58-52-58z"/>
+    <g class="detail"><path d="M145 210c40 22 90 22 130 0M145 245c40 20 90 20 130 0M155 280c32 15 78 15 110 0M210 170v145M160 360h100"/></g>
+    <g class="organ region" data-id="brain" role="button" tabindex="0" aria-label="Мозг"><ellipse cx="210" cy="95" rx="48" ry="38"/></g>
+    <g class="organ region" data-id="lungs" role="button" tabindex="0" aria-label="Лёгкие"><path d="M205 190c-35 0-55 24-53 65 2 27 15 43 37 42 14-2 20-18 21-38z"/><path d="M215 190c35 0 55 24 53 65-2 27-15 43-37 42-14-2-20-18-21-38z"/></g>
+    <g class="organ region" data-id="heart" role="button" tabindex="0" aria-label="Сердце"><path d="M210 218c-22-20-43-1-34 18 8 17 24 31 34 39 10-8 26-22 34-39 9-19-12-38-34-18z"/></g>
+    <g class="organ region" data-id="liver" role="button" tabindex="0" aria-label="Печень"><path d="M150 285c24-20 57-13 67 7v32c-31 8-61 0-70-18z"/></g>
+    <g class="organ region" data-id="gut" role="button" tabindex="0" aria-label="Кишечник"><ellipse cx="220" cy="350" rx="58" ry="35"/></g>
+    <g class="organ region" data-id="reproductive" role="button" tabindex="0" aria-label="Репродуктивная система"><ellipse cx="210" cy="410" rx="30" ry="12"/></g>
+    <g class="organ region" data-id="bones" role="button" tabindex="0" aria-label="Опорно-двигательная система"><path d="M190 450v205M230 450v205M175 455l-35 120M245 455l35 120"/></g>
+    <circle class="pulse" cx="210" cy="220" r="3"/>
+  </svg>
+  <svg id="brain" viewBox="0 0 720 500" aria-label="Схема мозга" role="img" hidden>
+    <path class="construction" d="M90 250C60 120 170 50 330 70c180-35 310 65 300 200 20 120-100 180-250 150C210 450 80 390 90 250z"/><path class="outline" d="M100 250C75 135 175 60 320 75c160-25 295 55 300 170 10 115-100 190-235 165-145 20-260-40-285-160z"/>
+    <path class="detail" d="M350 78c-25 100-25 250 0 330M110 210c120-45 310-45 480 5M125 310c120-35 300-30 450 25"/>
+    <g class="organ region" data-id="pfc" role="button" tabindex="0" aria-label="Префронтальная кора"><path d="M105 220c0-75 65-130 155-125l-15 120c-45 15-95 22-140 5z"/></g>
+    <g class="organ region" data-id="ofc" role="button" tabindex="0" aria-label="Орбитофронтальная кора"><path d="M110 225c45 5 90-2 135-15l10 60c-50 12-105 8-140-10z"/></g>
+    <g class="organ region" data-id="acc" role="button" tabindex="0" aria-label="Передняя поясная кора"><path d="M250 105c50-15 100-8 140 18l-10 95c-45-18-90-20-135-2z"/></g>
+    <ellipse class="organ region" data-id="hippocampus" cx="320" cy="300" rx="65" ry="25" tabindex="0"/>
+    <ellipse class="organ region" data-id="amygdala" cx="255" cy="335" rx="28" ry="20" tabindex="0"/>
+    <ellipse class="organ region" data-id="insula" cx="405" cy="260" rx="38" ry="62" tabindex="0"/>
+    <path class="organ region" data-id="striatum" d="M410 150c60-15 105 15 98 65-20 30-75 30-100 0z" tabindex="0"/>
+    <path class="organ region" data-id="cerebellum" d="M480 320c75-25 135 25 95 85-40 45-115 25-130-20z" tabindex="0"/>
+    <circle class="pulse" cx="180" cy="165" r="3"/><circle class="pulse" cx="320" cy="300" r="3"/>
+  </svg>
+  <div class="legend">MODEL: FACTOR → MECHANISM → FUNCTION/EFFECT → EVIDENCE → LIMITATIONS</div>
+</section>
+<aside class="data" id="data" aria-live="polite"></aside>
+</div>
+<footer>OPEN ATLAS · NO TRACKING · NO PERSONAL DATA · EDUCATIONAL, NOT DIAGNOSTIC · <a href="./atlas/ATLAS_SPEC.md">METHODOLOGY</a> · <a href="./atlas/SOURCES.md">SOURCES</a></footer>
+</div>
 <script>
-const data={
-pfc:{n:"Префронтальная кора",t:["исполнительный контроль","планирование"],x:"Участвует в организации поведения, приоритизации, принятии решений и контроле импульсов. При тяжёлом хроническом употреблении алкоголя NIAAA описывает нарушения работы и структурные изменения нейронных систем.",e:"MODERATE–HIGH",c:"для тяжёлого хронического употребления — хорошо поддерживается; конкретная причинность отдельных нейровизуализационных эффектов зависит от дизайна",l:"Не означает, что любое употребление вызывает измеримое повреждение у каждого человека.",s:"NIAAA · Alcohol and the Brain"},
-ofc:{n:"Орбитофронтальная кора",t:["оценка последствий","выбор"],x:"Участвует в оценке вариантов поведения и их последствий. Исследования AUD находят различия объёма и толщины OFC; интерпретация требует учёта дизайна и сопутствующих факторов.",e:"MODERATE",c:"association",l:"Малые клинические выборки не позволяют автоматически обобщать результат на всех употребляющих алкоголь.",s:"PubMed: 37190518"},
-acc:{n:"Передняя поясная кора",t:["контроль","мониторинг конфликтов"],x:"Участвует в когнитивном контроле и мониторинге действий. Изменения толщины ACC изучались при binge drinking и AUD.",e:"MODERATE",c:"association",l:"Результат конкретной выборки не равен универсальному причинному эффекту.",s:"PubMed: 24961871"},
-hippocampus:{n:"Гиппокамп",t:["память","обучение"],x:"Ключевая структура памяти и обучения. Алкоголь может нарушать работу систем памяти; при хроническом тяжёлом употреблении описаны структурные и функциональные изменения.",e:"HIGH",c:"established for acute impairment; chronic structural effects depend on pattern",l:"Нельзя переводить популяционные эффекты в прогноз для конкретного человека.",s:"NIAAA · Alcohol and the Brain"},
-amygdala:{n:"Миндалина",t:["эмоциональная обработка","стресс"],x:"Участвует в обработке эмоционально значимой информации. Алкоголь воздействует на распределённые системы регуляции эмоций и стресса.",e:"MODERATE",c:"механизмы и функциональные эффекты изучены; индивидуальный исход вариативен",l:"Не следует сводить сложное поведение к одной структуре.",s:"NIAAA · Alcohol and the Brain"},
-insula:{n:"Островковая кора",t:["интероцепция","значимость"],x:"Связана с обработкой внутренних состояний и значимости стимулов. В исследованиях зависимостей участвует в сетях, связанных с тягой и контролем поведения.",e:"MODERATE",c:"association / network evidence",l:"Сетевая функция не означает, что островок является единственной причиной поведения.",s:"NIAAA · neuroscience"},
-striatum:{n:"Стриатум",t:["мотивация","обучение"],x:"Участвует в системах вознаграждения, мотивационного обучения и выбора действий. Алкоголь меняет работу систем вознаграждения и подкрепления.",e:"MODERATE–HIGH",c:"well-established mechanism; individual structural effects vary",l:"Нельзя делать вывод о поведении конкретного человека только по этой системе.",s:"NIAAA · neuroscience"},
-cerebellum:{n:"Мозжечок",t:["координация","равновесие"],x:"Алкоголь остро нарушает функции, связанные с равновесием и координацией; NIAAA также описывает долгосрочные изменения при тяжёлом употреблении.",e:"HIGH",c:"established for acute functional effects",l:"Острый функциональный эффект и хроническое структурное изменение — разные типы утверждений.",s:"NIAAA · Alcohol and the Brain"}
+const factors=[
+{id:"alcohol",label:"Алкоголь"},{id:"smoking",label:"Табак / курение"},{id:"sleep",label:"Сон",pending:true},
+{id:"stress",label:"Стресс",pending:true},{id:"nutrition",label:"Питание",pending:true},{id:"activity",label:"Физическая активность",pending:true},{id:"pollution",label:"Загрязнение среды",pending:true}
+];
+const common={
+alcohol:{
+brain:{name:"Мозг",level:"HIGH",causality:"Установлено для ряда острых функциональных эффектов; хронические структурные эффекты зависят от паттерна употребления",mechanisms:["нейротоксичность","нейроадаптация","системы вознаграждения"],known:["Алкоголь нарушает работу мозговых коммуникационных путей и может ухудшать память, речь, равновесие и суждение.","При длительном тяжёлом употреблении описаны изменения структуры и функции мозга.","При AUD часть изменений может улучшаться при длительной трезвости; пластичность мозга является важной частью восстановления."],not:["Нельзя утверждать, что любое употребление вызывает одинаковое структурное повреждение у каждого человека.","Нельзя считать все изменения необратимыми."],sources:[["NIAAA — Alcohol and the Brain","https://www.niaaa.nih.gov/publications/alcohol-and-brain-overview"],["NIAAA — Neuroscience: Addiction and Recovery","https://www.niaaa.nih.gov/health-professionals-communities/core-resource-on-alcohol/neuroscience-brain-addiction-and-recovery"]]},
+liver:{name:"Печень",level:"HIGH",causality:"Установлено для алкоголь-ассоциированного заболевания печени",mechanisms:["метаболизм этанола","окислительный стресс","воспаление"],known:["Хроническое употребление может приводить к жировой болезни печени, алкогольному гепатиту и циррозу."],not:["Индивидуальный риск зависит от дозы, паттерна употребления и других факторов."],sources:[["NIAAA — Alcohol's Effects on the Body","https://www.niaaa.nih.gov/alcohols-effects-health/alcohols-effects-body"]]},
+reproductive:{name:"Репродуктивная система",level:"MODERATE",causality:"Зависит от исхода и периода воздействия",mechanisms:["эндокринные эффекты","токсическое воздействие"],known:["Алкоголь связан с нарушениями репродуктивной функции; отдельная категория — пренатальное воздействие, которое может нарушать развитие плода."],not:["Нельзя переносить данные о пренатальном воздействии на взрослого человека без оговорок."],sources:[["NIAAA — Alcohol and the Developing Brain","https://www.niaaa.nih.gov/publications/alcohol-and-brain-overview"]]},
+heart:{name:"Сердечно-сосудистая система",level:"HIGH",causality:"Зависит от исхода; риск многих состояний возрастает с употреблением",mechanisms:["сосудистые эффекты","аритмогенные эффекты"],known:["Алкоголь связан с повышением риска ряда сердечно-сосудистых состояний; причинность и величина эффекта зависят от паттерна употребления и исхода."],not:["Не следует превращать сложные дозо-ответные данные в универсальное правило для конкретного человека."],sources:[["WHO — Alcohol and cancer","https://www.who.int/europe/news-room/fact-sheets/item/alcohol-and-cancer"]]},
+gut:{name:"Кишечник",level:"MODERATE",causality:"Для ряда механизмов — поддерживается; вклад в конкретное поведение изучается",mechanisms:["дисбиоз","воспаление","кишечный барьер"],known:["Алкоголь может изменять микробиоту и проницаемость кишечного барьера; gut–brain axis является активной областью исследований."],not:["Механистические данные не позволяют автоматически делать вывод о поведении конкретного человека."],sources:[["NIAAA — Alcohol and the Body","https://www.niaaa.nih.gov/alcohols-effects-health/alcohols-effects-body"]]},
+mouth:{name:"Полость рта / рак",level:"HIGH",causality:"Причинная связь с несколькими видами рака установлена",mechanisms:["генотоксичность","ацетальдегид","окислительный стресс"],known:["IARC/WHO связывают алкоголь с раком полости рта, глотки, гортани, пищевода, печени, колоректальным раком и раком молочной железы у женщин.","Для рака нет установленного безопасного порога употребления алкоголя."],not:["Это утверждение о риске заболевания на уровне популяции, а не диагноз конкретного человека."],sources:[["WHO/IARC — Alcohol and cancer","https://www.who.int/europe/news-room/fact-sheets/item/alcohol-and-cancer"],["IARC — European Code Against Cancer","https://www.iarc.who.int/reference/european-code-against-cancer-4th-edition-alcohol-drinking-and-cancer/"]]}
+},
+smoking:{
+brain:{name:"Мозг",level:"MODERATE",causality:"В основном ассоциации; причинность отдельных структурных и когнитивных эффектов требует осторожности",mechanisms:["никотин","токсическое воздействие дыма","сосудистые эффекты","зависимость"],known:["В UK Biobank (n=33 293) курение было связано с меньшим общим и региональным объёмом серого вещества; эффект зависел от интенсивности и статуса курения.","Мета-анализ 24 исследований обнаружил поперечные ассоциации хронического курения с вниманием, памятью, когнитивной гибкостью и некоторыми видами импульсивности.","Острое влияние никотина, абстиненция и хронические эффекты — разные вопросы и не должны смешиваться."],not:["Ассоциация не доказывает, что курение является единственной причиной когнитивного различия.","Данные о креативности не позволяют утверждать, что курение универсально «улучшает» или «ухудшает» творчество."],sources:[["UK Biobank — Smoking and brain volume","https://pubmed.ncbi.nlm.nih.gov/36528239/"],["Systematic review/meta-analysis — neuropsychological impairments","https://pubmed.ncbi.nlm.nih.gov/30502351/"]]},
+lungs:{name:"Лёгкие",level:"HIGH",causality:"Причинная связь с ХОБЛ и раком лёгкого хорошо установлена",mechanisms:["токсическое воздействие","воспаление","окислительный стресс","повреждение ДНК"],known:["Курение является ведущей причиной предотвратимых заболеваний лёгких и связано с ХОБЛ и раком лёгкого.","Компоненты табачного дыма повреждают ткани и генетический материал."],not:["Не каждый курильщик развивает одинаковое заболевание; риск модифицируется множеством факторов."],sources:[["WHO — Tobacco","https://www.who.int/news-room/fact-sheets/detail/tobacco"]]},
+heart:{name:"Сердечно-сосудистая система",level:"HIGH",causality:"Причинная связь с сердечно-сосудистым риском установлена",mechanisms:["сосудистая дисфункция","воспаление","окислительный стресс"],known:["Курение повышает риск сердечно-сосудистых заболеваний и инсульта."],not:["Индивидуальный риск зависит от стажа, интенсивности и сопутствующих факторов."],sources:[["WHO — Tobacco","https://www.who.int/news-room/fact-sheets/detail/tobacco"]]},
+reproductive:{name:"Репродуктивная система",level:"HIGH",causality:"Для ряда репродуктивных исходов — хорошо поддерживается",mechanisms:["сосудистые эффекты","окислительный стресс","токсическое воздействие"],known:["Курение связано с неблагоприятными репродуктивными исходами и воздействием на беременность."],not:["Конкретный исход зависит от пола, периода воздействия и других факторов."],sources:[["CDC — Smoking and reproductive health","https://www.cdc.gov/tobacco/campaign/tips/diseases/reproductive-health.html"]]},
+mouth:{name:"Полость рта",level:"HIGH",causality:"Причинная связь с рядом заболеваний и раков установлена",mechanisms:["токсическое воздействие","повреждение ДНК","воспаление"],known:["Табачный дым связан с раком полости рта и заболеваниями пародонта."],not:["Риск конкретного заболевания не определяется одним фактором."],sources:[["WHO — Tobacco","https://www.who.int/news-room/fact-sheets/detail/tobacco"]]},
+bones:{name:"Опорно-двигательная система",level:"MODERATE",causality:"Для ряда исходов — ассоциация с биологически правдоподобными механизмами",mechanisms:["сосудистые эффекты","окислительный стресс"],known:["Курение связано с ухудшением здоровья костей и заживления."],not:["Величина эффекта зависит от возраста и других факторов."],sources:[["NIH/MedlinePlus — Smoking and bone health","https://medlineplus.gov/ency/patientinstructions/000494.htm"]]}
+}
 };
-const detail=document.getElementById("detail");
-function show(id){document.querySelectorAll(".region").forEach(q=>q.classList.toggle("active",q.dataset.id===id));const d=data[id];detail.innerHTML="<h2>"+d.n+"</h2>"+d.t.map(q=>"<span class='tag'>"+q+"</span>").join("")+"<p>"+d.x+"</p><div class='fact'><b>УРОВЕНЬ ДОКАЗАТЕЛЬНОСТИ</b>"+d.e+"</div><div class='fact'><b>ПРИЧИННОСТЬ / СВЯЗЬ</b>"+d.c+"</div><div class='fact'><b>ОГРАНИЧЕНИЕ</b>"+d.l+"</div><div class='fact'><b>ИСТОЧНИК</b>"+d.s+"</div>"}
-document.querySelectorAll(".region").forEach(q=>q.addEventListener("click",()=>show(q.dataset.id)));show("pfc");
-document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-mode]").forEach(q=>q.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");document.documentElement.dataset.mode=b.dataset.mode;});
-</script></body></html>
+const labels={brain:"Мозг",lungs:"Лёгкие",heart:"Сердце",liver:"Печень",gut:"Кишечник",reproductive:"Репродуктивная система",bones:"Опорно-двигательная система",mouth:"Полость рта"};
+let state={factor:"alcohol",organ:"brain",view:"body",quiet:false,mode:"visual"};
+const factorsEl=document.getElementById("factors"),dataEl=document.getElementById("data"),body=document.getElementById("body"),brain=document.getElementById("brain");
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function renderFactors(){factorsEl.innerHTML=factors.map(f=>'<button class="factor '+(state.factor===f.id?'active':'')+'" data-factor="'+f.id+'" aria-pressed="'+(state.factor===f.id)+'"><span class="dot"></span>'+esc(f.label)+(f.pending?' <span class="muted">· скоро</span>':'')+'</button>').join("");factorsEl.querySelectorAll(".factor").forEach(b=>b.onclick=()=>{state.factor=b.dataset.factor;state.organ=null;render()})}
+function renderView(){body.hidden=state.view!=="body";brain.hidden=state.view!=="brain";document.getElementById("modeTitle").textContent=state.view==="brain"?"BRAIN":"BODY";document.body.classList.toggle("mode-evidence",state.mode==="evidence")}
+function renderRegions(){document.querySelectorAll(".region").forEach(r=>{const id=r.dataset.id;const d=(common[state.factor]||{})[id];r.classList.toggle("impact",!!d);r.classList.toggle("active",state.organ===id)})}
+function renderPanel(){const d=(common[state.factor]||{})[state.organ];const f=factors.find(x=>x.id===state.factor);if(!d){dataEl.innerHTML='<div class="empty"><div><div style="font-size:28px;margin-bottom:10px">◌</div><b>'+esc(f?.label||"Фактор")+'</b><p>Данные ещё проходят методологическую верификацию. В атласе лучше показать отсутствие проверенного знания, чем заполнить пробел предположением.</p></div></div>';return}
+dataEl.innerHTML='<div class="label">'+esc(f.label)+' → '+esc(d.name)+'</div><h1>'+esc(d.name)+'</h1><div class="sub">Карта доказательств, а не приговор.</div><div class="chips">'+d.mechanisms.map(x=>'<span class="chip">'+esc(x)+'</span>').join("")+'</div><div class="block"><div class="label">УРОВЕНЬ ДОКАЗАТЕЛЬНОСТИ</div><span class="badge">'+esc(d.level)+'</span></div><div class="block"><div class="label">ПРИЧИННОСТЬ / СВЯЗЬ</div><div>'+esc(d.causality)+'</div></div><div class="block"><div class="label">ЧТО ИЗВЕСТНО</div>'+d.known.map(x=>'<p class="fact">'+esc(x)+'</p>').join("")+'</div><div class="block"><div class="label">ЧЕГО ЭТО НЕ ДОКАЗЫВАЕТ</div><div class="caveat">'+d.not.map(x=>'<div>'+esc(x)+'</div>').join("")+'</div></div><div class="block"><div class="label">ИСТОЧНИКИ</div>'+d.sources.map(s=>'<a class="source" href="'+s[1]+'" target="_blank" rel="noopener">'+esc(s[0])+'<small>Открыть первичный/официальный источник ↗</small></a>').join("")+'</div><div class="block muted">Статус записи: рабочая редакция · проверять дату последнего обзора перед публикацией.</div>'}
+function render(){renderFactors();renderView();renderRegions();renderPanel()}
+document.querySelectorAll(".organ").forEach(r=>{r.addEventListener("click",()=>{state.organ=state.organ===r.dataset.id?null:r.dataset.id;render()});r.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();state.organ=r.dataset.id;render()}})});
+document.getElementById("toggleView").onclick=()=>{state.view=state.view==="body"?"brain":"body";state.organ=state.view==="brain"?"pfc":"brain";render()};
+document.getElementById("clear").onclick=()=>{state.factor=null;state.organ=null;render()};
+document.getElementById("quiet").onclick=e=>{state.quiet=!state.quiet;document.body.classList.toggle("quiet",state.quiet);e.currentTarget.textContent=state.quiet?"QUIET: ON":"QUIET ROOM"};
+document.querySelectorAll("[data-mode]").forEach(()=>{});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){state.organ=null;render()}});
+document.getElementById("stage").addEventListener("dblclick",()=>{state.view=state.view==="body"?"brain":"body";render()});
+render();
+</script>
+</body></html>
