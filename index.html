@@ -208,6 +208,25 @@
         }
 
 
+
+        .book-fragment {
+            margin-top: 22px;
+            max-width: min(760px, 86vw);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(13px, 1.5vw, 17px);
+            line-height: 1.7;
+            font-style: italic;
+            letter-spacing: .025em;
+            color: rgba(238, 247, 245, .78);
+            text-shadow:
+                0 0 12px rgba(255, 255, 255, .06);
+        }
+
+        .book-fragment::before,
+        .book-fragment::after {
+            color: rgba(238, 247, 245, .32);
+        }
+
         .subtitle {
             margin-top: 13px;
 
@@ -1241,6 +1260,10 @@
 
             <div class="subtitle">
                 сложность — не ошибка · другой — реален
+            </div>
+
+            <div class="book-fragment">
+                «Я не Оно и не Сверх-Я. Я — это Я. Я — это Ты. Ты — это Я».
             </div>
 
             <div class="header-line"></div>
@@ -2460,7 +2483,7 @@
         ================================================== -->
 
         <!-- =================================================
-             13 — КОНСТИТУЦИЯ
+             15 — КОНСТИТУЦИЯ
              Extension point for future modules
         ================================================== -->
 
