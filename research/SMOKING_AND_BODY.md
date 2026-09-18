@@ -1,73 +1,155 @@
 # SMOKING AND BODY
 
-**Status:** evidence collection template  
-**Do not treat this file as a completed evidence review.**
+**Статус:** evidence review v0.1  
+**Дата проверки:** 2026-09-18  
+**Принцип:** фактор → механизм → мишень → функция → эффект → доказательства → ограничения.
 
-## Scope
+## 1. Что именно изучаем
 
-The atlas will examine smoking/tobacco exposure across:
+В атласе необходимо различать:
 
-- brain and nervous system;
-- cardiovascular system;
-- respiratory system;
-- reproductive system;
-- immune system;
-- oral health;
-- gastrointestinal system;
-- cancer outcomes;
-- other systems where evidence is sufficiently documented.
+- **табак / табачные изделия**;
+- **курение горящего табака**;
+- **никотин**;
+- **табачный дым**;
+- **пассивное курение**;
+- **электронные сигареты / vaping**.
 
-## Brain
+Нельзя автоматически переносить результат исследования никотина на весь эффект курения табака и наоборот.
 
-The evidence layer should distinguish:
+WHO сообщает, что табак повреждает практически все органы и связан с раком, сердечно-сосудистыми и респираторными заболеваниями, инсультом, снижением фертильности и другими последствиями. WHO отдельно подчёркивает, что никотин особенно опасен для развивающегося мозга детей, подростков и молодых людей. citeturn0search0
 
-- nicotine-specific effects;
-- effects of tobacco smoke and combustion products;
-- vascular effects;
-- stroke risk;
-- neurobiological adaptation and dependence;
-- cognitive outcomes;
-- structural brain findings;
-- dementia outcomes.
+## 2. Мозг
 
-WHO currently states that tobacco damages nearly every organ and identifies cardiovascular disease, stroke, lung disease, cancer and reduced fertility among tobacco-related harms. WHO also notes nicotine's particular risks for developing brains. These institutional statements should be decomposed into individual claims and traced to the underlying evidence before being displayed as atlas records.
+Для мозга атлас должен отображать несколько разных классов результатов:
 
-## Important distinction
+### Структура
 
-**Smoking ≠ nicotine alone.**
+Крупный анализ UK Biobank (n=33 293) обнаружил ассоциации между курением и меньшим общим и региональным объёмом серого вещества. Более высокая пожизненная экспозиция была связана с меньшим общим объёмом серого вещества; среди прекративших курить более длительный срок воздержания был связан с большим объёмом серого вещества. Авторы подчёркивают, что это наблюдательные ассоциации и они сами по себе не устанавливают направление причинности. citeturn0search6turn0search7
 
-The atlas must not attribute every effect of smoking to nicotine.
+**Формулировка атласа:**
 
-Conversely, nicotine-related findings must not automatically be presented as evidence about all tobacco products.
+> «В крупной популяционной выборке курение было связано с меньшим объёмом серого вещества; более длительное воздержание у бывших курильщиков было связано с большим объёмом серого вещества. Исследование не позволяет считать каждую обнаруженную связь прямым причинным эффектом курения».
 
-## Planned evidence fields
+### Системы и области
 
-For every claim:
+Систематический обзор и мета-анализ 2025 года включил 25 VBM-исследований (1 249 участников с tobacco use disorder и 1 874 контроля) и 35 rs-fMRI-исследований (1 436 и 1 550 соответственно). Авторы сообщили о структурных и функциональных различиях, в том числе в областях, связанных с префронтальной корой, передней поясной корой, таламусом и другими регионами, а также об изменениях сетей default mode, executive control и salience. При этом сами авторы отмечают неоднородность и воспроизводимость отдельных результатов как проблему поля. citeturn0search2turn0search10
 
-- exposure definition;
-- tobacco product;
-- smoking intensity/duration;
-- population;
-- age;
-- sex where relevant;
-- outcome;
-- study design;
-- confounders;
-- effect estimate;
-- causality;
-- reversibility;
-- limitations;
-- what the study does not prove;
-- source.
+### Электрическая активность
 
-## Future interactive scene
+Систематический обзор ЭЭГ 2025 года собрал исследования хронического курения и отметил, что изменения электрической активности мозга изучаются неоднородно; направление и локализация результатов требуют осторожной интерпретации. Поэтому в атласе EEG не должен превращаться в простую метку «мозг повреждён». citeturn0search3turn0search5
 
-The silhouette can reveal:
+## 3. Когнитивные функции
 
-**BRAIN → LUNGS → HEART/VESSELS → REPRODUCTIVE SYSTEM → ORAL CAVITY → OTHER SYSTEMS**
+Когнитивный слой должен быть разделён на:
 
-The animation should remain a navigation metaphor. The evidence panel is authoritative within the atlas.
+- внимание;
+- рабочую память;
+- исполнительный контроль;
+- когнитивную гибкость;
+- обучение;
+- память;
+- скорость обработки информации.
 
-## Pending
+Ключевой принцип: **кратковременный эффект никотина и долгосрочные последствия табачной зависимости — разные вопросы**.
 
-This section will be populated after the author's smoking research material is supplied and the evidence is independently checked.
+У зависимых курильщиков часть субъективного «улучшения концентрации» после сигареты может отражать уменьшение симптомов никотиновой абстиненции. Это нельзя автоматически интерпретировать как чистое повышение когнитивных возможностей относительно исходного уровня.
+
+## 4. Креативность
+
+Этот раздел должен быть особенно осторожным.
+
+Существуют исследования и обзоры, обсуждающие связь стимуляторов, включая никотин, с отдельными этапами творческого процесса. Обзор 2015 года указывает, что стимуляторы могут быть связаны с этапами оценки и разработки идей; автор обсуждает возможное усиление конвергентного мышления одновременно с возможным снижением дивергентного мышления. Это не является доказательством того, что курение в целом снижает или повышает творческие способности конкретного человека. citeturn0search1
+
+**Запрещённая формулировка:**
+
+> «Курение уничтожает творчество».
+
+**Допустимая:**
+
+> «Исследования дают неоднозначные данные о связи никотина с отдельными компонентами творческого процесса; доказательств того, что курение определяет творческий потенциал человека, недостаточно».
+
+### Что исключаем
+
+Тезис «курение необратимо повреждает DMN и поэтому ухудшает творчество» не должен использоваться как установленный факт. Нейровизуализационные исследования сообщают об изменениях сетей мозга, включая DMN, но это не равно доказанному необратимому разрушению сети или доказанному снижению творчества. citeturn0search2
+
+## 5. Обучение и развитие
+
+Для детей и подростков необходимо создавать отдельный слой, поскольку развивающийся мозг имеет другую уязвимость.
+
+WHO указывает, что никотин особенно вреден для детей, подростков и молодых людей, чьи мозговые системы продолжают развиваться. citeturn0search0
+
+Но атлас должен разделять:
+
+**экспозиция никотину** → **развитие мозга** → **когнитивный исход** → **образовательный результат**.
+
+Нельзя автоматически превращать статистическую связь между курением и успеваемостью в утверждение, что каждая конкретная оценка была вызвана курением.
+
+## 6. Курение и программирование
+
+На сегодняшний день нельзя делать вид, что существует достаточная специальная база по формуле:
+
+> «сигареты → качество кода программиста».
+
+Поэтому в атласе этот раздел должен быть обозначен:
+
+**DIRECT EVIDENCE: LIMITED / NOT ESTABLISHED**
+
+Можно показывать функциональную цепочку:
+
+**курение / зависимость → внимание / исполнительный контроль / когнитивная гибкость → функции, используемые при программировании**
+
+но это будет **трансляцией данных из общей когнитивной науки**, а не прямым исследованием программистов.
+
+Данные о каннабисе во время программирования не следует включать как доказательство воздействия табака или никотина: это другой фактор.
+
+## 7. Что атлас НЕ должен утверждать
+
+- «Курильщик обязательно имеет повреждение мозга».
+- «Одна сигарета необратимо уничтожает нейроны».
+- «Никотин и табачный дым действуют одинаково».
+- «Курение делает человека менее творческим».
+- «Курение делает программиста менее способным».
+- «Изменение объёма серого вещества автоматически означает потерю функции».
+- «Корреляция автоматически доказывает причинность».
+
+## 8. Что показывать на интерактивной карте
+
+**SMOKING**
+
+→ BRAIN  
+→ LUNGS  
+→ HEART / VESSELS  
+→ REPRODUCTIVE SYSTEM  
+→ ORAL CAVITY  
+→ IMMUNE SYSTEM  
+→ CANCER-RELATED OUTCOMES  
+→ OTHER SYSTEMS
+
+При выборе **BRAIN**:
+
+**STRUCTURE**  
+**FUNCTION**  
+**NETWORKS**  
+**VASCULAR**  
+**DEPENDENCE**  
+**DEVELOPMENT**  
+**RECOVERY**
+
+Для каждой карточки:
+
+**CLAIM → EVIDENCE LEVEL → CAUSALITY → POPULATION → EXPOSURE → METHOD → RESULT → LIMITATION → WHAT IT DOES NOT PROVE → SOURCE**
+
+## 9. Источники
+
+- WHO, Tobacco and nicotine, 2026.
+- Linli Z. et al., *Smoking is associated with lower brain volume and cognitive differences: A large population analysis based on the UK Biobank*, Progress in Neuro-Psychopharmacology and Biological Psychiatry, 2023, DOI: 10.1016/j.pnpbp.2022.110698.
+- Ma L. et al., *The structural and functional brain alternations in tobacco use disorder: a systematic review and meta-analysis*, Frontiers in Psychiatry, 2025, DOI: 10.3389/fpsyt.2025.1403604.
+- Taebi M. et al., *Chronic effects of tobacco smoking on electrical brain activity: A systematic review on electroencephalography studies*, Behavioural Brain Research, 2025, DOI: 10.1016/j.bbr.2025.115479.
+- Smith I., *Psychostimulants and Artistic, Musical, and Literary Creativity*, International Review of Neurobiology, 2015, DOI: 10.1016/bs.irn.2015.04.001.
+
+## 10. Методологический вывод
+
+**Курение необходимо показывать не как одну «точку вреда», а как многосистемный фактор с разными механизмами, исходами и уровнями доказательности.**
+
+Именно поэтому интерактивный силуэт человека является более точной моделью атласа, чем отдельная анимация лёгких.
