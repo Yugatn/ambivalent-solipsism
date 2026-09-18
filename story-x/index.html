@@ -21,7 +21,7 @@ p{margin:0 0 1.25em}
 .lead{font-size:20px;color:#dceae7}
 .quote{margin:32px 0;padding:20px 24px;border-left:2px solid var(--accent);background:linear-gradient(90deg,rgba(98,230,197,.075),transparent);color:#e4f8f2;font-size:20px;line-height:1.65}
 .formula{text-align:center;margin:34px 0;padding:20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font:600 15px/1.8 monospace;color:var(--accent);letter-spacing:.04em}
-.chapter-break{text-align:center;color:var(--muted);letter-spacing:.5em;margin:58px 0}
+.chapter-break{text-align:center;color:var(--muted);letter-spacing:.5em;margin:58px 0}.story-page{display:none}.story-page.active{display:block;animation:pageIn .35s ease}.page-shell{background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.012));border:1px solid var(--line);border-radius:16px;padding:42px 48px 36px;box-shadow:0 18px 60px rgba(0,0,0,.18)}.page-number{text-align:center;font:11px/1.4 monospace;letter-spacing:.2em;color:var(--muted);margin-bottom:24px}.page-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:28px}.page-nav button{border:1px solid var(--line);background:rgba(98,230,197,.045);color:var(--text);padding:11px 15px;border-radius:8px;font:600 12px monospace;cursor:pointer}.page-nav button:hover:not(:disabled){background:rgba(98,230,197,.12)}.page-nav button:disabled{opacity:.3;cursor:default}.progress{height:3px;background:rgba(255,255,255,.08);border-radius:99px;margin:0 0 28px;overflow:hidden}.progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .3s ease}.page-index{text-align:center;font:11px monospace;color:var(--muted);min-width:100px}.toc{margin:0 0 28px;padding:18px;border:1px solid var(--line);border-radius:12px;background:rgba(98,230,197,.025)}.toc-title{font:600 11px monospace;letter-spacing:.14em;color:var(--accent);margin-bottom:10px}.toc button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--muted);padding:7px 4px;cursor:pointer;font:14px Georgia,"Times New Roman",serif}.toc button:hover{color:var(--text)}@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@media(max-width:650px){.page-shell{padding:28px 20px 24px}.page-nav button{padding:10px 11px}.page-index{min-width:70px}}
 .note{font:12px/1.7 monospace;color:var(--muted);padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:30px 0}
 .nav{display:flex;gap:10px;flex-wrap:wrap;margin:34px 0}
 .nav a{color:var(--accent);border:1px solid var(--line);background:rgba(98,230,197,.035);padding:10px 14px;text-decoration:none;border-radius:7px;font:600 12px monospace}
@@ -53,7 +53,7 @@ strong{color:#f4fffc}
   if(!res.ok) throw new Error('HTTP '+res.status);
   const md=await res.text();
   root.innerHTML=renderMarkdown(md);
-  root.querySelectorAll('h2').forEach((h,i)=>{if(i>0){const b=document.createElement('div');b.className='chapter-break';b.textContent='· · ·';h.before(b)}});
+  setupPages(root);
  }catch(e){
   root.innerHTML='<div class="note">Не удалось автоматически загрузить текст главы. <a href="./probuzhdenie.md">Открыть текст напрямую</a>.</div>';
  }
@@ -82,6 +82,47 @@ function renderMarkdown(md){
   para.push(l.trim());
  }
  flushP();flushQ();return out;
+}
+function setupPages(root){
+ const children=[...root.children];
+ const sections=[];
+ let current=null;
+ children.forEach(el=>{
+  if(el.tagName==='H2'){
+   current={title:el.textContent,content:[el]};
+   sections.push(current);
+  }else if(current){current.content.push(el)}
+ });
+ if(!sections.length)return;
+ root.innerHTML='';
+ const toc=document.createElement('div');toc.className='toc';
+ toc.innerHTML='<div class="toc-title">СОДЕРЖАНИЕ · ВЫБЕРИТЕ ГЛАВУ</div>';
+ const progress=document.createElement('div');progress.className='progress';progress.innerHTML='<span></span>';
+ root.append(toc,progress);
+ const pages=[];
+ sections.forEach((s,i)=>{
+  const page=document.createElement('section');page.className='story-page'+(i===0?' active':'');
+  const shell=document.createElement('div');shell.className='page-shell';
+  const num=document.createElement('div');num.className='page-number';num.textContent='СТРАНИЦА '+(i+1)+' / '+sections.length;
+  shell.appendChild(num);
+  s.content.forEach(el=>shell.appendChild(el));
+  const nav=document.createElement('div');nav.className='page-nav';
+  const prev=document.createElement('button');prev.textContent='← Назад';prev.disabled=i===0;
+  const idx=document.createElement('div');idx.className='page-index';idx.textContent=(i+1)+' / '+sections.length;
+  const next=document.createElement('button');next.textContent=i===sections.length-1?'К началу':'Далее →'; 
+  nav.append(prev,idx,next);shell.appendChild(nav);page.appendChild(shell);root.appendChild(page);
+  pages.push(page);
+  const tb=document.createElement('button');tb.textContent=(i+1)+'. '+s.title;tb.onclick=()=>show(i);toc.appendChild(tb);
+  prev.onclick=()=>show(i-1);next.onclick=()=>show(i+1);
+ });
+ function show(i){
+  if(i<0)i=0;if(i>=pages.length)i=pages.length-1;
+  pages.forEach((p,n)=>p.classList.toggle('active',n===i));
+  progress.firstElementChild.style.width=((i+1)/pages.length*100)+'%';
+  history.replaceState(null,'','#page-'+(i+1));
+  window.scrollTo({top:0,behavior:'smooth'});
+ }
+ const match=location.hash.match(/page-(\d+)/);show(match?Number(match[1])-1:0);
 }
 </script>
 </body>
