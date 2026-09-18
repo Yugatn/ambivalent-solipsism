@@ -788,7 +788,7 @@
 
 
         /* =====================================================
-           DESCRIPTION
+           DESCRIPTION / CENTERED OVERLAY
         ===================================================== */
 
         .card {
@@ -796,59 +796,46 @@
         }
 
         .description {
-            position: absolute;
+            position: fixed;
             left: 50%;
-            top: calc(100% + 14px);
-            width: min(360px, calc(100vw - 32px));
-            max-width: calc(100vw - 32px);
-            padding: 18px 20px;
-            border-radius: 16px;
-            border: 1px solid rgba(69, 240, 195, .28);
-            background: linear-gradient(
-                145deg,
-                rgba(5, 15, 20, .985),
-                rgba(2, 8, 12, .985)
-            );
+            top: 50%;
+            width: min(560px, calc(100vw - 40px));
+            max-width: calc(100vw - 40px);
+            padding: 22px 26px;
+            border-radius: 18px;
+            border: 1px solid rgba(69, 240, 195, .30);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(5, 15, 20, .985),
+                    rgba(2, 8, 12, .985)
+                );
             box-shadow:
-                0 25px 70px rgba(0, 0, 0, .62),
-                0 0 35px rgba(69, 240, 195, .08);
+                0 30px 90px rgba(0, 0, 0, .72),
+                0 0 45px rgba(69, 240, 195, .10);
             color: #c3d3d2;
-            font-size: 13px;
-            line-height: 1.6;
+            font-size: 14px;
+            line-height: 1.65;
             text-align: center;
-            transform: translate(-50%, 8px) scale(.94);
+            transform: translate(-50%, calc(-50% + 18px)) scale(.94);
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
             transition:
-                opacity .25s ease,
-                transform .25s ease,
-                visibility .25s ease;
-            z-index: 10000;
+                opacity .22s ease,
+                transform .22s ease,
+                visibility .22s ease;
+            z-index: 100000;
         }
 
         .description::before {
             content: "";
             position: absolute;
-            left: 50%;
-            top: -5px;
-            width: 9px;
-            height: 9px;
-            transform: translateX(-50%) rotate(45deg);
-            background: #061016;
-            border-left: 1px solid rgba(69, 240, 195, .28);
-            border-top: 1px solid rgba(69, 240, 195, .28);
-        }
-
-        .card:nth-child(3n + 1) .description {
-            left: 0;
-            transform: translate(0, 8px) scale(.94);
-        }
-
-        .card:nth-child(3n) .description {
-            left: auto;
-            right: 0;
-            transform: translate(0, 8px) scale(.94);
+            inset: -12px;
+            z-index: -1;
+            border-radius: 24px;
+            background: rgba(0, 0, 0, .18);
+            filter: blur(12px);
         }
 
         .card:hover .description,
@@ -856,16 +843,7 @@
         .card:focus-visible .description {
             opacity: 1;
             visibility: visible;
-            transform: translate(-50%, 0) scale(1);
-        }
-
-        .card:nth-child(3n + 1):hover .description,
-        .card:nth-child(3n + 1).active .description,
-        .card:nth-child(3n + 1):focus-visible .description,
-        .card:nth-child(3n):hover .description,
-        .card:nth-child(3n).active .description,
-        .card:nth-child(3n):focus-visible .description {
-            transform: translate(0, 0) scale(1);
+            transform: translate(-50%, -50%) scale(1);
         }
 
         /* =====================================================
@@ -1095,53 +1073,13 @@
             ================================================ */
 
             .description {
-
-                width:
-                    calc(100vw - 24px);
-
-                max-width:
-                    calc(100vw - 24px);
-
-                padding:
-                    16px 17px;
-
+                width: calc(100vw - 28px);
+                max-width: calc(100vw - 28px);
+                padding: 17px 18px;
                 border-radius: 15px;
-
                 font-size: 12px;
-
                 line-height: 1.55;
-
-                left: 50%;
-                top: calc(100% + 10px);
-                transform: translate(-50%, 6px) scale(.94);
             }
-
-            .card:nth-child(3n + 1) .description {
-                left: 0;
-                transform: translate(0, 6px) scale(.94);
-            }
-
-            .card:nth-child(3n) .description {
-                left: auto;
-                right: 0;
-                transform: translate(0, 6px) scale(.94);
-            }
-
-            .card:hover .description,
-            .card.active .description,
-            .card:focus-visible .description {
-                transform: translate(-50%, 0) scale(1);
-            }
-
-            .card:nth-child(3n + 1):hover .description,
-            .card:nth-child(3n + 1).active .description,
-            .card:nth-child(3n + 1):focus-visible .description,
-            .card:nth-child(3n):hover .description,
-            .card:nth-child(3n).active .description,
-            .card:nth-child(3n):focus-visible .description {
-                transform: translate(0, 0) scale(1);
-            }
-
 
             .footer {
                 margin-top: 75px;
