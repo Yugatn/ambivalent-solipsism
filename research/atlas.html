@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Perception Atlas · Амбивалентный солипсизм</title>
+<style>
+:root{--bg:#020306;--fg:#f4f7f6;--muted:#8e9997;--line:rgba(255,255,255,.18);--glow:#eafff8;--accent:#9fffe0}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--fg)}body{font:15px/1.6 system-ui,sans-serif;background:radial-gradient(circle at 50% 15%,rgba(255,255,255,.05),transparent 32%),#020306}
+main{width:min(1200px,calc(100% - 32px));margin:auto;padding:30px 0 70px}a{color:inherit;text-decoration:none}.nav{display:flex;gap:18px;font:11px monospace;letter-spacing:.12em;color:var(--muted)}h1{font-size:clamp(34px,7vw,72px);font-weight:300;letter-spacing:-.04em;margin:55px 0 10px}.kicker{font:11px monospace;letter-spacing:.25em;color:var(--muted)}.lead{max-width:780px;color:var(--muted);font-size:17px}.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:35px 0}.toolbar button{background:transparent;color:var(--fg);border:1px solid var(--line);border-radius:999px;padding:9px 14px;cursor:pointer}.toolbar button[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 18px rgba(220,255,240,.12)}
+.layout{display:grid;grid-template-columns:1fr 390px;gap:24px}.panel{border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.025);padding:22px}.body{min-height:540px;position:relative;overflow:hidden}.brain{width:100%;height:500px}.region{fill:rgba(255,255,255,.015);stroke:rgba(255,255,255,.5);stroke-width:1;cursor:pointer;transition:.2s}.region:hover,.region.active{fill:rgba(220,255,240,.1);stroke:var(--glow);filter:drop-shadow(0 0 8px rgba(230,255,245,.65))}.wire{fill:none;stroke:rgba(255,255,255,.13);stroke-width:1}.node{fill:#fff;opacity:.65}.detail h2{font-size:27px;font-weight:400;margin:0 0 5px}.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 8px;margin:4px 4px 12px 0;font:10px monospace;color:var(--muted)}.detail p{color:var(--muted)}.fact{border-top:1px solid var(--line);padding:13px 0}.fact b{display:block;color:var(--fg);font-size:12px}.small{font-size:12px;color:var(--muted)}.sources{margin-top:30px}.sources a{color:var(--fg);text-decoration:underline;text-underline-offset:3px}@media(max-width:800px){.layout{grid-template-columns:1fr}.body{min-height:390px}.brain{height:390px}h1{margin-top:40px}}
+</style></head>
+<body><main>
+<nav class="nav"><a href="../">← НАЗАД</a><a href="../">⌂ AS</a><a href="./">RESEARCH</a></nav>
+<div class="kicker">PERCEPTION ATLAS // NEURO MAP</div>
+<h1>Мозг как карта восприятия</h1>
+<p class="lead">Интерактивная карта связывает область мозга, функцию, фактор воздействия и уровень доказательности. Это образовательный атлас, а не диагностический инструмент.</p>
+<div class="toolbar" aria-label="Режимы"><button data-mode="visual" aria-pressed="true">ВИЗУАЛЬНЫЙ</button><button data-mode="evidence" aria-pressed="false">ДОКАЗАТЕЛЬСТВА</button><button data-mode="quiet" aria-pressed="false">QUIET ROOM</button></div>
+<div class="layout"><section class="panel body">
+<svg class="brain" viewBox="0 0 700 500" role="img" aria-label="Схематическая интерактивная карта мозга">
+<path class="wire" d="M130 255 C100 130 190 45 330 65 C470 35 605 125 570 265 C590 375 470 445 345 420 C215 450 100 370 130 255Z"/>
+<path class="wire" d="M350 68 C320 150 330 350 345 420M150 230 C260 190 440 190 565 250M165 320 C270 285 445 290 555 330"/>
+<path class="region" data-id="pfc" d="M135 210 C125 130 195 80 275 85 L265 205 C220 215 175 230 135 210Z"/>
+<path class="region" data-id="ofc" d="M145 215 C185 215 230 210 270 205 L275 260 C220 270 175 260 145 240Z"/>
+<path class="region" data-id="acc" d="M270 120 C315 105 350 110 385 130 L375 220 C340 205 305 205 270 215Z"/>
+<ellipse class="region" data-id="hippocampus" cx="315" cy="290" rx="55" ry="27"/>
+<ellipse class="region" data-id="amygdala" cx="265" cy="325" rx="27" ry="20"/>
+<ellipse class="region" data-id="insula" cx="390" cy="260" rx="34" ry="55"/>
+<path class="region" data-id="striatum" d="M395 145 C445 135 485 160 480 205 C465 230 425 230 395 215Z"/>
+<path class="region" data-id="cerebellum" d="M470 300 C540 280 585 325 555 380 C520 420 450 390 435 350Z"/>
+<g class="node"><circle cx="205" cy="145" r="2"/><circle cx="315" cy="180" r="2"/><circle cx="400" cy="185" r="2"/><circle cx="490" cy="335" r="2"/></g>
+</svg></section><aside class="panel detail" id="detail" aria-live="polite"></aside></div>
+<section class="sources small"><strong>Метод:</strong> фактор ≠ механизм ≠ эффект ≠ доказательство. Для каждого утверждения различаются ассоциация и причинность, популяция, метод, ограничения и то, чего исследование не доказывает.
+<br><br>Источники: <a href="https://www.niaaa.nih.gov/publications/alcohol-and-brain-overview" target="_blank" rel="noopener">NIAAA · Alcohol and the Brain</a> · <a href="https://www.who.int/europe/ru/news/item/04-01-2023-no-level-of-alcohol-consumption-is-safe-for-our-health" target="_blank" rel="noopener">WHO Europe · alcohol</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/30502351/" target="_blank" rel="noopener">PubMed · tobacco smoking meta-analysis</a>.</section>
+</main>
+<script>
+const data={
+pfc:{n:"Префронтальная кора",t:["исполнительный контроль","планирование"],x:"Участвует в организации поведения, приоритизации, принятии решений и контроле импульсов. При тяжёлом хроническом употреблении алкоголя NIAAA описывает нарушения работы и структурные изменения нейронных систем.",e:"MODERATE–HIGH",c:"для тяжёлого хронического употребления — хорошо поддерживается; конкретная причинность отдельных нейровизуализационных эффектов зависит от дизайна",l:"Не означает, что любое употребление вызывает измеримое повреждение у каждого человека.",s:"NIAAA · Alcohol and the Brain"},
+ofc:{n:"Орбитофронтальная кора",t:["оценка последствий","выбор"],x:"Участвует в оценке вариантов поведения и их последствий. Исследования AUD находят различия объёма и толщины OFC; интерпретация требует учёта дизайна и сопутствующих факторов.",e:"MODERATE",c:"association",l:"Малые клинические выборки не позволяют автоматически обобщать результат на всех употребляющих алкоголь.",s:"PubMed: 37190518"},
+acc:{n:"Передняя поясная кора",t:["контроль","мониторинг конфликтов"],x:"Участвует в когнитивном контроле и мониторинге действий. Изменения толщины ACC изучались при binge drinking и AUD.",e:"MODERATE",c:"association",l:"Результат конкретной выборки не равен универсальному причинному эффекту.",s:"PubMed: 24961871"},
+hippocampus:{n:"Гиппокамп",t:["память","обучение"],x:"Ключевая структура памяти и обучения. Алкоголь может нарушать работу систем памяти; при хроническом тяжёлом употреблении описаны структурные и функциональные изменения.",e:"HIGH",c:"established for acute impairment; chronic structural effects depend on pattern",l:"Нельзя переводить популяционные эффекты в прогноз для конкретного человека.",s:"NIAAA · Alcohol and the Brain"},
+amygdala:{n:"Миндалина",t:["эмоциональная обработка","стресс"],x:"Участвует в обработке эмоционально значимой информации. Алкоголь воздействует на распределённые системы регуляции эмоций и стресса.",e:"MODERATE",c:"механизмы и функциональные эффекты изучены; индивидуальный исход вариативен",l:"Не следует сводить сложное поведение к одной структуре.",s:"NIAAA · Alcohol and the Brain"},
+insula:{n:"Островковая кора",t:["интероцепция","значимость"],x:"Связана с обработкой внутренних состояний и значимости стимулов. В исследованиях зависимостей участвует в сетях, связанных с тягой и контролем поведения.",e:"MODERATE",c:"association / network evidence",l:"Сетевая функция не означает, что островок является единственной причиной поведения.",s:"NIAAA · neuroscience"},
+striatum:{n:"Стриатум",t:["мотивация","обучение"],x:"Участвует в системах вознаграждения, мотивационного обучения и выбора действий. Алкоголь меняет работу систем вознаграждения и подкрепления.",e:"MODERATE–HIGH",c:"well-established mechanism; individual structural effects vary",l:"Нельзя делать вывод о поведении конкретного человека только по этой системе.",s:"NIAAA · neuroscience"},
+cerebellum:{n:"Мозжечок",t:["координация","равновесие"],x:"Алкоголь остро нарушает функции, связанные с равновесием и координацией; NIAAA также описывает долгосрочные изменения при тяжёлом употреблении.",e:"HIGH",c:"established for acute functional effects",l:"Острый функциональный эффект и хроническое структурное изменение — разные типы утверждений.",s:"NIAAA · Alcohol and the Brain"}
+};
+const detail=document.getElementById("detail");
+function show(id){document.querySelectorAll(".region").forEach(q=>q.classList.toggle("active",q.dataset.id===id));const d=data[id];detail.innerHTML="<h2>"+d.n+"</h2>"+d.t.map(q=>"<span class='tag'>"+q+"</span>").join("")+"<p>"+d.x+"</p><div class='fact'><b>УРОВЕНЬ ДОКАЗАТЕЛЬНОСТИ</b>"+d.e+"</div><div class='fact'><b>ПРИЧИННОСТЬ / СВЯЗЬ</b>"+d.c+"</div><div class='fact'><b>ОГРАНИЧЕНИЕ</b>"+d.l+"</div><div class='fact'><b>ИСТОЧНИК</b>"+d.s+"</div>"}
+document.querySelectorAll(".region").forEach(q=>q.addEventListener("click",()=>show(q.dataset.id)));show("pfc");
+document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-mode]").forEach(q=>q.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");document.documentElement.dataset.mode=b.dataset.mode;});
+</script></body></html>
