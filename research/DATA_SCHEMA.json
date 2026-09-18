@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Perception Atlas Evidence Record",
+  "type": "object",
+  "required": [
+    "id",
+    "factor",
+    "system",
+    "claim",
+    "evidence_level",
+    "causality",
+    "sources",
+    "last_reviewed"
+  ],
+  "properties": {
+    "id": {"type": "string"},
+    "factor": {"type": "string"},
+    "system": {"type": "string"},
+    "organ": {"type": ["string", "null"]},
+    "region": {"type": ["string", "null"]},
+    "mechanism": {"type": ["string", "null"]},
+    "function": {"type": ["string", "null"]},
+    "claim": {"type": "string"},
+    "effect": {"type": ["string", "null"]},
+    "evidence_level": {
+      "type": "string",
+      "enum": ["HIGH", "MODERATE", "LIMITED", "CONFLICTING", "INSUFFICIENT"]
+    },
+    "causality": {
+      "type": "string",
+      "enum": ["ESTABLISHED", "LIKELY", "SUGGESTIVE", "NOT_ESTABLISHED", "NOT_APPLICABLE"]
+    },
+    "population": {"type": ["string", "null"]},
+    "age": {"type": ["string", "null"]},
+    "sex": {"type": ["string", "null"]},
+    "exposure": {"type": ["string", "null"]},
+    "dose_or_duration": {"type": ["string", "null"]},
+    "outcome": {"type": ["string", "null"]},
+    "reversibility": {"type": ["string", "null"]},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "what_it_does_not_prove": {"type": "array", "items": {"type": "string"}},
+    "conflicting_evidence": {"type": "array", "items": {"type": "string"}},
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "title", "year"],
+        "properties": {
+          "type": {"type": "string"},
+          "title": {"type": "string"},
+          "authors": {"type": ["string", "null"]},
+          "year": {"type": "integer"},
+          "doi": {"type": ["string", "null"]},
+          "pubmed_id": {"type": ["string", "null"]},
+          "url": {"type": ["string", "null"]}
+        },
+        "additionalProperties": false
+      }
+    },
+    "as_interpretation": {"type": ["string", "null"]},
+    "tags": {"type": "array", "items": {"type": "string"}},
+    "last_reviewed": {"type": "string", "format": "date"}
+  },
+  "additionalProperties": false
+}
