@@ -796,10 +796,48 @@
         }
 
         .description {
+            position: absolute;
             left: 50%;
             top: calc(100% + 14px);
-            transform: translate(-50%, 8px) scale(.94);
             width: min(360px, calc(100vw - 32px));
+            max-width: calc(100vw - 32px);
+            padding: 18px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(69, 240, 195, .28);
+            background: linear-gradient(
+                145deg,
+                rgba(5, 15, 20, .985),
+                rgba(2, 8, 12, .985)
+            );
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, .62),
+                0 0 35px rgba(69, 240, 195, .08);
+            color: #c3d3d2;
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: center;
+            transform: translate(-50%, 8px) scale(.94);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition:
+                opacity .25s ease,
+                transform .25s ease,
+                visibility .25s ease;
+            z-index: 10000;
+        }
+
+        .description::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: -5px;
+            width: 9px;
+            height: 9px;
+            transform: translateX(-50%) rotate(45deg);
+            background: #061016;
+            border-left: 1px solid rgba(69, 240, 195, .28);
+            border-top: 1px solid rgba(69, 240, 195, .28);
         }
 
         .card:nth-child(3n + 1) .description {
@@ -813,112 +851,22 @@
             transform: translate(0, 8px) scale(.94);
         }
 
-        .description {
-            position: absolute;
-
-            left: 50%;
-            top: 50%;
-
-            width:
-                min(360px, calc(100vw - 32px));
-
-            max-width:
-                calc(100vw - 32px);
-
-            padding:
-                18px 20px;
-
-            border-radius: 16px;
-
-            border:
-                1px solid
-                rgba(69, 240, 195, .28);
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(5, 15, 20, .985),
-                    rgba(2, 8, 12, .985)
-                );
-
-            box-shadow:
-                0 25px 70px
-                rgba(0, 0, 0, .62),
-
-                0 0 35px
-                rgba(69, 240, 195, .08);
-
-            color:
-                #c3d3d2;
-
-            font-size: 13px;
-
-            line-height: 1.6;
-
-            text-align: center;
-
-            transform:
-                translate(-50%, 8px)
-                scale(.94);
-
-            opacity: 0;
-
-            visibility: hidden;
-
-            pointer-events: none;
-
-            transition:
-                opacity .25s ease,
-                transform .25s ease,
-                visibility .25s ease;
-
-            z-index: 10000;
-        }
-
-
-        .description::before {
-            content: "";
-
-            position: absolute;
-
-            left: 50%;
-
-            top: -5px;
-
-            width: 9px;
-
-            height: 9px;
-
-            transform:
-                translateX(-50%)
-                rotate(45deg);
-
-            background:
-                #061016;
-
-            border-left:
-                1px solid
-                rgba(69, 240, 195, .28);
-
-            border-top:
-                1px solid
-                rgba(69, 240, 195, .28);
-        }
-
-
         .card:hover .description,
         .card.active .description,
         .card:focus-visible .description {
-
             opacity: 1;
-
             visibility: visible;
-
-            transform:
-                translate(-50%, 0)
-                scale(1);
+            transform: translate(-50%, 0) scale(1);
         }
 
+        .card:nth-child(3n + 1):hover .description,
+        .card:nth-child(3n + 1).active .description,
+        .card:nth-child(3n + 1):focus-visible .description,
+        .card:nth-child(3n):hover .description,
+        .card:nth-child(3n).active .description,
+        .card:nth-child(3n):focus-visible .description {
+            transform: translate(0, 0) scale(1);
+        }
 
         /* =====================================================
            FOOTER
