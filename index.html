@@ -1112,7 +1112,34 @@
                 line-height: 1.55;
 
                 left: 50%;
-                top: 50%;
+                top: calc(100% + 10px);
+                transform: translate(-50%, 6px) scale(.94);
+            }
+
+            .card:nth-child(3n + 1) .description {
+                left: 0;
+                transform: translate(0, 6px) scale(.94);
+            }
+
+            .card:nth-child(3n) .description {
+                left: auto;
+                right: 0;
+                transform: translate(0, 6px) scale(.94);
+            }
+
+            .card:hover .description,
+            .card.active .description,
+            .card:focus-visible .description {
+                transform: translate(-50%, 0) scale(1);
+            }
+
+            .card:nth-child(3n + 1):hover .description,
+            .card:nth-child(3n + 1).active .description,
+            .card:nth-child(3n + 1):focus-visible .description,
+            .card:nth-child(3n):hover .description,
+            .card:nth-child(3n).active .description,
+            .card:nth-child(3n):focus-visible .description {
+                transform: translate(0, 0) scale(1);
             }
 
 
