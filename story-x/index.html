@@ -73,9 +73,9 @@ strong{color:#f4fffc}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function inline(s){
  s=esc(s);
- s=s.replace(/***(.+?)***/g,'<strong><em>$1</em></strong>');
- s=s.replace(/**(.+?)**/g,'<strong>$1</strong>');
- s=s.replace(/*(.+?)*/g,'<em>$1</em>');
+ s=s.replace(/\*\*\*(.+?)\*\*\*/g,'<strong><em>$1</em></strong>');
+ s=s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+ s=s.replace(/\*(.+?)\*/g,'<em>$1</em>');
  return s;
 }
 function renderMarkdown(md){
@@ -174,7 +174,7 @@ function setupPages(root){
   });
  }
  window.showStoryPage=show;
- const match=location.hash.match(/page-(d+)/);show(match?Number(match[1])-1:0);
+ const match=location.hash.match(/page-(\d+)/);show(match?Number(match[1])-1:0);
 }
 </script>
 </body>
