@@ -311,6 +311,14 @@ function renderCreatorProfile(){
  table.innerHTML=programTable+workTable;
  table.querySelectorAll(".work-open").forEach(btn=>btn.addEventListener("click",()=>selectCreatorWork(btn.dataset.workId)));
 }
+function checkChartHealth(){
+ const ids=["bars","timeline","density","wheel"];
+ const state=ids.map(id=>{const el=$("#"+id);return {id,exists:!!el,svg:!!el?.querySelector("svg"),error:!!el?.querySelector(".chart-error")};});
+ const failed=state.filter(x=>!x.exists||!x.svg||x.error);
+ const host=$("#chartHealth");
+ if(host) host.innerHTML=failed.length?'<span class="bad">Визуализация: '+failed.length+'/'+ids.length+' блоков требуют проверки.</span>':'<span class="good">Визуализация: 4/4 диаграммы построены.</span>';
+ return state;
+}
 function render(){
  const m=metrics();
  const area=selectedSet.size?[...selectedSet]:(selected==="ALL"?C:[selected]);
@@ -336,7 +344,7 @@ function render(){
  });
  renderChart("timeline",()=>drawTimeline()); const tl=$("#timeline"); if(tl) tl.querySelectorAll("[data-event-id]").forEach(el=>{el.addEventListener("click",()=>selectEvent(el.getAttribute("data-event-id")));el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();renderEvidenceTrace(el.getAttribute("data-event-id"));}});});
  renderChart("density",()=>drawDensity());
- renderChart("wheel",()=>drawWheel(m)); const wh=$("#wheel"); if(wh) wh.querySelectorAll("[data-wheel-class]").forEach(el=>{const open=()=>{selected=el.getAttribute("data-wheel-class"); selectedSet.clear(); render();};el.addEventListener("click",open);el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();open();}});}); renderProgramGroups(m);
+ renderChart("wheel",()=>drawWheel(m)); const wh=$("#wheel"); if(wh) wh.querySelectorAll("[data-wheel-class]").forEach(el=>{const open=()=>{selected=el.getAttribute("data-wheel-class"); selectedSet.clear(); render();};el.addEventListener("click",open);el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();open();}});}); renderProgramGroups(m); requestAnimationFrame(checkChartHealth);
  const traceEl=$("#traceContent");
  if(traceEl){
   const tc=selected==="ALL"?C[0]:selected, x=m[tc], ev=data.events.filter(e=>e.class===tc&&e.status==="present");
