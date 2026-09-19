@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audit | SymbiontOS</title>
+<style>
+:root{--bg:#05080b;--fg:#eaf3f0;--muted:#9aadaa;--a:#55e6c1;--line:rgba(85,230,193,.18);--card:#0b1216}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(85,230,193,.08),transparent 34%),var(--bg);color:var(--fg);font:16px/1.7 system-ui,-apple-system,sans-serif}main{width:min(1120px,calc(100% - 30px));margin:auto;padding:24px 0 90px}nav{display:flex;gap:18px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:16px}a{color:var(--muted);text-decoration:none}a:hover{color:var(--a)}.ey{margin-top:48px;color:var(--a);font:11px monospace;letter-spacing:.18em}h1{font-size:clamp(42px,8vw,78px);line-height:.95;margin:12px 0 20px}h2{font-size:25px;font-weight:500;margin:0 0 12px}.lead{font-size:21px;color:#c9d8d5;max-width:950px}section{margin-top:26px;padding:24px;border:1px solid var(--line);border-radius:18px;background:var(--card)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:14px}.card{padding:17px;border:1px solid var(--line);border-radius:14px;background:#071014}.card h3{margin-top:0}.formula,.quote{margin:18px 0;padding:18px 20px;border-left:2px solid var(--a)}.quote{font:22px Georgia,serif}p,li{color:#bdcbc8}ul{padding-left:22px}code,pre{font-family:ui-monospace,SFMono-Regular,monospace}code{color:#bdeee0}pre{overflow:auto;padding:18px;border:1px solid var(--line);border-radius:12px;background:#030609;color:#cce7e1}table{width:100%;border-collapse:collapse}td,th{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--a);font-weight:500}footer{margin-top:60px;color:#53615f;font:10px monospace}
+</style>
+</head>
+<body><main>
+<nav><a href="../">АМБИВАЛЕНТНЫЙ СОЛИПСИЗМ</a><a href="./event-log.html">EVENT LOG</a><a href="../ai/ai-safety.html">AI SAFETY</a><a href="../cognitive-safety/">COGNITIVE SAFETY</a></nav>
+<div class="ey">SYMBIONTOS · AUDIT · VERIFIABLE SYSTEM MEMORY</div>
+<h1>Audit</h1>
+<p class="lead"><strong>Audit</strong> — контур проверяемости SymbiontOS. Его задача не в том, чтобы «оценивать людей», а в том, чтобы устанавливать, что произошло в системе, на основании каких событий, политики и полномочий было принято решение и можно ли независимо проверить соответствующий переход.</p>
+<div class="quote">Аудит должен делать действие проверяемым, а не превращать проверяемость в инструмент скрытого управления.</div>
+
+<section><h2>01 · Место Audit в SymbiontOS</h2><p>Audit связывает Event Log, IdentityAnchor, ContextReducer, PolicyEngine, Transport и Event Fabric. Он формирует доказуемую историю критических переходов и позволяет отличать наблюдение, решение, действие и результат.</p><div class="formula">Event Log → Evidence → Audit Check → Finding → Review → Recovery / Acceptance</div></section>
+
+<section><h2>02 · Цель</h2><div class="grid"><div class="card"><h3>Проверяемость</h3><p>Можно установить, что произошло и когда.</p></div><div class="card"><h3>Происхождение</h3><p>Можно установить источник события и полномочия компонента.</p></div><div class="card"><h3>Соответствие</h3><p>Можно сопоставить действие с действовавшей политикой.</p></div><div class="card"><h3>Восстановление</h3><p>Можно найти точку нарушения и восстановить систему.</p></div></div></section>
+
+<section><h2>03 · Audit не равен Surveillance</h2><p>Аудит не требует записи всего, что делает пользователь или система. В архитектуре применяется принцип минимально необходимого доказательства. Чем чувствительнее данные, тем сильнее требования к минимизации, разграничению доступа и приватности.</p></section>
+
+<section><h2>04 · Audit не равен PolicyEngine</h2><p>PolicyEngine принимает решение в соответствии с политикой. Audit проверяет, было ли решение принято и исполнено в соответствии с заданными правилами. Аудиторский контур не должен незаметно становиться вторым PolicyEngine.</p><div class="formula">Detection ≠ Decision ≠ Audit ≠ Enforcement</div></section>
+
+<section><h2>05 · Audit не равен Event Log</h2><p>Event Log сохраняет историю. Audit анализирует выбранные части истории и строит проверяемое заключение. История может существовать без аудита; аудит без достаточной истории не может гарантировать проверяемость.</p></section>
+
+<section><h2>06 · Объект аудита</h2><p>Объектом может быть действие, переход состояния, изменение политики, авторизация, reconfiguration, передача данных, восстановление, AI-решение или иной критический переход.</p></section>
+
+<section><h2>07 · Audit Record</h2><pre>{
+  audit_id,
+  subject,
+  scope,
+  evidence_refs,
+  policy_version,
+  actor,
+  authorization,
+  checks,
+  finding,
+  uncertainty,
+  timestamp,
+  auditor_version,
+  integrity
+}</pre><p>Audit Record хранит ссылку на доказательства, а не обязательно их копию.</p></section>
+
+<section><h2>08 · Evidence</h2><p>Доказательством в техническом смысле является проверяемая запись или набор записей: Event Log, подпись, состояние конфигурации, policy version, authorization record, hash, trace или результат независимой проверки.</p></section>
+
+<section><h2>09 · Доказательство не равно истине</h2><p>Аудит подтверждает соответствие наблюдаемой истории выбранным условиям. Он не превращает неполную телеметрию в абсолютную истину о внешнем мире.</p><div class="formula">Evidence of system state ≠ Complete reality</div></section>
+
+<section><h2>10 · Scope</h2><p>Каждая проверка должна иметь явную область: конкретные события, временной интервал, узлы, policy version, класс действий или переход состояния. Неограниченный аудит создаёт неясность и лишнюю обработку данных.</p></section>
+
+<section><h2>11 · Audit levels</h2><table><tr><th>Уровень</th><th>Назначение</th></tr><tr><td>LOCAL</td><td>проверка одного узла</td></tr><tr><td>COMPONENT</td><td>проверка компонента</td></tr><tr><td>TRACE</td><td>проверка причинного пути</td></tr><tr><td>SYSTEM</td><td>проверка согласованности системы</td></tr><tr><td>RECONFIGURATION</td><td>проверка изменения конфигурации</td></tr><tr><td>SECURITY</td><td>проверка критических свойств безопасности</td></tr></table></section>
+
+<section><h2>12 · Critical actions</h2><p>Особенно тщательно проверяются действия, которые меняют полномочия, конфигурацию, epoch, маршрутизацию, политику, состояние безопасности или приводят к необратимым последствиям.</p></section>
+
+<section><h2>13 · Authorization chain</h2><p>Для критического действия необходимо иметь возможность восстановить цепочку: кто запросил, какой компонент сформировал предложение, какая политика применялась, кто авторизовал, что фактически было исполнено и каким оказался результат.</p><div class="formula">Intent → Proposal → Policy → Authorization → Action → Outcome</div></section>
+
+<section><h2>14 · Версия политики</h2><p>Audit обязан фиксировать policy version. Проверка действия по текущей политике вместо политики, действовавшей в момент действия, может создать ложное несоответствие.</p></section>
+
+<section><h2>15 · Полномочия</h2><p>Нужно проверять не только наличие authorization, но и её scope, срок действия, источник, делегирование и возможность отзыва. Наличие токена само по себе не доказывает легитимность действия.</p></section>
+
+<section><h2>16 · Least privilege</h2><p>Аудит должен выявлять превышение полномочий. Если компонент имел возможность сделать больше, чем требовалось для задачи, это является архитектурным сигналом для отдельного review.</p></section>
+
+<section><h2>17 · No self-expansion</h2><p>Критический инвариант SymbiontOS: компонент не должен самостоятельно расширять собственные полномочия и затем использовать расширенные полномочия как доказательство права на действие.</p></section>
+
+<section><h2>18 · Reversibility</h2><p>Аудит учитывает обратимость действия. Необратимые или дорого обратимые действия требуют более строгого уровня авторизации и доказательства необходимости.</p></section>
+
+<section><h2>19 · Minimal intervention</h2><p>Проверка должна учитывать, было ли действие минимально необходимым для достижения разрешённой цели. Это не означает автоматическую оценку полезности человека; речь идёт о техническом соответствии заявленной цели и предоставленных полномочий.</p></section>
+
+<section><h2>20 · Неопределённость</h2><p>Результат аудита должен уметь быть неопределённым. Если доказательств недостаточно, корректный результат — <code>UNKNOWN</code>, а не искусственно выбранные PASS или FAIL.</p><div class="formula">Unknown ≠ Pass · Unknown ≠ Fail · Unknown = Insufficient evidence</div></section>
+
+<section><h2>21 · Finding states</h2><table><tr><th>Состояние</th><th>Значение</th></tr><tr><td>PASS</td><td>проверяемые условия выполнены</td></tr><tr><td>FAIL</td><td>обнаружено подтверждённое нарушение условия</td></tr><tr><td>UNKNOWN</td><td>данных недостаточно</td></tr><tr><td>CONFLICT</td><td>доказательства противоречат друг другу</td></tr><tr><td>NOT_APPLICABLE</td><td>проверка неприменима</td></tr><tr><td>REVIEW</td><td>требуется дополнительная проверка</td></tr></table></section>
+
+<section><h2>22 · Conflict of evidence</h2><p>Если два источника противоречат друг другу, Audit не должен молча выбирать один. Необходимо сохранить конфликт, происхождение обоих источников и критерии последующего разрешения.</p></section>
+
+<section><h2>23 · Integrity</h2><p>Audit Record и его evidence references должны быть защищены от незаметной модификации. Используются hashes, подписи, цепочки целостности и контроль версии аудитора.</p></section>
+
+<section><h2>24 · Независимость</h2><p>Для критических проверок желательно отделять компонент, исполняющий действие, от компонента, который проверяет его соответствие. Иначе система может сама создавать и сама подтверждать собственное доказательство.</p></section>
+
+<section><h2>25 · Reproducibility</h2><p>Результат аудита должен по возможности воспроизводиться из того же набора evidence, версии политики, версии правил и версии аудитора.</p></section>
+
+<section><h2>26 · Auditor version</h2><p>Алгоритм проверки является частью контекста. Изменение правил аудита должно иметь собственную версию, иначе невозможно объяснить, почему одинаковые данные дали разные результаты.</p></section>
+
+<section><h2>27 · Audit rule</h2><pre>Rule(
+  scope,
+  preconditions,
+  required_evidence,
+  invariant,
+  tolerance,
+  decision
+)</pre><p>Правило должно быть максимально явным. Скрытая эвристика внутри аудита снижает проверяемость.</p></section>
+
+<section><h2>28 · Invariants</h2><div class="grid"><div class="card"><h3>AUTHORIZED_ONLY</h3><p>Критическое действие имеет необходимую авторизацию.</p></div><div class="card"><h3>POLICY_MATCH</h3><p>Действие соответствует действовавшей policy version.</p></div><div class="card"><h3>PROVENANCE_VALID</h3><p>Происхождение evidence проверяемо.</p></div><div class="card"><h3>NO_SELF_EXPANSION</h3><p>Полномочия не расширены самим субъектом действия.</p></div><div class="card"><h3>TRACE_COMPLETE</h3><p>Критический переход имеет достаточный causal trace.</p></div><div class="card"><h3>UNCERTAINTY_VISIBLE</h3><p>Недостаток данных не скрывается.</p></div><div class="card"><h3>AUDIT_SEPARATION</h3><p>Проверка не подменяется исполнением.</p></div><div class="card"><h3>EXIT_AVAILABLE</h3><p>Для предусмотренных архитектурой процессов существует механизм отказа или остановки.</p></div></div></section>
+
+<section><h2>29 · Event Log integration</h2><p>Event Log является первичным историческим источником. Audit использует event_id, trace_graph, epoch, sequence, policy events, authorization events и recovery events для построения проверки.</p></section>
+
+<section><h2>30 · Audit trail</h2><p>Сам аудит также является событием. Нельзя иметь непроверяемый аудит. Создание, изменение, экспорт и закрытие критического Audit Record должны оставлять собственный trail.</p></section>
+
+<section><h2>31 · Reconfiguration audit</h2><p>Для SymbiontOS проверяется последовательность <code>RECONFIG_PREP</code>, <code>VOTING</code>, <code>COMMIT</code>, соответствие coordinator, quorum/условиям протокола, согласованность epoch и отсутствие преждевременного commit.</p></section>
+
+<section><h2>32 · Coordinator audit</h2><p>В заданной модели coordinator определяется детерминированно как узел с минимальным <code>node_id</code>. Audit должен позволять независимо проверить это условие в конкретной эпохе.</p></section>
+
+<section><h2>33 · Crash-stop audit</h2><p>Audit различает normal completion, crash-stop, timeout, missing confirmation и recovery. Отсутствие подтверждения не должно автоматически интерпретироваться как успешное завершение.</p></section>
+
+<section><h2>34 · IdentityAnchor audit</h2><p>Проверяется соответствие event provenance устойчивой идентичности узла, ключу или другой принятой форме идентификации. Ротация ключей должна иметь собственную историю.</p></section>
+
+<section><h2>35 · ContextReducer audit</h2><p>Проверяется, какая версия ContextReducer использовалась и какой диапазон событий вошёл в рабочий контекст. Это предотвращает незаметную подмену исторического материала.</p></section>
+
+<section><h2>36 · PolicyEngine audit</h2><p>Проверяется связь между входным контекстом, policy version, decision и authorization. Audit не должен повторно принимать решение вместо PolicyEngine без явного режима независимой верификации.</p></section>
+
+<section><h2>37 · Transport audit</h2><p>Проверяются отправка, доставка, подтверждение, повтор, ошибка и порядок обработки. Delivery не равен processing, а processing не равен successful outcome.</p></section>
+
+<section><h2>38 · AI audit</h2><p>Для AI необходимо разделять запрос пользователя, входной контекст, предложение модели, policy check, authorization, фактическое действие и результат. Сам факт генерации AI-текста не является доказательством его истинности или безопасности.</p></section>
+
+<section><h2>39 · Decision trace</h2><p>Decision trace показывает структурированный путь принятия решения: входы, применённые правила, необходимые проверки, выбранное состояние и evidence references. Это не означает раскрытие внутренней цепочки рассуждений модели.</p></section>
+
+<section><h2>40 · Cognitive Safety</h2><p>В общей архитектуре AS Audit может проверять технические условия когнитивной безопасности: была ли обозначена персонализация, сохранён ли механизм выхода, не скрывалась ли неопределённость, не была ли система настроена на незаметное принуждение. Он не должен оценивать «правильность» сознания человека.</p></section>
+
+<section><h2>41 · EthicalAudit</h2><p>EthicalAudit может создавать <code>ViolationSignal</code>. Audit проверяет provenance, context type, правило, версию RuleEngine и факт обработки сигнала. Detection не становится автоматически окончательным решением.</p></section>
+
+<section><h2>42 · PICCS</h2><p>Audit может проверять packet_id, trace_graph, unwrap layers, integrity checks и policy decisions. Содержимое сообщения должно оставаться отделённым от метаданных доказательства там, где это необходимо для приватности.</p></section>
+
+<section><h2>43 · DEFT</h2><p>В DEFT Audit может проверять соблюдение ограничений viability, корректность transition и наличие recovery после нарушения. Аудит не заменяет саму математическую модель.</p></section>
+
+<section><h2>44 · Privacy</h2><p>Audit должен поддерживать selective disclosure: проверяющей стороне может быть достаточно криптографического доказательства свойства без раскрытия полного содержания события. Особенно важны локальный аудит, псевдонимизация и разделение ключей доступа.</p></section>
+
+<section><h2>45 · Data minimization</h2><p>Доказательство должно быть минимально достаточным. Не следует хранить персональные данные только потому, что они потенциально могут пригодиться будущему аудиту.</p></section>
+
+<section><h2>46 · Access audit</h2><p>Чтение чувствительного Audit Record также является значимым событием. Доступ должен быть ограничен scope и оставлять проверяемый след.</p></section>
+
+<section><h2>47 · Export</h2><p>Экспорт аудита должен сохранять происхождение, версии, integrity metadata и границы выборки. Экспорт не должен создавать альтернативную «неофициальную историю».</p></section>
+
+<section><h2>48 · Retention</h2><p>Audit records имеют собственную retention policy. Для юридически или технически чувствительных записей срок хранения и правила удаления должны быть формализованы.</p></section>
+
+<section><h2>49 · Deletion and correction</h2><p>Удаление записи не должно скрывать факт её существования там, где это противоречит требованиям целостности. Исправление оформляется новой записью с указанием причины и ссылки на исходный объект.</p></section>
+
+<section><h2>50 · Failure modes</h2><div class="grid"><div class="card"><h3>Missing evidence</h3><p>результат UNKNOWN или REVIEW.</p></div><div class="card"><h3>Corrupted evidence</h3><p>нарушение integrity.</p></div><div class="card"><h3>Conflicting evidence</h3><p>CONFLICT без скрытого выбора.</p></div><div class="card"><h3>Auditor failure</h3><p>проверка не объявляется успешной автоматически.</p></div></div></section>
+
+<section><h2>51 · Fail-safe / Fail-soft</h2><p>Для критических действий отсутствие аудита может блокировать действие. Для некритических операций система может продолжать работу с маркировкой degraded audit. Политика этого поведения должна быть определена заранее.</p></section>
+
+<section><h2>52 · Recovery</h2><p>После обнаружения нарушения Audit передаёт структурированный finding в контур containment/recovery. Сам Audit не должен самовольно изменять систему.</p><div class="formula">Detect → Audit → Review → Contain → Recover → Verify</div></section>
+
+<section><h2>53 · Human review</h2><p>Для неоднозначных и высокорисковых случаев предусмотрен human review. Человек получает evidence, uncertainty, scope и варианты дальнейшего действия, а не скрытое решение системы, представленное как единственно возможное.</p></section>
+
+<section><h2>54 · Right to challenge</h2><p>Аудиторское заключение должно быть оспоримо в пределах архитектуры. Должна существовать возможность указать на ошибочное evidence, неполный контекст или неправильное применение правила.</p></section>
+
+<section><h2>55 · No Goodhart audit</h2><p>Нельзя оптимизировать систему под единственный показатель «успешного аудита». Формальное прохождение проверки не должно становиться самоцелью вместо соблюдения реальных инвариантов.</p></section>
+
+<section><h2>56 · Audit quality</h2><p>Качество аудита следует оценивать по полноте доказательств, воспроизводимости, устойчивости к подмене, способности обнаруживать нарушения и прозрачности неопределённости, а не одним числом.</p></section>
+
+<section><h2>57 · Formal model</h2><pre>Audit(Scope, Evidence, Policy, Rules)
+  → Finding
+
+Finding ∈ {
+  PASS,
+  FAIL,
+  UNKNOWN,
+  CONFLICT,
+  REVIEW,
+  NOT_APPLICABLE
+}
+
+Verify(Evidence) → {VALID, INVALID, UNKNOWN}
+Trace(EventID) → CausalSubgraph
+Check(Action, PolicyVersion, Authorization) → Finding</pre></section>
+
+<section><h2>58 · TLA+ направление</h2><p>В TLA+ можно формализовать инварианты аудита: критическое действие требует authorization; commit требует корректной фазы reconfiguration; epoch меняется только через допустимый переход; audit result не может быть PASS при отсутствии обязательного evidence; UNKNOWN не превращается автоматически в PASS.</p></section>
+
+<section><h2>59 · Минимальный API</h2><pre>audit(scope)
+verify(evidence)
+trace(event_id)
+check(action)
+get_finding(audit_id)
+challenge(audit_id, evidence)
+export(audit_id)
+close(audit_id)</pre></section>
+
+<section><h2>60 · Что Audit не делает</h2><ul><li>не определяет абсолютную истину;</li><li>не читает мысли;</li><li>не классифицирует людей по качеству сознания;</li><li>не заменяет PolicyEngine;</li><li>не является системой цензуры;</li><li>не скрывает неопределённость;</li><li>не даёт компоненту новых полномочий;</li><li>не стирает неудобную историю.</li></ul></section>
+
+<section><h2>61 · Архитектурные связи</h2><div class="grid"><div class="card"><h3>Event Fabric</h3><p>распространяет события.</p></div><div class="card"><h3>Event Log</h3><p>сохраняет историю.</p></div><div class="card"><h3>Audit</h3><p>проверяет историю.</p></div><div class="card"><h3>ContextReducer</h3><p>формирует рабочий контекст.</p></div><div class="card"><h3>PolicyEngine</h3><p>применяет политику.</p></div><div class="card"><h3>Transport</h3><p>обеспечивает коммуникацию.</p></div></div></section>
+
+<section><h2>62 · Audit как контур доверия</h2><p>Доверие к SymbiontOS не должно строиться на утверждении «система безопасна». Оно должно возникать из возможности независимо проверить критические переходы, увидеть ограничения и обнаружить несоответствие.</p><div class="formula"><strong>Trust = Verifiability + Provenance + Integrity + Uncertainty + Reviewability</strong></div></section>
+
+<section><h2>63 · Связь с общей концепцией AS</h2><p>Audit технически продолжает принцип Shared Incompleteness: модель системы никогда не должна выдавать собственную историю за полную реальность. Проверяемость повышает надёжность модели, но не отменяет остаток непознанного.</p><div class="quote">Реальность равноценна Модели и остатку непознанного.</div></section>
+
+<section><h2>64 · Центральный принцип</h2><div class="quote"><strong>Аудит нужен не для того, чтобы система считала себя правой, а для того, чтобы её действия можно было проверить, оспорить и исправить.</strong></div></section>
+
+<section><h2>65 · Итоговая архитектура</h2><div class="formula"><strong>Event → Evidence → Audit → Finding → Review → Action / Recovery → Verification</strong></div><p>Event Log хранит историю. Audit проверяет её. PolicyEngine принимает решения. Human Review сохраняет возможность оспаривания. Recovery исправляет последствия. Повторная Verification подтверждает состояние после изменения.</p></section>
+
+<footer>SYMBIONTOS · AUDIT · AMBIVALENT SOLIPSISM · ARCHITECTURAL SPECIFICATION</footer>
+</main></body></html>
