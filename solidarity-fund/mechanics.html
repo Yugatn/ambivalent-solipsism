@@ -90,7 +90,62 @@ winner_i = deterministic_random(seed, i)</pre>
 <table><tr><th>Участники</th><th>Вклад</th><th>Валовый фонд</th><th>1 000 получателей</th></tr><tr><td>10 млн</td><td>$0,10</td><td>$1 млн</td><td>$1 000</td></tr><tr><td>50 млн</td><td>$0,10</td><td>$5 млн</td><td>$5 000</td></tr><tr><td>100 млн</td><td>$0,10</td><td>$10 млн</td><td>$10 000</td></tr><tr><td>100 млн</td><td>$0,05</td><td>$5 млн</td><td>$5 000</td></tr><tr><td>100 млн</td><td>$0,20</td><td>$20 млн</td><td>$20 000</td></tr></table>
 <p>Эта таблица показывает чувствительность, а не прогноз участия.</p></section>
 
-<section><h2>17 · Расходы и резерв</h2>
+<section id="calculator"><h2>17 · Интерактивный калькулятор фонда</h2>
+<p>Введите параметры цикла. Калькулятор в реальном времени показывает валовый сбор, резерв и расходы, распределяемую сумму и выплату каждому из выбранного числа получателей.</p>
+<div class="card" style="padding:22px">
+<div class="grid">
+<label><strong>Участники</strong><input id="sfParticipants" type="number" min="1" step="1" value="100000000" style="width:100%;margin-top:7px;padding:11px;border-radius:9px;border:1px solid var(--line);background:#020507;color:var(--text);font:inherit"></label>
+<label><strong>Вклад на участника</strong><input id="sfContribution" type="number" min="0" step="0.01" value="0.10" style="width:100%;margin-top:7px;padding:11px;border-radius:9px;border:1px solid var(--line);background:#020507;color:var(--text);font:inherit"></label>
+<label><strong>Получателей</strong><input id="sfRecipients" type="number" min="1" step="1" value="1000" style="width:100%;margin-top:7px;padding:11px;border-radius:9px;border:1px solid var(--line);background:#020507;color:var(--text);font:inherit"></label>
+<label><strong>Резерв и расходы, %</strong><input id="sfReserve" type="number" min="0" max="100" step="0.1" value="10" style="width:100%;margin-top:7px;padding:11px;border-radius:9px;border:1px solid var(--line);background:#020507;color:var(--text);font:inherit"></label>
+</div>
+<div id="sfWarning" class="note" style="display:none;margin-top:16px"></div>
+<div class="grid" style="margin-top:16px">
+<div class="card"><h3>Валовый сбор</h3><p id="sfGross">0,00</p></div>
+<div class="card"><h3>Резерв и расходы</h3><p id="sfCosts">0,00</p></div>
+<div class="card"><h3>Распределяется</h3><p id="sfNet">0,00</p></div>
+<div class="card"><h3>Выплата одному</h3><p id="sfPayout">0,00</p></div>
+</div>
+<p class="small">Расчёт нейтрален к валюте: число 0,10 означает 0,10 выбранной расчётной единицы. Комиссии и реальные расходы следует уточнять отдельно. При полном финансировании и 10% резерве/расходах пример 100 млн × 0,10 даёт 9 млн распределяемого ресурса и 9 000 на каждого из 1 000 получателей.</p>
+</div>
+<script>
+(function(){
+  const ids=['sfParticipants','sfContribution','sfRecipients','sfReserve'];
+  const el=id=>document.getElementById(id);
+  const fmt=n=>new Intl.NumberFormat('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n);
+  function calc(){
+    const participants=Number(el('sfParticipants').value);
+    const contribution=Number(el('sfContribution').value);
+    const recipients=Number(el('sfRecipients').value);
+    const reserve=Number(el('sfReserve').value);
+    const warning=el('sfWarning');
+    warning.style.display='none';
+    if(!Number.isFinite(participants)||participants<1||!Number.isFinite(contribution)||contribution<0||!Number.isFinite(recipients)||recipients<1||!Number.isFinite(reserve)||reserve<0||reserve>100){
+      warning.textContent='Проверьте значения: участники и получатели должны быть больше нуля, вклад не может быть отрицательным, резерв и расходы должны находиться в диапазоне от 0 до 100%.';
+      warning.style.display='block';
+      ['sfGross','sfCosts','sfNet','sfPayout'].forEach(id=>el(id).textContent='0,00');
+      return;
+    }
+    const gross=participants*contribution;
+    const costs=gross*reserve/100;
+    const net=Math.max(0,gross-costs);
+    const payout=net/recipients;
+    el('sfGross').textContent=fmt(gross);
+    el('sfCosts').textContent=fmt(costs);
+    el('sfNet').textContent=fmt(net);
+    el('sfPayout').textContent=fmt(payout);
+    if(recipients>participants){
+      warning.textContent='Получателей больше, чем участников. Для модели «один субъект — один шанс» число получателей не должно превышать число участников.';
+      warning.style.display='block';
+    }
+  }
+  ids.forEach(id=>el(id).addEventListener('input',calc));
+  calc();
+})();
+</script>
+</section>
+
+<section><h2>18 · Расходы и резерв</h2>
 <div class="formula">Net = Gross − PaymentCosts − Operations − Compliance − Reserve</div>
 <p>Резерв нужен для возвратов, колебаний поступлений, технических сбоев, спорных транзакций и выполнения уже подтверждённых обязательств.</p>
 <p>Доля резерва должна быть отдельным параметром программы и публиковаться до начала цикла.</p></section>
