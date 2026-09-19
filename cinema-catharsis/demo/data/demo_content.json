@@ -4,7 +4,9 @@
     "title": "Demo Film — Synthetic Work",
     "duration_seconds": 5880,
     "data_status": "illustrative",
-    "analysis_version": "demo-0.5"
+    "analysis_version": "demo-0.5",
+    "scene_count": 18,
+    "shot_count": 54
   },
   "ontology": {
     "classes": {
@@ -594,6 +596,162 @@
       "annotation",
       "sampling",
       "aggregation"
+    ]
+  },
+  "analysis_parameters": {
+    "C_min": 0.95,
+    "perceptual_min_ms": 120,
+    "perceptual_window_reference_ms": [
+      120,
+      240
+    ],
+    "perceptual_parameter_status": "assumption",
+    "note": "Нет универсального минимального времени психофизиологического отклика для всех задач восприятия. 120 ms используется здесь как демонстрационное нижнее окно для маркировки сверхкратких событий; чувствительность проверяется диапазоном 120–240 ms."
+  },
+  "scenes": [
+    {
+      "id": "S01",
+      "start": 0,
+      "end": 320,
+      "shot_count": 3
+    },
+    {
+      "id": "S02",
+      "start": 320,
+      "end": 640,
+      "shot_count": 3
+    },
+    {
+      "id": "S03",
+      "start": 640,
+      "end": 960,
+      "shot_count": 3
+    },
+    {
+      "id": "S04",
+      "start": 960,
+      "end": 1280,
+      "shot_count": 3
+    },
+    {
+      "id": "S05",
+      "start": 1280,
+      "end": 1600,
+      "shot_count": 3
+    },
+    {
+      "id": "S06",
+      "start": 1600,
+      "end": 1920,
+      "shot_count": 3
+    },
+    {
+      "id": "S07",
+      "start": 1920,
+      "end": 2240,
+      "shot_count": 3
+    },
+    {
+      "id": "S08",
+      "start": 2240,
+      "end": 2560,
+      "shot_count": 3
+    },
+    {
+      "id": "S09",
+      "start": 2560,
+      "end": 2880,
+      "shot_count": 3
+    },
+    {
+      "id": "S10",
+      "start": 2880,
+      "end": 3200,
+      "shot_count": 3
+    },
+    {
+      "id": "S11",
+      "start": 3200,
+      "end": 3520,
+      "shot_count": 3
+    },
+    {
+      "id": "S12",
+      "start": 3520,
+      "end": 3840,
+      "shot_count": 3
+    },
+    {
+      "id": "S13",
+      "start": 3840,
+      "end": 4160,
+      "shot_count": 3
+    },
+    {
+      "id": "S14",
+      "start": 4160,
+      "end": 4480,
+      "shot_count": 3
+    },
+    {
+      "id": "S15",
+      "start": 4480,
+      "end": 4800,
+      "shot_count": 3
+    },
+    {
+      "id": "S16",
+      "start": 4800,
+      "end": 5120,
+      "shot_count": 3
+    },
+    {
+      "id": "S17",
+      "start": 5120,
+      "end": 5440,
+      "shot_count": 3
+    },
+    {
+      "id": "S18",
+      "start": 5440,
+      "end": 5760,
+      "shot_count": 3
+    }
+  ],
+  "destructive_programs": {
+    "status": "illustrative_taxonomy",
+    "definitions": {
+      "C2": "Агрессивные действия",
+      "C3": "Рискованное поведение",
+      "C8": "Конфликт"
+    },
+    "note": "В демо это операциональная демонстрационная группировка, а не утверждение о вредности."
+  },
+  "psychological_attitudes": {
+    "status": "interpretation_layer",
+    "note": "Это отдельный L4-слой. Он не вычисляется из screen_time_share и не является утверждением о воздействии на зрителя.",
+    "items": [
+      {
+        "id": "PA1",
+        "label": "нормализация поведения",
+        "basis": "повторяемость наблюдаемого поведения в контексте",
+        "confidence": 0.62,
+        "status": "hypothesis"
+      },
+      {
+        "id": "PA2",
+        "label": "моральная неоднозначность",
+        "basis": "сосуществование наблюдаемых положительных и отрицательных последствий",
+        "confidence": 0.54,
+        "status": "hypothesis"
+      },
+      {
+        "id": "PA3",
+        "label": "социальное одобрение",
+        "basis": "наблюдаемая реакция персонажей; требует ручной верификации",
+        "confidence": 0.41,
+        "status": "ambiguous"
+      }
     ]
   }
 }
