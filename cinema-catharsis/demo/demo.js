@@ -209,18 +209,20 @@ function renderInspector(eventId){
 }
 function selectEvent(eventId){
  const e=data.events.find(x=>String(x.id)===String(eventId)); if(!e)return;
- selected=e.class; selectedSet=new Set([e.class]); openProgramGroups.add(e.class); window.__selectedEventId=String(eventId); renderInspector(eventId);
+ selected=e.class; selectedSet=new Set([e.class]); openProgramGroups.add(e.class); window.__selectedEventId=String(eventId); window.__selectedSceneId=String(e.scene_id??e.context_observed?.scene_id??""); window.__selectedShotId=String(e.shot_id??e.context_observed?.shot_id??"");
+ renderInspector(eventId);
  render();
  requestAnimationFrame(()=>{renderEvidenceTrace(eventId);document.getElementById("calculationTrace")?.scrollIntoView({behavior:"smooth",block:"center"});});
 }
 function renderEvidenceTrace(eventId){
- const e=data.events.find(x=>String(x.id)===String(eventId)), out=$("#traceContent"); if(!out||!e)return;
- const obs=e.context_observed||e.observed_context||{}, interp=e.interpretation||e.interpreted_context||null;
- const scene=e.scene_id??e.scene??"unknown", shot=e.shot_id??e.shot??"unknown";
- const dur=Math.max(0,(e.end||0)-(e.start||0));
+ const e=data.events.find(x=>String(x.id)===String(eventId)),out=$("#traceContent");if(!out||!e)return;
+ const obs=e.context_observed||e.observed_context||{},interp=e.interpretation||e.interpreted_context||null;
+ const scene=e.scene_id??e.scene??obs.scene_id??"unknown",shot=e.shot_id??e.shot??obs.shot_id??"unknown",dur=Math.max(0,(e.end||0)-(e.start||0));
+ const sameScene=data.events.filter(x=>String(x.scene_id??x.context_observed?.scene_id??"")===String(scene)&&x.status==="present");
+ const sameShot=sameScene.filter(x=>String(x.shot_id??x.context_observed?.shot_id??"")===String(shot));
  out.innerHTML="<h3>"+esc(String(e.id))+" · "+esc(String(e.class||"unknown"))+"</h3>"+
- "<div class=\"trace-grid\"><div><b>Timestamp</b><br>"+fmt(e.start,3)+"–"+fmt(e.end,3)+" s<br>Δt = "+fmt(dur,3)+" s</div>"+
- "<div><b>Scene</b><br>"+esc(String(scene))+"</div><div><b>Shot</b><br>"+esc(String(shot))+"</div></div>"+
+ "<div class=\"trace-chain\" role=\"navigation\" aria-label=\"Цепочка доказательности\"><span class=\"trace-node active\">Scene "+esc(String(scene))+"</span><span>→</span><span class=\"trace-node active\">Shot "+esc(String(shot))+"</span><span>→</span><span class=\"trace-node active\">Event "+esc(String(e.id))+"</span><span>→</span><span class=\"trace-node\">L0–L2</span><span>→</span><span class=\"trace-node\">L3</span><span>→</span><span class=\"trace-node\">L4</span></div>"+
+ "<div class=\"trace-grid\"><div><b>Timestamp</b><br>"+fmt(e.start,3)+"–"+fmt(e.end,3)+" s<br>Δt = "+fmt(dur,3)+" s</div><div><b>Scene</b><br>"+esc(String(scene))+"<br><span class=\"muted small\">Событий в сцене: "+sameScene.length+"</span></div><div><b>Shot</b><br>"+esc(String(shot))+"<br><span class=\"muted small\">Событий в shot: "+sameShot.length+"</span></div></div>"+
  "<h4>L0–L2 · наблюдаемое событие</h4><p>"+esc(String(e.description||e.label||"Событие зафиксировано в Content Map."))+"</p>"+
  "<h4>L3 · observed_context</h4><pre class=\"trace-json\">"+esc(JSON.stringify(obs,null,2))+"</pre>"+
  "<h4>L4 · interpretation</h4><p>"+(interp?esc(typeof interp==="string"?interp:JSON.stringify(interp,null,2)):"<span class=\"muted\">Интерпретация не задана.</span>")+"</p>"+
