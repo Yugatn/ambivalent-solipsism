@@ -219,10 +219,13 @@ function renderEvidenceNavigator(e){
  const scene=e.scene_id??e.context_observed?.scene_id??"unknown";
  const shot=e.shot_id??e.context_observed?.shot_id??"unknown";
  const phrase=e.phrase??e.quote??e.transcript_fragment??null;
- const candidate=phrase?'<div class="evidence-candidate"><b>Phrase candidate</b><p>'+esc(String(phrase))+'</p><span class="muted small">candidate · source='+esc(String(e.media_source??"Content Map"))+'</span></div>':'<div class="evidence-candidate muted small">Phrase candidate: пока отсутствует. Будущий AI-агент сможет предложить реплику с timestamp и provenance; интерфейс не создаёт текст автоматически.</div>';
- out.innerHTML='<div class="evidence-path"><span>Scene '+esc(String(scene))+'</span><span>→</span><span>Shot '+esc(String(shot))+'</span><span>→</span><span>Event '+esc(String(e.id))+'</span><span>→</span><span>Phrase</span></div>'+candidate+'<div class="small muted">Timestamp: '+fmt(e.start,3)+'–'+fmt(e.end,3)+' s · confidence: '+fmt(e.confidence,3)+'</div>';
-}
-function renderEvidenceTrace(eventId){
+ const sceneEvents=data.events.filter(x=>String(x.scene_id??x.context_observed?.scene_id??"")===String(scene)&&x.status==="present");
+ const shotEvents=sceneEvents.filter(x=>String(x.shot_id??x.context_observed?.shot_id??"")===String(shot));
+ const candidates=e.evidence_candidates||[];
+ let candidateHtml=phrase?'<div class="evidence-candidate"><b>Phrase candidate</b><p>'+esc(String(phrase))+'</p><span class="muted small">candidate · source='+esc(String(e.media_source??"Content Map"))+'</span></div>':'<div class="evidence-candidate muted small">Phrase candidate: пока отсутствует.</div>';
+ if(candidates.length) candidateHtml='<div class="candidate-list">'+candidates.map((c,n)=>'<div class="evidence-candidate"><b>Candidate '+(n+1)+'</b><p>'+esc(String(c.text??c.phrase??""))+'</p><span class="muted small">'+esc(String(c.review_status??"candidate"))+' · '+esc(String(c.start??e.start))+'–'+esc(String(c.end??e.end))+' s · confidence '+fmt(c.confidence,3)+'</span></div>').join("")+'</div>';
+ out.innerHTML='<div class="evidence-path"><span>Scene '+esc(String(scene))+' · '+sceneEvents.length+' events</span><span>→</span><span>Shot '+esc(String(shot))+' · '+shotEvents.length+' events</span><span>→</span><span>Event '+esc(String(e.id))+'</span><span>→</span><span>Phrase</span></div>'+candidateHtml+'<div class="small muted">Timestamp: '+fmt(e.start,3)+'–'+fmt(e.end,3)+' s · confidence: '+fmt(e.confidence,3)+'</div>';
+}function renderEvidenceTrace(eventId){
  const e=data.events.find(x=>String(x.id)===String(eventId)),out=$("#traceContent");if(!out||!e)return;
  const obs=e.context_observed||e.observed_context||{},interp=e.interpretation||e.interpreted_context||null;
  const scene=e.scene_id??e.scene??obs.scene_id??"unknown",shot=e.shot_id??e.shot??obs.shot_id??"unknown",dur=Math.max(0,(e.end||0)-(e.start||0));
