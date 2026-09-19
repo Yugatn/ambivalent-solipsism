@@ -206,8 +206,6 @@ function render(){
  }catch(err){ $("#keyMetrics").innerHTML='<div class="card"><div class="bad">Сводный блок временно недоступен.</div><div class="small">'+esc(err.message||String(err))+'</div></div>'; }
  $("#reportOutput").hidden=true;
  setupReporting();
- const area=selectedSet.size?[...selectedSet]:(selected==="ALL"?C:[selected]);
- const areaAgg=aggregateArea(m,area);
  const cov=data.coverage.temporal;
  $("#coverageBanner").innerHTML='<div class="coverage '+(cov>=C_MIN?"coverage-ok":"coverage-low")+'">Coverage: <b>'+fmt(cov*100)+'%</b> · C_min='+(C_MIN*100)+'% · '+(cov>=C_MIN?"absence may be reported as absent":"absence must be reported as unknown")+'</div>';
  $("#metrics").innerHTML=C.map(c=>'<div class="card"><div class="muted">'+c+' · '+data.ontology.classes[c]+'</div><div class="metric">'+fmt(m[c].share*100)+'%</div><div class="small">Nω='+fmt(m[c].N,2)+' · Tω='+fmt(m[c].T,1)+'s · Sω='+fmt(m[c].share*100,2)+'%</div><div class="small">Cω='+fmt(m[c].coverage*100,2)+'% shots · ρevents='+fmt(m[c].event_density,3)+'/мин · ρtime='+fmt(m[c].covered_time_density,3)+'с/мин · Rω='+fmt(m[c].repeatability,3)+'</div><div class="small">confidence='+fmt(m[c].mean_confidence,2)+' · status=<span class="status status-'+m[c].status+'">'+m[c].status+'</span></div></div>').join("");
