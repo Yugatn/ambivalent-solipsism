@@ -23,6 +23,13 @@ p{margin:0 0 1.25em}
 .formula{text-align:center;margin:34px 0;padding:20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font:600 15px/1.8 monospace;color:var(--accent);letter-spacing:.04em}
 .chapter-break{text-align:center;color:var(--muted);letter-spacing:.5em;margin:58px 0}.story-page{display:none}.story-page.active{display:block;animation:pageIn .35s ease}.page-shell{background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.012));border:1px solid var(--line);border-radius:16px;padding:42px 48px 36px;box-shadow:0 18px 60px rgba(0,0,0,.18)}.page-number{text-align:center;font:11px/1.4 monospace;letter-spacing:.2em;color:var(--muted);margin-bottom:24px}.page-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:28px}.page-nav button{border:1px solid var(--line);background:rgba(98,230,197,.045);color:var(--text);padding:11px 15px;border-radius:8px;font:600 12px monospace;cursor:pointer}.page-nav button:hover:not(:disabled){background:rgba(98,230,197,.12)}.page-nav button:disabled{opacity:.3;cursor:default}.progress{height:3px;background:rgba(255,255,255,.08);border-radius:99px;margin:0 0 28px;overflow:hidden}.progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .3s ease}.page-index{text-align:center;font:11px monospace;color:var(--muted);min-width:100px}.toc{margin:0 0 28px;padding:18px;border:1px solid var(--line);border-radius:12px;background:rgba(98,230,197,.025)}.toc-title{font:600 11px monospace;letter-spacing:.14em;color:var(--accent);margin-bottom:10px}.toc button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--muted);padding:7px 4px;cursor:pointer;font:14px Georgia,"Times New Roman",serif}.toc button:hover{color:var(--text)}@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@media(max-width:650px){.page-shell{padding:28px 20px 24px}.page-nav button{padding:10px 11px}.page-index{min-width:70px}}
 .note{font:12px/1.7 monospace;color:var(--muted);padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:30px 0}
+
+.story-map{margin:0 0 28px;padding:20px;border:1px solid var(--line);border-radius:12px;background:rgba(98,230,197,.025)}
+.story-map-title{font:600 11px monospace;letter-spacing:.14em;color:var(--accent);margin-bottom:12px}
+.story-map-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.story-map button{border:1px solid var(--line);background:rgba(98,230,197,.035);color:var(--text);padding:11px 12px;border-radius:8px;text-align:left;font:600 12px monospace;cursor:pointer}
+.story-map button:hover{background:rgba(98,230,197,.1)}
+@media(max-width:650px){.story-map-grid{grid-template-columns:1fr}}
 .nav{display:flex;gap:10px;flex-wrap:wrap;margin:34px 0}
 .nav a{color:var(--accent);border:1px solid var(--line);background:rgba(98,230,197,.035);padding:10px 14px;text-decoration:none;border-radius:7px;font:600 12px monospace}
 .nav a:hover{background:rgba(98,230,197,.1)}
@@ -37,6 +44,19 @@ strong{color:#f4fffc}
 <h1>Сюжет Икс</h1>
 <p class="subtitle">Это чуть больше, чем просто история... Это Сюжет Икс...</p>
 <div class="meta">ТЕКУЩАЯ РЕДАКЦИЯ · ТЕКСТ ЗАГРУЖАЕТСЯ ИЗ probuzhdenie.md · ПАРАЛЛЕЛЬНЫЕ ВЕТВИ СОХРАНЯЮТСЯ</div>
+</section>
+<section class="story-map" aria-label="Карта Сюжета Икс">
+<div class="story-map-title">КАРТА СЮЖЕТА · БЫСТРЫЙ ПЕРЕХОД</div>
+<div class="story-map-grid">
+<button data-target="Пробуждение">Пробуждение</button>
+<button data-target="Юджин">Юджин</button>
+<button data-target="Мира">Мира</button>
+<button data-target="Бифуркация">Бифуркация</button>
+<button data-target="Трансперсональные путешественники">Трансперсональные путешественники</button>
+<button data-target="Боги Революции">Боги Революции</button>
+<button data-target="Близнецы">Близнецы</button>
+<button data-target="Ветви реальности">Ветви реальности</button>
+</div>
 </section>
 <article id="story" aria-live="polite"><div class="loading">Загрузка текста…</div></article>
 <div class="nav">
@@ -54,6 +74,7 @@ strong{color:#f4fffc}
   const md=await res.text();
   root.innerHTML=renderMarkdown(md);
   setupPages(root);
+  setupStoryMap();
  }catch(e){
   root.innerHTML='<div class="note">Не удалось автоматически загрузить текст главы. <a href="./probuzhdenie.md">Открыть текст напрямую</a>.</div>';
  }
@@ -82,6 +103,21 @@ function renderMarkdown(md){
   para.push(l.trim());
  }
  flushP();flushQ();return out;
+}
+function setupStoryMap(){
+ document.querySelectorAll('.story-map button').forEach(btn=>{
+  btn.onclick=()=>{
+   const target=btn.dataset.target.toLowerCase();
+   const headings=[...document.querySelectorAll('#story h2')];
+   const found=headings.find(h=>h.textContent.toLowerCase().includes(target));
+   if(!found)return;
+   const sections=[...document.querySelectorAll('#story .story-page')];
+   const page=found.closest('.story-page');
+   const index=sections.indexOf(page);
+   if(index>=0 && typeof window.showStoryPage==='function') window.showStoryPage(index);
+   else {found.scrollIntoView({behavior:'smooth',block:'start'});}
+  };
+ });
 }
 function setupPages(root){
  const children=[...root.children];
