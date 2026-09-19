@@ -123,7 +123,13 @@ function setupStoryMap(){
    if(!found)return;
    const sections=[...document.querySelectorAll('#story .story-page')];
    const index=sections.indexOf(found.closest('.story-page'));
-   if(index>=0 && typeof window.showStoryPage==='function') window.showStoryPage(index);
+   if(index>=0 && typeof window.showStoryPage==='function'){
+ window.showStoryPage(index);
+ requestAnimationFrame(()=>{
+  const active=document.querySelector('#story .story-page.active');
+  if(active) active.scrollIntoView({behavior:'smooth',block:'start'});
+ });
+}
   };
  });
 }
