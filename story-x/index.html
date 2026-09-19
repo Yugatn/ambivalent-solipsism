@@ -119,18 +119,28 @@ function setupStoryMap(){
    };
    const target=targets[btn.dataset.target];
    if(!target)return;
-   const found=[...document.querySelectorAll('#story h2')].find(h=>h.textContent.trim().toLowerCase()===target.toLowerCase());
+
+   const found=[...document.querySelectorAll('#story h2')]
+    .find(h=>h.textContent.trim().toLowerCase()===target.toLowerCase());
    if(!found)return;
+
    const sections=[...document.querySelectorAll('#story .story-page')];
    const page=found.closest('.story-page');
    const index=sections.indexOf(page);
-   if(index>=0 && typeof window.showStoryPage==='function'){
-    window.showStoryPage(index);
-    requestAnimationFrame(()=>{
-     const active=page.classList.contains('active')?page:document.querySelector('#story .story-page.active');
-     if(active) active.scrollIntoView({behavior:'smooth',block:'start'});
-    });
-   }
+
+   if(index<0 || typeof window.showStoryPage!=='function')return;
+
+   window.showStoryPage(index);
+
+   setTimeout(()=>{
+    const active=document.querySelector('#story .story-page.active');
+    if(active){
+     active.scrollIntoView({
+      behavior:'smooth',
+      block:'start'
+     });
+    }
+   },50);
   };
  });
 }
@@ -146,8 +156,14 @@ function setupPages(root){
  });
  if(!sections.length)return;
  root.innerHTML='';
- const toc=document.createElement('div');toc.className='toc';
- toc.innerHTML='<div class="toc-title">СОДЕРЖАНИЕ · ВЫБЕРИТЕ ГЛАВУ</div>';
+ const toc=document.createElement('details');
+ toc.className='toc';
+
+ const tocSummary=document.createElement('summary');
+ tocSummary.className='toc-title';
+ tocSummary.textContent='СОДЕРЖАНИЕ · ВЫБЕРИТЕ ГЛАВУ';
+
+ toc.appendChild(tocSummary);
  const progress=document.createElement('div');progress.className='progress';progress.innerHTML='<span></span>';
  root.append(toc,progress);
  const pages=[];
@@ -167,10 +183,15 @@ function setupPages(root){
   prev.onclick=()=>show(i-1);next.onclick=()=>show(i+1);
  });
  function show(i){
-  if(i<0)i=0;if(i>=pages.length)i=pages.length-1;
+  if(i<0)i=0;
+  if(i>=pages.length)i=pages.length-1;
+
   pages.forEach((p,n)=>p.classList.toggle('active',n===i));
   progress.firstElementChild.style.width=((i+1)/pages.length*100)+'%';
   history.replaceState(null,'','#page-'+(i+1));
+
+  toc.open=false;
+
   window.scrollTo({top:0,behavior:'smooth'});
  }
  window.showStoryPage=show;
