@@ -1,0 +1,47 @@
+version: 0.1.0
+angle_origin: "12 o'clock"
+direction: "clockwise"
+ordering: fixed_by_ontology
+unknown_policy: "unknown_is_not_zero"
+
+classes:
+  - code: C1
+    label: consumption
+    color: "#E88B4A"
+    programs: [alc, tob, drg, eat]
+  - code: C2
+    label: action
+    color: "#4A7FB5"
+    programs: [veh, wrk, edu]
+  - code: C3
+    label: interaction
+    color: "#D66B9A"
+    programs: [frd, hlp, frd_conflict, rom]
+  - code: C4
+    label: corporeality
+    color: "#C5504A"
+    programs: [vio, sex]
+  - code: C5
+    label: environment
+    color: "#5AA05A"
+    programs: [urb, nat]
+  - code: C6
+    label: attributes
+    color: "#8B6BB5"
+    programs: [clo, tch]
+  - code: C7
+    label: narrative
+    color: "#D9B44A"
+    programs: [suc, fai]
+  - code: C8
+    label: communication
+    color: "#4AB5B5"
+    programs: [adv, prs, thr, arg]
+  - code: C9
+    label: economics
+    color: "#8B6B4A"
+    programs: [mny, prc, lux, pov]
+  - code: C10
+    label: social_civic
+    color: "#4AB5A0"
+    programs: [friendship, love, trust, respect, care, solidarity, cooperation, mutual_aid, citizenship, civic_duty, volunteering, public_service, collective_action, social_responsibility, political_participation, political_advocacy, electoral_activity, protest, revolution, political_authority, political_opposition, political_repression, national_identity, patriotism, internationalism, local_identity, cultural_identity, equality, hierarchy, individualism, collectivism, freedom, order, tolerance, justice]
