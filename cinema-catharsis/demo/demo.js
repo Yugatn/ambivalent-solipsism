@@ -1,3 +1,27 @@
+
+const CODE_TIPS={
+ N:"Nω · число событий категории.",
+ T:"Tω · объединённая длительность интервалов категории; перекрытия внутри категории не удваиваются.",
+ S:"Sω · абсолютная screen-time share = Tω / T. Это не viewer exposure.",
+ C:"Cω · покрытие релевантных shots. Низкое покрытие ограничивает вывод об отсутствии.",
+ "ρevents":"ρevents · плотность событий: Nω / (T / 60).",
+ "ρtime":"ρtime · плотность времени: Tω / (T / 60).",
+ R:"Rω · повторяемость относительно числа narrative units / scenes.",
+ confidence:"confidence · уверенность кодирования или интерпретации; не вероятность эффекта.",
+ constructive:"Constructive · полярность кодбука, а не научный вердикт.",
+ destructive:"Destructive · полярность кодбука, не доказанный вред аудитории.",
+ unknown:"Unknown · данных недостаточно для утверждения отсутствия.",
+ ambiguous:"Ambiguous · наблюдение есть, но уверенность ниже порога.",
+ L4:"L4 · интерпретационная гипотеза. Не доказывает изменение установки у зрителя.",
+ life_orientation:"life_orientation · ось сохранения/укрепления жизни ↔ сокращения жизни.",
+ cognitive_orientation:"cognitive_orientation · ось развития мышления/творчества ↔ блокировки/пассивности."
+};
+function tip(code){const t=CODE_TIPS[code]||("Описание для "+code+" находится в текущей онтологии.");return '<button type="button" class="code-tip" data-tip="'+String(t).replace(/"/g,"&quot;")+'" aria-label="'+String(t).replace(/"/g,"&quot;")+'">?</button>'}
+function initCodeTips(){
+ document.querySelectorAll(".code-tip").forEach(el=>{el.addEventListener("click",e=>{e.stopPropagation();const open=el.classList.contains("tip-open");document.querySelectorAll(".code-tip.tip-open").forEach(x=>x.classList.remove("tip-open"));if(!open)el.classList.add("tip-open")});el.addEventListener("keydown",e=>{if(e.key==="Escape")el.classList.remove("tip-open")})});
+ document.addEventListener("click",e=>{if(!e.target.closest(".code-tip"))document.querySelectorAll(".code-tip.tip-open").forEach(x=>x.classList.remove("tip-open"))},{passive:true});
+}
+
 const C=["C1","C2","C3","C4","C5","C6","C7","C8","C9","C10"], palette=["#58d6ff","#ff647c","#ffb454","#72e0a5","#bd8cff","#67a8ff","#ff77b7","#ff8d5c","#6ee7d0","#aab4c8"];let data=null,selected="ALL",selectedSet=new Set(),metric="share",wheelMode="absolute",passport=null;
 const C_MIN=0.95, VERSIONS={ontology:"0.3.0",model:"demo-0.6",schema:"input-0.1",measurement:"CM-0.6",attitudes:"attitudes-0.1"};
 const $=s=>document.querySelector(s),fmt=(x,d=1)=>Number(x).toFixed(d);
@@ -129,7 +153,7 @@ function render(){
  $("#passport").innerHTML='<table class="table"><tr><th>Параметр</th><th>Значение</th></tr><tr><td>Ω*</td><td>'+area.join(", ")+'</td></tr><tr><td>Area union time</td><td>'+fmt(areaAgg.T,1)+' s · '+fmt(areaAgg.S*100,2)+'%</td></tr><tr><td>HΩ* normalized</td><td>'+fmt(areaAgg.diversity_index_norm,3)+'</td></tr><tr><td>Runtime</td><td>'+Math.floor(data.work.duration_seconds/60)+' мин '+data.work.duration_seconds%60+' с</td></tr><tr><td>Scenes</td><td>'+data.work.scene_count+'</td></tr><tr><td>Shots</td><td>'+data.work.shot_count+'</td></tr><tr><td>Events</td><td>'+data.events.length+'</td></tr><tr><td>Temporal coverage</td><td>'+fmt(cov*100,2)+'%</td></tr><tr><td>Modalities</td><td>vision '+fmt((data.coverage.modalities?.vision??0)*100,1)+'%, audio '+fmt((data.coverage.modalities?.audio??0)*100,1)+'%, text '+fmt((data.coverage.modalities?.text??0)*100,1)+'%</td></tr><tr><td>Data status</td><td>'+esc(data.work.data_status)+'</td></tr></table>';
  const cs=contextStats();
  renderSceneAnalysis();
- renderAttitudes();$("#contextMetrics").innerHTML='<div class="card"><div class="muted">Сцены</div><div class="metric">'+cs.sceneCount+'</div><div class="small">N_units для Rω</div></div><div class="card"><div class="muted">Планы / shots</div><div class="metric">'+cs.shotCount+'</div><div class="small">знаменатель Cω</div></div><div class="card"><div class="muted">Сверхкраткие события</div><div class="metric">'+cs.subPerceptual+'</div><div class="small">&lt; '+cs.minMs+' ms; параметрический флаг</div></div><div class="card"><div class="muted">Оси L3</div><div class="metric">'+Object.keys(cs.context).length+'</div><div class="small">наблюдаемый контекст</div></div>';
+ renderAttitudes();initCodeTips();$("#contextMetrics").innerHTML='<div class="card"><div class="muted">Сцены</div><div class="metric">'+cs.sceneCount+'</div><div class="small">N_units для Rω</div></div><div class="card"><div class="muted">Планы / shots</div><div class="metric">'+cs.shotCount+'</div><div class="small">знаменатель Cω</div></div><div class="card"><div class="muted">Сверхкраткие события</div><div class="metric">'+cs.subPerceptual+'</div><div class="small">&lt; '+cs.minMs+' ms; параметрический флаг</div></div><div class="card"><div class="muted">Оси L3</div><div class="metric">'+Object.keys(cs.context).length+'</div><div class="small">наблюдаемый контекст</div></div>';
  const dp=data.destructive_programs||{}, pa=data.psychological_attitudes||{};
  const destructiveList=Object.entries(dp.definitions||{}).map(([k,v])=>{const x=m[k]||{N:0,T:0,share:0,status:"absent"};return '<li><b>'+esc(k)+'</b> — '+esc(v)+'<br><span class="small">N='+fmt(x.N,2)+' · T='+fmt(x.T,1)+'s · S='+fmt(x.share*100,2)+'% · status='+x.status+'</span></li>';}).join("");
  const contextTable=Object.entries(cs.context).map(([k,v])=>'<tr><td>'+esc(k)+'</td><td>'+Object.entries(v).map(([x,n])=>esc(x)+': '+n).join(" · ")+'</td></tr>').join("");
