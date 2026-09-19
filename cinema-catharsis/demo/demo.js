@@ -347,18 +347,26 @@ function render(){
  const cov=data.coverage.temporal;
  $("#coverageBanner").innerHTML='<div class="coverage '+(cov>=C_MIN?"coverage-ok":"coverage-low")+'">Coverage: <b>'+fmt(cov*100)+'%</b> · C_min='+(C_MIN*100)+'% · '+(cov>=C_MIN?"absence may be reported as absent":"absence must be reported as unknown")+'</div>';
  $("#metrics").innerHTML=C.map(c=>'<div class="card"><div class="muted">'+c+' · '+data.ontology.classes[c]+'</div><div class="metric">'+fmt(m[c].share*100)+'%</div><div class="small">Nω='+fmt(m[c].N,2)+' · Tω='+fmt(m[c].T,1)+'s · Sω='+fmt(m[c].share*100,2)+'%</div><div class="small">Cω='+fmt(m[c].coverage*100,2)+'% shots · ρevents='+fmt(m[c].event_density,3)+'/мин · ρtime='+fmt(m[c].covered_time_density,3)+'с/мин · Rω='+fmt(m[c].repeatability,3)+'</div><div class="small">confidence='+fmt(m[c].mean_confidence,2)+' · status=<span class="status status-'+m[c].status+'">'+m[c].status+'</span></div></div>').join("");
- const renderChart=(id,fn)=>{const el=$("#"+id);if(!el)return;try{el.innerHTML=fn()}catch(err){el.innerHTML='<div class="chart-error"><b>Диаграмма временно недоступна</b><br><span>'+esc(err.message||String(err))+'</span></div>';}};
- renderChart("bars",()=>drawBars(m));
- // Cross-view synchronization: every category bar exposes the same selection state as Timeline/Wheel.
+ // Cross-view synchronization: charts are rendered only by renderChartsOnly().
  const bars=$("#bars");
  if(bars) bars.querySelectorAll("[data-class]").forEach(el=>{
-   const activate=()=>{const c=el.dataset.class;if(!c)return;selected=c;selectedSet=new Set([c]);controls();render();document.getElementById("selectedInspector")?.scrollIntoView({behavior:"smooth",block:"nearest"});};
+   const activate=()=>{const c=el.dataset.class;if(!c)return;selected=c;selectedSet=new Set([c]);render();document.getElementById("selectedInspector")?.scrollIntoView({behavior:"smooth",block:"nearest"});};
    el.addEventListener("click",activate);
    el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();activate();}});
  });
- renderChart("timeline",()=>drawTimeline()); const tl=$("#timeline"); if(tl) tl.querySelectorAll("[data-event-id]").forEach(el=>{el.addEventListener("click",()=>selectEvent(el.getAttribute("data-event-id")));el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();renderEvidenceTrace(el.getAttribute("data-event-id"));}});});
- renderChart("density",()=>drawDensity());
- renderChart("wheel",()=>drawWheel(m)); const wh=$("#wheel"); if(wh) wh.querySelectorAll("[data-wheel-class]").forEach(el=>{const open=()=>{selected=el.getAttribute("data-wheel-class"); selectedSet.clear(); render();};el.addEventListener("click",open);el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();open();}});}); renderProgramGroups(m); requestAnimationFrame(checkChartHealth);
+ const tl=$("#timeline");
+ if(tl) tl.querySelectorAll("[data-event-id]").forEach(el=>{
+   el.addEventListener("click",()=>selectEvent(el.getAttribute("data-event-id")));
+   el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();renderEvidenceTrace(el.getAttribute("data-event-id"));}});
+ });
+ const wh=$("#wheel");
+ if(wh) wh.querySelectorAll("[data-wheel-class]").forEach(el=>{
+   const open=()=>{selected=el.getAttribute("data-wheel-class");selectedSet=new Set([selected]);render();};
+   el.addEventListener("click",open);
+   el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();open();}});
+ });
+ renderProgramGroups(m);
+ requestAnimationFrame(checkChartHealth);
  const traceEl=$("#traceContent");
  if(traceEl){
   const tc=selected==="ALL"?C[0]:selected, x=m[tc], ev=data.events.filter(e=>e.class===tc&&e.status==="present");
