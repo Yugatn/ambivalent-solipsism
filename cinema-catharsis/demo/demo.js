@@ -197,9 +197,13 @@ function setupReporting(){
 }
 function render(){
  const m=metrics();
- const keyArea=selectedSet.size?[...selectedSet]:(selected==="ALL"?C:[selected]);
- const keyAgg=aggregateArea(m,keyArea);
- $("#keyMetrics").innerHTML='<div class="card"><div class="muted">Coverage '+tip("C")+'</div><div class="metric">'+fmt(data.coverage.temporal*100,1)+'%</div><div class="small">Ccov = Tprocessed / T · C_min='+(C_MIN*100)+'%</div></div><div class="card"><div class="muted">События '+tip("N")+'</div><div class="metric">'+data.events.length+'</div><div class="small">Количество L1/L2 событий в Content Map</div></div><div class="card"><div class="muted">Сцены / shots</div><div class="metric">'+data.work.scene_count+' / '+data.work.shot_count+'</div><div class="small">единицы нарративной и монтажной сегментации</div></div><div class="card"><div class="muted">Ω* union '+tip("S")+'</div><div class="metric">'+fmt(keyAgg.S*100,2)+'%</div><div class="small">объединённое время выбранной области; перекрытия не удваиваются</div></div><div class="card"><div class="muted">Средняя confidence '+tip("confidence")+'</div><div class="metric">'+fmt(C.reduce((s,c)=>s+m[c].mean_confidence,0)/C.length,2)+'</div><div class="small">уверенность кодирования/интерпретации, не вероятность эффекта</div></div><div class="card"><div class="muted">Data status</div><div class="metric">'+esc(data.work.data_status||"unknown")+'</div><div class="small">Synthetic demo ≠ audience study</div></div>'
+ const area=selectedSet.size?[...selectedSet]:(selected==="ALL"?C:[selected]);
+ const areaAgg=aggregateArea(m,area);
+ // Charts must render independently from optional dashboard/report UI.
+ try{
+  const keyArea=area, keyAgg=areaAgg;
+  $("#keyMetrics").innerHTML='<div class="card"><div class="muted">Coverage '+tip("C")+'</div><div class="metric">'+fmt(data.coverage.temporal*100,1)+'%</div><div class="small">Ccov = Tprocessed / T · C_min='+(C_MIN*100)+'%</div></div><div class="card"><div class="muted">События '+tip("N")+'</div><div class="metric">'+data.events.length+'</div><div class="small">Количество L1/L2 событий в Content Map</div></div><div class="card"><div class="muted">Сцены / shots</div><div class="metric">'+data.work.scene_count+' / '+data.work.shot_count+'</div><div class="small">единицы нарративной и монтажной сегментации</div></div><div class="card"><div class="muted">Ω* union '+tip("S")+'</div><div class="metric">'+fmt(keyAgg.S*100,2)+'%</div><div class="small">'+keyArea.join(", ")+' · объединённое время; перекрытия не удваиваются</div></div><div class="card"><div class="muted">Средняя confidence '+tip("confidence")+'</div><div class="metric">'+fmt(C.reduce((s,c)=>s+m[c].mean_confidence,0)/C.length,2)+'</div><div class="small">уверенность кодирования/интерпретации, не вероятность эффекта</div></div><div class="card"><div class="muted">Data status</div><div class="metric">'+esc(data.work.data_status||"unknown")+'</div><div class="small">Synthetic demo ≠ audience study</div></div>';
+ }catch(err){ $("#keyMetrics").innerHTML='<div class="card"><div class="bad">Сводный блок временно недоступен.</div><div class="small">'+esc(err.message||String(err))+'</div></div>'; }
  $("#reportOutput").hidden=true;
  setupReporting();
  const area=selectedSet.size?[...selectedSet]:(selected==="ALL"?C:[selected]);
