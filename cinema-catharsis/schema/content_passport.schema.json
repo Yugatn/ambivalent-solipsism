@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Yugatn/ambivalent-solipsism/blob/main/cinema-catharsis/schema/content_passport.schema.json",
+  "title": "Cinema Catharsis Content Passport 3.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "content_hash",
+    "metadata",
+    "credits",
+    "content_map"
+  ],
+  "properties": {
+    "id": {
+      "type": [
+        "integer",
+        "string"
+      ]
+    },
+    "content_hash": {
+      "type": "string",
+      "minLength": 1
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "credits": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "cast": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "content_map": {
+      "type": "object",
+      "required": [
+        "versions"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "versions": {
+          "type": "object",
+          "required": [
+            "ontology",
+            "model",
+            "measurement"
+          ],
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "status": {
+          "enum": [
+            "present",
+            "absent",
+            "unknown",
+            "ambiguous",
+            "not_applicable",
+            "preliminary"
+          ]
+        },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "temporal": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 1
+            },
+            "modality": {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "completeness": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "quality": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "context_observed": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": true
+        },
+        "context_interpreted": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": true
+        },
+        "uncertainty": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": true
+        },
+        "validation": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": true
+        },
+        "provenance": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": true
+        }
+      }
+    },
+    "screen_time_sec": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "screen_time_confidence": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 1
+    }
+  }
+}
