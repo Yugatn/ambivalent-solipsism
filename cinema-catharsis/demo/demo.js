@@ -143,7 +143,7 @@ function aggregateArea(m,area){const T=data.work.duration_seconds;const cats=are
 
 function esc(s){return String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}
 function drawBars(m){const W=760,H=300,p=45,max=Math.max(...C.map(c=>m[c][metric==="share"?"share":"N"]),.001),bar=(W-70)/10-8;let svg='<svg viewBox="0 0 760 300" class="chart">';C.forEach((c,i)=>{const v=m[c][metric==="share"?"share":"N"],h=(H-70)*v/max,x=p+i*((W-70)/10),y=H-35-h;svg+=`<rect x="${x}" y="${y}" width="${bar}" height="${h}" rx="5" fill="${palette[i]}" opacity="${selected==="ALL"||selected===c?1:.25}"/><text x="${x+bar/2}" y="${H-15}" fill="#9aa7ba" font-size="12" text-anchor="middle">${c}</text><text x="${x+bar/2}" y="${Math.max(18,y-5)}" fill="#e9eef8" font-size="11" text-anchor="middle">${metric==="share"?fmt(v*100)+"%":v}</text>`});return svg+"</svg>"}
-function drawTimeline(){const W=760,H=340,p=42,T=data.work.duration_seconds,lane=25;let svg='<svg viewBox="0 0 760 340" class="chart">';data.events.forEach((e,i)=>{if(selected!=="ALL"&&e.class!==selected)return;if(e.status!=="present")return;const y=15+(i%12)*lane,x=p+(e.start/T)*(W-p-20),w=Math.max(3,(duration(e)/T)*(W-p-20));svg+=`<rect x="${x}" y="${y}" width="${w}" height="16" rx="4" fill="${palette[C.indexOf(e.class)]}"/><text x="${x+3}" y="${y+12}" font-size="9" fill="#061018">${esc(e.id)} · ${e.class}</text>`});for(let k=0;k<=6;k++){const x=p+k*(W-p-20)/6;svg+=`<line x1="${x}" y1="0" x2="${x}" y2="325" stroke="#263247"/><text x="${x}" y="338" fill="#8e9aad" font-size="10" text-anchor="middle">${Math.round(T*k/6/60)}m</text>`}return svg+"</svg>"}
+function drawTimeline(){const W=760,H=340,p=42,T=data.work.duration_seconds,lane=25;let svg='<svg viewBox="0 0 760 340" class="chart">';data.events.forEach((e,i)=>{if(selected!=="ALL"&&e.class!==selected)return;if(e.status!=="present")return;const y=15+(i%12)*lane,x=p+(e.start/T)*(W-p-20),w=Math.max(3,(duration(e)/T)*(W-p-20));svg+=`<rect data-event-id="${esc(e.id)}" tabindex="0" role="button" aria-label="Событие ${esc(e.id)}, категория ${esc(e.class)}, ${fmt(e.start,2)}–${fmt(e.end,2)} секунд" x="${x}" y="${y}" width="${w}" height="16" rx="4" fill="${palette[C.indexOf(e.class)]}"/><text x="${x+3}" y="${y+12}" font-size="9" fill="#061018">${esc(e.id)} · ${e.class}</text>`});for(let k=0;k<=6;k++){const x=p+k*(W-p-20)/6;svg+=`<line x1="${x}" y1="0" x2="${x}" y2="325" stroke="#263247"/><text x="${x}" y="338" fill="#8e9aad" font-size="10" text-anchor="middle">${Math.round(T*k/6/60)}m</text>`}return svg+"</svg>"}
 function drawDensity(){const bins=12,T=data.work.duration_seconds,b=T/bins,W=760,H=280,p=45;const counts=Array(bins).fill(0);data.events.forEach(e=>{if(e.status==="present"&&(selected==="ALL"||e.class===selected))counts[Math.min(bins-1,Math.floor(e.start/b))]++});const mx=Math.max(...counts,1),bw=(W-p-20)/bins-5;let svg='<svg viewBox="0 0 760 280" class="chart">';counts.forEach((n,i)=>{const h=190*n/mx,x=p+i*(bw+5),y=220-h;svg+=`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="4" fill="#78e6b2"/><text x="${x+bw/2}" y="${y-5}" fill="#e9eef8" font-size="11" text-anchor="middle">${fmt(n/(b/60),2)}</text>`});return svg+"</svg>"}
 function drawWheel(m){
  const cx=180,cy=180,r=42;
@@ -157,6 +157,19 @@ function drawWheel(m){
  });
  svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(r-2)+'" fill="#080b12"/><text x="'+cx+'" y="'+(cy-5)+'" fill="#e9eef8" font-size="12" text-anchor="middle">screen_time</text><text x="'+cx+'" y="'+(cy+13)+'" fill="#8e9aad" font-size="10" text-anchor="middle">share</text></svg>';
  return svg;
+}
+function renderEvidenceTrace(eventId){
+ const e=data.events.find(x=>String(x.id)===String(eventId)), out=$("#traceContent"); if(!out||!e)return;
+ const obs=e.context_observed||e.observed_context||{}, interp=e.interpretation||e.interpreted_context||null;
+ const scene=e.scene_id??e.scene??"unknown", shot=e.shot_id??e.shot??"unknown";
+ const dur=Math.max(0,(e.end||0)-(e.start||0));
+ out.innerHTML="<h3>"+esc(String(e.id))+" · "+esc(String(e.class||"unknown"))+"</h3>"+
+ "<div class=\"trace-grid\"><div><b>Timestamp</b><br>"+fmt(e.start,3)+"–"+fmt(e.end,3)+" s<br>Δt = "+fmt(dur,3)+" s</div>"+
+ "<div><b>Scene</b><br>"+esc(String(scene))+"</div><div><b>Shot</b><br>"+esc(String(shot))+"</div></div>"+
+ "<h4>L0–L2 · наблюдаемое событие</h4><p>"+esc(String(e.description||e.label||"Событие зафиксировано в Content Map."))+"</p>"+
+ "<h4>L3 · observed_context</h4><pre class=\"trace-json\">"+esc(JSON.stringify(obs,null,2))+"</pre>"+
+ "<h4>L4 · interpretation</h4><p>"+(interp?esc(typeof interp==="string"?interp:JSON.stringify(interp,null,2)):"<span class=\"muted\">Интерпретация не задана.</span>")+"</p>"+
+ "<p><b>Confidence:</b> "+fmt(e.confidence,3)+" · <b>Status:</b> "+esc(String(e.status||"unknown"))+"<br><span class=\"muted\">Confidence не является вероятностью причинного эффекта.</span></p>";
 }
 function renderStatus(){const m=metrics();const rows=C.map(c=>{const es=data.events.filter(e=>e.class===c),statuses=[...new Set(es.map(e=>e.status))];let state=m[c].status;if(statuses.includes("not_applicable")&&!es.length)state="not_applicable";return[c,state,statuses.join(", ")||"no event",m[c].mean_confidence]});$("#statusTable").innerHTML='<table class="table"><tr><th>Class</th><th>Result</th><th>Raw statuses</th><th>Confidence</th></tr>'+rows.map(r=>`<tr><td>${r[0]}</td><td><span class="status status-${r[1]}">${r[1]}</span></td><td>${esc(r[2])}</td><td>${fmt(r[3],2)}</td></tr>`).join("")+'</table>'}
 function buildReportText(m,area,areaAgg){
@@ -211,7 +224,7 @@ function render(){
  $("#metrics").innerHTML=C.map(c=>'<div class="card"><div class="muted">'+c+' · '+data.ontology.classes[c]+'</div><div class="metric">'+fmt(m[c].share*100)+'%</div><div class="small">Nω='+fmt(m[c].N,2)+' · Tω='+fmt(m[c].T,1)+'s · Sω='+fmt(m[c].share*100,2)+'%</div><div class="small">Cω='+fmt(m[c].coverage*100,2)+'% shots · ρevents='+fmt(m[c].event_density,3)+'/мин · ρtime='+fmt(m[c].covered_time_density,3)+'с/мин · Rω='+fmt(m[c].repeatability,3)+'</div><div class="small">confidence='+fmt(m[c].mean_confidence,2)+' · status=<span class="status status-'+m[c].status+'">'+m[c].status+'</span></div></div>').join("");
  const renderChart=(id,fn)=>{const el=$("#"+id);if(!el)return;try{el.innerHTML=fn()}catch(err){el.innerHTML='<div class="chart-error"><b>Диаграмма временно недоступна</b><br><span>'+esc(err.message||String(err))+'</span></div>';}};
  renderChart("bars",()=>drawBars(m));
- renderChart("timeline",()=>drawTimeline());
+ renderChart("timeline",()=>drawTimeline()); const tl=$("#timeline"); if(tl) tl.querySelectorAll("[data-event-id]").forEach(el=>{el.addEventListener("click",()=>renderEvidenceTrace(el.getAttribute("data-event-id")));el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();renderEvidenceTrace(el.getAttribute("data-event-id"));}});});
  renderChart("density",()=>drawDensity());
  renderChart("wheel",()=>drawWheel(m)); renderProgramGroups(m);
  const traceEl=$("#traceContent");
