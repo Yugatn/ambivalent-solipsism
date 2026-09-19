@@ -284,17 +284,32 @@ function populateCreatorSelect(){
  people.forEach(p=>{const o=document.createElement("option");o.value=p.person_id||p.id||p.name;o.textContent=(p.canonical_name||p.name||p.person_id)+" · "+(p.role||"");sel.appendChild(o)});
  sel.onchange=renderCreatorProfile;
 }
+function selectCreatorWork(workId){
+ window.__selectedWorkId=String(workId);
+ const people=data?.creators||data?.people||[];
+ const person=people.find(p=>String(p.person_id||p.id||p.name)===String($("#creatorSelect")?.value));
+ const w=(person?.works||[]).find(x=>String(x.work_id||x.id||x.title)===String(workId));
+ const out=$("#creatorWorkDetail"); if(!out||!w)return;
+ const currentId=String(data?.work?.id??"");
+ const loaded=currentId===String(w.work_id||w.id);
+ const events=loaded?data.events.filter(e=>!e.work_id||String(e.work_id)===currentId):[];
+ out.hidden=false;
+ out.innerHTML='<div class="work-detail-head"><div><h3>'+esc(String(w.title||w.work_id))+'</h3><div class="muted small">'+esc(String(w.year??"—"))+' · '+esc(String(w.role||"—"))+'</div></div><span class="status-pill">'+(loaded?"Content Map загружен":"Content Map не загружен")+'</span></div>'+
+ '<p class="small">'+(loaded?'Показаны события текущего Content Map. Evidence Trace и Timeline относятся к этому произведению.':'Для этого произведения в текущем демо нет отдельного Content Map. Система не подставляет данные из другого произведения.')+'</p>'+
+ (loaded?'<div class="creator-kpis"><div><span class="muted small">Событий</span><b>'+events.length+'</b></div><div><span class="muted small">Duration</span><b>'+fmt(data.work.duration_seconds,1)+' s</b></div><div><span class="muted small">Ontology</span><b>'+esc(String(data.metadata?.ontology_version??"—"))+'</b></div></div><button type="button" class="secondary" onclick="document.getElementById(\'calculationTrace\')?.scrollIntoView({behavior:\'smooth\',block:\'center\'})">Открыть Evidence Trace</button>':'<div class="muted small">Следующий этап pipeline: загрузка отдельного Content Map по work_id.</div>');
+}
 function renderCreatorProfile(){
- const sel=$("#creatorSelect"),summary=$("#creatorSummary"),table=$("#creatorTable");if(!sel||!summary||!table)return;
+ const sel=$("#creatorSelect"),summary=$("#creatorSummary"),table=$("#creatorTable"),detail=$("#creatorWorkDetail");if(!sel||!summary||!table)return;
  const people=data?.creators||data?.people||[];const id=sel.value;
- if(!id){summary.innerHTML='<div class="muted">Выберите персону после загрузки корпуса.</div>';table.innerHTML="";return;}
+ if(!id){summary.innerHTML='<div class="muted">Выберите персону после загрузки корпуса.</div>';table.innerHTML="";if(detail)detail.hidden=true;return;}
  const p=people.find(x=>String(x.person_id||x.id||x.name)===String(id));if(!p)return;
  const works=p.works||[];
  summary.innerHTML='<div class="creator-kpis"><div><span class="muted small">Известно произведений</span><b>'+esc(String(p.works_total_known??"—"))+'</b></div><div><span class="muted small">Проанализировано</span><b>'+esc(String(p.works_analyzed??works.filter(w=>w.analyzed).length))+'</b></div><div><span class="muted small">Роль</span><b>'+esc(String(p.role||"—"))+'</b></div></div>';
  const rows=Object.entries(p.program_profile||{}).map(([code,v])=>({code,...v})).sort((a,b)=>(b.screen_time_share??0)-(a.screen_time_share??0));
  const programTable='<h3>Агрегированный профиль программ</h3><div class="table-wrap"><table><thead><tr><th>Программа</th><th>Произведений</th><th>Nω</th><th>Tω, сек</th><th>Sω</th><th>Rω</th></tr></thead><tbody>'+rows.map(v=>'<tr><td><b>'+esc(v.code)+'</b></td><td>'+esc(String(v.works_present??0))+'</td><td>'+esc(String(v.event_count??0))+'</td><td>'+fmt(v.duration_sec??0,2)+'</td><td>'+fmt((v.screen_time_share??0)*100,2)+'%</td><td>'+fmt((v.recurrence??0)*100,2)+'%</td></tr>').join("")+'</tbody></table></div>';
- const workTable='<h3>Корпус произведений</h3><div class="table-wrap"><table><thead><tr><th>Произведение</th><th>Год</th><th>Роль</th><th>Анализ</th><th>Программы</th></tr></thead><tbody>'+works.map(w=>'<tr><td><b>'+esc(String(w.title||w.work_id))+'</b></td><td>'+esc(String(w.year??"—"))+'</td><td>'+esc(String(w.role||"—"))+'</td><td>'+((w.analyzed)?'<span class="good">analyzed</span>':'<span class="muted">not analyzed</span>')+'</td><td>'+esc((w.programs||[]).join(", "))+'</td></tr>').join("")+'</tbody></table></div>';
+ const workTable='<h3>Корпус произведений</h3><div class="table-wrap"><table><thead><tr><th>Произведение</th><th>Год</th><th>Роль</th><th>Анализ</th><th>Программы</th><th></th></tr></thead><tbody>'+works.map(w=>'<tr><td><b>'+esc(String(w.title||w.work_id))+'</b></td><td>'+esc(String(w.year??"—"))+'</td><td>'+esc(String(w.role||"—"))+'</td><td>'+((w.analyzed)?'<span class="good">analyzed</span>':'<span class="muted">not analyzed</span>')+'</td><td>'+esc((w.programs||[]).join(", "))+'</td><td><button type="button" class="secondary work-open" data-work-id="'+esc(w.work_id||w.id||w.title)+'">Открыть</button></td></tr>').join("")+'</tbody></table></div>';
  table.innerHTML=programTable+workTable;
+ table.querySelectorAll(".work-open").forEach(btn=>btn.addEventListener("click",()=>selectCreatorWork(btn.dataset.workId)));
 }
 function render(){
  const m=metrics();
