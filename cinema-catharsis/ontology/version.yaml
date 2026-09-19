@@ -1,0 +1,12 @@
+schema: cinema-catharsis-ontology
+version: 0.1.0
+status: draft
+semver: true
+change_policy:
+  breaking: major
+  additive: minor
+  editorial: patch
+governance:
+  proposal: RFC
+  public_review_days: 30
+  pilot_fragments_minimum: 100
