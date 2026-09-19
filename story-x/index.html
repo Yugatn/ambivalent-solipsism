@@ -107,15 +107,23 @@ function renderMarkdown(md){
 function setupStoryMap(){
  document.querySelectorAll('.story-map button').forEach(btn=>{
   btn.onclick=()=>{
-   const target=btn.dataset.target.toLowerCase();
-   const headings=[...document.querySelectorAll('#story h2')];
-   const found=headings.find(h=>h.textContent.toLowerCase().includes(target));
+   const targets={
+    'Пробуждение':'Первое пробуждение',
+    'Юджин':'Юджин',
+    'Мира':'Возвращение',
+    'Бифуркация':'Эффект бабочки',
+    'Трансперсональные путешественники':'Орден трансперсональных путешественников',
+    'Боги Революции':'Эдем. Два дерева',
+    'Близнецы':'Конструкт, двойник и архисубъект',
+    'Ветви реальности':'Один субъект — несколько траекторий'
+   };
+   const target=targets[btn.dataset.target];
+   if(!target)return;
+   const found=[...document.querySelectorAll('#story h2')].find(h=>h.textContent.trim().toLowerCase()===target.toLowerCase());
    if(!found)return;
    const sections=[...document.querySelectorAll('#story .story-page')];
-   const page=found.closest('.story-page');
-   const index=sections.indexOf(page);
+   const index=sections.indexOf(found.closest('.story-page'));
    if(index>=0 && typeof window.showStoryPage==='function') window.showStoryPage(index);
-   else {found.scrollIntoView({behavior:'smooth',block:'start'});}
   };
  });
 }
