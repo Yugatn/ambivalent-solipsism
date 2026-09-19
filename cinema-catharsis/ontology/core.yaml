@@ -1,0 +1,23 @@
+ontology:
+  id: cinema-catharsis-core
+  version: 0.1.0
+  status: draft
+  principle: Operational definitions before interpretation.
+
+classes:
+  C1: {label: consumption, description: "Consumption or use of substances/material goods."}
+  C2: {label: action, description: "Observable individual actions and activities."}
+  C3: {label: interaction, description: "Observable interactions between subjects."}
+  C4: {label: corporeality, description: "Body-related observable content."}
+  C5: {label: environment, description: "Places, settings and environmental elements."}
+  C6: {label: attributes, description: "Objects, appearance, clothing and technological attributes."}
+  C7: {label: narrative, description: "Narrative states, outcomes and structural roles."}
+  C8: {label: communication, description: "Speech, information transfer and communicative acts."}
+  C9: {label: economics, description: "Money, property, work, status and economic relations."}
+
+rules:
+  - "A class is not itself a behavioral program."
+  - "Programs may co-occur."
+  - "Every program requires an operational definition."
+  - "Ambiguous cases are annotated as unknown/uncertain, not forced into a class."
+  - "Ontology labels describe observations; they do not encode moral judgment."
