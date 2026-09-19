@@ -159,6 +159,42 @@ function drawWheel(m){
  return svg;
 }
 function renderStatus(){const m=metrics();const rows=C.map(c=>{const es=data.events.filter(e=>e.class===c),statuses=[...new Set(es.map(e=>e.status))];let state=m[c].status;if(statuses.includes("not_applicable")&&!es.length)state="not_applicable";return[c,state,statuses.join(", ")||"no event",m[c].mean_confidence]});$("#statusTable").innerHTML='<table class="table"><tr><th>Class</th><th>Result</th><th>Raw statuses</th><th>Confidence</th></tr>'+rows.map(r=>`<tr><td>${r[0]}</td><td><span class="status status-${r[1]}">${r[1]}</span></td><td>${esc(r[2])}</td><td>${fmt(r[3],2)}</td></tr>`).join("")+'</table>'}
+function buildReportText(m,area,areaAgg){
+ const lines=[];
+ lines.push("СИНЕМА КАТАРСИС — ИССЛЕДОВАТЕЛЬСКИЙ ОТЧЁТ");
+ lines.push("Произведение: "+(data.work.title||"Без названия"));
+ lines.push("Длительность: "+data.work.duration_seconds+" с");
+ lines.push("Статус данных: "+(data.work.data_status||"unknown"));
+ lines.push("");
+ lines.push("ОГРАНИЧЕНИЯ: screen_time_share ≠ viewer_exposure; контентный анализ не устанавливает audience effect или причинный вред.");
+ lines.push("");
+ lines.push("ОБЩИЕ МЕТРИКИ");
+ lines.push("Сцены: "+data.work.scene_count+"; shots: "+data.work.shot_count+"; events: "+data.events.length);
+ lines.push("Temporal coverage: "+fmt(data.coverage.temporal*100,2)+"%");
+ lines.push("C_min: "+(C_MIN*100)+"%");
+ lines.push("");
+ lines.push("КАТЕГОРИИ");
+ C.forEach(c=>{const x=m[c];lines.push(c+" | "+data.ontology.classes[c]+" | status="+x.status+" | N="+fmt(x.N,2)+" | T="+fmt(x.T,3)+" s | S="+fmt(x.share*100,3)+"% | C="+fmt(x.coverage*100,2)+"% | rho_events="+fmt(x.event_density,3)+"/min | rho_time="+fmt(x.covered_time_density,3)+" s/min | R="+fmt(x.repeatability,3)+" | confidence="+fmt(x.mean_confidence,3));});
+ lines.push("");
+ lines.push("ВЫБРАННАЯ ОБЛАСТЬ Ω*");
+ lines.push(area.join(", "));
+ lines.push("Union time: "+fmt(areaAgg.T,3)+" s; absolute share: "+fmt(areaAgg.S*100,3)+"%; normalized entropy: "+fmt(areaAgg.diversity_index_norm,4));
+ return lines.join("\\n");
+}
+function downloadBlob(content,name,type){
+ const blob=new Blob([content],{type});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function exportSpreadsheet(m){
+ const rows=[["Cinema Catharsis","Category","Label","Status","Nω","Tω (s)","Sω (%)","Cω (%)","ρevents (/min)","ρtime (s/min)","Rω","Confidence"]];
+ C.forEach(c=>{const x=m[c];rows.push(["Cinema Catharsis",c,data.ontology.classes[c],x.status,x.N,x.T,x.share*100,x.coverage*100,x.event_density,x.covered_time_density,x.repeatability,x.mean_confidence])});
+ const csv=rows.map(row=>row.map(v=>'"'+String(v??"").replaceAll('"','""')+'"').join(";")).join("\\r\\n");
+ downloadBlob("\\uFEFF"+csv,"cinema-catharsis-report.csv","text/csv;charset=utf-8");
+}
+function setupReporting(){
+ const b=$("#reportBtn"),s=$("#sheetBtn"),t=$("#reportOutput");
+ if(b)b.onclick=()=>{const m=metrics(),area=selectedSet.size?[...selectedSet]:(selected==="ALL"?C:[selected]),a=aggregateArea(m,area);t.hidden=false;t.textContent=buildReportText(m,area,a);t.focus()};
+ if(s)s.onclick=()=>exportSpreadsheet(metrics());
+}
 function render(){
  const m=metrics();
  const area=selectedSet.size?[...selectedSet]:(selected==="ALL"?C:[selected]);
