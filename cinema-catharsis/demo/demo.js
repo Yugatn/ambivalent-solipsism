@@ -211,10 +211,11 @@ function render(){
  const cov=data.coverage.temporal;
  $("#coverageBanner").innerHTML='<div class="coverage '+(cov>=C_MIN?"coverage-ok":"coverage-low")+'">Coverage: <b>'+fmt(cov*100)+'%</b> · C_min='+(C_MIN*100)+'% · '+(cov>=C_MIN?"absence may be reported as absent":"absence must be reported as unknown")+'</div>';
  $("#metrics").innerHTML=C.map(c=>'<div class="card"><div class="muted">'+c+' · '+data.ontology.classes[c]+'</div><div class="metric">'+fmt(m[c].share*100)+'%</div><div class="small">Nω='+fmt(m[c].N,2)+' · Tω='+fmt(m[c].T,1)+'s · Sω='+fmt(m[c].share*100,2)+'%</div><div class="small">Cω='+fmt(m[c].coverage*100,2)+'% shots · ρevents='+fmt(m[c].event_density,3)+'/мин · ρtime='+fmt(m[c].covered_time_density,3)+'с/мин · Rω='+fmt(m[c].repeatability,3)+'</div><div class="small">confidence='+fmt(m[c].mean_confidence,2)+' · status=<span class="status status-'+m[c].status+'">'+m[c].status+'</span></div></div>').join("");
- $("#bars").innerHTML=drawBars(m);
- $("#timeline").innerHTML=drawTimeline();
- $("#density").innerHTML=drawDensity();
- $("#wheel").innerHTML=drawWheel(m); renderProgramGroups(m);
+ const renderChart=(id,fn)=>{const el=$("#"+id);if(!el)return;try{el.innerHTML=fn()}catch(err){el.innerHTML='<div class="chart-error"><b>Диаграмма временно недоступна</b><br><span>'+esc(err.message||String(err))+'</span></div>';}};
+ renderChart("bars",()=>drawBars(m));
+ renderChart("timeline",()=>drawTimeline());
+ renderChart("density",()=>drawDensity());
+ renderChart("wheel",()=>drawWheel(m)); renderProgramGroups(m);
  document.querySelectorAll("[data-wheel-class]").forEach(p=>{const show=()=>{const c=p.dataset.wheelClass;const x=m[c];p.setAttribute("aria-label",c+" · "+fmt(x.share*100,2)+"% · N="+fmt(x.N,2)+" · T="+fmt(x.T,1)+" s · C="+fmt(x.coverage*100,1)+"% · confidence "+fmt(x.mean_confidence,2)+" · "+x.status)};p.addEventListener("focus",show);p.addEventListener("click",()=>{selectedSet=new Set([p.dataset.wheelClass]);selected=p.dataset.wheelClass;controls();render()})});
  $("#editorList").innerHTML=data.events.map((e,i)=>'<div class="editor-row"><b>'+esc(e.id)+'</b><span>'+e.class+'</span><input data-i="'+i+'" data-k="start" type="number" step="0.1" value="'+e.start+'"><input data-i="'+i+'" data-k="end" type="number" step="0.1" value="'+e.end+'"><input data-i="'+i+'" data-k="confidence" type="number" min="0" max="1" step="0.01" value="'+(e.confidence??1)+'"><button data-del="'+i+'">×</button></div>').join("");
  $("#selected").textContent=area.length===C.length?"Вся онтология":area.map(c=>c+" — "+data.ontology.classes[c]).join(", ");
