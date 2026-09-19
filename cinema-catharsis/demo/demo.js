@@ -285,17 +285,16 @@ function populateCreatorSelect(){
  sel.onchange=renderCreatorProfile;
 }
 function renderCreatorProfile(){
- const sel=$("#creatorSelect"), summary=$("#creatorSummary"), table=$("#creatorTable"); if(!sel||!summary||!table)return;
- const people=data.creators||data.people||[];
- if(!sel.options.length||sel.options.length===1){
-   people.forEach(p=>{const o=document.createElement("option");o.value=p.person_id||p.id||p.name;o.textContent=(p.canonical_name||p.name||p.person_id)+" · "+(p.role||"");sel.appendChild(o);});
- }
- const id=sel.value; if(!id){summary.innerHTML='<div class="muted">Выберите персону после загрузки корпуса.</div>';table.innerHTML="";return;}
- const p=people.find(x=>String(x.person_id||x.id||x.name)===String(id)); if(!p)return;
- const works=p.works_analyzed??p.works_total_analyzed??0,total=p.works_total_known??"—";
- summary.innerHTML='<div class="creator-kpis"><div><span class="muted small">Известно произведений</span><b>'+esc(String(total))+'</b></div><div><span class="muted small">Проанализировано</span><b>'+esc(String(works))+'</b></div><div><span class="muted small">Роль</span><b>'+esc(String(p.role||"—"))+'</b></div></div>';
- const rows=Object.entries(p.program_profile||{}).map(([code,v])=>({code,...v})).sort((a,b)=>(b.screen_time_share??b.S_p_omega??0)-(a.screen_time_share??a.S_p_omega??0));
- table.innerHTML='<div class="table-wrap"><table><thead><tr><th>Программа</th><th>Произведений</th><th>Событий N</th><th>T, сек</th><th>Sω</th><th>Rω</th></tr></thead><tbody>'+rows.map(v=>'<tr><td><b>'+esc(v.code)+'</b></td><td>'+esc(String(v.works_present??v.W_p_omega??0))+'</td><td>'+esc(String(v.event_count??v.N_p_omega??0))+'</td><td>'+fmt(v.duration_sec??v.T_p_omega??0,2)+'</td><td>'+fmt((v.screen_time_share??v.S_p_omega??0)*100,2)+'%</td><td>'+fmt((v.recurrence??v.R_p_omega??0)*100,2)+'%</td></tr>').join("")+'</tbody></table></div>';
+ const sel=$("#creatorSelect"),summary=$("#creatorSummary"),table=$("#creatorTable");if(!sel||!summary||!table)return;
+ const people=data?.creators||data?.people||[];const id=sel.value;
+ if(!id){summary.innerHTML='<div class="muted">Выберите персону после загрузки корпуса.</div>';table.innerHTML="";return;}
+ const p=people.find(x=>String(x.person_id||x.id||x.name)===String(id));if(!p)return;
+ const works=p.works||[];
+ summary.innerHTML='<div class="creator-kpis"><div><span class="muted small">Известно произведений</span><b>'+esc(String(p.works_total_known??"—"))+'</b></div><div><span class="muted small">Проанализировано</span><b>'+esc(String(p.works_analyzed??works.filter(w=>w.analyzed).length))+'</b></div><div><span class="muted small">Роль</span><b>'+esc(String(p.role||"—"))+'</b></div></div>';
+ const rows=Object.entries(p.program_profile||{}).map(([code,v])=>({code,...v})).sort((a,b)=>(b.screen_time_share??0)-(a.screen_time_share??0));
+ const programTable='<h3>Агрегированный профиль программ</h3><div class="table-wrap"><table><thead><tr><th>Программа</th><th>Произведений</th><th>Nω</th><th>Tω, сек</th><th>Sω</th><th>Rω</th></tr></thead><tbody>'+rows.map(v=>'<tr><td><b>'+esc(v.code)+'</b></td><td>'+esc(String(v.works_present??0))+'</td><td>'+esc(String(v.event_count??0))+'</td><td>'+fmt(v.duration_sec??0,2)+'</td><td>'+fmt((v.screen_time_share??0)*100,2)+'%</td><td>'+fmt((v.recurrence??0)*100,2)+'%</td></tr>').join("")+'</tbody></table></div>';
+ const workTable='<h3>Корпус произведений</h3><div class="table-wrap"><table><thead><tr><th>Произведение</th><th>Год</th><th>Роль</th><th>Анализ</th><th>Программы</th></tr></thead><tbody>'+works.map(w=>'<tr><td><b>'+esc(String(w.title||w.work_id))+'</b></td><td>'+esc(String(w.year??"—"))+'</td><td>'+esc(String(w.role||"—"))+'</td><td>'+((w.analyzed)?'<span class="good">analyzed</span>':'<span class="muted">not analyzed</span>')+'</td><td>'+esc((w.programs||[]).join(", "))+'</td></tr>').join("")+'</tbody></table></div>';
+ table.innerHTML=programTable+workTable;
 }
 function render(){
  const m=metrics();
