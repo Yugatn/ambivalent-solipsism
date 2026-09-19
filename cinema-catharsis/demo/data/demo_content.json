@@ -849,5 +849,58 @@
         "status": "ambiguous"
       }
     ]
-  }
+  },
+  "creators": [
+    {
+      "person_id": "demo-person-001",
+      "canonical_name": "Demo Creator",
+      "role": "director",
+      "works_total_known": 3,
+      "works_analyzed": 1,
+      "works": [
+        {
+          "work_id": "demo-001",
+          "title": "Demo Film — Synthetic Work",
+          "year": 2024,
+          "role": "director",
+          "analyzed": true,
+          "programs": [
+            "consumption",
+            "action",
+            "conflict",
+            "interaction",
+            "branding",
+            "risk",
+            "work",
+            "care",
+            "isolation",
+            "intimacy"
+          ]
+        }
+      ],
+      "program_profile": {
+        "consumption": {
+          "works_present": 1,
+          "event_count": 3,
+          "duration_sec": 355,
+          "screen_time_share": 0.06037414965986394,
+          "recurrence": 1
+        },
+        "action": {
+          "works_present": 1,
+          "event_count": 3,
+          "duration_sec": 225,
+          "screen_time_share": 0.03826530612244898,
+          "recurrence": 1
+        },
+        "conflict": {
+          "works_present": 1,
+          "event_count": 3,
+          "duration_sec": 280,
+          "screen_time_share": 0.047619047619047616,
+          "recurrence": 1
+        }
+      }
+    }
+  ]
 }
