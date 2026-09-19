@@ -651,3 +651,52 @@ CONTENT + EXPOSURE + RESPONSE + DESIGN + UNCERTAINTY + LIMITATIONS
 9. only then — exposure-response pilot.
 
 Это предотвращает преждевременный переход от философской гипотезы к эмпирическому утверждению.
+
+
+---
+
+## 28. v0.3.0 Epistemic Integrity Amendment
+
+### 28.1 Epistemic ladder
+
+`L0 Observation → L1 Event → L2 Ontology / Manifestation → L3 Observed Context → L4 Interpretation → L5 Causal Claim`
+
+L4 не записывается как L0–L3 факт. L5 требует отдельного causal design.
+
+### 28.2 Context separation
+
+Используются `context_observed` и `context_interpreted`. Романтизация, одобрение, осуждение и ирония не должны быть единственными L3 метками.
+
+### 28.3 Status model
+
+`present | absent | unknown | ambiguous | not_applicable`
+
+`absent ⇒ coverage.temporal ≥ C_min`.
+
+### 28.4 Coverage ≠ quality
+
+`quality` и `coverage` публикуются отдельно. Неполный охват не становится полным анализом из-за высокой confidence.
+
+### 28.5 Assumptions and sensitivity
+
+Существенные assumptions должны иметь parameter, range/tested values, results, max_delta и status. До эмпирической валидации пороги являются operational parameters, а не универсальными константами.
+
+### 28.6 Claims
+
+`Claim = <status, source, method, versions, uncertainty, validation, sensitivity, history>`. Допустимые статусы определены в `claims/README.md`.
+
+### 28.7 Evidence adequacy
+
+Для каждого вопроса фиксируются `question_type`, design, population, comparator, outcome, effect, uncertainty, limitations и adequacy_for_question. A–E может оставаться вторичной навигацией.
+
+### 28.8 Reliability ≠ validity
+
+Krippendorff's α и κ оценивают agreement/reliability, а не универсальную validity. Validation разделяет reliability, validity, coverage, calibration и drift.
+
+### 28.9 Correction Protocol
+
+Исправления идут по цепочке original → correction → corrected; исходная версия получает `superseded`.
+
+### 28.10 Core principle
+
+> Сначала увидеть. Затем измерить. Затем отделить наблюдаемое от интерпретируемого. Затем оценить неопределённость. И только после этого формулировать вывод.
