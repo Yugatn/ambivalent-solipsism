@@ -1,0 +1,27 @@
+ontology_version: 0.1.0
+programs:
+  - {code: alc, label: "Алкоголь", class: C1, definition: "Observable presence, handling, preparation, serving or consumption of an alcoholic beverage."}
+  - {code: tob, label: "Табак/никотин", class: C1, definition: "Observable tobacco/nicotine product, handling, smoking or explicit use."}
+  - {code: drg, label: "Психоактивное вещество", class: C1, definition: "Observable use, preparation, exchange or explicit identification of a psychoactive substance."}
+  - {code: eat, label: "Питание", class: C1, definition: "Observable preparation, serving or consumption of food."}
+  - {code: veh, label: "Управление транспортом", class: C2, definition: "Subject operates or controls a vehicle."}
+  - {code: wrk, label: "Работа", class: C2, definition: "Observable occupational or task-defined work activity."}
+  - {code: edu, label: "Обучение", class: C2, definition: "Observable teaching, instruction or structured learning activity."}
+  - {code: vio, label: "Физическое насилие", class: C4, definition: "Observable physical force directed at another subject with apparent attack, restraint or injury context."}
+  - {code: sex, label: "Сексуальное содержание", class: C4, definition: "Observable sexual act, sexualized bodily display or explicit sexual communication according to the codebook."}
+  - {code: frd, label: "Межличностный конфликт", class: C3, definition: "Observable disagreement, confrontation or conflict between subjects."}
+  - {code: hlp, label: "Помощь", class: C3, definition: "Observable action intended to assist another subject."}
+  - {code: adv, label: "Реклама", class: C8, definition: "Communication explicitly intended to promote a product, service, person, idea or behavior."}
+  - {code: prs, label: "Убеждение", class: C8, definition: "Communication attempting to change another subject's attitude, decision or behavior."}
+  - {code: thr, label: "Угроза", class: C8, definition: "Communication expressing or clearly implying intended harm or coercive consequence."}
+  - {code: arg, label: "Спор", class: C8, definition: "Reciprocal verbal disagreement with identifiable opposing positions."}
+  - {code: mny, label: "Деньги", class: C9, definition: "Observable money, payment, transfer or explicit monetary transaction."}
+  - {code: prc, label: "Покупка", class: C9, definition: "Observable acquisition of goods/services in exchange for payment or explicit purchase act."}
+  - {code: lux, label: "Демонстрация роскоши", class: C9, definition: "Salient representation of high-value goods or status markers."}
+  - {code: pov, label: "Материальная нехватка", class: C9, definition: "Observable material deprivation represented through living conditions, resources or inability to obtain necessities."}
+  - {code: clo, label: "Одежда/внешний атрибут", class: C6, definition: "Observable clothing, accessory or appearance attribute relevant to the scene."}
+  - {code: tch, label: "Технология", class: C6, definition: "Observable use or salient representation of a technological device/system."}
+  - {code: urb, label: "Городская среда", class: C5, definition: "Observable urban built environment."}
+  - {code: nat, label: "Природная среда", class: C5, definition: "Observable natural landscape or ecosystem."}
+  - {code: suc, label: "Успех", class: C7, definition: "Narratively explicit achievement or successful outcome."}
+  - {code: fai, label: "Неудача", class: C7, definition: "Narratively explicit failure or unsuccessful outcome."}
