@@ -209,10 +209,18 @@ function renderInspector(eventId){
 }
 function selectEvent(eventId){
  const e=data.events.find(x=>String(x.id)===String(eventId)); if(!e)return;
- selected=e.class; selectedSet=new Set([e.class]); openProgramGroups.add(e.class); window.__selectedEventId=String(eventId); window.__selectedSceneId=String(e.scene_id??e.context_observed?.scene_id??""); window.__selectedShotId=String(e.shot_id??e.context_observed?.shot_id??"");
+ selected=e.class; selectedSet=new Set([e.class]); openProgramGroups.add(e.class); window.__selectedEventId=String(eventId); window.__selectedSceneId=String(e.scene_id??e.context_observed?.scene_id??""); window.__selectedShotId=String(e.shot_id??e.context_observed?.shot_id??""); renderEvidenceNavigator(e);
  renderInspector(eventId);
  render();
  requestAnimationFrame(()=>{renderEvidenceTrace(eventId);document.getElementById("calculationTrace")?.scrollIntoView({behavior:"smooth",block:"center"});});
+}
+function renderEvidenceNavigator(e){
+ const out=$("#evidenceNavigator"); if(!out)return;
+ const scene=e.scene_id??e.context_observed?.scene_id??"unknown";
+ const shot=e.shot_id??e.context_observed?.shot_id??"unknown";
+ const phrase=e.phrase??e.quote??e.transcript_fragment??null;
+ const candidate=phrase?'<div class="evidence-candidate"><b>Phrase candidate</b><p>'+esc(String(phrase))+'</p><span class="muted small">candidate · source='+esc(String(e.media_source??"Content Map"))+'</span></div>':'<div class="evidence-candidate muted small">Phrase candidate: пока отсутствует. Будущий AI-агент сможет предложить реплику с timestamp и provenance; интерфейс не создаёт текст автоматически.</div>';
+ out.innerHTML='<div class="evidence-path"><span>Scene '+esc(String(scene))+'</span><span>→</span><span>Shot '+esc(String(shot))+'</span><span>→</span><span>Event '+esc(String(e.id))+'</span><span>→</span><span>Phrase</span></div>'+candidate+'<div class="small muted">Timestamp: '+fmt(e.start,3)+'–'+fmt(e.end,3)+' s · confidence: '+fmt(e.confidence,3)+'</div>';
 }
 function renderEvidenceTrace(eventId){
  const e=data.events.find(x=>String(x.id)===String(eventId)),out=$("#traceContent");if(!out||!e)return;
