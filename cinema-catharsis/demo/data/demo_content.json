@@ -42,8 +42,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S01",
+        "shot_id": "SH002"
+      },
+      "scene_id": "S01",
+      "shot_id": "SH002"
     },
     {
       "id": "E002",
@@ -64,8 +68,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S02",
+        "shot_id": "SH006"
+      },
+      "scene_id": "S02",
+      "shot_id": "SH006"
     },
     {
       "id": "E003",
@@ -86,8 +94,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S02",
+        "shot_id": "SH004"
+      },
+      "scene_id": "S02",
+      "shot_id": "SH004"
     },
     {
       "id": "E004",
@@ -108,8 +120,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S03",
+        "shot_id": "SH008"
+      },
+      "scene_id": "S03",
+      "shot_id": "SH008"
     },
     {
       "id": "E005",
@@ -130,8 +146,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S03",
+        "shot_id": "SH009"
+      },
+      "scene_id": "S03",
+      "shot_id": "SH009"
     },
     {
       "id": "E006",
@@ -152,8 +172,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S04",
+        "shot_id": "SH010"
+      },
+      "scene_id": "S04",
+      "shot_id": "SH010"
     },
     {
       "id": "E007",
@@ -174,8 +198,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S05",
+        "shot_id": "SH014"
+      },
+      "scene_id": "S05",
+      "shot_id": "SH014"
     },
     {
       "id": "E008",
@@ -196,8 +224,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S06",
+        "shot_id": "SH018"
+      },
+      "scene_id": "S06",
+      "shot_id": "SH018"
     },
     {
       "id": "E009",
@@ -218,8 +250,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S07",
+        "shot_id": "SH019"
+      },
+      "scene_id": "S07",
+      "shot_id": "SH019"
     },
     {
       "id": "E010",
@@ -240,8 +276,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S08",
+        "shot_id": "SH022"
+      },
+      "scene_id": "S08",
+      "shot_id": "SH022"
     },
     {
       "id": "E011",
@@ -262,8 +302,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S09",
+        "shot_id": "SH026"
+      },
+      "scene_id": "S09",
+      "shot_id": "SH026"
     },
     {
       "id": "E012",
@@ -284,8 +328,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S09",
+        "shot_id": "SH027"
+      },
+      "scene_id": "S09",
+      "shot_id": "SH027"
     },
     {
       "id": "E013",
@@ -306,8 +354,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S10",
+        "shot_id": "SH028"
+      },
+      "scene_id": "S10",
+      "shot_id": "SH028"
     },
     {
       "id": "E014",
@@ -328,8 +380,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S11",
+        "shot_id": "SH032"
+      },
+      "scene_id": "S11",
+      "shot_id": "SH032"
     },
     {
       "id": "E015",
@@ -350,8 +406,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S12",
+        "shot_id": "SH036"
+      },
+      "scene_id": "S12",
+      "shot_id": "SH036"
     },
     {
       "id": "E016",
@@ -372,8 +432,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S14",
+        "shot_id": "SH040"
+      },
+      "scene_id": "S14",
+      "shot_id": "SH040"
     },
     {
       "id": "E017",
@@ -394,8 +458,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S15",
+        "shot_id": "SH044"
+      },
+      "scene_id": "S15",
+      "shot_id": "SH044"
     },
     {
       "id": "E018",
@@ -416,8 +484,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S15",
+        "shot_id": "SH045"
+      },
+      "scene_id": "S15",
+      "shot_id": "SH045"
     },
     {
       "id": "E019",
@@ -438,8 +510,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S16",
+        "shot_id": "SH046"
+      },
+      "scene_id": "S16",
+      "shot_id": "SH046"
     },
     {
       "id": "E020",
@@ -460,8 +536,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S17",
+        "shot_id": "SH049"
+      },
+      "scene_id": "S17",
+      "shot_id": "SH049"
     },
     {
       "id": "E021",
@@ -482,8 +562,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S18",
+        "shot_id": "SH053"
+      },
+      "scene_id": "S18",
+      "shot_id": "SH053"
     },
     {
       "id": "E022",
@@ -504,8 +588,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S18",
+        "shot_id": "SH054"
+      },
+      "scene_id": "S18",
+      "shot_id": "SH054"
     },
     {
       "id": "E023",
@@ -526,8 +614,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S18",
+        "shot_id": "SH052"
+      },
+      "scene_id": "S18",
+      "shot_id": "SH052"
     },
     {
       "id": "E024",
@@ -548,8 +640,12 @@
         "recurrence_within_scene": "unknown",
         "temporal_position": "unknown",
         "other_characters": "unknown",
-        "immediate_reaction": "unknown"
-      }
+        "immediate_reaction": "unknown",
+        "scene_id": "S18",
+        "shot_id": "SH053"
+      },
+      "scene_id": "S18",
+      "shot_id": "SH053"
     }
   ],
   "coverage": {
