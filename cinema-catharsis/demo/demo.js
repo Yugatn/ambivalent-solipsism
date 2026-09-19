@@ -158,9 +158,22 @@ function drawWheel(m){
  svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(r-2)+'" fill="#080b12"/><text x="'+cx+'" y="'+(cy-5)+'" fill="#e9eef8" font-size="12" text-anchor="middle">screen_time</text><text x="'+cx+'" y="'+(cy+13)+'" fill="#8e9aad" font-size="10" text-anchor="middle">share</text></svg>';
  return svg;
 }
+function renderInspector(eventId){
+ const e=data.events.find(x=>String(x.id)===String(eventId)), el=$("#inspectorContent"); if(!el||!e)return;
+ const m=metrics()[e.class]||{};
+ const obs=e.context_observed||e.observed_context||{};
+ const interp=e.interpretation||e.interpreted_context||null;
+ const dur=Math.max(0,(e.end||0)-(e.start||0));
+ el.innerHTML='<div class="inspector-head"><b>'+esc(String(e.id))+'</b><span>'+esc(String(e.class||"unknown"))+'</span></div>'+
+ '<div class="inspector-grid"><div><small>Timestamp</small><b>'+fmt(e.start,3)+'–'+fmt(e.end,3)+' s</b></div><div><small>Δt</small><b>'+fmt(dur,3)+' s</b></div><div><small>Nω</small><b>'+fmt(m.N,2)+'</b></div><div><small>Sω</small><b>'+fmt(m.share*100,3)+'%</b></div><div><small>Confidence</small><b>'+fmt(e.confidence,3)+'</b></div><div><small>Status</small><b>'+esc(String(e.status||"unknown"))+'</b></div></div>'+
+ '<div class="inspector-section"><b>Scene / Shot</b><br>Scene: '+esc(String(e.scene_id??e.scene??"unknown"))+' · Shot: '+esc(String(e.shot_id??e.shot??"unknown"))+'</div>'+
+ '<div class="inspector-section"><b>L0–L2 · наблюдение</b><br>'+esc(String(e.description||e.label||"Событие зафиксировано в Content Map."))+'</div>'+
+ '<div class="inspector-section"><b>L3 · observed_context</b><pre class="trace-json">'+esc(JSON.stringify(obs,null,2))+'</pre></div>'+
+ '<div class="inspector-section"><b>L4 · interpretation</b><br>'+esc(interp?typeof interp==="string"?interp:JSON.stringify(interp,null,2):"Не задана")+'</div>';
+}
 function selectEvent(eventId){
  const e=data.events.find(x=>String(x.id)===String(eventId)); if(!e)return;
- selected=e.class; selectedSet=new Set([e.class]); openProgramGroups.add(e.class);
+ selected=e.class; selectedSet=new Set([e.class]); openProgramGroups.add(e.class); renderInspector(eventId);
  render();
  requestAnimationFrame(()=>{renderEvidenceTrace(eventId);document.getElementById("calculationTrace")?.scrollIntoView({behavior:"smooth",block:"center"});});
 }
