@@ -278,6 +278,19 @@ function setupReporting(){
  if(b)b.onclick=()=>{const m=metrics(),area=selectedSet.size?[...selectedSet]:(selected==="ALL"?C:[selected]),a=aggregateArea(m,area);t.hidden=false;t.textContent=buildReportText(m,area,a);t.focus()};
  if(s)s.onclick=()=>exportSpreadsheet(metrics());
 }
+function renderCreatorProfile(){
+ const sel=$("#creatorSelect"), summary=$("#creatorSummary"), table=$("#creatorTable"); if(!sel||!summary||!table)return;
+ const people=data.creators||data.people||[];
+ if(!sel.options.length||sel.options.length===1){
+   people.forEach(p=>{const o=document.createElement("option");o.value=p.person_id||p.id||p.name;o.textContent=(p.canonical_name||p.name||p.person_id)+" · "+(p.role||"");sel.appendChild(o);});
+ }
+ const id=sel.value; if(!id){summary.innerHTML='<div class="muted">Выберите персону после загрузки корпуса.</div>';table.innerHTML="";return;}
+ const p=people.find(x=>String(x.person_id||x.id||x.name)===String(id)); if(!p)return;
+ const works=p.works_analyzed??p.works_total_analyzed??0,total=p.works_total_known??"—";
+ summary.innerHTML='<div class="creator-kpis"><div><span class="muted small">Известно произведений</span><b>'+esc(String(total))+'</b></div><div><span class="muted small">Проанализировано</span><b>'+esc(String(works))+'</b></div><div><span class="muted small">Роль</span><b>'+esc(String(p.role||"—"))+'</b></div></div>';
+ const rows=Object.entries(p.program_profile||{}).map(([code,v])=>({code,...v})).sort((a,b)=>(b.screen_time_share??b.S_p_omega??0)-(a.screen_time_share??a.S_p_omega??0));
+ table.innerHTML='<div class="table-wrap"><table><thead><tr><th>Программа</th><th>Произведений</th><th>Событий N</th><th>T, сек</th><th>Sω</th><th>Rω</th></tr></thead><tbody>'+rows.map(v=>'<tr><td><b>'+esc(v.code)+'</b></td><td>'+esc(String(v.works_present??v.W_p_omega??0))+'</td><td>'+esc(String(v.event_count??v.N_p_omega??0))+'</td><td>'+fmt(v.duration_sec??v.T_p_omega??0,2)+'</td><td>'+fmt((v.screen_time_share??v.S_p_omega??0)*100,2)+'%</td><td>'+fmt((v.recurrence??v.R_p_omega??0)*100,2)+'%</td></tr>').join("")+'</tbody></table></div>';
+}
 function render(){
  const m=metrics();
  const area=selectedSet.size?[...selectedSet]:(selected==="ALL"?C:[selected]);
@@ -354,7 +367,7 @@ document.querySelectorAll("[data-source-tab]").forEach(tab=>tab.addEventListener
  const name=tab.dataset.sourceTab;
  document.querySelectorAll("[data-source-tab]").forEach(x=>{x.classList.toggle("active",x===tab);x.setAttribute("aria-selected",x===tab?"true":"false")});
  document.querySelectorAll("[data-source-pane]").forEach(p=>{const active=p.dataset.sourcePane===name;p.hidden=!active;p.classList.toggle("active",active)});
-}));
+}\n $("#creatorSelect")?.addEventListener("change",renderCreatorProfile); renderCreatorProfile();));
 $("#loadDemoSource")?.addEventListener("click",loadDemo);
 $("#contentMapFile")?.addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{try{load(JSON.parse(reader.result))}catch(err){$("#validation").innerHTML='<span class="bad">Некорректный JSON.</span>'}};reader.readAsText(f)});
 $("#fileInput").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{try{load(JSON.parse(reader.result))}catch(err){$("#validation").innerHTML='<span class="bad">Некорректный JSON.</span>'}};reader.readAsText(f)});
