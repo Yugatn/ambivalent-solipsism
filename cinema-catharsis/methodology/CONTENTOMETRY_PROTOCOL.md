@@ -617,3 +617,37 @@ CONTENT + METHOD + UNCERTAINTY + VERSION + LIMITATIONS
 > Не превращать измерение в интерпретацию.
 
 Синема Катарсис остаётся инфраструктурой наблюдаемости медиасреды, а не системой принятия решений за Субъекта.
+
+
+---
+
+## 27. Protocol implementation lock — 2026-09-19
+
+Protocol v0.2 является методологическим контрактом исследовательского прототипа.
+
+До появления эмпирической валидации следующие величины считаются **операциональными параметрами исследования**, а не универсальными человеческими константами:
+
+- reaction thresholds;
+- exposure indices;
+- dose-response functions;
+- composite arousal measures.
+
+Любая будущая публикация результата должна указывать:
+
+```
+CONTENT + EXPOSURE + RESPONSE + DESIGN + UNCERTAINTY + LIMITATIONS
+```
+
+### MVP validation sequence
+
+1. ontology/codebook;
+2. independent double annotation;
+3. adjudication;
+4. locked gold-standard test set;
+5. baseline model;
+6. precision/recall/F1 + calibration;
+7. error analysis;
+8. reproducibility package;
+9. only then — exposure-response pilot.
+
+Это предотвращает преждевременный переход от философской гипотезы к эмпирическому утверждению.
