@@ -122,14 +122,15 @@ function setupStoryMap(){
    const found=[...document.querySelectorAll('#story h2')].find(h=>h.textContent.trim().toLowerCase()===target.toLowerCase());
    if(!found)return;
    const sections=[...document.querySelectorAll('#story .story-page')];
-   const index=sections.indexOf(found.closest('.story-page'));
+   const page=found.closest('.story-page');
+   const index=sections.indexOf(page);
    if(index>=0 && typeof window.showStoryPage==='function'){
- window.showStoryPage(index);
- requestAnimationFrame(()=>{
-  const active=document.querySelector('#story .story-page.active');
-  if(active) active.scrollIntoView({behavior:'smooth',block:'start'});
- });
-}
+    window.showStoryPage(index);
+    requestAnimationFrame(()=>{
+     const active=page.classList.contains('active')?page:document.querySelector('#story .story-page.active');
+     if(active) active.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+   }
   };
  });
 }
