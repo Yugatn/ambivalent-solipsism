@@ -1,0 +1,27 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://yugatn.github.io/ambivalent-solipsism/cinema-catharsis/schema/content_map.schema.json",
+  "title":"Cinema Catharsis Content Map",
+  "type":"object",
+  "required":["work","events","coverage","validation"],
+  "properties":{
+    "work":{"type":"object","required":["id","title","duration_seconds","data_status"],"properties":{
+      "id":{"type":"string"},"title":{"type":"string"},"duration_seconds":{"type":"number","exclusiveMinimum":0},
+      "data_status":{"enum":["illustrative","preliminary","validated","superseded"]}
+    }},
+    "events":{"type":"array","items":{"type":"object","required":["id","start","end","class","program","status"],"properties":{
+      "id":{"type":"string"},"start":{"type":"number","minimum":0},"end":{"type":"number","exclusiveMinimum":0},
+      "class":{"enum":["C1","C2","C3","C4","C5","C6","C7","C8","C9","C10"]},
+      "program":{"type":"string"},"status":{"enum":["present","absent","unknown","ambiguous","not_applicable"]},
+      "label":{"type":"string"},"note":{"type":"string"}
+    }}},
+    "coverage":{"type":"object","required":["temporal","modalities"],"properties":{
+      "temporal":{"type":"number","minimum":0,"maximum":1},
+      "modalities":{"type":"object","additionalProperties":{"type":"number","minimum":0,"maximum":1}}
+    }},
+    "validation":{"type":"object","properties":{
+      "status":{"type":"string"},"illustrative":{"type":"boolean"},
+      "reliability":{"type":"object"},"reference_set":{"type":"object"}
+    }}
+  }
+}
