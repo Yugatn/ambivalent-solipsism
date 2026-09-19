@@ -16,6 +16,15 @@ function attitudeRows(){
  const ontology=data.attitude_ontology||window.ATTITUDE_ONTOLOGY||{items:[]};
  return (ontology.items||[]).map(item=>{const es=by[item.id]||[], t=unionLength(es), share=t/T, conf=es.length?es.reduce((a,e)=>a+Number(e.confidence??1),0)/es.length:null; return {...item,N:es.length,T:t,share,confidence:conf,status:es.length?(conf<.5?"ambiguous":"hypothesis"):"unknown",observations:es}}); 
 }
+function renderAttitudeEvidence(row){
+ const el=document.getElementById("attitudeEvidence");
+ if(!el)return;
+ if(!row){el.innerHTML="<div class='muted small'>Выберите установку в таблице для просмотра evidence trace.</div>";return;}
+ let html="<h3>"+esc(row.label)+" · "+fmt(row.share*100,3)+"%</h3><div class='small muted'>L4-гипотеза · "+esc(row.definition)+"</div>";
+ if(!row.observations.length) html+="<div class='muted'>Нет кодированных наблюдений.</div>";
+ row.observations.forEach(o=>{html+="<div class='evidence-item'><b>"+esc(o.id||o.category||"observation")+"</b> · "+fmt(o.start,1)+"–"+fmt(o.end,1)+" s · duration "+fmt(o.end-o.start,1)+" s · confidence "+fmt(o.confidence,2)+"<br><span>"+esc(o.basis||"Основание не указано")+"</span><br><span class='small muted'>L3 context: "+esc(JSON.stringify(o.context_observed||{}))+"</span></div>";});
+ el.innerHTML=html;
+}
 function renderAttitudes(){
  const rows=attitudeRows();
  const groups=(window.ATTITUDE_ONTOLOGY&&window.ATTITUDE_ONTOLOGY.groups)||data.attitude_ontology?.groups||{};
