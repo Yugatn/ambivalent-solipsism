@@ -171,8 +171,8 @@ function drawTimeline(){
    const y=top+li*laneH;
    const x=p+(e.start/T)*scale,w=Math.max(5,(duration(e)/T)*scale);
    const active=selected==="ALL"||selected===e.class;
-   const selectedEvent=window.__selectedEventId===String(e.id);
-   svg+='<rect data-event-id="'+esc(e.id)+'" tabindex="0" role="button" aria-label="Событие '+esc(e.id)+', '+esc(e.class)+', '+fmt(e.start,2)+'–'+fmt(e.end,2)+' секунд" x="'+x+'" y="'+(y+4)+'" width="'+w+'" height="18" rx="4" fill="'+palette[C.indexOf(e.class)]+'" opacity="'+(selectedEvent?1:(active?.88:.35))+'" stroke="'+(selectedEvent?"#ffffff":"none")+'" stroke-width="'+(selectedEvent?2:0)+'"/>';
+   const selectedEvent=window.__selectedEventId===String(e.id);const tip=esc(e.id+" · "+e.class+" · "+fmt(e.start,2)+"–"+fmt(e.end,2)+" s · Δt="+fmt(duration(e),2)+" s · confidence="+fmt(e.confidence??1,2));
+   svg+='<rect data-event-id="'+esc(e.id)+'" tabindex="0" role="button" aria-label="Событие '+esc(e.id)+', '+esc(e.class)+', '+fmt(e.start,2)+'–'+fmt(e.end,2)+' секунд" x="'+x+'" y="'+(y+4)+'" width="'+w+'" height="18" rx="4" fill="'+palette[C.indexOf(e.class)]+'" opacity="'+(selectedEvent?1:(active?.88:.35))+'" stroke="'+(selectedEvent?"#ffffff":"none")+'" stroke-width="'+(selectedEvent?2:0)+'"><title>'+tip+'</title></rect>';
    if(w>34)svg+='<text x="'+(x+4)+'" y="'+(y+17)+'" font-size="9" fill="#061018">'+esc(e.id)+'</text>';
  });
  for(let k=0;k<=6;k++){
