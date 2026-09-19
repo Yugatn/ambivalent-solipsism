@@ -50,7 +50,7 @@ strong{color:#f4fffc}
 <div class="eyebrow">STORY X · INTERACTIVE READER</div>
 <h1>Сюжет Икс</h1>
 <p class="subtitle">Это чуть больше, чем просто история... Это Сюжет Икс...</p>
-<div class="meta">ТЕКУЩАЯ РЕДАКЦИЯ · ТЕКСТ ЗАГРУЖАЕТСЯ ИЗ probuzhdenie.md · ПАРАЛЛЕЛЬНЫЕ ВЕТВИ СОХРАНЯЮТСЯ</div>
+<div class="meta">ТЕКУЩАЯ РЕДАКЦИЯ · ТЕКСТ ЗАГРУЖАЕТСЯ ИЗ probuzhdenie.md · КАЖДАЯ ГЛАВА СОХРАНЯЕТСЯ КАК ОТДЕЛЬНЫЙ ФРАГМЕНТ</div>
 </section>
 <section class="story-path" aria-label="Логика Сюжета Икс">
 <div class="story-path-title">СКВОЗНАЯ ТРАЕКТОРИЯ</div>
@@ -168,7 +168,7 @@ function setupPages(root){
  sections.forEach((s,i)=>{
   const page=document.createElement('section');page.className='story-page'+(i===0?' active':'');
   const shell=document.createElement('div');shell.className='page-shell';
-  const num=document.createElement('div');num.className='page-number';num.textContent='СТРАНИЦА '+(i+1)+' / '+sections.length;
+  const num=document.createElement('div');num.className='page-number';num.textContent='ГЛАВА '+(i+1)+' / '+sections.length;
   shell.appendChild(num);
   s.content.forEach(el=>shell.appendChild(el));
   const nav=document.createElement('div');nav.className='page-nav';
