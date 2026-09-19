@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Yugatn/ambivalent-solipsism/blob/main/cinema-catharsis/schema/claim.schema.json",
+  "title": "Cinema Catharsis Claim",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "claim_id",
+    "claim",
+    "status",
+    "source",
+    "method",
+    "versions",
+    "uncertainty",
+    "validation",
+    "sensitivity_analysis",
+    "correction_history",
+    "publishable"
+  ],
+  "properties": {
+    "claim_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "definition",
+        "observation",
+        "measurement",
+        "assumption",
+        "hypothesis",
+        "literature",
+        "interpretation",
+        "philosophical"
+      ]
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "additionalProperties": true
+    },
+    "method": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "additionalProperties": true
+    },
+    "versions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "uncertainty": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "validation": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "sensitivity_analysis": {
+      "type": "object",
+      "required": [
+        "required"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "correction_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "publishable": {
+      "type": "boolean"
+    },
+    "interpretations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    }
+  }
+}
