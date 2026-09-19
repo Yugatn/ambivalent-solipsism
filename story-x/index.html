@@ -35,7 +35,14 @@ p{margin:0 0 1.25em}
 .nav a:hover{background:rgba(98,230,197,.1)}
 strong{color:#f4fffc}
 @media(max-width:650px){body{font-size:16px;line-height:1.82}.reader{width:min(100% - 22px,920px);padding-top:30px}.hero{padding-top:22px}.subtitle{font-size:17px}.quote{font-size:18px;padding:16px 18px}h2{margin-top:52px}}
-</style>
+.story-path{margin:0 0 28px;padding:18px;border:1px solid var(--line);border-radius:12px;background:rgba(98,230,197,.025)}
+.story-path-title{font:600 11px monospace;letter-spacing:.14em;color:var(--accent);margin-bottom:12px}
+.story-path-track{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.story-path-node{padding:7px 10px;border:1px solid var(--line);border-radius:99px;font:600 11px monospace;color:var(--text);background:rgba(98,230,197,.035)}
+.story-path-arrow{color:var(--muted);font:12px monospace}
+.verify{margin:32px 0;padding:20px;border:1px solid var(--line);border-radius:12px;background:rgba(98,230,197,.025)}
+.verify-title{font:600 11px monospace;letter-spacing:.14em;color:var(--accent);margin-bottom:10px}
+.verify p{margin-bottom:12px}.verify button{border:1px solid var(--line);background:rgba(98,230,197,.045);color:var(--text);padding:9px 12px;border-radius:7px;font:600 12px monospace;cursor:pointer;margin:4px}.verify button:hover{background:rgba(98,230,197,.1)}.verify-result{margin-top:12px;color:#bfd0cc;font-size:14px}</style>
 </head>
 <body>
 <main class="reader">
@@ -44,6 +51,18 @@ strong{color:#f4fffc}
 <h1>Сюжет Икс</h1>
 <p class="subtitle">Это чуть больше, чем просто история... Это Сюжет Икс...</p>
 <div class="meta">ТЕКУЩАЯ РЕДАКЦИЯ · ТЕКСТ ЗАГРУЖАЕТСЯ ИЗ probuzhdenie.md · ПАРАЛЛЕЛЬНЫЕ ВЕТВИ СОХРАНЯЮТСЯ</div>
+</section>
+<section class="story-path" aria-label="Логика Сюжета Икс">
+<div class="story-path-title">СКВОЗНАЯ ТРАЕКТОРИЯ</div>
+<div class="story-path-track">
+<span class="story-path-node">Пещера</span><span class="story-path-arrow">→</span>
+<span class="story-path-node">Сомнение</span><span class="story-path-arrow">→</span>
+<span class="story-path-node">Пробуждение</span><span class="story-path-arrow">→</span>
+<span class="story-path-node">Проверка</span><span class="story-path-arrow">→</span>
+<span class="story-path-node">Выбор</span><span class="story-path-arrow">→</span>
+<span class="story-path-node">След</span><span class="story-path-arrow">→</span>
+<span class="story-path-node">Новая ветвь</span>
+</div>
 </section>
 <section class="story-map" aria-label="Карта Сюжета Икс">
 <div class="story-map-title">КАРТА СЮЖЕТА · БЫСТРЫЙ ПЕРЕХОД</div>
@@ -96,6 +115,17 @@ function renderMarkdown(md){
   para.push(l.trim());
  }
  flushP();flushQ();return out;
+}
+function addVerifyBlock(root){
+ const h=[...root.querySelectorAll('h2')].find(x=>x.textContent.trim()==='Беседы Югатна с ИИ');
+ if(!h)return;
+ const box=document.createElement('div');box.className='verify';
+ box.innerHTML='<div class="verify-title">VERIFY · СООБЩЕНИЕ ОТ ЗМЕЯ</div><p>На экране появляется неизвестное сообщение. Как поступить?</p><div><button type="button" data-v="observe">Сначала зафиксировать и проверить</button><button type="button" data-v="accept">Сразу принять как истину</button><button type="button" data-v="reject">Сразу отвергнуть</button></div><div class="verify-result"></div>';
+ box.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  const r=box.querySelector('.verify-result');
+  r.textContent=b.dataset.v==='observe'?'Принцип Сюжета Икс: наблюдение отделяется от интерпретации. Сначала сохранить сообщение, контекст и источник; затем проверить гипотезу.':b.dataset.v==='accept'?'Слишком раннее принятие превращает гипотезу в факт.':'Слишком раннее отрицание уничтожает данные до проверки.';
+ });
+ h.parentNode.insertBefore(box,h.nextElementSibling);
 }
 function setupStoryMap(){
  const grid=document.querySelector('.story-map-grid');
