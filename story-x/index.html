@@ -47,16 +47,7 @@ strong{color:#f4fffc}
 </section>
 <section class="story-map" aria-label="Карта Сюжета Икс">
 <div class="story-map-title">КАРТА СЮЖЕТА · БЫСТРЫЙ ПЕРЕХОД</div>
-<div class="story-map-grid">
-<button data-target="Пробуждение">Пробуждение</button>
-<button data-target="Юджин">Юджин</button>
-<button data-target="Мира">Мира</button>
-<button data-target="Бифуркация">Бифуркация</button>
-<button data-target="Трансперсональные путешественники">Трансперсональные путешественники</button>
-<button data-target="Боги Революции">Боги Революции</button>
-<button data-target="Близнецы">Близнецы</button>
-<button data-target="Ветви реальности">Ветви реальности</button>
-</div>
+<div class="story-map-grid"></div>
 </section>
 <article id="story" aria-live="polite"><div class="loading">Загрузка текста…</div></article>
 <div class="nav">
@@ -82,13 +73,14 @@ strong{color:#f4fffc}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function inline(s){
  s=esc(s);
- s=s.replace(/\*\*\*(.+?)\*\*\*/g,'<strong><em>$1</em></strong>');
- s=s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
- s=s.replace(/\*(.+?)\*/g,'<em>$1</em>');
+ s=s.replace(/***(.+?)***/g,'<strong><em>$1</em></strong>');
+ s=s.replace(/**(.+?)**/g,'<strong>$1</strong>');
+ s=s.replace(/*(.+?)*/g,'<em>$1</em>');
  return s;
 }
 function renderMarkdown(md){
- const lines=md.replace(/\r/g,'').split('\n');
+ const lines=md.replace(//g,'').split('
+');
  let out='',para=[],quote=[];
  const flushP=()=>{if(para.length){out+='<p>'+inline(para.join(' '))+'</p>';para=[]}};
  const flushQ=()=>{if(quote.length){out+='<div class="quote">'+quote.map(x=>inline(x)).join('<br>')+'</div>';quote=[]}};
@@ -97,7 +89,7 @@ function renderMarkdown(md){
   if(/^## /.test(l)){flushP();flushQ();out+='<h2>'+inline(l.slice(3))+'</h2>';continue}
   if(/^### /.test(l)){flushP();flushQ();out+='<h3>'+inline(l.slice(4))+'</h3>';continue}
   if(/^> ?/.test(l)){flushP();quote.push(l.replace(/^> ?/,''));continue}
-  if(/^\*\*[^*]+\*\*$/.test(l.trim())){flushP();flushQ();out+='<div class="formula">'+inline(l.trim())+'</div>';continue}
+  if(/^**[^*]+**$/.test(l.trim())){flushP();flushQ();out+='<div class="formula">'+inline(l.trim())+'</div>';continue}
   if(/^---$/.test(l.trim())){flushP();flushQ();out+='<div class="chapter-break">· · ·</div>';continue}
   if(!l.trim()){flushP();flushQ();continue}
   para.push(l.trim());
@@ -105,43 +97,24 @@ function renderMarkdown(md){
  flushP();flushQ();return out;
 }
 function setupStoryMap(){
- document.querySelectorAll('.story-map button').forEach(btn=>{
-  btn.onclick=()=>{
-   const targets={
-    'Пробуждение':'Первое пробуждение',
-    'Юджин':'Юджин',
-    'Мира':'Возвращение',
-    'Бифуркация':'Эффект бабочки',
-    'Трансперсональные путешественники':'Орден трансперсональных путешественников',
-    'Боги Революции':'Эдем. Два дерева',
-    'Близнецы':'Конструкт, двойник и архисубъект',
-    'Ветви реальности':'Один субъект — несколько траекторий'
-   };
-   const target=targets[btn.dataset.target];
-   if(!target)return;
+ const grid=document.querySelector('.story-map-grid');
+ if(!grid)return;
 
-   const found=[...document.querySelectorAll('#story h2')]
-    .find(h=>h.textContent.trim().toLowerCase()===target.toLowerCase());
-   if(!found)return;
+ const headings=[...document.querySelectorAll('#story h2')];
+ grid.innerHTML='';
 
-   const sections=[...document.querySelectorAll('#story .story-page')];
-   const page=found.closest('.story-page');
-   const index=sections.indexOf(page);
-
-   if(index<0 || typeof window.showStoryPage!=='function')return;
-
-   window.showStoryPage(index);
-
-   setTimeout(()=>{
-    const active=document.querySelector('#story .story-page.active');
-    if(active){
-     active.scrollIntoView({
-      behavior:'smooth',
-      block:'start'
-     });
-    }
-   },50);
+ headings.forEach((heading,index)=>{
+  const button=document.createElement('button');
+  button.type='button';
+  button.textContent=(index+1)+'. '+heading.textContent.trim();
+  button.onclick=()=>{
+   const pages=[...document.querySelectorAll('#story .story-page')];
+   const page=heading.closest('.story-page');
+   const pageIndex=pages.indexOf(page);
+   if(pageIndex<0 || typeof window.showStoryPage!=='function')return;
+   window.showStoryPage(pageIndex);
   };
+  grid.appendChild(button);
  });
 }
 function setupPages(root){
@@ -192,10 +165,16 @@ function setupPages(root){
 
   toc.open=false;
 
-  window.scrollTo({top:0,behavior:'smooth'});
+  const active=pages[i];
+  requestAnimationFrame(()=>{
+   active.scrollIntoView({
+    behavior:'smooth',
+    block:'start'
+   });
+  });
  }
  window.showStoryPage=show;
- const match=location.hash.match(/page-(\d+)/);show(match?Number(match[1])-1:0);
+ const match=location.hash.match(/page-(d+)/);show(match?Number(match[1])-1:0);
 }
 </script>
 </body>
