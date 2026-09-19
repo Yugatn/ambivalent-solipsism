@@ -387,7 +387,8 @@ document.querySelectorAll("[data-source-tab]").forEach(tab=>tab.addEventListener
  const name=tab.dataset.sourceTab;
  document.querySelectorAll("[data-source-tab]").forEach(x=>{x.classList.toggle("active",x===tab);x.setAttribute("aria-selected",x===tab?"true":"false")});
  document.querySelectorAll("[data-source-pane]").forEach(p=>{const active=p.dataset.sourcePane===name;p.hidden=!active;p.classList.toggle("active",active)});
-}\n $("#creatorSelect")?.addEventListener("change",renderCreatorProfile); renderCreatorProfile();));
+}));
+$("#creatorSelect")?.addEventListener("change",renderCreatorProfile);
 $("#loadDemoSource")?.addEventListener("click",loadDemo);
 $("#contentMapFile")?.addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{try{load(JSON.parse(reader.result))}catch(err){$("#validation").innerHTML='<span class="bad">Некорректный JSON.</span>'}};reader.readAsText(f)});
 $("#fileInput").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{try{load(JSON.parse(reader.result))}catch(err){$("#validation").innerHTML='<span class="bad">Некорректный JSON.</span>'}};reader.readAsText(f)});
