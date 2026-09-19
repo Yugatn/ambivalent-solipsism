@@ -1,0 +1,6 @@
+ontology_version: 0.1.0
+relations: [performs, uses, located_in, precedes, follows, co_occurs_with, causes_as_shown, reacts_to, communicates_to]
+constraints:
+  - "causes_as_shown records narrative representation of causality, not scientific causation."
+  - "co_occurs_with is structural and non-causal."
+  - "Unknown relations remain unknown."
