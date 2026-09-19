@@ -79,8 +79,7 @@ function inline(s){
  return s;
 }
 function renderMarkdown(md){
- const lines=md.replace(//g,'').split('
-');
+ const lines=md.split(/\r?\n/);
  let out='',para=[],quote=[];
  const flushP=()=>{if(para.length){out+='<p>'+inline(para.join(' '))+'</p>';para=[]}};
  const flushQ=()=>{if(quote.length){out+='<div class="quote">'+quote.map(x=>inline(x)).join('<br>')+'</div>';quote=[]}};
