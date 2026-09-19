@@ -21,14 +21,14 @@ p{margin:0 0 1.25em}
 .lead{font-size:20px;color:#dceae7}
 .quote{margin:32px 0;padding:20px 24px;border-left:2px solid var(--accent);background:linear-gradient(90deg,rgba(98,230,197,.075),transparent);color:#e4f8f2;font-size:20px;line-height:1.65}
 .formula{text-align:center;margin:34px 0;padding:20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font:600 15px/1.8 monospace;color:var(--accent);letter-spacing:.04em}
-.chapter-break{text-align:center;color:var(--muted);letter-spacing:.5em;margin:58px 0}.story-page{display:none}.story-page.active{display:block;animation:pageIn .35s ease}.page-shell{background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.012));border:1px solid var(--line);border-radius:16px;padding:42px 48px 36px;box-shadow:0 18px 60px rgba(0,0,0,.18)}.page-number{text-align:center;font:11px/1.4 monospace;letter-spacing:.2em;color:var(--muted);margin-bottom:24px}.page-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:28px}.page-nav button{border:1px solid var(--line);background:rgba(98,230,197,.045);color:var(--text);padding:11px 15px;border-radius:8px;font:600 12px monospace;cursor:pointer}.page-nav button:hover:not(:disabled){background:rgba(98,230,197,.12)}.page-nav button:disabled{opacity:.3;cursor:default}.progress{height:3px;background:rgba(255,255,255,.08);border-radius:99px;margin:0 0 28px;overflow:hidden}.progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .3s ease}.page-index{text-align:center;font:11px monospace;color:var(--muted);min-width:100px}.toc{margin:0 0 28px;padding:18px;border:1px solid var(--line);border-radius:12px;background:rgba(98,230,197,.025)}.toc-title{font:600 11px monospace;letter-spacing:.14em;color:var(--accent);margin-bottom:10px}.toc button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--muted);padding:7px 4px;cursor:pointer;font:14px Georgia,"Times New Roman",serif}.toc button:hover{color:var(--text)}@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@media(max-width:650px){.page-shell{padding:28px 20px 24px}.page-nav button{padding:10px 11px}.page-index{min-width:70px}}
+.chapter-break{text-align:center;color:var(--muted);letter-spacing:.5em;margin:58px 0}.story-page{display:none}.story-page.active{display:block;animation:pageIn .35s ease}.page-shell{background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.012));border:1px solid var(--line);border-radius:16px;padding:42px 48px 36px;box-shadow:0 18px 60px rgba(0,0,0,.18)}.page-number{text-align:center;font:11px/1.4 monospace;letter-spacing:.2em;color:var(--muted);margin-bottom:24px}.page-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:28px}.page-nav button{border:1px solid var(--line);background:rgba(98,230,197,.045);color:var(--text);padding:11px 15px;border-radius:8px;font:600 12px monospace;cursor:pointer}.page-nav button:hover:not(:disabled){background:rgba(98,230,197,.12)}.page-nav button:focus-visible,.toc button:focus-visible,.story-map button:focus-visible,.nav a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.page-nav button:disabled{opacity:.3;cursor:default}.progress{height:3px;background:rgba(255,255,255,.08);border-radius:99px;margin:0 0 28px;overflow:hidden}.progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .3s ease}.page-index{text-align:center;font:11px monospace;color:var(--muted);min-width:100px}.toc{margin:0 0 28px;padding:18px;border:1px solid var(--line);border-radius:12px;background:rgba(98,230,197,.025)}.toc-title{font:600 11px monospace;letter-spacing:.14em;color:var(--accent);margin-bottom:10px}.toc button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--muted);padding:7px 4px;cursor:pointer;font:14px Georgia,"Times New Roman",serif}.toc button:hover{color:var(--text)}@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@media(max-width:650px){.page-shell{padding:28px 20px 24px}.page-nav button{padding:10px 11px}.page-index{min-width:70px}}
 .note{font:12px/1.7 monospace;color:var(--muted);padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:30px 0}
 
 .story-map{margin:0 0 28px;padding:20px;border:1px solid var(--line);border-radius:12px;background:rgba(98,230,197,.025)}
 .story-map-title{font:600 11px monospace;letter-spacing:.14em;color:var(--accent);margin-bottom:12px}
 .story-map-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .story-map button{border:1px solid var(--line);background:rgba(98,230,197,.035);color:var(--text);padding:11px 12px;border-radius:8px;text-align:left;font:600 12px monospace;cursor:pointer}
-.story-map button:hover{background:rgba(98,230,197,.1)}
+.story-map button:hover{background:rgba(98,230,197,.1)}.story-map button.active{border-color:var(--accent);color:var(--accent)}
 @media(max-width:650px){.story-map-grid{grid-template-columns:1fr}}
 .nav{display:flex;gap:10px;flex-wrap:wrap;margin:34px 0}
 .nav a{color:var(--accent);border:1px solid var(--line);background:rgba(98,230,197,.035);padding:10px 14px;text-decoration:none;border-radius:7px;font:600 12px monospace}
@@ -124,20 +124,18 @@ function addVerifyBlock(root){
 function setupStoryMap(){
  const grid=document.querySelector('.story-map-grid');
  if(!grid)return;
-
  const headings=[...document.querySelectorAll('#story h2')];
  grid.innerHTML='';
-
  headings.forEach((heading,index)=>{
   const button=document.createElement('button');
   button.type='button';
   button.textContent=(index+1)+'. '+heading.textContent.trim();
+  button.setAttribute('aria-label','Открыть главу '+(index+1)+': '+heading.textContent.trim());
   button.onclick=()=>{
    const pages=[...document.querySelectorAll('#story .story-page')];
    const page=heading.closest('.story-page');
    const pageIndex=pages.indexOf(page);
-   if(pageIndex<0 || typeof window.showStoryPage!=='function')return;
-   window.showStoryPage(pageIndex);
+   if(pageIndex>=0 && typeof window.showStoryPage==='function') window.showStoryPage(pageIndex);
   };
   grid.appendChild(button);
  });
@@ -148,7 +146,7 @@ function setupPages(root){
  let current=null;
  children.forEach(el=>{
   if(el.tagName==='H2'){
-   current={title:el.textContent,content:[el]};
+   current={title:el.textContent.trim(),content:[el]};
    sections.push(current);
   }else if(current){current.content.push(el)}
  });
@@ -156,50 +154,99 @@ function setupPages(root){
  root.innerHTML='';
  const toc=document.createElement('details');
  toc.className='toc';
-
  const tocSummary=document.createElement('summary');
  tocSummary.className='toc-title';
  tocSummary.textContent='СОДЕРЖАНИЕ · ВЫБЕРИТЕ ГЛАВУ';
-
  toc.appendChild(tocSummary);
- const progress=document.createElement('div');progress.className='progress';progress.innerHTML='<span></span>';
+ const progress=document.createElement('div');
+ progress.className='progress';
+ progress.setAttribute('role','progressbar');
+ progress.setAttribute('aria-label','Прогресс чтения');
+ progress.setAttribute('aria-valuemin','1');
+ progress.setAttribute('aria-valuemax',String(sections.length));
+ progress.innerHTML='<span></span>';
  root.append(toc,progress);
  const pages=[];
+ const tocButtons=[];
  sections.forEach((s,i)=>{
-  const page=document.createElement('section');page.className='story-page'+(i===0?' active':'');
+  const page=document.createElement('section');
+  page.className='story-page'+(i===0?' active':'');
+  page.id='page-'+(i+1);
+  page.setAttribute('aria-labelledby','chapter-title-'+(i+1));
+  page.setAttribute('tabindex','-1');
   const shell=document.createElement('div');shell.className='page-shell';
-  const num=document.createElement('div');num.className='page-number';num.textContent='ГЛАВА '+(i+1)+' / '+sections.length;
+  const num=document.createElement('div');num.className='page-number';
+  num.textContent='ГЛАВА '+(i+1)+' / '+sections.length;
+  const title=s.content[0];
+  title.id='chapter-title-'+(i+1);
   shell.appendChild(num);
   s.content.forEach(el=>shell.appendChild(el));
   const nav=document.createElement('div');nav.className='page-nav';
-  const prev=document.createElement('button');prev.textContent='← Назад';prev.disabled=i===0;
-  const idx=document.createElement('div');idx.className='page-index';idx.textContent=(i+1)+' / '+sections.length;
-  const next=document.createElement('button');next.textContent=i===sections.length-1?'К началу':'Далее →'; 
+  const prev=document.createElement('button');prev.type='button';prev.textContent='Назад';prev.disabled=i===0;
+  prev.setAttribute('aria-label','Предыдущая глава');
+  const idx=document.createElement('div');idx.className='page-index';idx.setAttribute('aria-live','polite');idx.textContent=(i+1)+' / '+sections.length;
+  const next=document.createElement('button');next.type='button';next.textContent=i===sections.length-1?'К началу':'Далее';
+  next.setAttribute('aria-label',i===sections.length-1?'Вернуться к началу':'Следующая глава');
   nav.append(prev,idx,next);shell.appendChild(nav);page.appendChild(shell);root.appendChild(page);
   pages.push(page);
-  const tb=document.createElement('button');tb.textContent=(i+1)+'. '+s.title;tb.onclick=()=>show(i);toc.appendChild(tb);
+  const tb=document.createElement('button');tb.type='button';tb.textContent=(i+1)+'. '+s.title;
+  tb.setAttribute('aria-current',i===0?'page':'false');
+  tb.onclick=()=>show(i);
+  toc.appendChild(tb);tocButtons.push(tb);
   prev.onclick=()=>show(i-1);next.onclick=()=>show(i+1);
  });
- function show(i){
+ function show(i,opts={}){
   if(i<0)i=0;
   if(i>=pages.length)i=pages.length-1;
-
-  pages.forEach((p,n)=>p.classList.toggle('active',n===i));
-  progress.firstElementChild.style.width=((i+1)/pages.length*100)+'%';
-  history.replaceState(null,'','#page-'+(i+1));
-
-  toc.open=false;
-
-  const active=pages[i];
-  requestAnimationFrame(()=>{
-   active.scrollIntoView({
-    behavior:'smooth',
-    block:'start'
-   });
+  pages.forEach((p,n)=>{
+   const active=n===i;
+   p.classList.toggle('active',active);
+   p.setAttribute('aria-hidden',active?'false':'true');
   });
+  tocButtons.forEach((b,n)=>b.setAttribute('aria-current',n===i?'page':'false'));
+  progress.firstElementChild.style.width=((i+1)/pages.length*100)+'%';
+  progress.setAttribute('aria-valuenow',String(i+1));
+  progress.setAttribute('aria-valuetext','Глава '+(i+1)+' из '+pages.length);
+  history.replaceState(null,'','#page-'+(i+1));
+  localStorage.setItem('story-x-last-page',String(i+1));
+  toc.open=false;
+  if(opts.focus!==false){
+   requestAnimationFrame(()=>{
+    pages[i].focus({preventScroll:true});
+    window.scrollTo({top:0,behavior:'smooth'});
+   });
+  }
  }
  window.showStoryPage=show;
- const match=location.hash.match(/page-(\d+)/);show(match?Number(match[1])-1:0);
+ let initial=0;
+ const match=location.hash.match(/page-(\d+)/);
+ if(match) initial=Number(match[1])-1;
+ else {
+  const saved=Number(localStorage.getItem('story-x-last-page'));
+  if(Number.isInteger(saved)&&saved>0) initial=saved-1;
+ }
+ show(initial,{focus:false});
+ document.addEventListener('keydown',e=>{
+  if(e.altKey||e.ctrlKey||e.metaKey) return;
+  if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();show((pages.findIndex(p=>p.classList.contains('active')))+1)}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show((pages.findIndex(p=>p.classList.contains('active')))-1)}
+  if(e.key==='Home'){e.preventDefault();show(0)}
+  if(e.key==='End'){e.preventDefault();show(pages.length-1)}
+ });
+ let touchStartX=0,touchStartY=0;
+ root.addEventListener('touchstart',e=>{
+  if(e.touches.length===1){touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY}
+ },{passive:true});
+ root.addEventListener('touchend',e=>{
+  if(!touchStartX)return;
+  const dx=e.changedTouches[0].clientX-touchStartX;
+  const dy=e.changedTouches[0].clientY-touchStartY;
+  touchStartX=touchStartY=0;
+  if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.3){
+   const current=pages.findIndex(p=>p.classList.contains('active'));
+   show(current+(dx<0?1:-1));
+  }
+ },{passive:true});
 }
 </script>
 </body>
