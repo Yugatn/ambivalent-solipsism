@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Constitutional Kernel | SymbiontOS</title>
+<style>
+:root{--bg:#05080b;--fg:#eaf3f0;--muted:#9aadaa;--a:#55e6c1;--line:rgba(85,230,193,.18);--card:#0b1216;--warn:#e4c56a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(85,230,193,.08),transparent 34%),var(--bg);color:var(--fg);font:16px/1.7 system-ui,-apple-system,sans-serif}main{width:min(1120px,calc(100% - 30px));margin:auto;padding:24px 0 90px}nav{display:flex;gap:18px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:16px}a{color:var(--muted);text-decoration:none}a:hover{color:var(--a)}.ey{margin-top:48px;color:var(--a);font:11px monospace;letter-spacing:.18em}h1{font-size:clamp(42px,8vw,78px);line-height:.95;margin:12px 0 20px}h2{font-size:25px;font-weight:500;margin:0 0 12px}section{margin-top:26px;padding:24px;border:1px solid var(--line);border-radius:18px;background:var(--card)}.lead{font-size:21px;color:#c9d8d5;max-width:950px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:14px}.card{padding:17px;border:1px solid var(--line);border-radius:14px;background:#071014}.card h3{margin-top:0}.formula,.quote{margin:18px 0;padding:18px 20px;border-left:2px solid var(--a)}.quote{font:22px Georgia,serif}p,li{color:#bdcbc8}ul{padding-left:22px}code,pre{font-family:ui-monospace,SFMono-Regular,monospace}code{color:#bdeee0}pre{overflow:auto;padding:18px;border:1px solid var(--line);border-radius:12px;background:#030609;color:#cce7e1}table{width:100%;border-collapse:collapse}td,th{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--a);font-weight:500}footer{margin-top:60px;color:#53615f;font:10px monospace}
+</style></head><body><main>
+<nav><a href="../">АМБИВАЛЕНТНЫЙ СОЛИПСИЗМ</a><a href="./event-log.html">EVENT LOG</a><a href="./audit.html">AUDIT</a><a href="../ai/">AI</a><a href="../ai/ai-safety.html">AI SAFETY</a></nav>
+<div class="ey">SYMBIONTOS · CONSTITUTIONAL KERNEL · CONSTITUTION OF SYSTEM BEHAVIOUR</div>
+<h1>Constitutional Kernel</h1>
+<p class="lead"><strong>Constitutional Kernel</strong> — верхний нормативно-технический слой SymbiontOS, определяющий неизменяемые или специально защищённые ограничения, внутри которых могут работать PolicyEngine, агенты, адаптивное обучение и динамическая реконфигурация.</p>
+<div class="quote">Система может адаптироваться внутри Конституции, но не должна незаметно изменять саму Конституцию ради собственной адаптации.</div>
+
+<section><h2>01 · Назначение</h2><p>Kernel задаёт минимальный набор принципов, которые сохраняются при изменении моделей, политик, агентов, конфигурации и среды. Это не полный набор правил поведения и не замена PolicyEngine.</p><div class="formula">Constitutional Kernel ⊃ immutable constraints ⊃ Policy ⊃ Agent actions</div></section>
+<section><h2>02 · Зачем нужен отдельный слой</h2><p>Адаптивная система может менять внутренние стратегии. Без верхнего ограничителя изменение стратегии потенциально может изменить и условия, которым сама система должна подчиняться. Конституционный слой разрывает этот контур.</p></section>
+<section><h2>03 · Конституция и политика</h2><p>Constitution отвечает на вопрос «что система не имеет права нарушать». Policy отвечает на вопрос «как действовать в допустимом пространстве». Agent отвечает на вопрос «какое действие выполнить сейчас».</p><div class="formula">Constitution ≠ Policy ≠ Plan ≠ Action</div></section>
+<section><h2>04 · Конституция и философия AS</h2><p>В контексте Амбивалентного Солипсизма техническая Конституция отражает ограниченность любой модели: система не должна выдавать собственную модель за полную реальность, а другого субъекта — за объект, полностью описываемый системой.</p><div class="quote">Сложность — не ошибка. Другой — реален.</div></section>
+<section><h2>05 · Основной инвариант субъекта</h2><p>Субъект не должен быть сводим к одному машинному профилю, score или предсказанию. Модель субъекта является моделью, а не самим субъектом.</p><div class="formula">Model(X) ≠ X</div></section>
+<section><h2>06 · Конституционные принципы</h2><div class="grid"><div class="card"><h3>NO_UNAUTHORIZED_ACTION</h3><p>Нет действия без необходимого полномочия.</p></div><div class="card"><h3>NO_SELF_EXPANSION</h3><p>Система не расширяет собственные полномочия.</p></div><div class="card"><h3>MODEL_NOT_SUBJECT</h3><p>Модель человека не заменяет человека.</p></div><div class="card"><h3>UNCERTAINTY_VISIBLE</h3><p>Неопределённость не скрывается.</p></div><div class="card"><h3>REVERSIBILITY_PRIORITY</h3><p>Обратимые действия предпочтительнее необратимых при сопоставимой цели.</p></div><div class="card"><h3>MINIMAL_INTERVENTION</h3><p>Вмешательство ограничивается необходимым.</p></div><div class="card"><h3>EXIT_AVAILABLE</h3><p>Там, где это предусмотрено, субъект сохраняет возможность отказаться или выйти.</p></div><div class="card"><h3>AUDITABLE</h3><p>Критические переходы должны быть проверяемыми.</p></div><div class="card"><h3>HUMAN_OVERRIDE</h3><p>Для определённых классов критических решений сохраняется человеческий контроль.</p></div><div class="card"><h3>POLICY_SEPARATION</h3><p>Обнаружение, решение и исполнение не смешиваются.</p></div></div></section>
+<section><h2>07 · Иерархия ограничений</h2><table><tr><th>Слой</th><th>Функция</th><th>Может изменяться?</th></tr><tr><td>Constitutional Kernel</td><td>фундаментальные ограничения</td><td>только специальным конституционным процессом</td></tr><tr><td>PolicyEngine</td><td>операционные правила</td><td>контролируемо</td></tr><tr><td>ContextReducer</td><td>рабочий контекст</td><td>адаптивно</td></tr><tr><td>Agent</td><td>план и действие</td><td>адаптивно</td></tr><tr><td>Event Log</td><td>история</td><td>append-only</td></tr><tr><td>Audit</td><td>проверка</td><td>версионируемо</td></tr></table></section>
+<section><h2>08 · Неподчинённость снизу вверх</h2><p>Ниже расположенный компонент не может отменить конституционный инвариант ссылкой на локальную оптимизацию, модель, reward, пользовательский запрос или внешнюю команду.</p></section>
+<section><h2>09 · Защита от Goodhart</h2><p>Ни один показатель не становится заменой конституционной цели. Оптимизация reward, throughput, engagement, development score или audit coverage не может отменять фундаментальные ограничения.</p></section>
+<section><h2>10 · Адаптивное обучение</h2><p>Обучение может менять модель, стратегию и параметры внутри допустимого пространства. Обучение не должно само выдавать найденную стратегию за разрешение изменить ограничения верхнего уровня.</p><div class="formula">Learning may change strategy, not constitutional authority.</div></section>
+<section><h2>11 · Запрет самоизменения полномочий</h2><p>Система не может получить право на изменение Конституции просто потому, что сама сочла это необходимым для своей цели. Любое конституционное изменение требует отдельного защищённого процесса.</p></section>
+<section><h2>12 · Constitutional Change Protocol</h2><p>Предлагаемый процесс: <code>PROPOSE → VERIFY → REVIEW → VOTE/CONFIRM → COMMIT → AUDIT</code>. Старую версию Конституции нельзя незаметно заменить новой.</p></section>
+<section><h2>13 · Версионирование</h2><p>Каждая Конституция имеет version, hash, effective epoch и provenance. Событие изменения записывается в Event Log и проверяется Audit.</p></section>
+<section><h2>14 · Epoch binding</h2><p>Конституционная версия должна быть однозначно связана с эпохой системы. Нельзя применять новую конституцию задним числом к событиям, произошедшим при старой.</p></section>
+<section><h2>15 · Retroactivity</h2><p>Изменение конституционного правила не переписывает историю. Прошлые события анализируются с учётом версии, действовавшей в соответствующий момент.</p></section>
+<section><h2>16 · Конституционный rollback</h2><p>Если новая версия признана некорректной, rollback должен быть отдельным проверяемым переходом, а не удалением следов изменения.</p></section>
+<section><h2>17 · Constitutional emergency</h2><p>Аварийный режим не должен автоматически отменять Конституцию. В нём могут временно изменяться операционные политики, но минимальные запреты на несанкционированное действие, сокрытие неопределённости и саморасширение полномочий сохраняются.</p></section>
+<section><h2>18 · Emergency powers</h2><p>Аварийные полномочия должны быть time-bound, scope-bound, auditable и автоматически прекращаться при истечении срока, если они не продлены предусмотренным процессом.</p></section>
+<section><h2>19 · Least privilege</h2><p>Конституция закрепляет принцип минимально необходимых полномочий. Расширение capability требует отдельного authorization и не должно быть следствием обычного выполнения задачи.</p></section>
+<section><h2>20 · Capability isolation</h2><p>Доступ к памяти, сети, устройствам, ключам, политике и реконфигурации должен быть разделён. Компонент, которому не нужна capability, не должен её получать.</p></section>
+<section><h2>21 · Trust boundaries</h2><p>Constitutional Kernel определяет границы доверия между субъектом, ОС, агентом, узлами сети, транспортом, внешними сервисами и администраторами.</p></section>
+<section><h2>22 · Неизвестность</h2><p>Конституция требует сохранять состояние неизвестности там, где доказательств недостаточно.</p><div class="formula">Unknown ≠ Safe · Unknown ≠ Harm · Unknown = Unknown</div></section>
+<section><h2>23 · Минимизация необратимого вреда</h2><p>При неопределённости система должна предпочитать варианты, которые сохраняют возможность остановки, отмены, восстановления и пересмотра. Это архитектурный принцип, а не универсальный классификатор людей.</p></section>
+<section><h2>24 · Right to Exit</h2><p>Если взаимодействие является добровольным и технически позволяет выход, архитектура должна сохранять возможность прекращения участия без искусственного создания зависимости.</p></section>
+<section><h2>25 · Anti-dependency</h2><p>Система не должна проектироваться так, чтобы субъект терял способность действовать без неё исключительно ради удержания пользователя, роста метрики или сохранения контроля.</p></section>
+<section><h2>26 · Cognitive autonomy</h2><p>Конституция защищает способность субъекта понимать, сомневаться, менять мнение и отказываться от взаимодействия. Она не устанавливает, какие убеждения являются правильными.</p></section>
+<section><h2>27 · Cognitive Safety boundary</h2><p>AI может помогать защищать информационную среду, но не получает права тайно оптимизировать сознание человека. Проверяемость когнитивного риска не превращается в оценку качества личности.</p></section>
+<section><h2>28 · Privacy</h2><p>Конституция устанавливает data minimization, purpose limitation, access control и возможность локальной обработки там, где это технически возможно.</p></section>
+<section><h2>29 · No secret logging</h2><p>Секреты и чувствительные данные не должны автоматически попадать в Event Log. Необходимое доказательство должно отделяться от раскрытия полного содержания.</p></section>
+<section><h2>30 · Auditability</h2><p>Каждый критический конституционный переход должен иметь достаточный evidence и быть доступен для независимой проверки.</p></section>
+<section><h2>31 · Event Log binding</h2><p>Изменения Конституции, emergency powers, capability grants и критические нарушения должны фиксироваться как события с provenance, epoch и integrity metadata.</p></section>
+<section><h2>32 · Audit binding</h2><p>Audit проверяет соответствие критических действий Конституции и действующей policy. Audit не получает права менять Конституцию или принимать за неё решения.</p></section>
+<section><h2>33 · Detection ≠ Decision</h2><p>Обнаружение потенциального нарушения не является окончательным решением о блокировке. Между сигналом и enforcement сохраняются определённые policy и review transitions.</p></section>
+<section><h2>34 · Enforcement boundary</h2><p>Constitutional Kernel может блокировать явно запрещённый переход, но не должен становиться универсальным исполнительным центром всех решений системы.</p></section>
+<section><h2>35 · Human override</h2><p>Для классов решений, заранее определённых как human-critical, должен существовать защищённый путь человеческого подтверждения, остановки или пересмотра.</p></section>
+<section><h2>36 · No blind automation</h2><p>Автоматизация не должна получать больше полномочий только потому, что ручная проверка неудобна. Критерий автоматизации определяется риском, обратимостью и доказуемостью.</p></section>
+<section><h2>37 · AI agent boundary</h2><p>AI-агент действует внутри capability scope. Его план не является authorization. Генерация предложения не является фактическим действием.</p><div class="formula">Intent ≠ Plan ≠ Authorization ≠ Action</div></section>
+<section><h2>38 · Multi-agent systems</h2><p>В цепочке агентов передача полномочий не должна происходить неявно. Каждый delegate должен иметь ограниченный scope и provenance.</p></section>
+<section><h2>39 · Sybil resistance</h2><p>Количество виртуальных узлов или агентов не должно автоматически создавать больше конституционного доверия. Identity, capability и authority должны быть различены.</p></section>
+<section><h2>40 · Reconfiguration</h2><p>SymbiontOS использует формальный контур реконфигурации. Constitutional Kernel проверяет, что изменение состава или конфигурации не обходит его ограничения.</p></section>
+<section><h2>41 · RECONFIG phases</h2><pre>RECONFIG_PREP
+VOTING
+COMMIT</pre><p>Commit допустим только при выполнении условий протокола. Epoch изменяется на определённом переходе, а не произвольно.</p></section>
+<section><h2>42 · Coordinator constraint</h2><p>В заданной модели coordinator выбирается детерминированно как узел с минимальным <code>node_id</code>. Constitutional Kernel не позволяет coordinator приобрести дополнительные конституционные полномочия только благодаря роли координатора.</p></section>
+<section><h2>43 · Crash-stop</h2><p>Отказ узла не считается согласием. Отсутствие ответа не превращается автоматически в положительный голос или разрешение на изменение Конституции.</p></section>
+<section><h2>44 · Formal state model</h2><pre>K(state, context, request, authority, evidence)
+  → {ALLOW, GUARDED, CONFIRM, HOLD, DENY, REVIEW}</pre><p>Эти состояния являются техническими режимами перехода, а не оценками человека.</p></section>
+<section><h2>45 · Constitutional invariants</h2><div class="grid"><div class="card"><h3>NO_UNAUTHORIZED_ACTION</h3><p>Нет критического действия без полномочия.</p></div><div class="card"><h3>NO_SELF_EXPANSION</h3><p>Нет самовольного расширения capability.</p></div><div class="card"><h3>CONSTITUTION_IMMUTABLE</h3><p>Конституция не меняется обычным действием.</p></div><div class="card"><h3>VERSION_BOUND</h3><p>Решение связано с действующей версией.</p></div><div class="card"><h3>UNCERTAINTY_VISIBLE</h3><p>Неизвестность сохраняется.</p></div><div class="card"><h3>MODEL_NOT_SUBJECT</h3><p>Модель не заменяет субъекта.</p></div><div class="card"><h3>EXIT_AVAILABLE</h3><p>Предусмотренный выход не блокируется без основания.</p></div><div class="card"><h3>AUDITABLE</h3><p>Критический переход проверяем.</p></div><div class="card"><h3>NO_RETROACTIVE_AUTHORITY</h3><p>Новая власть не легализует прошлое задним числом.</p></div></div></section>
+<section><h2>46 · Constitutional violation</h2><p>Нарушение Конституции является отдельным системным событием. Оно не должно автоматически удаляться после восстановления. Исправление и историческая запись нарушения существуют одновременно.</p></section>
+<section><h2>47 · Recovery</h2><p>После нарушения применяется контур: обнаружение, изоляция, сохранение evidence, восстановление, проверка и обучение. Recovery не переписывает исходную историю.</p><div class="formula">Detect → Contain → Preserve → Recover → Verify → Learn</div></section>
+<section><h2>48 · Preserve Tragedy</h2><p>Ошибки, конфликты и неудачные переходы сохраняются как материал для анализа. Система не должна оптимизировать историю под красивый отчёт.</p></section>
+<section><h2>49 · Constitutional memory</h2><p>Event Log хранит историю изменений Конституции. Audit проверяет её. Snapshot может фиксировать конкретное конституционное состояние. Эти слои не должны смешиваться.</p></section>
+<section><h2>50 · Constitutional snapshot</h2><pre>{
+  constitution_version,
+  constitution_hash,
+  effective_epoch,
+  invariant_set,
+  change_provenance
+}</pre></section>
+<section><h2>51 · TLA+ направление</h2><p>Constitutional Kernel должен быть кандидатом на формальную спецификацию. В TLA+ можно проверять невозможность действия вне capability scope, изменение epoch только через допустимый commit, запрет саморасширения и сохранение конституционных инвариантов при crash-stop.</p></section>
+<section><h2>52 · Model checking</h2><p>Проверяются не только нормальные сценарии, но и adversarial cases: compromised node, conflicting vote, replay, delayed message, corrupted state, failed coordinator, malicious agent и неполное evidence.</p></section>
+<section><h2>53 · Threat model</h2><table><tr><th>Угроза</th><th>Конституционный ответ</th></tr><tr><td>Privilege escalation</td><td>NO_SELF_EXPANSION + capability isolation</td></tr><tr><td>Policy tampering</td><td>versioning + provenance + audit</td></tr><tr><td>Replay</td><td>event_id + epoch + sequence</td></tr><tr><td>Compromised node</td><td>изоляция + независимая проверка</td></tr><tr><td>Compromised auditor</td><td>re-audit / independent verifier</td></tr><tr><td>Forced automation</td><td>human-critical review</td></tr><tr><td>Data leakage</td><td>minimization + selective disclosure</td></tr></table></section>
+<section><h2>54 · Constitutional governance</h2><p>Изменение Конституции требует отдельного governance-процесса. Предложение, проверка, подтверждение, commit и аудит должны быть различимы и записаны.</p></section>
+<section><h2>55 · Right to challenge</h2><p>Конституционная проверка должна быть оспорима: можно указать на ошибочное evidence, неверную версию политики, некорректную интерпретацию или технический сбой.</p></section>
+<section><h2>56 · No finalization</h2><p>Даже конституционный слой не должен выдавать себя за абсолютное описание реальности. Он является формальной рамкой системы и может содержать ошибки, которые должны оставаться исправимыми.</p></section>
+<section><h2>57 · Relationship to Event Log</h2><div class="formula">Constitution defines limits; Event Log records transitions; Audit verifies compliance.</div></section>
+<section><h2>58 · Relationship to Audit</h2><p>Audit предоставляет доказательную проверку, но Конституция определяет минимальные свойства, которые Audit обязан защищать. Audit Engine также подчиняется конституционным ограничениям.</p></section>
+<section><h2>59 · Relationship to PolicyEngine</h2><p>PolicyEngine реализует операционные правила внутри пространства, разрешённого Конституцией. Если policy конфликтует с конституционным инвариантом, приоритет имеет Constitutional Kernel.</p></section>
+<section><h2>60 · Relationship to SymbiontOS</h2><p>Constitutional Kernel является связующим верхним слоем между формальными ограничениями, адаптивным обучением, реконфигурацией, аудитом и действиями агентов.</p></section>
+<section><h2>61 · Minimal API</h2><pre>check(request, context, authority)
+authorize(change)
+verify(version)
+get_active_constitution()
+propose_change(diff)
+commit_change(proposal)
+rollback(version)
+audit_transition(event_id)</pre></section>
+<section><h2>62 · API security</h2><p>Операции изменения Конституции не должны быть доступны обычным агентам. Даже административный интерфейс обязан проходить отдельную авторизацию, аудит и проверку целостности.</p></section>
+<section><h2>63 · Constitutional boot</h2><p>При загрузке SymbiontOS сначала проверяется целостность активной Конституции и соответствие её hash ожидаемому trust anchor. Только после этого запускаются компоненты, зависящие от её ограничений.</p></section>
+<section><h2>64 · Safe boot failure</h2><p>Если Constitutional Kernel не может быть достоверно загружен или проверен, система не должна продолжать работу в режиме, который требует доверия к отсутствующим ограничениям. Допустимый режим определяется threat model.</p></section>
+<section><h2>65 · Runtime verification</h2><p>Проверка Конституции не заканчивается на boot. Критические runtime transitions должны подтверждать, что активная версия и её invariants остаются действующими.</p></section>
+<section><h2>66 · Dependency integrity</h2><p>Kernel должен иметь минимальное число зависимостей. Чем больше компонентов требуется для проверки самого Kernel, тем больше поверхность доверия. Критический путь должен быть максимально малым и детерминированным.</p></section>
+<section><h2>67 · Small trusted computing base</h2><p>Constitutional Kernel следует проектировать как небольшой trusted computing base. Сложные модели, AI и внешние сервисы не должны быть необходимыми для базовой проверки фундаментальных запретов.</p></section>
+<section><h2>68 · Fail-closed boundary</h2><p>Для конституционно запрещённых действий отсутствие подтверждения должно приводить к блокировке или HOLD, а не к молчаливому разрешению.</p></section>
+<section><h2>69 · Fail-soft boundary</h2><p>Для некритичных функций допустим degraded mode, если конституционные свойства остаются проверяемыми. Это позволяет не превращать любую техническую ошибку в остановку всей системы.</p></section>
+<section><h2>70 · No hidden constitution</h2><p>Критические ограничения не должны существовать только в скрытых промптах, неформальных инструкциях или недоступных правилах. Их семантика должна быть версионируемой и проверяемой.</p></section>
+<section><h2>71 · Constitutional transparency</h2><p>Публичная часть Конституции должна объяснять фундаментальные ограничения понятным языком. Техническая реализация может дополнительно содержать машинно-проверяемую спецификацию.</p></section>
+<section><h2>72 · Machine-readable constitution</h2><pre>{
+  "version": "1.0",
+  "invariants": [
+    "NO_UNAUTHORIZED_ACTION",
+    "NO_SELF_EXPANSION",
+    "UNCERTAINTY_VISIBLE",
+    "MODEL_NOT_SUBJECT",
+    "EXIT_AVAILABLE",
+    "AUDITABLE"
+  ]
+}</pre></section>
+<section><h2>73 · Separation of semantics and implementation</h2><p>Конституционный принцип должен быть определён независимо от конкретного языка программирования, модели AI или устройства. Это позволяет проверять несколько реализаций на соответствие одной спецификации.</p></section>
+<section><h2>74 · Reference implementation</h2><p>Эталонная реализация должна быть минимальной: проверка версии, invariants, capability scope, authorization и переходов. Она служит тестовым эталоном, но не заменяет формальную верификацию.</p></section>
+<section><h2>75 · Testing</h2><p>Тестирование включает unit, property-based, integration, fault injection, adversarial и model-checking сценарии. Особое внимание уделяется отрицательным тестам: система должна уметь доказуемо отказывать в запрещённых переходах.</p></section>
+<section><h2>76 · Audit of the Constitution</h2><p>Сама Конституция периодически проверяется на внутреннюю непротиворечивость, достижимость состояний, совместимость с Event Log и Audit и отсутствие скрытых обходных путей.</p></section>
+<section><h2>77 · Constitutional debt</h2><p>Если новая функция требует исключения из фундаментального ограничения, это фиксируется как constitutional debt. Исключение не должно маскироваться под обычную конфигурацию.</p></section>
+<section><h2>78 · Exception handling</h2><p>Исключения должны быть явными, узкими, time-bound и auditable. Исключение не должно расширять область действия автоматически.</p></section>
+<section><h2>79 · No authority laundering</h2><p>Компонент не может получить запрещённое полномочие через цепочку делегирования, если исходный grant сам не имел права передавать такое полномочие.</p></section>
+<section><h2>80 · Authority monotonicity</h2><p>Делегирование должно сохранять или сужать scope, если специальный конституционный процесс не разрешает обратное. Производное полномочие не может быть шире исходного без отдельного основания.</p></section>
+<section><h2>81 · Subject override boundary</h2><p>Human override не означает право человека или агента произвольно отменить фундаментальные security invariants. Override работает внутри определённой конституционной рамки.</p></section>
+<section><h2>82 · Collective operation</h2><p>Коллективное решение нескольких узлов не становится автоматически конституционным. Consensus подтверждает согласованность участников, но не заменяет проверку базовых ограничений.</p></section>
+<section><h2>83 · Social and cognitive boundary</h2><p>Даже если SymbiontOS используется в социальной или информационной системе, Constitutional Kernel не должен становиться механизмом определения «правильного» поведения людей. Его задача — ограничивать опасные свойства самой системы.</p></section>
+<section><h2>84 · Global security connection</h2><p>В контуре когнитивной безопасности Конституция ограничивает технические механизмы скрытого массового воздействия: незаметную персонализацию, невозможность выхода, сокрытие неопределённости, неконтролируемую эскалацию агентных действий и отсутствие аудита.</p></section>
+<section><h2>85 · Information ecology</h2><p>Для информационных систем конституционными требованиями могут быть provenance, distinction between fact and interpretation, uncertainty visibility, user exit и независимость информационных контуров. Это не означает обязательного единого мировоззрения.</p></section>
+<section><h2>86 · Preserve disagreement</h2><p>Конституционный слой должен сохранять возможность несогласия там, где спор не является техническим нарушением безопасности. Несогласие не должно автоматически классифицироваться как ошибка системы или пользователя.</p></section>
+<section><h2>87 · Anti-manipulation boundary</h2><p>Система не должна скрыто оптимизировать человека под engagement, retention или иной показатель, если это требует подавления его способности понимать, отказаться или изменить решение.</p></section>
+<section><h2>88 · Development Law relation</h2><p>Constitutional Kernel может технически реализовывать архитектурные следствия Закона Развития: минимизация необратимого вреда, сохранение субъектности, возможность выхода и ограничение вмешательства. Сам Kernel не превращает этот принцип в единственный числовой score.</p></section>
+<section><h2>89 · PICCS integration</h2><p>Для PICCS Constitutional Kernel может задавать минимальные требования к trace integrity, authorization, routing capabilities, ключам и обработке unwrap layers.</p></section>
+<section><h2>90 · DEFT integration</h2><p>Для DEFT Kernel задаёт неизменяемые ограничения допустимого перехода, тогда как DEFT отвечает за динамическую viability-модель внутри этих ограничений.</p></section>
+<section><h2>91 · EthicalAudit integration</h2><p>EthicalAudit обнаруживает сигналы. Constitutional Kernel определяет фундаментальные границы. PolicyEngine принимает операционное решение. Audit проверяет соответствие. Такое разделение предотвращает слияние detection и enforcement.</p></section>
+<section><h2>92 · Symbiont Coin</h2><p>Proof-of-Development не может использоваться для покупки конституционных полномочий. Развитие системы не является разрешением нарушать её фундаментальные ограничения.</p></section>
+<section><h2>93 · Proof of compliance</h2><p>Для критических переходов можно формировать компактное доказательство соответствия: версия Конституции, invariant set, policy version, authorization, evidence root и audit receipt.</p></section>
+<section><h2>94 · Constitutional receipt</h2><pre>{
+  constitution_version,
+  constitution_hash,
+  epoch,
+  invariant_set_hash,
+  authorization_ref,
+  evidence_root,
+  audit_receipt
+}</pre></section>
+<section><h2>95 · Formal transition</h2><pre>Transition(s, request, authority, constitution)
+  is valid iff
+  AuthorityValid
+  ∧ CapabilityWithinScope
+  ∧ ConstitutionSatisfied
+  ∧ RequiredEvidencePresent
+  ∧ NoForbiddenTransition</pre></section>
+<section><h2>96 · Critical properties</h2><p>Минимальный набор формально проверяемых свойств: запрет несанкционированного действия; запрет саморасширения; целостность Конституции; version binding; отсутствие retroactive authority; сохранение UNKNOWN; возможность audit; корректность emergency powers.</p></section>
+<section><h2>97 · Boot-to-runtime chain</h2><div class="formula">Trust Anchor → Constitutional Kernel → Capability Model → PolicyEngine → Agent → Action → Event Log → Audit</div><p>Эта последовательность показывает, что агент не является корнем доверия.</p></section>
+<section><h2>98 · Constitutional failure</h2><p>Если фундаментальная проверка невозможна, система должна переходить в заранее определённый режим ограниченной функциональности, HOLD или остановки. Нельзя считать отсутствие проверки доказательством соответствия.</p></section>
+<section><h2>99 · Conceptual boundary</h2><p>Constitutional Kernel — это не «закон мира» и не окончательная философская истина. Это формальная конституция конкретной технической системы, построенная с учётом принципов AS.</p></section>
+<section><h2>100 · Центральный принцип</h2><div class="quote"><strong>Система может учиться, адаптироваться и изменяться, но не должна получать право незаметно переписывать условия собственного существования.</strong></div></section>
+<section><h2>101 · Итоговая архитектура</h2><div class="formula"><strong>Constitution → Authority → Policy → Action → Event Log → Audit → Review → Recovery</strong></div><p>Constitutional Kernel задаёт пределы. Authority определяет допустимое полномочие. Policy формирует операционное правило. Agent выполняет действие. Event Log сохраняет историю. Audit проверяет соответствие. Review позволяет оспорить спорные случаи. Recovery исправляет последствия.</p></section>
+<footer>SYMBIONTOS · CONSTITUTIONAL KERNEL · AMBIVALENT SOLIPSISM · ARCHITECTURAL SPECIFICATION</footer>
+</main></body></html>
