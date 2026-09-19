@@ -197,6 +197,11 @@ function setupReporting(){
 }
 function render(){
  const m=metrics();
+ const keyArea=selectedSet.size?[...selectedSet]:(selected==="ALL"?C:[selected]);
+ const keyAgg=aggregateArea(m,keyArea);
+ $("#keyMetrics").innerHTML='<div class="card"><div class="muted">Coverage</div><div class="metric">'+fmt(data.coverage.temporal*100,1)+'%</div><div class="small">C_min='+(C_MIN*100)+'% · '+(data.coverage.temporal>=C_MIN?"absence can be reported":"absence remains unknown")+'</div></div><div class="card"><div class="muted">События</div><div class="metric">'+data.events.length+'</div><div class="small">L0–L2 units in current Content Map</div></div><div class="card"><div class="muted">Сцены / shots</div><div class="metric">'+data.work.scene_count+' / '+data.work.shot_count+'</div><div class="small">narrative / segmentation units</div></div><div class="card"><div class="muted">Ω* union</div><div class="metric">'+fmt(keyAgg.S*100,2)+'%</div><div class="small">'+keyArea.join(", ")+' · overlaps are not double-counted within union</div></div><div class="card"><div class="muted">Средняя confidence</div><div class="metric">'+fmt(C.reduce((s,c)=>s+m[c].mean_confidence,0)/C.length,2)+'</div><div class="small">coding / interpretation confidence, not effect probability</div></div><div class="card"><div class="muted">Data status</div><div class="metric">'+esc(data.work.data_status||"unknown")+'</div><div class="small">Synthetic demo ≠ audience study</div></div>
+ $("#reportOutput").hidden=true;
+ setupReporting();
  const area=selectedSet.size?[...selectedSet]:(selected==="ALL"?C:[selected]);
  const areaAgg=aggregateArea(m,area);
  const cov=data.coverage.temporal;
