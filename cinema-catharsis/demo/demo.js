@@ -226,7 +226,7 @@ function render(){
  renderChart("bars",()=>drawBars(m));
  renderChart("timeline",()=>drawTimeline()); const tl=$("#timeline"); if(tl) tl.querySelectorAll("[data-event-id]").forEach(el=>{el.addEventListener("click",()=>renderEvidenceTrace(el.getAttribute("data-event-id")));el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();renderEvidenceTrace(el.getAttribute("data-event-id"));}});});
  renderChart("density",()=>drawDensity());
- renderChart("wheel",()=>drawWheel(m)); renderProgramGroups(m);
+ renderChart("wheel",()=>drawWheel(m)); const wh=$("#wheel"); if(wh) wh.querySelectorAll("[data-wheel-class]").forEach(el=>{const open=()=>{selected=el.getAttribute("data-wheel-class"); selectedSet.clear(); render();};el.addEventListener("click",open);el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();open();}});}); renderProgramGroups(m);
  const traceEl=$("#traceContent");
  if(traceEl){
   const tc=selected==="ALL"?C[0]:selected, x=m[tc], ev=data.events.filter(e=>e.class===tc&&e.status==="present");
