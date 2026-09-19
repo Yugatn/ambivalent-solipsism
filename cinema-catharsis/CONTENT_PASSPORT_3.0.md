@@ -762,3 +762,40 @@ CONTENT ≠ EXPOSURE ≠ RESPONSE ≠ EFFECT ≠ HARM
 > Не смешивать уровни знания.
 > Не скрывать неопределённость.
 > Не решать за Субъекта.
+
+
+---
+
+## 27. Implementation lock — 2026-09-19
+
+Эта спецификация является базовым публичным контрактом Content Passport 3.0.
+
+Следующий технический слой не должен менять смысл существующих полей молча. Изменения схемы оформляются через:
+
+1. schema_version;
+2. migration note;
+3. backward-compatibility status;
+4. validation update;
+5. changelog.
+
+### Separation invariant
+
+```
+METADATA ≠ CONTENT OBSERVATION ≠ EXPOSURE ≠ SUBJECT RESPONSE
+```
+
+Производные показатели всегда сопровождаются provenance, uncertainty и версией метода.
+
+### MVP implementation order
+
+```
+JSON Schema
+→ sample passport
+→ validator
+→ metadata adapter
+→ annotation schema
+→ passport composer
+→ HTML renderer
+```
+
+Цель MVP — получить воспроизводимую карточку даже до автоматического анализа полного видеоматериала.
