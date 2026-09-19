@@ -1,3 +1,5 @@
+window.addEventListener("error",e=>{const el=document.getElementById("validation");if(el)el.innerHTML='<span class="bad">JavaScript error:</span> '+esc(e.message||"unknown error")+'<br><span class="small muted">Проверьте консоль браузера и версию demo.js.</span>';},{passive:true});
+window.addEventListener("unhandledrejection",e=>{const el=document.getElementById("validation");if(el)el.innerHTML='<span class="bad">Ошибка загрузки/вычисления:</span> '+esc(e.reason?.message||String(e.reason||"unknown rejection"));},{passive:true});
 
 const CODE_TIPS={
  N:"Nω · число событий категории.",
