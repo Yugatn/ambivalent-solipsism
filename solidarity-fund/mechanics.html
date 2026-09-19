@@ -3,13 +3,64 @@
 <title>Механика фонда солидарности · Амбивалентный солипсизм</title>
 <meta name="description" content="Подробная механика Фонда солидарности: взносы, циклы, пулы, заявки, случайное распределение, аудит, резервы, антизависимость, приватность и математическая модель.">
 <style>
-:root{--bg:#03070a;--panel:#081116;--text:#edf7f4;--muted:#a9bab7;--a:#55e6c1;--line:rgba(85,230,193,.18)}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(85,230,193,.08),transparent 35%),var(--bg);color:var(--text);font:16px/1.72 system-ui,-apple-system,sans-serif}main{width:min(1120px,calc(100% - 28px));margin:auto;padding:24px 0 90px}nav{display:flex;gap:18px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:16px}a{color:var(--muted);text-decoration:none}a:hover{color:var(--a)}.ey{margin-top:46px;color:var(--a);font:11px monospace;letter-spacing:.18em}h1{font-size:clamp(40px,8vw,78px);line-height:.95;margin:12px 0 20px;font-weight:500}h2{font-size:28px;margin:54px 0 14px;font-weight:500}h3{font-size:19px}.lead{font-size:21px;color:#c7d5d2;max-width:980px}.formula,.quote,.note{margin:22px 0;padding:20px;border:1px solid var(--line);border-radius:16px;background:var(--panel)}.formula{text-align:center;font-size:22px}.quote{border-left:2px solid var(--a);font:21px Georgia,serif}.note strong{color:var(--a)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.card{padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}.card p{color:#b9c8c5}.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.node{padding:10px 13px;border:1px solid var(--line);border-radius:11px;background:#071014}.connector{color:var(--a)}table{width:100%;border-collapse:collapse;margin:20px 0}th,td{text-align:left;vertical-align:top;padding:12px;border-bottom:1px solid var(--line)}th{color:var(--a)}td{color:#bdcbc8}pre{overflow:auto;padding:18px;border:1px solid var(--line);border-radius:12px;background:#020507;color:#cce8e1}code{color:#bdeee0}.small{color:#879794;font-size:14px}ul{padding-left:23px}li{margin:7px 0;color:#bdcbc8}.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}.toc a{padding:10px;border:1px solid var(--line);border-radius:10px;font-size:14px}footer{margin-top:70px;color:#536360;font:10px monospace}
+:root{--bg:#020609;--panel:#071216;--panel2:#0b181d;--text:#eef9f6;--muted:#9fb3b0;--a:#5ff0c8;--a2:#a8ffe8;--line:rgba(95,240,200,.16);--line2:rgba(255,255,255,.07);--shadow:0 18px 55px rgba(0,0,0,.28)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(900px 500px at 50% -120px,rgba(95,240,200,.12),transparent 70%),radial-gradient(700px 500px at 100% 35%,rgba(68,145,255,.055),transparent 70%),var(--bg);color:var(--text);font:16px/1.78 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 70%);opacity:.45}
+main{width:min(1160px,calc(100% - 32px));margin:auto;padding:22px 0 100px}
+nav{position:sticky;top:10px;z-index:10;display:flex;gap:8px;flex-wrap:wrap;padding:10px;margin:0 -10px 44px;border:1px solid var(--line);border-radius:16px;background:rgba(4,12,15,.78);backdrop-filter:blur(14px);box-shadow:var(--shadow)}
+nav a{color:var(--muted);text-decoration:none;padding:8px 11px;border-radius:10px;font-size:13px;letter-spacing:.02em}
+nav a:first-child{color:var(--a2);font-weight:650}
+nav a:hover{color:var(--text);background:rgba(95,240,200,.08)}
+.ey{margin-top:24px;color:var(--a);font:11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.22em;text-transform:uppercase}
+h1{font-size:clamp(48px,9vw,92px);line-height:.9;margin:14px 0 24px;font-weight:520;letter-spacing:-.045em;max-width:900px}
+h2{font-size:clamp(25px,3vw,34px);line-height:1.1;margin:72px 0 18px;font-weight:560;letter-spacing:-.02em}
+h3{font-size:18px;margin:0 0 7px}
+p{max-width:980px}
+.lead{font-size:clamp(18px,2.1vw,23px);line-height:1.55;color:#cbdad7;max-width:930px}
+section{position:relative;padding-top:1px}
+section:not(:first-of-type):before{content:"";display:block;width:72px;height:1px;margin:0 0 28px;background:linear-gradient(90deg,var(--a),transparent);opacity:.65}
+.formula,.quote,.note{margin:24px 0;padding:22px 24px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(11,24,29,.92),rgba(4,12,15,.92));box-shadow:0 12px 36px rgba(0,0,0,.18)}
+.formula{text-align:center;font-size:clamp(18px,2.3vw,25px);line-height:1.45;color:var(--a2)}
+.quote{border-left:3px solid var(--a);font:clamp(19px,2.2vw,24px)/1.55 Georgia,serif;color:#e5f2ef}
+.note strong{color:var(--a)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.card{padding:20px;border:1px solid var(--line2);border-radius:16px;background:linear-gradient(145deg,rgba(9,22,27,.95),rgba(5,13,16,.95));box-shadow:0 12px 30px rgba(0,0,0,.16);transition:transform .2s,border-color .2s,background .2s}
+.card:hover{transform:translateY(-2px);border-color:rgba(95,240,200,.3);background:linear-gradient(145deg,rgba(11,29,34,.98),rgba(5,14,18,.98))}
+.card p{color:#b7c8c5;margin-bottom:0}
+.flow{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:20px 0}
+.node{padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:#071116;color:#d9ebe7;box-shadow:inset 0 1px rgba(255,255,255,.035)}
+.connector{color:var(--a);font-size:18px}
+table{width:100%;border-collapse:separate;border-spacing:0;margin:22px 0;border:1px solid var(--line2);border-radius:15px;overflow:hidden;background:rgba(5,14,18,.62)}
+th,td{text-align:left;vertical-align:top;padding:13px 15px;border-bottom:1px solid var(--line2)}
+th{color:var(--a2);font-weight:600;background:rgba(95,240,200,.045)}
+tr:last-child td{border-bottom:0}
+td{color:#bdcbc8}
+pre{overflow:auto;padding:20px;border:1px solid var(--line);border-radius:15px;background:#020507;color:#cce8e1;box-shadow:inset 0 0 40px rgba(95,240,200,.025)}
+code{color:#bdeee0}
+.small{color:#879794;font-size:14px}
+ul,ol{padding-left:25px}
+li{margin:7px 0;color:#bdcbc8}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}
+.toc a{padding:10px;border:1px solid var(--line);border-radius:10px;font-size:14px}
+input,button{font:inherit}
+#calculator .card{border-color:rgba(95,240,200,.24);background:linear-gradient(145deg,rgba(8,25,29,.98),rgba(4,13,16,.98))}
+#calculator input{transition:border-color .2s,box-shadow .2s}
+#calculator input:focus{outline:none;border-color:var(--a)!important;box-shadow:0 0 0 3px rgba(95,240,200,.08)}
+footer{margin-top:90px;padding-top:22px;border-top:1px solid var(--line2);color:#536360;font:10px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em}
+@media(max-width:700px){main{width:min(100% - 20px,1160px);padding-top:12px}nav{top:5px;margin:0 -2px 34px}nav a{font-size:12px;padding:7px 8px}h1{font-size:clamp(45px,15vw,70px)}h2{margin-top:54px}.lead{font-size:18px}.formula,.quote,.note{padding:18px}.flow{align-items:stretch}.node{flex:1 1 auto}table{font-size:14px;display:block;overflow-x:auto;white-space:normal}th,td{min-width:150px}}
 </style></head><body><main>
 <nav><a href="../">АМБИВАЛЕНТНЫЙ СОЛИПСИЗМ</a><a href="./">ФОНД</a><a href="../society/human-network.html">ЧЕЛОВЕЧЕСКАЯ СЕТЬ</a><a href="../ai/ai-safety.html">AI SAFETY</a></nav>
 <div class="ey">SOLIDARITY FUND · MECHANICS</div>
 <h1>Механика фонда</h1>
 <p class="lead">Эта страница переводит идею Фонда солидарности из общего принципа в операционную модель: от поступления малого добровольного вклада до формирования пула, проверки права участия, распределения средств, аудита и измерения результата.</p>
 <div class="formula"><strong>Малый вклад × большое число участников = общий ресурс развития</strong></div>
+<div class="grid" style="margin-top:18px">
+<div class="card"><h3>01 · Ресурс</h3><p>Малые добровольные взносы объединяются в общий фонд.</p></div>
+<div class="card"><h3>02 · Правила</h3><p>Условия цикла фиксируются заранее и доступны для проверки.</p></div>
+<div class="card"><h3>03 · Проверяемость</h3><p>Ключевые действия оставляют проверяемый цифровой след.</p></div>
+</div>
 
 <section><h2>01 · Что именно моделирует механика</h2>
 <p>Фонд рассматривается как инфраструктура коллективного ресурса. Механика должна отвечать на семь вопросов: кто вносит ресурс, когда он становится доступным, кто может участвовать, как определяется получатель, сколько средств можно распределить, как предотвращается злоупотребление и как проверяется результат.</p>
@@ -37,7 +88,16 @@
 <p>Для квартальной модели цикл равен 90 или 91 календарному дню в зависимости от конкретного расписания. Правила следующего цикла не должны менять право уже допущенных участников задним числом.</p></section>
 
 <section><h2>07 · Снимок цикла</h2>
-<p>В момент закрытия цикла создаётся неизменяемый snapshot: объём средств, список допущенных заявок, версия правил, число мест, алгоритм распределения и источник случайности. После этого результат может быть проверен независимо.</p>
+<p>Снимок цикла — это зафиксированное состояние фонда перед распределением. Он нужен, чтобы после завершения цикла можно было независимо проверить, <strong>какие правила действовали, сколько средств было доступно, сколько получателей участвовало и на основании каких данных был получен результат.</strong></p>
+<div class="grid">
+<div class="card"><h3>Финансы</h3><p><code>gross_amount</code> — все поступления. <code>reserve_amount</code> — сумма, оставленная в резерве. <code>distributable_amount</code> — ресурс, доступный для распределения.</p></div>
+<div class="card"><h3>Правила</h3><p><code>cycle_id</code> — идентификатор цикла. <code>rule_version</code> — версия правил, действовавшая именно в этом цикле.</p></div>
+<div class="card"><h3>Участники</h3><p><code>pool_id</code> — идентификатор пула. <code>eligible_set_hash</code> — криптографический отпечаток списка допущенных заявок.</p></div>
+<div class="card"><h3>Распределение</h3><p><code>recipient_count</code> — число получателей. <code>randomness_commitment</code> — зафиксированное обязательство по параметрам случайности до публикации результата.</p></div>
+</div>
+<div class="note"><strong>Простыми словами:</strong> snapshot — это «фотография» состояния фонда в контрольный момент. Если после этого кто-то изменит список, сумму или правила, изменение должно быть обнаруживаемым.</div>
+<details style="margin-top:18px">
+<summary style="cursor:pointer;color:var(--a2);font-weight:600">Показать техническую запись</summary>
 <pre>{
   cycle_id,
   rule_version,
@@ -49,7 +109,8 @@
   recipient_count,
   randomness_commitment,
   snapshot_timestamp
-}</pre></section>
+}</pre>
+</details></section>
 
 <section><h2>08 · Пулы</h2>
 <p>Единый фонд может содержать несколько независимых пулов. Это предотвращает ситуацию, когда одна программа поглощает весь ресурс.</p>
@@ -164,7 +225,7 @@ winner_i = deterministic_random(seed, i)</pre>
 
 <section><h2>21 · Audit trail</h2>
 <p>Каждый критический переход получает идентификатор и связанную запись. История должна позволять восстановить: какая версия правил действовала, какой пул был выбран, сколько денег было доступно, как сформирован eligible-set и каким образом получен результат.</p>
-<pre>Contribution → Pool → Eligibility → Snapshot → Randomness → Selection → Payment → Outcome</pre></section>
+<pre>Contribution  ·  Pool  ·  Eligibility  ·  Snapshot  ·  Randomness  ·  Selection  ·  Payment  ·  Outcome</pre></section>
 
 <section><h2>22 · Разделение функций</h2>
 <p>Оператор, который принимает деньги, не должен единолично определять победителей и единолично подтверждать собственный аудит. При росте фонда функции следует разделять.</p>
@@ -197,11 +258,11 @@ winner_i = deterministic_random(seed, i)</pre>
 
 <section><h2>29 · Результат помощи</h2>
 <table><tr><th>До</th><th>Интервенция</th><th>После</th></tr><tr><td>конкретное препятствие</td><td>ресурс фонда</td><td>изменение доступной возможности</td></tr><tr><td>невозможность обучения</td><td>финансирование обучения</td><td>доступ к квалификации</td></tr><tr><td>невозможность переезда</td><td>транспортный ресурс</td><td>доступ к новому месту работы</td></tr><tr><td>отсутствие инструмента</td><td>оборудование</td><td>возможность работать</td></tr></table>
-<p>Связь «выплата → результат» не должна объявляться доказанной автоматически. Необходимо различать корреляцию, самоотчёт и подтверждённый эффект.</p></section>
+<p>Связь «выплата  ·  результат» не должна объявляться доказанной автоматически. Необходимо различать корреляцию, самоотчёт и подтверждённый эффект.</p></section>
 
 <section><h2>30 · Обратная связь</h2>
 <p>После каждого цикла фонд анализирует ошибки и изменяет операционные правила только через новую версию. Изменение правил не должно скрывать историю предыдущих циклов.</p>
-<div class="formula">Cycle → Audit → Findings → Rule Proposal → Review → New Version → Next Cycle</div></section>
+<div class="formula">Cycle  ·  Audit  ·  Findings  ·  Rule Proposal  ·  Review  ·  New Version  ·  Next Cycle</div></section>
 
 <section><h2>31 · Право на выход</h2>
 <p>Участник может прекратить регулярные взносы. Выход не должен снижать его достоинство, создавать скрытый долг или превращаться в санкцию.</p>
