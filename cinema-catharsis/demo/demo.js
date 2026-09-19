@@ -37,19 +37,73 @@ function renderSceneAnalysis(){
  el.innerHTML='<div class="grid"><div class="card"><div class="muted">Нарративных сцен</div><div class="metric">'+scenes+'</div><div class="small">единицы для Rω</div></div><div class="card"><div class="muted">Планов</div><div class="metric">'+shots+'</div><div class="small">единицы для Cω</div></div><div class="card"><div class="muted">Сцен с событиями</div><div class="metric">'+observedScenes.length+'</div><div class="small">по текущему Content Map</div></div><div class="card"><div class="muted">Событий ниже порога</div><div class="metric">'+shortEvents.length+'</div><div class="small">'+threshold+' ms · assumption</div></div></div><div class="notice small"><b>Параметр:</b> '+threshold+' ms. Он не называется «законом восприятия» и не доказывает отсутствие психофизиологического отклика. Для чувствительности сравните 120 и 240 ms.</div><div class="table-scroll"><table class="table"><tr><th>Сцена</th><th>Интервал</th><th>Длительность</th><th>События</th><th>Shots</th></tr>'+sceneRows.map(x=>'<tr><td><b>'+esc(x.id)+'</b></td><td>'+fmt(x.start,1)+'–'+fmt(x.end,1)+' s</td><td>'+fmt(x.duration,1)+' s</td><td>'+x.events+'</td><td>'+x.shots+'</td></tr>').join('')+'</table></div>';
 }
 function attitudePolarity(id){const g=Object.entries((data.attitude_ontology||window.ATTITUDE_ONTOLOGY||{}).groups||{}).find(([k,v])=>v.includes(id))?.[0]||"other";return ["risk_destructive","prejudice_stigma","mental_health_self_harm","antisocial","commercial_body_image"].includes(g)?"destructive":["prosocial","family_social","work_civic","health_constructive"].includes(g)?"constructive":"other"}
+function attitudeMeta(){
+ const ont=data.attitude_ontology||window.ATTITUDE_ONTOLOGY||{items:[],groups:{}};
+ const groups=ont.groups||{};
+ const domainMap={
+  prosocial:["social_relations","Просоциальные отношения"],
+  family_social:["family_social","Семья и близкие"],
+  work_civic:["work_civic","Труд, обучение и гражданские нормы"],
+  health_constructive:["health_constructive","Здоровье и сохранение жизни"],
+  risk_destructive:["risk_destructive","Риск, здоровье и поведенческие зависимости"],
+  prejudice_stigma:["prejudice_stigma","Предубеждение, стигма и враждебность"],
+  mental_health_self_harm:["mental_health_self_harm","Психическое здоровье и самоповреждение"],
+  antisocial:["antisocial","Антисоциальные стратегии"],
+  commercial_body_image:["commercial_body_image","Потребление, статус и образ тела"]
+ };
+ const polarity={};
+ Object.entries(groups).forEach(([g,ids])=>ids.forEach(id=>polarity[id]=
+   ["prosocial","family_social","work_civic","health_constructive"].includes(g)?"constructive":
+   ["risk_destructive","prejudice_stigma","mental_health_self_harm","antisocial","commercial_body_image"].includes(g)?"destructive":"uncertain"));
+ return {groups,domainMap,polarity};
+}
+function attitudeRows(){
+ const T=data.work.duration_seconds, obs=Array.isArray(data.attitude_observations)?data.attitude_observations:DEMO_ATTITUDES;
+ const by={}; for(const o of obs){if(!by[o.category])by[o.category]=[];by[o.category].push(o)}
+ const meta=attitudeMeta();
+ return (data.attitude_ontology?.items||window.ATTITUDE_ONTOLOGY?.items||[]).map(item=>{
+   const es=by[item.id]||[], t=unionLength(es), conf=es.length?es.reduce((a,e)=>a+Number(e.confidence??1),0)/es.length:null;
+   const group=Object.entries(meta.groups).find(([,ids])=>ids.includes(item.id))?.[0]||"other";
+   const domain=meta.domainMap[group]?.[0]||"other";
+   const polarity=meta.polarity[item.id]||"uncertain";
+   const status=es.length?(conf<.5?"ambiguous":"hypothesis"):"unknown";
+   return {...item,N:es.length,T:t,share:t/T,confidence:conf,status,group,domain,polarity,observations:es};
+ });
+}
+function axisForAttitude(row){
+ const cognitive={constructive:["A22","A77","A78","A79","A80","A81"],destructive:["A82","A83","A84","A85"]};
+ const life={preserve:["A27","A28","A29","A30","A31","A32","A89","A91"],shorten:["A33","A34","A35","A36","A38","A59","A60","A88","A90"]};
+ if(cognitive.constructive.includes(row.id))return ["cognitive_orientation","development"];
+ if(cognitive.destructive.includes(row.id))return ["cognitive_orientation","blocking/passivity"];
+ if(life.preserve.includes(row.id))return ["life_orientation","preservation/strengthening"];
+ if(life.shorten.includes(row.id))return ["life_orientation","shortening"];
+ return [null,null];
+}
+function renderAttitudeAxes(rows){
+ const sum=(axis,val)=>rows.filter(r=>axisForAttitude(r)[0]===axis&&axisForAttitude(r)[1]===val).reduce((a,r)=>a+r.T,0);
+ const pct=x=>fmt(x/data.work.duration_seconds*100,3);
+ $("#attitudeAxes").innerHTML='<div class="card"><b>life_orientation</b><div class="small">Сохранение/укрепление: <b>'+pct(sum("life_orientation","preservation/strengthening"))+'%</b> · сокращение: <b>'+pct(sum("life_orientation","shortening"))+'%</b></div></div><div class="card"><b>cognitive_orientation</b><div class="small">Развитие мышления/творчества: <b>'+pct(sum("cognitive_orientation","development"))+'%</b> · блокировка/пассивность: <b>'+pct(sum("cognitive_orientation","blocking/passivity"))+'%</b></div></div>';
+}
 function renderAttitudes(){
- const rows=attitudeRows();
- const groups=(window.ATTITUDE_ONTOLOGY&&window.ATTITUDE_ONTOLOGY.groups)||data.attitude_ontology?.groups||{};
- const groupName={prosocial:"Просоциальные",family_social:"Семья и близкие",work_civic:"Труд и гражданские нормы",health_constructive:"Здоровьесберегающие",risk_destructive:"Деструктивные и рискованные",prejudice_stigma:"Предубеждение, стигма и враждебность",mental_health_self_harm:"Психическое здоровье и самоповреждение",antisocial:"Антисоциальные",commercial_body_image:"Потребление, статус и образ тела"};
- const positive=new Set([...(groups.prosocial||[]),...(groups.family_social||[]),...(groups.work_civic||[]),...(groups.health_constructive||[])]);
- const destructive=new Set([...(groups.risk_destructive||[]),...(groups.prejudice_stigma||[]),...(groups.mental_health_self_harm||[]),...(groups.antisocial||[]),...(groups.commercial_body_image||[])]);
- const present=rows.filter(x=>x.N>0);
- const sumPresent=present.reduce((a,x)=>a+x.T,0);
- $("#attitudeSummary").innerHTML='<div class="card"><div class="muted">Кодов L4</div><div class="metric">'+rows.length+'</div><div class="small">расширяемый кодбук</div></div><div class="card"><div class="muted">Наблюдаемых гипотез</div><div class="metric">'+present.length+'</div><div class="small">с интервалами в демо</div></div><div class="card"><div class="muted">Покрыто L4</div><div class="metric">'+fmt(sumPresent/T*100,2)+'%</div><div class="small">сумма интервалов может перекрываться</div></div><div class="card"><div class="muted">C_min</div><div class="metric">'+fmt(C_MIN*100,0)+'%</div><div class="small">для L3 absence; L4 требует отдельной валидации</div></div>';
- let out='<div class="table-scroll"><table class="table"><tr><th>Установка / гипотеза</th><th>Категория</th><th>Полярность</th><th>Tω</th><th>% полной длительности</th><th>N</th><th>confidence</th><th>Статус</th><th>Расшифровка</th></tr>';
- rows.forEach(x=>{const polarity=attitudePolarity(x.id);const group=Object.entries(groups).find(([g,ids])=>ids.includes(x.id))?.[0]||"other";const status=x.N?x.status:"unknown";out+='<tr><td><b>'+esc(x.label)+'</b><div class="small">'+esc(x.id)+'</div></td><td>'+esc(groupName[group]||group)+'</td><td><span class="badge">'+polarity+'</span></td><td>'+fmt(x.T,1)+' s</td><td><b>'+fmt(x.share*100,3)+'%</b></td><td>'+x.N+'</td><td>'+ (x.confidence===null?"—":fmt(x.confidence,2))+'</td><td>'+status+'</td><td>'+esc(x.definition)+'<br><span class="small">'+(x.observations.length?esc(x.observations.map(o=>o.basis).join("; ")):"нет кодированного наблюдения")+'</span></td></tr>'});
- out+='</table></div><div class="notice small"><b>Важно:</b> положительные/конструктивные и деструктивные категории — аналитические группировки, а не оценка произведения. Для одного и того же интервала могут быть несколько L4-гипотез, поэтому проценты не складываются в 100%.</div>';
+ const rows=attitudeRows(), meta=attitudeMeta(), q=window.__attitudeFilter||{}, domain=q.domain||"ALL", polarity=q.polarity||"ALL", search=(q.search||"").trim().toLowerCase();
+ const filtered=rows.filter(r=>(domain==="ALL"||r.domain===domain)&&(polarity==="ALL"||r.polarity===polarity)&&(!search||(r.label+" "+r.id+" "+r.definition).toLowerCase().includes(search)));
+ const present=rows.filter(x=>x.N>0), constructive=present.filter(x=>x.polarity==="constructive").length, destructive=present.filter(x=>x.polarity==="destructive").length, unknown=rows.filter(x=>x.status==="unknown").length;
+ $("#attitudeSummary").innerHTML='<div class="card"><div class="muted">L4-гипотез</div><div class="metric">'+rows.length+'</div><div class="small">кодбук attitudes-0.1</div></div><div class="card"><div class="muted">Constructive</div><div class="metric">'+constructive+'</div><div class="small">аналитическая полярность</div></div><div class="card"><div class="muted">Destructive</div><div class="metric">'+destructive+'</div><div class="small">аналитическая полярность</div></div><div class="card"><div class="muted">Unknown</div><div class="metric">'+unknown+'</div><div class="small">нет кодированного evidence</div></div>';
+ renderAttitudeAxes(rows);
+ let out='<div class="table-scroll"><table class="table"><tr><th>Domain</th><th>Program</th><th>Attitude hypothesis</th><th>Polarity</th><th>Status</th><th>N</th><th>Tω</th><th>Sω%</th><th>Cω</th><th>ρevents</th><th>ρtime</th><th>Rω</th><th>confidence</th></tr>';
+ filtered.forEach(x=>{
+   const cov=data.work.shot_count?new Set(x.observations.map(o=>o.shot_id).filter(Boolean)).size/data.work.shot_count:data.coverage.temporal;
+   const rho=x.N/(data.work.duration_seconds/60), rhot=x.T/(data.work.duration_seconds/60), R=data.work.scene_count?x.N/data.work.scene_count:0;
+   const groupLabel=meta.domainMap[x.group]?.[1]||"Другая область";
+   const sameDomain=filtered.filter(y=>y.domain===x.domain).reduce((a,y)=>a+y.share,0);
+   const selectedComp=sameDomain?x.share/sameDomain:0;
+   const trace=x.observations.map(o=>'<div class="evidence-item"><b>'+esc(o.id||x.id)+'</b> · '+fmt(o.start,1)+'–'+fmt(o.end,1)+' s · scene '+esc(o.scene_id??"—")+' · shot '+esc(o.shot_id??"—")+' · event '+esc(o.event_id??o.id??"—")+'<br><span class="small">L3 observed_context: '+esc(JSON.stringify(o.context_observed||{}))+'</span><br><span class="small">L4 interpretation: '+esc(o.basis||x.definition)+'</span> · confidence '+fmt(o.confidence??x.confidence??0,2)+'</div>').join("");
+   out+='<tr class="attitude-row" data-attitude-id="'+x.id+'"><td>'+esc(groupLabel)+'</td><td>'+esc(x.domain)+'</td><td><b>'+esc(x.label)+'</b><div class="small">'+esc(x.id)+'</div></td><td><span class="badge">'+x.polarity+'</span></td><td>'+esc(x.status)+'</td><td>'+x.N+'</td><td>'+fmt(x.T,1)+' s</td><td><b>'+fmt(x.share*100,3)+'%</b></td><td>'+fmt(cov*100,2)+'%</td><td>'+fmt(rho,3)+'/min</td><td>'+fmt(rhot,3)+' s/min</td><td>'+fmt(R,3)+'</td><td>'+(x.confidence===null?"—":fmt(x.confidence,2))+'</td></tr>';
+   out+='<tr class="attitude-detail" id="attitude-detail-'+x.id+'" hidden><td colspan="13"><div class="card"><b>'+esc(x.label)+'</b><div class="small">Absolute Sω='+fmt(x.share*100,3)+'% · selected-area composition Pω^Ω*='+fmt(selectedComp*100,3)+'% · evidence count='+x.observations.length+'</div><div class="small">Uncertainty: measurement / annotation / segmentation / grouping; CI95 не оценивается для synthetic demo.</div><div style="margin-top:8px"><b>Evidence Trace</b>'+(trace||'<div class="muted small">Нет наблюдений.</div>')+'</div></div></td></tr>';
+ });
+ out+='</table></div><div class="notice small"><b>Граница интерпретации:</b> L4 — гипотеза, а не доказанный эффект аудитории. Constructive/Destructive — метаданные кодбука. Единого harm score нет. Процент Sω — доля времени контента, не viewer exposure.</div>';
  $("#attitudeProfile").innerHTML=out;
+ document.querySelectorAll(".attitude-row").forEach(row=>row.addEventListener("click",()=>{const id=row.dataset.attitudeId,d=$("#attitude-detail-"+id);if(d)d.hidden=!d.hidden;renderAttitudeEvidence(rows.find(x=>x.id===id));}));
 }
 function aggregateArea(m,area){const T=data.work.duration_seconds;const cats=area.filter(c=>m[c]);const union=unionLength(data.events.filter(e=>cats.includes(e.class)&&e.status==="present"));const denom=cats.reduce((a,c)=>a+m[c].share,0);const probs=cats.map(c=>denom?m[c].share/denom:0);const H=probs.reduce((a,p)=>a+(p>0?-p*Math.log(p):0),0),Hn=cats.length>1?H/Math.log(cats.length):0;return{N:cats.reduce((a,c)=>a+m[c].N,0),T:union,S:union/T,internal_composition:Object.fromEntries(cats.map((c,i)=>[c,probs[i]])),diversity_index:H,diversity_index_norm:Hn}}
 
@@ -86,7 +140,8 @@ function render(){
 }
 function controls(){const el=$("#controls");el.innerHTML='<button data-c="ALL">Вся онтология</button>'+C.map(c=>`<button data-c="${c}">${c}</button>`).join("")+'<button data-c="CLEAR">Сбросить</button>';el.onclick=e=>{const b=e.target.closest("button");if(!b)return;const c=b.dataset.c;if(c==="ALL"){selected="ALL";selectedSet=new Set(C)}else if(c==="CLEAR"){selected="ALL";selectedSet=new Set(C)}else{selectedSet.has(c)?selectedSet.delete(c):selectedSet.add(c);selected=selectedSet.size===1?[...selectedSet][0]:"ALL"}el.querySelectorAll("button").forEach(x=>x.classList.remove("active"));if(selectedSet.size===C.length)el.querySelector("[data-c=ALL]").classList.add("active");else for(const x of selectedSet)el.querySelector(`[data-c="${x}"]`)?.classList.add("active");render()}}
 function normalizeInput(d){if(d&&d.film){return {work:{id:"imported-"+Date.now(),title:d.film.title,duration_seconds:d.film.duration_sec,data_status:"preliminary",analysis_version:VERSIONS.measurement},ontology:{classes:Object.fromEntries(C.map(c=>[c,c]))},events:(d.events||[]).map((e,i)=>({id:e.id||"E"+String(i+1).padStart(3,"0"),start:e.start,end:e.end,class:e.category,program:"imported",status:"present",confidence:e.confidence,context_observed:e.context_observed||{},membership:e.membership??e.p??1})),coverage:d.coverage||{temporal:1,modalities:{}},validation:d.validation||{status:"not_validated"}}}return d}
-function load(d){d=normalizeInput(d);const errors=validate(d);$("#validation").innerHTML=errors.length?`<span class="bad">Schema check: ${errors.length} error(s)</span><br>${errors.map(esc).join("<br>")}`:`<span class="good">Schema check: базовая валидация пройдена.</span> · ${esc(d.work.title)} · ${esc(d.work.data_status)}`;if(errors.length)return;data=d;selected="ALL";selectedSet=new Set(C);controls();render()}
+function setupAttitudeFilters(){const sel=$("#attitudeDomainFilter");if(!sel)return;const meta=attitudeMeta();const seen=new Map();Object.entries(meta.domainMap).forEach(([k,v])=>seen.set(v[0],v[1]));sel.innerHTML='<option value="ALL">All domains</option>'+[...seen].map(([k,v])=>'<option value="'+k+'">'+esc(v)+'</option>').join("");const apply=()=>{window.__attitudeFilter={domain:sel.value,polarity:$("#attitudePolarityFilter")?.value||"ALL",search:$("#attitudeSearch")?.value||""};renderAttitudes()};sel.onchange=apply;$("#attitudePolarityFilter").onchange=apply;$("#attitudeSearch").oninput=apply;}
+function load(d){d=normalizeInput(d);setupAttitudeFilters();const errors=validate(d);$("#validation").innerHTML=errors.length?`<span class="bad">Schema check: ${errors.length} error(s)</span><br>${errors.map(esc).join("<br>")}`:`<span class="good">Schema check: базовая валидация пройдена.</span> · ${esc(d.work.title)} · ${esc(d.work.data_status)}`;if(errors.length)return;data=d;selected="ALL";selectedSet=new Set(C);controls();render()}
 function loadDemo(){Promise.all([fetch("data/demo_content.json").then(r=>r.json()),fetch("data/attitude_ontology.json").then(r=>r.json())]).then(([d,o])=>{window.ATTITUDE_ONTOLOGY=o;d.attitude_ontology=o;load(d)}).catch(()=>$("#validation").textContent="Не удалось загрузить Demo JSON. Откройте через GitHub Pages или HTTP-сервер.")}
 const importPanel=document.querySelector(".import-panel");["dragenter","dragover"].forEach(ev=>importPanel.addEventListener(ev,e=>{e.preventDefault();importPanel.classList.add("drop-active")}));["dragleave","drop"].forEach(ev=>importPanel.addEventListener(ev,e=>{e.preventDefault();importPanel.classList.remove("drop-active")}));importPanel.addEventListener("drop",e=>{const f=e.dataTransfer.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{try{load(JSON.parse(reader.result))}catch(err){$("#validation").innerHTML='<span class="bad">Некорректный JSON.</span>'}};reader.readAsText(f)});
 $("#fileInput").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{try{load(JSON.parse(reader.result))}catch(err){$("#validation").innerHTML='<span class="bad">Некорректный JSON.</span>'}};reader.readAsText(f)});
