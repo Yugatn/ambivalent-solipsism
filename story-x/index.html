@@ -89,7 +89,7 @@ function renderMarkdown(md){
   if(/^## /.test(l)){flushP();flushQ();out+='<h2>'+inline(l.slice(3))+'</h2>';continue}
   if(/^### /.test(l)){flushP();flushQ();out+='<h3>'+inline(l.slice(4))+'</h3>';continue}
   if(/^> ?/.test(l)){flushP();quote.push(l.replace(/^> ?/,''));continue}
-  if(/^**[^*]+**$/.test(l.trim())){flushP();flushQ();out+='<div class="formula">'+inline(l.trim())+'</div>';continue}
+  if(/^\*\*[^*]+\*\*$/.test(l.trim())){flushP();flushQ();out+='<div class="formula">'+inline(l.trim())+'</div>';continue}
   if(/^---$/.test(l.trim())){flushP();flushQ();out+='<div class="chapter-break">· · ·</div>';continue}
   if(!l.trim()){flushP();flushQ();continue}
   para.push(l.trim());
