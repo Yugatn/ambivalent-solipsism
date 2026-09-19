@@ -143,7 +143,43 @@ function aggregateArea(m,area){const T=data.work.duration_seconds;const cats=are
 
 function esc(s){return String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]))}
 function drawBars(m){const W=760,H=300,p=45,max=Math.max(...C.map(c=>m[c][metric==="share"?"share":"N"]),.001),bar=(W-70)/10-8;let svg='<svg viewBox="0 0 760 300" class="chart">';C.forEach((c,i)=>{const v=m[c][metric==="share"?"share":"N"],h=(H-70)*v/max,x=p+i*((W-70)/10),y=H-35-h;svg+=`<rect data-class="${c}" tabindex="0" role="button" aria-label="${esc(c+" · "+fmt(v*100,2)+"%")}" x="${x}" y="${y}" width="${bar}" height="${h}" rx="5" fill="${palette[i]}" opacity="${selected==="ALL"||selected===c?1:.25}"/><text x="${x+bar/2}" y="${H-15}" fill="#9aa7ba" font-size="12" text-anchor="middle">${c}</text><text x="${x+bar/2}" y="${Math.max(18,y-5)}" fill="#e9eef8" font-size="11" text-anchor="middle">${metric==="share"?fmt(v*100)+"%":v}</text>`});return svg+"</svg>"}
-function drawTimeline(){const W=760,H=Math.max(340,Math.min(900,55+data.events.filter(e=>e.status==="present"&&(selected==="ALL"||e.class===selected)).length*22)),p=42,T=data.work.duration_seconds,lane=22;let svg='<svg viewBox="0 0 760 '+H+'" class="chart">';let laneIndex=0;data.events.forEach((e)=>{if(selected!=="ALL"&&e.class!==selected)return;if(e.status!=="present")return;const y=15+(laneIndex++)*lane,x=p+(e.start/T)*(W-p-20),w=Math.max(3,(duration(e)/T)*(W-p-20));svg+=`<rect data-event-id="${esc(e.id)}" tabindex="0" role="button" aria-label="Событие ${esc(e.id)}, категория ${esc(e.class)}, ${fmt(e.start,2)}–${fmt(e.end,2)} секунд" x="${x}" y="${y}" width="${w}" height="16" rx="4" fill="${palette[C.indexOf(e.class)]}"/><text x="${x+3}" y="${y+12}" font-size="9" fill="#061018">${esc(e.id)} · ${e.class}</text>`});for(let k=0;k<=6;k++){const x=p+k*(W-p-20)/6;svg+=`<line x1="${x}" y1="0" x2="${x}" y2="${H-25}" stroke="#263247"/><text x="${x}" y="338" fill="#8e9aad" font-size="10" text-anchor="middle">${Math.round(T*k/6/60)}m</text>`}return svg+"</svg>"}
+function drawTimeline(){
+ const W=760,p=42,T=data.work.duration_seconds,laneH=34,top=34,bottom=28;
+ const visible=data.events.filter(e=>e.status==="present"&&(selected==="ALL"||e.class===selected));
+ const laneClasses=selected==="ALL"?C:C.filter(c=>visible.some(e=>e.class===c));
+ const H=Math.max(260,top+laneClasses.length*laneH+bottom);
+ const scale=W-p-20;
+ let svg='<svg viewBox="0 0 '+W+' '+H+'" class="chart timeline-chart" role="img" aria-labelledby="timelineTitle timelineDesc">';
+ svg+='<title id="timelineTitle">Timeline событий</title><desc id="timelineDesc">Дорожки категорий, границы сцен и кликабельные события.</desc>';
+ laneClasses.forEach((c,i)=>{
+   const y=top+i*laneH;
+   svg+='<line x1="'+p+'" y1="'+(y+18)+'" x2="'+(W-20)+'" y2="'+(y+18)+'" stroke="#263247"/>';
+   svg+='<text x="6" y="'+(y+13)+'" fill="#e9eef8" font-size="11" font-weight="600">'+esc(c)+'</text>';
+   svg+='<text x="6" y="'+(y+27)+'" fill="#718096" font-size="9">'+esc(data.ontology.classes[c]||"")+'</text>';
+ });
+ const sceneMap=new Map();
+ visible.forEach(e=>{const sid=e.scene_id??e.context_observed?.scene_id;if(sid&&!sceneMap.has(String(sid)))sceneMap.set(String(sid),e.start)});
+ [...sceneMap.entries()].sort((a,b)=>a[1]-b[1]).forEach(([sid,t])=>{
+   const x=p+(t/T)*scale;
+   svg+='<line x1="'+x+'" y1="10" x2="'+x+'" y2="'+(H-bottom)+'" stroke="#56657a" stroke-dasharray="3 4" opacity=".7"/>';
+   svg+='<text x="'+(x+3)+'" y="20" fill="#8e9aad" font-size="9">'+esc(sid)+'</text>';
+ });
+ visible.forEach(e=>{
+   const li=laneClasses.indexOf(e.class); if(li<0)return;
+   const y=top+li*laneH;
+   const x=p+(e.start/T)*scale,w=Math.max(5,(duration(e)/T)*scale);
+   const active=selected==="ALL"||selected===e.class;
+   const selectedEvent=window.__selectedEventId===String(e.id);
+   svg+='<rect data-event-id="'+esc(e.id)+'" tabindex="0" role="button" aria-label="Событие '+esc(e.id)+', '+esc(e.class)+', '+fmt(e.start,2)+'–'+fmt(e.end,2)+' секунд" x="'+x+'" y="'+(y+4)+'" width="'+w+'" height="18" rx="4" fill="'+palette[C.indexOf(e.class)]+'" opacity="'+(selectedEvent?1:(active?.88:.35))+'" stroke="'+(selectedEvent?"#ffffff":"none")+'" stroke-width="'+(selectedEvent?2:0)+'"/>';
+   if(w>34)svg+='<text x="'+(x+4)+'" y="'+(y+17)+'" font-size="9" fill="#061018">'+esc(e.id)+'</text>';
+ });
+ for(let k=0;k<=6;k++){
+   const x=p+k*scale/6;
+   svg+='<line x1="'+x+'" y1="'+(H-bottom)+'" x2="'+x+'" y2="'+(H-bottom+4)+'" stroke="#56657a"/>';
+   svg+='<text x="'+x+'" y="'+(H-6)+'" fill="#8e9aad" font-size="10" text-anchor="middle">'+Math.round(T*k/6/60)+'m</text>';
+ }
+ return svg+"</svg>";
+}
 function drawDensity(){const bins=12,T=data.work.duration_seconds,b=T/bins,W=760,H=280,p=45;const counts=Array(bins).fill(0);data.events.forEach(e=>{if(e.status==="present"&&(selected==="ALL"||e.class===selected))counts[Math.min(bins-1,Math.floor(e.start/b))]++});const mx=Math.max(...counts,1),bw=(W-p-20)/bins-5;let svg='<svg viewBox="0 0 760 280" class="chart">';counts.forEach((n,i)=>{const h=190*n/mx,x=p+i*(bw+5),y=220-h;svg+=`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="4" fill="#78e6b2"/><text x="${x+bw/2}" y="${y-5}" fill="#e9eef8" font-size="11" text-anchor="middle">${fmt(n/(b/60),2)}</text>`});return svg+"</svg>"}
 function drawWheel(m){
  const cx=180,cy=180,r=42;
@@ -173,7 +209,7 @@ function renderInspector(eventId){
 }
 function selectEvent(eventId){
  const e=data.events.find(x=>String(x.id)===String(eventId)); if(!e)return;
- selected=e.class; selectedSet=new Set([e.class]); openProgramGroups.add(e.class); renderInspector(eventId);
+ selected=e.class; selectedSet=new Set([e.class]); openProgramGroups.add(e.class); window.__selectedEventId=String(eventId); renderInspector(eventId);
  render();
  requestAnimationFrame(()=>{renderEvidenceTrace(eventId);document.getElementById("calculationTrace")?.scrollIntoView({behavior:"smooth",block:"center"});});
 }
