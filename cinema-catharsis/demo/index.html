@@ -16,28 +16,32 @@
 <label class="small">Search <input id="attitudeSearch" type="search" placeholder="A77, творчество, здоровье…" style="min-width:220px"></label>
 </div><div id="attitudeAxes" class="grid"></div><div id="attitudeSummary" class="grid"></div><div id="attitudeProfile"></div><details class="code-reference-panel"><summary>Справочник кодов A01–A91</summary><p class="small muted">Нажмите код, чтобы открыть его Evidence Trace. Коды описывают онтологию анализа, а не доказанные эффекты аудитории.</p><div id="codeReference"></div></details><div id="attitudeEvidence" class="notice small" style="margin-top:12px">Выберите строку профиля, чтобы увидеть Evidence Trace.</div></section><section class="panel public-method" id="publicMethod" style="margin-top:14px"><h2>Публичная методология и формулы расчёта</h2><div class="notice"><b>Принцип прозрачности.</b> Все основные показатели должны быть воспроизводимы из исходного Content Map. Система не использует скрытый «индекс вреда» и не превращает наличие элемента в вывод о воздействии на зрителя.</div><h3>1. Базовые обозначения</h3><ul><li><b>T</b> — длительность произведения.</li><li><b>ω</b> — выбранная категория/программа.</li><li><b>Nω</b> — число событий категории.</li><li><b>[t<sub>i</sub>,u<sub>i</sub>]</b> — временной интервал события.</li><li><b>p<sub>i,ω</sub></b> — мягкая принадлежность события категории, 0…1.</li></ul><h3>2. Количество событий</h3><div class="formula-block">Nω = Σ<sub>i</sub> p<sub>i,ω</sub></div><p class="small muted">При бинарной классификации p = 1/0 формула превращается в обычный подсчёт событий.</p><h3>3. Временная длительность</h3><div class="formula-block">Tω = μ(⋃<sub>i:p<sub>i,ω</sub>&gt;0</sub> [t<sub>i</sub>,u<sub>i</sub>])</div><p class="small muted">μ — длина объединения временных интервалов. Перекрывающиеся события внутри одной категории не считаются дважды.</p><h3>4. Абсолютная screen-time share</h3><div class="formula-block">Sω = Tω / T</div><p class="small muted">В процентах: Sω × 100%. Это доля времени контента, а не доля зрителей.</p><h3>5. Покрытие shots</h3><div class="formula-block">Cω = N<sub>shots,ω</sub> / N<sub>shots,relevant</sub></div><p class="small muted">Покрытие показывает, какая часть релевантных единиц была охвачена анализом.</p><h3>6. Плотность событий</h3><div class="formula-block">ρ<sub>events,ω</sub> = Nω / (T / 60)</div><div class="formula-block">ρ<sub>time,ω</sub> = Tω / (T / 60)</div><p class="small muted">Первая величина — событий в минуту, вторая — секунд контента категории на минуту произведения.</p><h3>7. Повторяемость</h3><div class="formula-block">Rω = Uω / U</div><p class="small muted">Uω — число повествовательных единиц, в которых встречается категория; U — общее число соответствующих единиц.</p><h3>8. Состав выбранной области Ω*</h3><div class="formula-block">P<sub>ω</sub><sup>Ω*</sup> = Sω / Σ<sub>h∈Ω*</sub> S<sub>h</sub> × 100%</div><p class="small muted">Это относительная доля внутри выбранной области. Она отличается от абсолютной Sω.</p><h3>9. Union time выбранной области</h3><div class="formula-block">T<sub>Ω*</sub> = μ(⋃<sub>ω∈Ω*</sub> ⋃<sub>i∈ω</sub> [t<sub>i</sub>,u<sub>i</sub>])</div><p class="small muted">Общие перекрытия между категориями объединяются. Поэтому сумма абсолютных Sω может превышать 100%, а TΩ* не превышает T.</p><h3>10. Энтропия разнообразия</h3><div class="formula-block">H = −Σ pω ln(pω), &nbsp; pω = Sω / ΣSω</div><div class="formula-block">H<sub>norm</sub> = H / ln(|Ω*|)</div><p class="small muted">Используется только как описательная характеристика распределения внутри выбранной области, а не как оценка вреда или качества.</p><h3>11. Coverage всего анализа</h3><div class="formula-block">C<sub>cov</sub> = T<sub>processed</sub> / T</div><p class="small muted">При проектном пороге C<sub>min</sub> = 0.95: отсутствие может классифицироваться как absent только при достаточном покрытии. При недостаточном покрытии результат должен оставаться unknown.</p><h3>12. Неопределённость</h3><div class="formula-block">εω = ⟨ε<sub>measurement</sub>, ε<sub>annotation</sub>, ε<sub>segmentation</sub>, ε<sub>generalization</sub>, CI95⟩</div><p class="small muted">Компоненты неопределённости не объединяются в один «магический» балл. CI95 публикуется только тогда, когда для него существует соответствующая статистическая модель.</p><h3>13. Что система НЕ вычисляет автоматически</h3><ul><li>viewer exposure;</li><li>психологический эффект;</li><li>причинный вред;</li><li>«вредность фильма» одним числом;</li><li>процент зрителей, сформировавших установку.</li></ul><h3>14. Воспроизводимость</h3><p>Для каждого опубликованного результата должны сохраняться версия онтологии, версия модели, параметры сегментации, пороги, исходный Content Map и версия расчётного движка. Это позволяет независимо воспроизвести результат.</p><p class="small"><b>Публичное правило:</b> если формула, исходные данные или существенный параметр неизвестны, соответствующий показатель не должен представляться как полностью воспроизводимый.</p></section><section class="panel compact-reference" style="margin-top:14px">
 <h2>Методика, границы и справочник</h2>
+<div class="compact-summary">
+<span><b>N</b> события</span><span><b>T</b> длительность</span><span><b>C</b> покрытие</span><span><b>unknown ≠ absent</b></span><span><b>Sω</b> absolute screen-time share</span><span><b>F(Ω*)</b> модульный профиль</span>
+</div>
 <div class="compact-grid">
-<div>
-<details open><summary><b>Как читать результат</b></summary>
+<details>
+<summary><b>Как читать результат</b><span class="summary-hint">N · T · C · статусы · перекрытия</span></summary>
 <div id="contextDetail"></div>
 <ul class="small">
 <li><b>N</b> — число событий; <b>T</b> — длительность наблюдаемых событий.</li>
 <li><b>C</b> — покрытие анализа. <b>unknown ≠ absent</b>.</li>
 <li>Перекрывающиеся категории могут давать сумму Sω &gt; 100%.</li>
-<li>α, precision/recall, validity и drift — разные свойства и не являются единым показателем.</li>
-</ul></details>
-</div>
-<div>
-<details open><summary><b>Модульная формула состава</b></summary>
-<div class="formula-block"><b>F(Ω*)</b> = {ω, Nω, Tω, Sω, Cω, ρω, Rω, statusω, εω} · Ω* ⊆ Ω</div>
-<p class="small muted">Абсолютная Sω измеряется относительно полной длительности; внутри Ω* состав нормируется отдельно. Перекрытия объединяются.</p>
+<li>α, precision/recall, validity и drift — разные свойства.</li>
+</ul>
+</details>
+<details>
+<summary><b>Модульная формула состава</b><span class="summary-hint">Ω* ⊆ Ω · метрики · неопределённость</span></summary>
+<div class="formula-block"><b>F(Ω*)</b> = {ω, Nω, Tω, Sω, Cω, ρω, Rω, statusω, εω}</div>
+<p class="small muted">Sω — относительно полной длительности; внутри Ω* состав нормируется отдельно. Перекрытия объединяются.</p>
+</details>
+<details>
+<summary><b>Границы интерпретации</b><span class="summary-hint">L0–L3 · L4 · L5</span></summary>
+<div class="notice small"><b>L0–L3</b> — наблюдаемые/операционализированные данные. <b>L4</b> — интерпретационная гипотеза. <b>L5</b> требует отдельного исследования аудитории. Система не вычисляет viewer exposure, психологический эффект, причинный вред, «вредность фильма» одним числом или процент зрителей, сформировавших установку.</div>
+</details>
+<details>
+<summary><b>Воспроизводимость</b><span class="summary-hint">онтология · модель · параметры · Content Map</span></summary>
+<p class="small">Сохраняются версия онтологии, версия модели, параметры сегментации, пороги, исходный Content Map и версия расчётного движка. Если формула, исходные данные или существенный параметр неизвестны, показатель не представляется полностью воспроизводимым.</p>
 </details>
 </div>
-</div>
-<details><summary><b>Границы интерпретации</b></summary>
-<div class="notice small"><b>L0–L3</b> публикуются как наблюдаемые/операционализированные данные. <b>L4</b> — интерпретационная гипотеза. <b>L5</b> требует отдельного исследования аудитории. Система не вычисляет viewer exposure, психологический эффект, причинный вред, «вредность фильма» одним числом или процент зрителей, сформировавших установку.</div>
-</details>
-<details><summary><b>Воспроизводимость</b></summary>
-<p class="small">Для результата сохраняются версия онтологии, версия модели, параметры сегментации, пороги, исходный Content Map и версия расчётного движка. Если формула, исходные данные или существенный параметр неизвестны, показатель не представляется полностью воспроизводимым.</p>
-</details>
 </section><div class="footer">Синема Катарсис · Контентометрический анализ · Synthetic data · no audience-effect or causal inference.</div></main><script src="demo.js"></script></body></html>
