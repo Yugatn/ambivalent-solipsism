@@ -212,8 +212,11 @@ function setupPages(root){
   toc.open=false;
   if(opts.focus!==false){
    requestAnimationFrame(()=>{
-    pages[i].focus({preventScroll:true});
-    window.scrollTo({top:0,behavior:'smooth'});
+    const target=pages[i];
+    const headerOffset=24;
+    const top=target.getBoundingClientRect().top+window.scrollY-headerOffset;
+    window.scrollTo({top,behavior:'smooth'});
+    target.focus({preventScroll:true});
    });
   }
  }
