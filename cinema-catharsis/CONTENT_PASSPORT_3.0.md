@@ -799,3 +799,64 @@ JSON Schema
 ```
 
 Цель MVP — получить воспроизводимую карточку даже до автоматического анализа полного видеоматериала.
+
+
+---
+
+## 27. v0.3.0 Methodological Integrity Addendum
+
+### 27.1 Структура паспорта
+
+```text
+Passport = ⟨Metadata, Measurement, Provenance, Uncertainty, Versions⟩
+```
+
+Обозначение `Metadata ∪ Measurement` не используется как формальное определение паспорта.
+
+### 27.2 Статусы и coverage
+
+Для MPE/программы: `present | absent | unknown | ambiguous | not_applicable`.
+
+Правило: `absent ⇒ coverage.temporal ≥ C_min`. Недостаточное покрытие означает `unknown`/`preliminary`, а не доказанное отсутствие.
+
+### 27.3 Quality ≠ coverage
+
+`quality` описывает detection/classification; `coverage` — полноту охвата. Они публикуются отдельно.
+
+### 27.4 Context
+
+Наблюдаемый контекст хранится в `context_observed`; интерпретации — в `context_interpreted.interpretations[]`. Несколько интерпретаций допустимы.
+
+### 27.5 Screen-time share ≠ viewer exposure
+
+`screen_time_share = Tω/T` описывает произведение и не является `viewer_exposure`.
+
+### 27.6 Manifestation ≠ Scene
+
+Manifestation — конкретный экземпляр ontology class. Scene — монтажно-нарративная единица. Они не являются отношением один-к-одному.
+
+### 27.7 Evidence and question type
+
+`literature` — provenance/source type. Для научного утверждения дополнительно фиксируются `question_type`, `design`, `population`, `comparator`, `outcome`, `effect`, `uncertainty`, `limitations`, `adequacy_for_question`.
+
+### 27.8 Validation
+
+Krippendorff's α и κ измеряют agreement/reliability и не являются универсальной мерой validity. Validation summary разделяет reliability, validity, coverage, calibration и drift.
+
+### 27.9 Correction Protocol
+
+```yaml
+correction:
+  id: correction-0001
+  target: content_id / claim_id
+  field: "..."
+  old_value: "..."
+  new_value: "..."
+  reason: "..."
+  created_at: "..."
+  status: corrected | superseded | rejected
+```
+
+Старый результат не удаляется молча.
+
+**Status:** Content Passport 3.0 — v0.3.0 methodological specification.
