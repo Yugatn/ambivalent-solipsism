@@ -1,0 +1,36 @@
+{
+  "work":{"id":"demo-001","title":"Demo Film — Synthetic Work","duration_seconds":5880,"data_status":"illustrative","analysis_version":"demo-0.1"},
+  "ontology":{"classes":{
+    "C1":"Потребление","C2":"Агрессия","C3":"Риск","C4":"Социальное взаимодействие","C5":"Реклама/брендинг",
+    "C6":"Труд","C7":"Интимность","C8":"Конфликт","C9":"Забота","C10":"Изоляция"
+  }},
+  "events":[
+    {"id":"E001","start":120,"end":165,"class":"C1","program":"consumption","status":"present","label":"эпизод 1"},
+    {"id":"E002","start":420,"end":510,"class":"C2","program":"action","status":"present","label":"эпизод 2"},
+    {"id":"E003","start":455,"end":545,"class":"C8","program":"conflict","status":"present","label":"перекрытие"},
+    {"id":"E004","start":720,"end":795,"class":"C4","program":"interaction","status":"present","label":"эпизод 3"},
+    {"id":"E005","start":900,"end":960,"class":"C5","program":"branding","status":"present","label":"эпизод 4"},
+    {"id":"E006","start":1180,"end":1290,"class":"C3","program":"risk","status":"present","label":"эпизод 5"},
+    {"id":"E007","start":1450,"end":1510,"class":"C6","program":"work","status":"present","label":"эпизод 6"},
+    {"id":"E008","start":1780,"end":1870,"class":"C9","program":"care","status":"present","label":"эпизод 7"},
+    {"id":"E009","start":2050,"end":2125,"class":"C10","program":"isolation","status":"present","label":"эпизод 8"},
+    {"id":"E010","start":2360,"end":2440,"class":"C1","program":"consumption","status":"present","label":"эпизод 9"},
+    {"id":"E011","start":2700,"end":2835,"class":"C2","program":"action","status":"present","label":"эпизод 10"},
+    {"id":"E012","start":2760,"end":2860,"class":"C4","program":"interaction","status":"present","label":"перекрытие"},
+    {"id":"E013","start":3140,"end":3200,"class":"C7","program":"intimacy","status":"present","label":"эпизод 11"},
+    {"id":"E014","start":3480,"end":3575,"class":"C8","program":"conflict","status":"present","label":"эпизод 12"},
+    {"id":"E015","start":3820,"end":3940,"class":"C3","program":"risk","status":"present","label":"эпизод 13"},
+    {"id":"E016","start":4200,"end":4305,"class":"C6","program":"work","status":"present","label":"эпизод 14"},
+    {"id":"E017","start":4510,"end":4580,"class":"C9","program":"care","status":"present","label":"эпизод 15"},
+    {"id":"E018","start":4740,"end":4850,"class":"C10","program":"isolation","status":"present","label":"эпизод 16"},
+    {"id":"E019","start":5050,"end":5140,"class":"C1","program":"consumption","status":"present","label":"эпизод 17"},
+    {"id":"E020","start":5350,"end":5475,"class":"C5","program":"branding","status":"present","label":"эпизод 18"},
+    {"id":"E021","start":5480,"end":5570,"class":"C2","program":"action","status":"present","label":"эпизод 19"},
+    {"id":"E022","start":5520,"end":5620,"class":"C8","program":"conflict","status":"present","label":"перекрытие"},
+    {"id":"E023","start":5700,"end":5775,"class":"C4","program":"interaction","status":"present","label":"эпизод 20"},
+    {"id":"E024","start":5790,"end":5870,"class":"C9","program":"care","status":"present","label":"эпизод 21"}
+  ],
+  "coverage":{"temporal":0.98,"modalities":{"vision":0.97,"audio":0.92,"text":0.95},"note":"Демонстрационная оценка покрытия; не результат валидационного исследования."},
+  "validation":{"status":"illustrative","illustrative":true,"reliability":{"metric":"Krippendorff's alpha","value":0.81},"reference_set":{"precision":0.94,"recall":0.88}},
+  "absence_demo":{"C1":"present","C2":"present","C3":"present","C4":"present","C5":"present","C6":"present","C7":"present","C8":"present","C9":"present","C10":"present"}
+}
