@@ -214,6 +214,15 @@ function render(){
  renderChart("timeline",()=>drawTimeline());
  renderChart("density",()=>drawDensity());
  renderChart("wheel",()=>drawWheel(m)); renderProgramGroups(m);
+ const traceEl=$("#traceContent");
+ if(traceEl){
+  const tc=selected==="ALL"?C[0]:selected, x=m[tc], ev=data.events.filter(e=>e.class===tc&&e.status==="present");
+  const intervals=ev.map(e=>[e.start,e.end]).sort((a,b)=>a[0]-b[0]);
+  const merged=[]; intervals.forEach(([a,b])=>{const last=merged[merged.length-1];if(last&&a<=last[1])last[1]=Math.max(last[1],b);else merged.push([a,b]);});
+  const union=merged.reduce((s,[a,b])=>s+b-a,0);
+  traceEl.innerHTML='<h3>'+esc(tc)+' — '+esc(data.ontology.classes[tc])+'</h3><div class="trace-grid"><div><b>Nω</b><br>'+fmt(x.N,2)+' = Σ pᵢ,ω</div><div><b>Tω</b><br>'+fmt(union,3)+' s = μ(⋃ intervals)</div><div><b>Sω</b><br>'+fmt(x.share*100,3)+'% = '+fmt(union,3)+' / '+fmt(data.work.duration_seconds,3)+'</div></div><h4>Исходные интервалы</h4><div class="trace-intervals">'+(intervals.length?intervals.map((v,i)=>'<div><b>E'+(i+1)+'</b> · '+fmt(v[0],3)+'–'+fmt(v[1],3)+' s · '+fmt(v[1]-v[0],3)+' s</div>').join(""):'<div class="muted">Нет событий.</div>')+'</div><p class="small muted">Объединённые интервалы: '+merged.map(v=>fmt(v[0],2)+'–'+fmt(v[1],2)+' s').join(', ')+' · '+fmt(union,3)+' s. Перекрытия внутри категории учтены один раз.</p>';
+ }
+
  document.querySelectorAll("[data-wheel-class]").forEach(p=>{const show=()=>{const c=p.dataset.wheelClass;const x=m[c];p.setAttribute("aria-label",c+" · "+fmt(x.share*100,2)+"% · N="+fmt(x.N,2)+" · T="+fmt(x.T,1)+" s · C="+fmt(x.coverage*100,1)+"% · confidence "+fmt(x.mean_confidence,2)+" · "+x.status)};p.addEventListener("focus",show);p.addEventListener("click",()=>{selectedSet=new Set([p.dataset.wheelClass]);selected=p.dataset.wheelClass;controls();render()})});
  $("#editorList").innerHTML=data.events.map((e,i)=>'<div class="editor-row"><b>'+esc(e.id)+'</b><span>'+e.class+'</span><input data-i="'+i+'" data-k="start" type="number" step="0.1" value="'+e.start+'"><input data-i="'+i+'" data-k="end" type="number" step="0.1" value="'+e.end+'"><input data-i="'+i+'" data-k="confidence" type="number" min="0" max="1" step="0.01" value="'+(e.confidence??1)+'"><button data-del="'+i+'">×</button></div>').join("");
  $("#selected").textContent=area.length===C.length?"Вся онтология":area.map(c=>c+" — "+data.ontology.classes[c]).join(", ");
