@@ -319,9 +319,23 @@ function checkChartHealth(){
  if(host) host.innerHTML=failed.length?'<span class="bad">Визуализация: '+failed.length+'/'+ids.length+' блоков требуют проверки.</span>':'<span class="good">Визуализация: 4/4 диаграммы построены.</span>';
  return state;
 }
+function renderChartsOnly(){
+ if(!data)return;
+ let m;
+ try{m=metrics()}catch(err){
+  ["bars","timeline","density","wheel"].forEach(id=>{const el=$("#"+id);if(el)el.innerHTML='<div class="chart-error"><b>Не удалось рассчитать данные для графика</b><br><span>'+esc(err.message||String(err))+'</span></div>';});
+  return;
+ }
+ const renderOne=(id,fn)=>{const el=$("#"+id);if(!el)return;try{el.innerHTML=fn();}catch(err){el.innerHTML='<div class="chart-error"><b>Ошибка построения</b><br><span>'+esc(err.message||String(err))+'</span></div>';}};
+ renderOne("bars",()=>drawBars(m));
+ renderOne("timeline",()=>drawTimeline());
+ renderOne("density",()=>drawDensity());
+ renderOne("wheel",()=>drawWheel(m));
+}
 function render(){
  const m=metrics();
  const area=selectedSet.size?[...selectedSet]:(selected==="ALL"?C:[selected]);
+ renderChartsOnly();
  const areaAgg=aggregateArea(m,area);
  // Charts must render independently from optional dashboard/report UI.
  try{
