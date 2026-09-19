@@ -220,7 +220,9 @@ function exportSpreadsheet(m){
  const rows=[["Cinema Catharsis","Category","Label","Status","Nω","Tω (s)","Sω (%)","Cω (%)","ρevents (/min)","ρtime (s/min)","Rω","Confidence"]];
  C.forEach(c=>{const x=m[c];rows.push(["Cinema Catharsis",c,data.ontology.classes[c],x.status,x.N,x.T,x.share*100,x.coverage*100,x.event_density,x.covered_time_density,x.repeatability,x.mean_confidence])});
  const csv=rows.map(row=>row.map(v=>'"'+String(v??"").replaceAll('"','""')+'"').join(";")).join("\\r\\n");
+ const tsv=rows.map(row=>row.map(v=>String(v??"").replaceAll("\\t"," ")).join("\\t")).join("\\r\\n");
  downloadBlob("\\uFEFF"+csv,"cinema-catharsis-report.csv","text/csv;charset=utf-8");
+ downloadBlob("\\uFEFF"+tsv,"cinema-catharsis-report.tsv","text/tab-separated-values;charset=utf-8");
 }
 function setupReporting(){
  const b=$("#reportBtn"),s=$("#sheetBtn"),t=$("#reportOutput");
