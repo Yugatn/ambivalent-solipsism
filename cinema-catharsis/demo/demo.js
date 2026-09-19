@@ -182,7 +182,7 @@ function drawTimeline(){
  }
  return svg+"</svg>";
 }
-function drawDensity(){const bins=12,T=data.work.duration_seconds,b=T/bins,W=760,H=280,p=45;const counts=Array(bins).fill(0);data.events.forEach(e=>{if(e.status==="present"&&(selected==="ALL"||e.class===selected))counts[Math.min(bins-1,Math.floor(e.start/b))]++});const mx=Math.max(...counts,1),bw=(W-p-20)/bins-5;let svg='<svg viewBox="0 0 760 280" class="chart">';counts.forEach((n,i)=>{const h=190*n/mx,x=p+i*(bw+5),y=220-h;svg+=`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="4" fill="#78e6b2"/><text x="${x+bw/2}" y="${y-5}" fill="#e9eef8" font-size="11" text-anchor="middle">${fmt(n/(b/60),2)}</text>`});return svg+"</svg>"}
+function drawDensity(){const bins=12,T=data.work.duration_seconds,b=T/bins,W=760,H=280,p=45;const counts=Array(bins).fill(0);data.events.forEach(e=>{if(e.status==="present"&&(selected==="ALL"||e.class===selected))counts[Math.min(bins-1,Math.floor(e.start/b))]++});const mx=Math.max(...counts,1),bw=(W-p-20)/bins-5;let svg='<svg viewBox="0 0 760 280" class="chart">';counts.forEach((n,i)=>{const h=190*n/mx,x=p+i*(bw+5),y=220-h,t0=i*b,t1=(i+1)*b;svg+=`<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="4" fill="#78e6b2"><title>${fmt(t0,1)}–${fmt(t1,1)} s · ${fmt(n/(b/60),2)} events/min</title></rect><text x="${x+bw/2}" y="${y-5}" fill="#e9eef8" font-size="11" text-anchor="middle">${fmt(n/(b/60),2)}</text>`});return svg+"</svg>"}
 function drawWheel(m){
  const cx=180,cy=180,r=42;
  const area=selectedSet.size?C.filter(c=>selectedSet.has(c)):C;
