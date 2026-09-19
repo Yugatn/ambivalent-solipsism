@@ -158,6 +158,12 @@ function drawWheel(m){
  svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(r-2)+'" fill="#080b12"/><text x="'+cx+'" y="'+(cy-5)+'" fill="#e9eef8" font-size="12" text-anchor="middle">screen_time</text><text x="'+cx+'" y="'+(cy+13)+'" fill="#8e9aad" font-size="10" text-anchor="middle">share</text></svg>';
  return svg;
 }
+function selectEvent(eventId){
+ const e=data.events.find(x=>String(x.id)===String(eventId)); if(!e)return;
+ selected=e.class; selectedSet=new Set([e.class]); openProgramGroups.add(e.class);
+ render();
+ requestAnimationFrame(()=>{renderEvidenceTrace(eventId);document.getElementById("calculationTrace")?.scrollIntoView({behavior:"smooth",block:"center"});});
+}
 function renderEvidenceTrace(eventId){
  const e=data.events.find(x=>String(x.id)===String(eventId)), out=$("#traceContent"); if(!out||!e)return;
  const obs=e.context_observed||e.observed_context||{}, interp=e.interpretation||e.interpreted_context||null;
@@ -224,7 +230,7 @@ function render(){
  $("#metrics").innerHTML=C.map(c=>'<div class="card"><div class="muted">'+c+' · '+data.ontology.classes[c]+'</div><div class="metric">'+fmt(m[c].share*100)+'%</div><div class="small">Nω='+fmt(m[c].N,2)+' · Tω='+fmt(m[c].T,1)+'s · Sω='+fmt(m[c].share*100,2)+'%</div><div class="small">Cω='+fmt(m[c].coverage*100,2)+'% shots · ρevents='+fmt(m[c].event_density,3)+'/мин · ρtime='+fmt(m[c].covered_time_density,3)+'с/мин · Rω='+fmt(m[c].repeatability,3)+'</div><div class="small">confidence='+fmt(m[c].mean_confidence,2)+' · status=<span class="status status-'+m[c].status+'">'+m[c].status+'</span></div></div>').join("");
  const renderChart=(id,fn)=>{const el=$("#"+id);if(!el)return;try{el.innerHTML=fn()}catch(err){el.innerHTML='<div class="chart-error"><b>Диаграмма временно недоступна</b><br><span>'+esc(err.message||String(err))+'</span></div>';}};
  renderChart("bars",()=>drawBars(m));
- renderChart("timeline",()=>drawTimeline()); const tl=$("#timeline"); if(tl) tl.querySelectorAll("[data-event-id]").forEach(el=>{el.addEventListener("click",()=>renderEvidenceTrace(el.getAttribute("data-event-id")));el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();renderEvidenceTrace(el.getAttribute("data-event-id"));}});});
+ renderChart("timeline",()=>drawTimeline()); const tl=$("#timeline"); if(tl) tl.querySelectorAll("[data-event-id]").forEach(el=>{el.addEventListener("click",()=>selectEvent(el.getAttribute("data-event-id")));el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();renderEvidenceTrace(el.getAttribute("data-event-id"));}});});
  renderChart("density",()=>drawDensity());
  renderChart("wheel",()=>drawWheel(m)); const wh=$("#wheel"); if(wh) wh.querySelectorAll("[data-wheel-class]").forEach(el=>{const open=()=>{selected=el.getAttribute("data-wheel-class"); selectedSet.clear(); render();};el.addEventListener("click",open);el.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();open();}});}); renderProgramGroups(m);
  const traceEl=$("#traceContent");
@@ -262,7 +268,7 @@ function renderProgramGroups(m){
    return '<div class="program-group '+(isOpen?'open':'')+'"><button type="button" class="program-group-header" aria-expanded="'+isOpen+'" data-program-group="'+c+'"><span class="class-code">'+c+'</span><span class="class-name">'+esc(data.ontology.classes[c])+'</span><span class="class-metric">'+fmt(share*100,2)+'%</span><span aria-hidden="true">'+(isOpen?'▾':'▸')+'</span></button><div class="program-sublist" '+(isOpen?'':'hidden')+'><div class="small muted">Nω='+fmt(m[c].N,2)+' · Tω='+fmt(m[c].T,1)+' s · Cω='+fmt(m[c].coverage*100,1)+'% · status='+m[c].status+'</div><ul>'+items+'</ul></div></div>';
  }).join("");
  el.querySelectorAll("[data-program-group]").forEach(b=>b.addEventListener("click",()=>{const c=b.dataset.programGroup;openProgramGroups.has(c)?openProgramGroups.delete(c):openProgramGroups.add(c);renderProgramGroups(m)}));
- el.querySelectorAll("[data-event-id]").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();const id=b.dataset.eventId;renderEvidenceTrace(id);document.getElementById("calculationTrace")?.scrollIntoView({behavior:"smooth",block:"center"})}));
+ el.querySelectorAll("[data-event-id]").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();const id=b.dataset.eventId;selectEvent(id)}));
 }
 function controls(){const el=$("#controls");el.innerHTML='<button data-c="ALL">Вся онтология</button>'+C.map(c=>`<button data-c="${c}">${c}</button>`).join("")+'<button data-c="CLEAR">Сбросить</button>';el.onclick=e=>{const b=e.target.closest("button");if(!b)return;const c=b.dataset.c;if(c==="ALL"){selected="ALL";selectedSet=new Set(C)}else if(c==="CLEAR"){selected="ALL";selectedSet=new Set(C)}else{selectedSet.has(c)?selectedSet.delete(c):selectedSet.add(c);selected=selectedSet.size===1?[...selectedSet][0]:"ALL"}el.querySelectorAll("button").forEach(x=>x.classList.remove("active"));if(selectedSet.size===C.length)el.querySelector("[data-c=ALL]").classList.add("active");else for(const x of selectedSet)el.querySelector(`[data-c="${x}"]`)?.classList.add("active");render()}}
 function normalizeInput(d){if(d&&d.film){return {work:{id:"imported-"+Date.now(),title:d.film.title,duration_seconds:d.film.duration_sec,data_status:"preliminary",analysis_version:VERSIONS.measurement},ontology:{classes:Object.fromEntries(C.map(c=>[c,c]))},events:(d.events||[]).map((e,i)=>({id:e.id||"E"+String(i+1).padStart(3,"0"),start:e.start,end:e.end,class:e.category,program:"imported",status:"present",confidence:e.confidence,context_observed:e.context_observed||{},membership:e.membership??e.p??1})),coverage:d.coverage||{temporal:1,modalities:{}},validation:d.validation||{status:"not_validated"}}}return d}
