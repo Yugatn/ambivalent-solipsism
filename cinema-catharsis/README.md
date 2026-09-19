@@ -770,3 +770,27 @@ L0 Observation → L1 Event → L2 Ontology/Manifestation → L3 Observed Contex
 Главный принцип проекта:
 
 > **Сначала увидеть. Затем измерить. Затем отделить наблюдаемое от интерпретируемого. Затем оценить неопределённость. И только после этого формулировать вывод.**
+
+
+---
+
+## v0.4.0 — Epistemic and measurement corrections
+
+Теоретическая основа обновлена до v0.4.0. Зафиксированы принципиальные различия между **Work / Scene / Shot / Primitive / Event / Manifestation**, между **observed_context / interpreted_context**, а также между **screen_time_share** и реальной **viewer_exposure**.
+
+Отдельно разделены **quality, coverage, completeness и uncertainty**. Статусы наблюдения теперь включают **present / absent / unknown / ambiguous / not_applicable**; `absent` допустим только при достаточном покрытии.
+
+Krippendorff’s α и κ трактуются как показатели **reliability/agreement**, а не как универсальная оценка качества или валидности. `literature` трактуется как provenance/source type, а сила доказательств описывается дизайном исследования и его ограничениями. Существенные `assumption` требуют sensitivity analysis.
+
+### Публичная теория
+
+**[Теоретическая основа](THEORETICAL_FOUNDATION.md)** · **[Публичная HTML-версия](theory.html)**
+
+### Визуальная архитектура
+
+- [01 — Architecture](docs/diagrams/01-architecture.svg)
+- [02 — Epistemic Hierarchy](docs/diagrams/02-epistemic-hierarchy.svg)
+- [03 — Content Passport](docs/diagrams/03-content-passport.svg)
+- [04 — Content Wheel](docs/diagrams/04-content-wheel.svg)
+
+Диаграммы являются **reference/illustrative assets**, если для конкретного анализа не указаны реальные данные и версии расчёта.
