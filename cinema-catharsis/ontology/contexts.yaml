@@ -1,12 +1,22 @@
-ontology_version: 0.1.0
-context_axes:
-  consequence: [none_shown, positive, negative, ambiguous, delayed]
-  representation: [neutral, emphasized, minimized, stylized, explicit, implicit, unknown]
-  actor_role: [agent, target, observer, facilitator, victim, perpetrator, unknown]
-  camera_emphasis: [none, low, medium, high, unknown]
-  social_reaction: [none, approval, disapproval, mixed, neutral, unknown]
-  verbal_context: [none, descriptive, approving, disapproving, ambiguous, unknown]
-  music: [none, neutral, reinforcing, contrasting, unknown]
-  recurrence: [isolated, repeated, motif, unknown]
-  narrative_role: [incidental, functional, central, climactic, unknown]
-rule: "Context axes are independent observations; no single axis is equivalent to romanticization."
+ontology_version: 0.2.0
+context_layers:
+  observed:
+    actor_role: [agent, target, observer, facilitator, victim, perpetrator, unknown]
+    camera_emphasis: [none, low, medium, high, unknown]
+    location: [unknown, interior, exterior, public, private, workplace, educational, medical, transport, other]
+    social_reaction_observed: [none, approval_signal, disapproval_signal, mixed_signal, neutral, unknown]
+    music_present: [true, false, unknown]
+    music_relation_observed: [reinforcing_signal, contrasting_signal, neutral, unknown]
+    recurrence: [isolated, repeated, motif, unknown]
+    consequence_observed: [none_shown, positive_outcome_shown, negative_outcome_shown, mixed, delayed, unknown]
+  interpreted:
+    representation: [neutral, emphasized, minimized, stylized, explicit, implicit, unknown]
+    verbal_context: [descriptive, approving, disapproving, ambiguous, unknown]
+    narrative_role: [incidental, functional, central, climactic, unknown]
+    interpretation_labels:
+      - romanticization
+      - irony
+      - endorsement
+      - condemnation
+      - other
+rule: "Observed context is separated from interpretation. No single axis is equivalent to romanticization or causal effect."
