@@ -51,7 +51,16 @@
         "память",
         "идентичность",
         "криосон"
-      ]
+      ],
+      "clusters": [
+        "identity"
+      ],
+      "atlas_ref": {
+        "status": "conceptual_link",
+        "note": "Связь с PERCEPTION ATLAS пока не является нейрокогнитивным утверждением; требует отдельной проверки источниками."
+      },
+      "created": "2026-09-20",
+      "last_reviewed": "2026-09-20"
     },
     {
       "id": "vanilla-sky-demolition-man",
@@ -101,7 +110,16 @@
         "сон",
         "память",
         "наказание"
-      ]
+      ],
+      "clusters": [
+        "cryosleep"
+      ],
+      "atlas_ref": {
+        "status": "conceptual_link",
+        "note": "Связь с PERCEPTION ATLAS пока не является нейрокогнитивным утверждением; требует отдельной проверки источниками."
+      },
+      "created": "2026-09-20",
+      "last_reviewed": "2026-09-20"
     },
     {
       "id": "vanilla-sky-proyecto-lazaro",
@@ -151,7 +169,17 @@
         "идентичность",
         "вина",
         "второй шанс"
-      ]
+      ],
+      "clusters": [
+        "cryosleep",
+        "identity"
+      ],
+      "atlas_ref": {
+        "status": "conceptual_link",
+        "note": "Связь с PERCEPTION ATLAS пока не является нейрокогнитивным утверждением; требует отдельной проверки источниками."
+      },
+      "created": "2026-09-20",
+      "last_reviewed": "2026-09-20"
     },
     {
       "id": "matrix-inception",
@@ -201,7 +229,16 @@
         "сон",
         "Лимб",
         "сознание"
-      ]
+      ],
+      "clusters": [
+        "simulation"
+      ],
+      "atlas_ref": {
+        "status": "conceptual_link",
+        "note": "Связь с PERCEPTION ATLAS пока не является нейрокогнитивным утверждением; требует отдельной проверки источниками."
+      },
+      "created": "2026-09-20",
+      "last_reviewed": "2026-09-20"
     },
     {
       "id": "matrix-thirteenth-floor",
@@ -251,7 +288,16 @@
         "вложенность",
         "пробуждение",
         "реальность"
-      ]
+      ],
+      "clusters": [
+        "simulation"
+      ],
+      "atlas_ref": {
+        "status": "conceptual_link",
+        "note": "Связь с PERCEPTION ATLAS пока не является нейрокогнитивным утверждением; требует отдельной проверки источниками."
+      },
+      "created": "2026-09-20",
+      "last_reviewed": "2026-09-20"
     },
     {
       "id": "inception-thirteenth-floor",
@@ -299,7 +345,16 @@
         "симуляция",
         "сон",
         "онтология"
-      ]
+      ],
+      "clusters": [
+        "simulation"
+      ],
+      "atlas_ref": {
+        "status": "conceptual_link",
+        "note": "Связь с PERCEPTION ATLAS пока не является нейрокогнитивным утверждением; требует отдельной проверки источниками."
+      },
+      "created": "2026-09-20",
+      "last_reviewed": "2026-09-20"
     },
     {
       "id": "oblivion-matrix",
@@ -349,7 +404,17 @@
         "контроль",
         "симуляция",
         "идентичность"
-      ]
+      ],
+      "clusters": [
+        "simulation",
+        "ai_cosmos"
+      ],
+      "atlas_ref": {
+        "status": "conceptual_link",
+        "note": "Связь с PERCEPTION ATLAS пока не является нейрокогнитивным утверждением; требует отдельной проверки источниками."
+      },
+      "created": "2026-09-20",
+      "last_reviewed": "2026-09-20"
     },
     {
       "id": "oblivion-2001",
@@ -399,7 +464,34 @@
         "эволюция",
         "космос",
         "человек"
-      ]
+      ],
+      "clusters": [
+        "ai_cosmos"
+      ],
+      "atlas_ref": {
+        "status": "conceptual_link",
+        "note": "Связь с PERCEPTION ATLAS пока не является нейрокогнитивным утверждением; требует отдельной проверки источниками."
+      },
+      "created": "2026-09-20",
+      "last_reviewed": "2026-09-20"
     }
-  ]
+  ],
+  "clusters": {
+    "cryosleep": {
+      "label": "Криосон",
+      "description": "Субъективное переживание паузы между состояниями жизни."
+    },
+    "simulation": {
+      "label": "Симуляция и уровни реальности",
+      "description": "Вложенные модели, искусственная среда и вопрос о предельном уровне реальности."
+    },
+    "identity": {
+      "label": "Идентичность и клон",
+      "description": "Память, копия, возвращение и пересборка субъекта."
+    },
+    "ai_cosmos": {
+      "label": "ИИ и космос",
+      "description": "Искусственный разум, контроль и место человека в технологической системе."
+    }
+  }
 }
