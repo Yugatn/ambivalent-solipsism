@@ -6,7 +6,20 @@
 <title>Поддержать творчество · Амбивалентный солипсизм</title>
 <style>
 :root{--bg:#050807;--panel:rgba(12,25,21,.82);--text:#edf8f4;--muted:#9eb4ae;--accent:#55e8bd;--line:rgba(85,232,189,.2);--soft:rgba(85,232,189,.07)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(85,232,189,.12),transparent 38%),linear-gradient(180deg,#020504,#07110e 55%,#020504);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75;text-align:center}main{width:min(900px,calc(100% - 28px));margin:auto;padding:24px 0 90px}nav{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--line)}nav a{color:var(--muted);text-decoration:none;font-size:11px;letter-spacing:.1em}nav a:hover{color:var(--accent)}.ey{margin-top:72px;color:var(--accent);font:11px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.2em}.hero{padding:18px 0 35px}h1{font-size:clamp(46px,9vw,88px);line-height:.95;letter-spacing:-.05em;margin:10px 0 28px;font-weight:650}.lead{font-size:clamp(20px,3vw,28px);line-height:1.45;color:#d2e1dd}.card{padding:30px;border:1px solid var(--line);border-radius:24px;background:var(--panel);box-shadow:0 20px 70px rgba(0,0,0,.2)}.button{display:inline-block;margin:18px 0 8px;padding:15px 23px;border-radius:14px;background:var(--accent);color:#04100c;text-decoration:none;font-weight:750}.button:hover{transform:translateY(-1px)}details{margin-top:20px;border-top:1px solid var(--line);padding-top:20px}summary{cursor:pointer;color:var(--accent);font-weight:650}ol{padding-left:22px;color:#c9d9d5;text-align:center;list-style-position:inside}.muted{color:var(--muted);font-size:14px}.quote{margin:28px 0;padding:20px 22px;border-left:2px solid var(--accent);background:var(--soft);color:#d8e7e3;border-radius:0 14px 14px 0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(85,232,189,.12),transparent 38%),linear-gradient(180deg,#020504,#07110e 55%,#020504);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75;text-align:center}main{width:min(900px,calc(100% - 28px));margin:auto;padding:24px 0 90px}nav{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--line)}nav a{color:var(--muted);text-decoration:none;font-size:11px;letter-spacing:.1em}nav a:hover{color:var(--accent)}.ey{margin-top:72px;color:var(--accent);font:11px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.2em}.hero{padding:18px 0 35px}h1{font-size:clamp(46px,9vw,88px);line-height:.95;letter-spacing:-.05em;margin:10px 0 28px;font-weight:650}.lead{font-size:clamp(20px,3vw,28px);line-height:1.45;color:#d2e1dd}.card{padding:30px;border:1px solid var(--line);border-radius:24px;background:var(--panel);box-shadow:0 20px 70px rgba(0,0,0,.2)}
+.donate-button{position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:240px;height:66px;margin:18px 0 8px;padding:0 30px;overflow:hidden;border:1px solid rgba(85,232,189,.65);border-radius:16px;background:#04100c;color:#effff9;text-decoration:none;font-weight:800;letter-spacing:.02em;box-shadow:0 0 18px rgba(85,232,189,.18),inset 0 0 24px rgba(85,232,189,.08);isolation:isolate;transition:transform .25s ease,box-shadow .25s ease}
+.donate-button::before{content:"";position:absolute;inset:-80%;z-index:-2;background:conic-gradient(from 0deg,transparent 0deg,rgba(85,232,189,.08) 55deg,rgba(85,232,189,.65) 90deg,transparent 125deg,transparent 360deg);animation:matrixSpin 3.2s linear infinite}
+.donate-button::after{content:"";position:absolute;inset:2px;z-index:-1;border-radius:14px;background:linear-gradient(180deg,rgba(2,10,7,.92),rgba(4,18,13,.82));box-shadow:inset 0 0 22px rgba(85,232,189,.12)}
+.matrix-code{position:absolute;inset:-25px;z-index:-1;display:flex;justify-content:space-around;align-items:center;overflow:hidden;opacity:.48;color:var(--accent);font:700 15px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:3px;white-space:nowrap;pointer-events:none;transform:rotate(-7deg);text-shadow:0 0 7px rgba(85,232,189,.9)}
+.matrix-code span{display:block;animation:matrixFall 1.7s linear infinite;writing-mode:vertical-rl}
+.matrix-code span:nth-child(2){animation-delay:-.8s}.matrix-code span:nth-child(3){animation-delay:-1.3s}.matrix-code span:nth-child(4){animation-delay:-.35s}.matrix-code span:nth-child(5){animation-delay:-1.55s}.matrix-code span:nth-child(6){animation-delay:-1s}
+.donate-label{position:relative;z-index:3;text-shadow:0 1px 8px #000}
+.donate-button:hover{transform:translateY(-3px) scale(1.025);box-shadow:0 0 30px rgba(85,232,189,.38),inset 0 0 28px rgba(85,232,189,.14)}
+.donate-button:active{transform:translateY(0) scale(.99)}
+@keyframes matrixSpin{to{transform:rotate(360deg)}}
+@keyframes matrixFall{0%{transform:translateY(-55px);opacity:0}15%{opacity:.9}70%{opacity:.55}100%{transform:translateY(55px);opacity:0}}
+details{margin-top:20px;border-top:1px solid var(--line);padding-top:20px}summary{cursor:pointer;color:var(--accent);font-weight:650}ol{padding-left:22px;color:#c9d9d5;text-align:center;list-style-position:inside}.muted{color:var(--muted);font-size:14px}.quote{margin:28px 0;padding:20px 22px;border-left:2px solid var(--accent);background:var(--soft);color:#d8e7e3;border-radius:0 14px 14px 0}
+@media(prefers-reduced-motion:reduce){.donate-button::before,.matrix-code span{animation:none}}
 </style>
 </head>
 <body><main>
@@ -19,11 +32,14 @@
 <section class="card">
 <p>Я создаю этот проект как пространство для философских идей, исследований, экспериментов и цифровых проектов. Поддержка помогает продолжать эту работу и развивать новые материалы.</p>
 <div class="quote">Если моё творчество вам откликается — буду благодарен за поддержку.</div>
-<a class="button" href="https://t.me/tribute/app?startapp=dEdF" target="_blank" rel="noopener noreferrer">Поддержать творчество</a>
+<a class="donate-button" href="https://t.me/tribute/app?startapp=dEdF" target="_blank" rel="noopener noreferrer" aria-label="Поддержать творчество">
+<span class="matrix-code" aria-hidden="true"><span>ЮГАТЕО ЮГАТЕО</span><span>ЮГАТЕО ЮГАТЕО</span><span>ЮГАТЕО ЮГАТЕО</span><span>ЮГАТЕО ЮГАТЕО</span><span>ЮГАТЕО ЮГАТЕО</span><span>ЮГАТЕО ЮГАТЕО</span></span>
+<span class="donate-label">Поддержать</span>
+</a>
 <details>
 <summary>Как сделать донат?</summary>
 <ol>
-<li>Нажмите кнопку <strong>«Поддержать творчество»</strong>.</li>
+<li>Нажмите кнопку <strong>«Поддержать»</strong>.</li>
 <li>Откроется Telegram и страница Tribute.</li>
 <li>Выберите доступный вариант поддержки и подтвердите платеж.</li>
 <li>После подтверждения донат будет отправлен через сервис Tribute.</li>
