@@ -1,401 +1,436 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://yugatn.github.io/ambivalent-solipsism/research/acn-schema.json",
-  "title": "Associative Context Network Card Schema",
-  "description": "Версия 2.0. Совместимая схема карточек Ассоциативно-контекстуальной сети. Разделяет источник, лакуну, контекст, основание связи, альтернативы и остаток неизвестного. Старые поля сохранены для совместимости.",
+  "title": "Associative Context Network Graph Schema",
+  "description": "ACN 1.0: единая схема графа Ассоциативно-контекстуальной сети. Узлы и рёбра разделены; epistemic_status, relation_to_core, link_type и causality имеют разные функции.",
+  "schema_version": "2.0",
   "type": "object",
   "required": [
-    "id",
-    "source",
-    "lacuna",
-    "context",
-    "status",
-    "basis",
-    "residual"
+    "schema_version",
+    "data_version",
+    "updated",
+    "cluster",
+    "nodes",
+    "edges"
   ],
   "properties": {
-    "id": {
+    "schema_version": {
+      "type": "string"
+    },
+    "data_version": {
+      "type": "string"
+    },
+    "updated": {
       "type": "string",
-      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+      "format": "date"
     },
-    "source": {
+    "cluster": {
       "type": "object",
       "required": [
+        "id",
         "title",
-        "medium"
+        "description",
+        "central_question",
+        "core_ids"
       ],
       "properties": {
+        "id": {
+          "type": "string"
+        },
         "title": {
           "type": "string"
         },
-        "medium": {
-          "type": "string",
-          "enum": [
-            "film",
-            "series",
-            "book",
-            "game",
-            "other"
-          ]
-        },
-        "year": {
-          "type": [
-            "integer",
-            "null"
-          ],
-          "minimum": 1800,
-          "maximum": 2200
-        },
-        "author": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "original_title": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "relation_to_core": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "mediator": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "abstraction_level": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            "empirical",
-            "textual",
-            "interpretive",
-            "hypothetical",
-            null
-          ]
-        }
-      },
-      "additionalProperties": false
-    },
-    "lacuna": {
-      "type": "object",
-      "required": [
-        "question",
-        "types"
-      ],
-      "properties": {
-        "question": {
+        "description": {
           "type": "string"
         },
-        "types": {
-          "type": "array",
-          "minItems": 1,
-          "items": {
-            "type": "string",
-            "enum": [
-              "сюжетная",
-              "психическая",
-              "причинная",
-              "онтологическая",
-              "идентичностная",
-              "темпоральная",
-              "этическая",
-              "технологическая",
-              "космологическая",
-              "текстовая",
-              "интерпретационная",
-              "личная",
-              "остаточная"
-            ]
-          }
-        }
-      },
-      "additionalProperties": false
-    },
-    "context": {
-      "type": "object",
-      "required": [
-        "title",
-        "transfer"
-      ],
-      "properties": {
-        "title": {
+        "central_question": {
           "type": "string"
         },
-        "medium": {
-          "type": "string",
-          "enum": [
-            "film",
-            "series",
-            "book",
-            "game",
-            "other"
-          ]
-        },
-        "year": {
-          "type": [
-            "integer",
-            "null"
-          ],
-          "minimum": 1800,
-          "maximum": 2200
-        },
-        "transfer": {
-          "type": "string"
-        },
-        "effect": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "relation": {
-      "type": "object",
-      "properties": {
-        "direction": {
-          "type": "string"
-        },
-        "reversible": {
-          "type": "boolean"
-        },
-        "type": {
+        "core_ids": {
           "type": "array",
           "items": {
             "type": "string"
           }
         },
-        "link_type": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "strength": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            "low",
-            "medium",
-            "high",
-            null
-          ]
-        },
-        "epistemic_status": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "causality": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "enum": [
-            "established",
-            "not_established",
-            "unknown",
-            null
-          ]
-        },
-        "basis": {
-          "type": [
-            "string",
-            "null"
-          ]
-        }
-      },
-      "additionalProperties": false
-    },
-    "status": {
-      "type": "string",
-      "enum": [
-        "канон",
-        "авторское свидетельство",
-        "интерпретация",
-        "гипотеза",
-        "личная ассоциация"
-      ]
-    },
-    "basis": {
-      "type": "array",
-      "minItems": 1,
-      "items": {
-        "type": "string"
-      }
-    },
-    "alternatives": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "counter_relation": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "epistemic_weight": {
-      "type": "string",
-      "enum": [
-        "низкий",
-        "средний",
-        "высокий"
-      ],
-      "description": "Оценка качества основания, а не истинности самой связи."
-    },
-    "false_completeness_risk": {
-      "type": "string",
-      "enum": [
-        "низкий",
-        "средний",
-        "высокий"
-      ]
-    },
-    "residual": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "object",
-          "required": [
-            "primary_question"
-          ],
-          "properties": {
-            "primary_question": {
-              "type": "string"
-            },
-            "secondary_questions": {
-              "type": "array",
-              "items": {
+        "excluded": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "title",
+              "reason"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "original": {
+                "type": "string"
+              },
+              "year": {
+                "type": "string"
+              },
+              "reason": {
                 "type": "string"
               }
             },
-            "note": {
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "source",
+          "lacuna",
+          "lacuna_types",
+          "context",
+          "transferred",
+          "effect",
+          "model_basis",
+          "chain_basis",
+          "epistemic_status",
+          "contestation",
+          "causality",
+          "alternatives",
+          "counter_links",
+          "false_completeness",
+          "residual",
+          "tags"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]*$"
+          },
+          "source": {
+            "type": "object",
+            "required": [
+              "title",
+              "original",
+              "year",
+              "media_type",
+              "role",
+              "relation_to_core",
+              "mediator",
+              "abstraction_level"
+            ],
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "original": {
+                "type": "string"
+              },
+              "author": {
+                "type": "string"
+              },
+              "year": {
+                "type": "string",
+                "pattern": "^\\d{4}$"
+              },
+              "media_type": {
+                "type": "string",
+                "enum": [
+                  "literary",
+                  "cinematic",
+                  "scientific",
+                  "archival",
+                  "other"
+                ]
+              },
+              "role": {
+                "type": "string"
+              },
+              "relation_to_core": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "mediator": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "abstraction_level": {
+                "type": "string",
+                "enum": [
+                  "empirical",
+                  "textual",
+                  "interpretive",
+                  "hypothetical"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "referent": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "required": [
+              "type",
+              "name"
+            ],
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "period": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "lacuna": {
+            "type": "object",
+            "required": [
+              "question",
+              "description"
+            ],
+            "properties": {
+              "question": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "lacuna_types": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
               "type": "string"
             }
           },
-          "additionalProperties": false
-        }
-      ]
-    },
-    "tags": {
-      "type": "array",
-      "items": {
-        "type": "string"
+          "context": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "role"
+            ],
+            "additionalProperties": false
+          },
+          "transferred": {
+            "type": "string"
+          },
+          "effect": {
+            "type": "string"
+          },
+          "model_basis": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "chain_basis": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "epistemic_status": {
+            "type": "string",
+            "enum": [
+              "canon",
+              "documented",
+              "interpretation",
+              "hypothesis",
+              "personal_association",
+              "contested_evidence"
+            ]
+          },
+          "contestation": {
+            "type": "string",
+            "enum": [
+              "absent",
+              "present",
+              "significant"
+            ]
+          },
+          "causality": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "established",
+              "not_established",
+              "unknown",
+              null
+            ]
+          },
+          "alternatives": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "counter_links": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "false_completeness": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "residual": {
+            "type": "object",
+            "required": [
+              "primary_question",
+              "secondary_questions"
+            ],
+            "properties": {
+              "primary_question": {
+                "type": "string"
+              },
+              "secondary_questions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          },
+          "atlas_ref": {
+            "type": "object",
+            "required": [
+              "factor",
+              "function"
+            ],
+            "properties": {
+              "factor": {
+                "type": "string"
+              },
+              "function": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
       }
     },
-    "clusters": {
+    "edges": {
       "type": "array",
       "items": {
-        "type": "string"
-      },
-      "description": "Тематические кластеры, к которым относится связь."
-    },
-    "atlas_ref": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "string"
+        "type": "object",
+        "required": [
+          "id",
+          "from",
+          "to",
+          "link_type",
+          "relation",
+          "strength",
+          "direction",
+          "epistemic_status",
+          "causality",
+          "basis"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "link_type": {
+            "type": "string"
+          },
+          "relation": {
+            "type": "string"
+          },
+          "strength": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "direction": {
+            "type": "string"
+          },
+          "epistemic_status": {
+            "type": "string",
+            "enum": [
+              "canon",
+              "documented",
+              "interpretation",
+              "hypothesis",
+              "personal_association",
+              "contested_evidence"
+            ]
+          },
+          "causality": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "established",
+              "not_established",
+              "unknown",
+              null
+            ]
+          },
+          "basis": {
+            "type": "string"
+          }
         },
-        "note": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
-    "created": {
-      "type": "string",
-      "format": "date"
-    },
-    "last_reviewed": {
-      "type": "string",
-      "format": "date"
-    },
-    "epistemic_status": {
-      "type": [
-        "string",
-        "null"
-      ],
-      "enum": [
-        "canon",
-        "documented",
-        "interpretation",
-        "hypothesis",
-        "personal_association",
-        "contested_evidence",
-        null
-      ]
-    },
-    "model_basis": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "chain_basis": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "referent": {
-      "type": [
-        "object",
-        "null"
-      ],
-      "properties": {
-        "type": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "type",
-        "name"
-      ],
-      "additionalProperties": false
-    },
-    "causality": {
-      "type": [
-        "string",
-        "null"
-      ],
-      "enum": [
-        "established",
-        "not_established",
-        "unknown",
-        null
-      ]
-    },
-    "contestation": {
-      "type": [
-        "string",
-        "null"
-      ],
-      "enum": [
-        "absent",
-        "present",
-        "significant",
-        null
-      ]
+        "additionalProperties": false
+      }
     }
   },
-  "additionalProperties": false,
-  "schema_version": "2.0"
+  "additionalProperties": false
 }
