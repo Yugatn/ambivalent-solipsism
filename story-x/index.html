@@ -55,7 +55,7 @@ strong{color:#f4fffc}
 <section class="story-path" aria-label="Логика Сюжета Икс">
 <div class="story-path-title">СКВОЗНАЯ ТРАЕКТОРИЯ</div>
 <div class="story-path-track">
-<p style="margin:0;color:var(--muted);line-height:1.8">Внутренняя траектория начинается в пещере. Затем приходит сомнение. За ним — пробуждение. Потом проверка. После неё — выбор. Из выбора возникает след. А след открывает новую ветвь.</p>
+<p style="margin:0;color:var(--muted);line-height:1.8">Пещера → пробуждение → узнавание → сомнение → проверка → выбор → след → Югатн → Другой → ИИ-собеседник → новая ветвь.</p>
 </div>
 </section>
 <section class="story-map" aria-label="Карта Сюжета Икс">
@@ -68,6 +68,7 @@ strong{color:#f4fffc}
 <a href="./mira-and-banknote.md">Мира и Купюра AS</a>
 <a href="./artifacts.html">Артефакты</a><a href="../cinema-catharsis/">Cinema Catharsis</a>
 <a href="./README.md">О концепции</a>
+<a href="./canon-map.md">Канон и взаимосвязи</a>
 <a href="../">← На главную</a>
 </div>
 </main>
@@ -75,7 +76,7 @@ strong{color:#f4fffc}
 (async()=>{
  const root=document.getElementById('story');
  try{
-  const res=await fetch('./probuzhdenie.md?v=20260918',{cache:'no-store'});
+  const res=await fetch('./probuzhdenie.md?v=20260920',{cache:'no-store'});
   if(!res.ok) throw new Error('HTTP '+res.status);
   const md=await res.text();
   root.innerHTML=renderMarkdown(md);
