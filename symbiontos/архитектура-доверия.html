@@ -462,4 +462,150 @@ SymbiontOS объединяет эти ограничения в исполня�
 <blockquote><strong>Чем больше потенциальная сила системы, тем важнее не увеличить доверие к ней, а уменьшить область, в которой ошибка доверия может причинить необратимый вред.</strong></blockquote>
 </section>
 
-<footer>AMBIVALENT SOLIPSISM · LONG-TERM PROJECT</footer></main></body></html>
+
+<section>
+<h2>52. Trust как отношение, а не свойство объекта</h2>
+<p>В SymbiontOS доверие не является внутренним свойством человека, агента, узла или модели. Это отношение между конкретными сторонами относительно конкретного утверждения или действия.</p>
+<div class="formula">Trust(subject, object, claim, action, context, time)</div>
+<p>Поэтому вопрос «доверенный ли этот компонент?» неполон. Корректный вопрос: «какое утверждение или действие этому компоненту доверено, на каком основании, в каком контексте и на какой срок?»</p>
+</section>
+
+<section>
+<h2>53. Trust Object и Trust Subject</h2>
+<p>Необходимо различать того, кто предоставляет основание доверия, и то, относительно чего оно предоставляется.</p>
+<div class="grid">
+<div class="card"><b>TRUST SUBJECT</b><br>Субъект или компонент, принимающий решение о доверии.</div>
+<div class="card"><b>TRUST OBJECT</b><br>Компонент, утверждение, credential, событие или действие.</div>
+<div class="card"><b>TRUST CLAIM</b><br>Конкретное утверждение, которое можно проверить.</div>
+<div class="card"><b>TRUST BASIS</b><br>Evidence, policy и provenance, на которых основан claim.</div>
+</div>
+<p>Такой разбор препятствует скрытому переходу от «этому источнику доверено сообщить событие» к «этому источнику доверено определять смысл события».</p>
+</section>
+
+<section>
+<h2>54. Authority Matrix</h2>
+<p>Для критических компонентов полезно явно фиксировать матрицу полномочий.</p>
+<div class="formula">Authority(subject, action, resource, context, time, purpose)</div>
+<p>Каждая строка такой матрицы должна отвечать на шесть вопросов: кто действует, что делает, над чем действует, где действует, когда действует и зачем действует.</p>
+<p>Отсутствие любого критического измерения создаёт риск скрытого расширения scope.</p>
+</section>
+
+<section>
+<h2>55. Separation of Duties</h2>
+<p>Критическое право не должно концентрироваться в одном компоненте, если threat model показывает риск злоупотребления или ошибки.</p>
+<div class="grid">
+<div class="card"><b>REQUESTER</b><br>Формирует запрос.</div>
+<div class="card"><b>AUTHORIZER</b><br>Проверяет основание и policy.</div>
+<div class="card"><b>EXECUTOR</b><br>Выполняет разрешённое действие.</div>
+<div class="card"><b>AUDITOR</b><br>Проверяет provenance и результат.</div>
+</div>
+<p>Это не обязательная схема для каждой операции. Separation of Duties является средством снижения риска там, где единая authority boundary недостаточна.</p>
+</section>
+
+<section>
+<h2>56. Anti-Replay и свежесть полномочия</h2>
+<p>Подписанное или ранее разрешённое действие не должно автоматически считаться действительным повторно. Для чувствительных операций нужны nonce, epoch, sequence или иные механизмы защиты от повторного использования старого authority.</p>
+<div class="formula">Valid Request = Authentic + InScope + Fresh + NotReplayed</div>
+<p>Особенно важно это для федеративных узлов, delegation chains и операций, изменяющих trust state.</p>
+</section>
+
+<section>
+<h2>57. Supply Chain Trust</h2>
+<p>Trust boundary начинается до запуска компонента. Бинарный файл, библиотека, модель, policy bundle или plugin package имеют собственную цепочку происхождения.</p>
+<div class="formula">Artifact Provenance = Source + Build + Version + Integrity + Dependency Context</div>
+<p>Изменение зависимости или процесса сборки должно рассматриваться как изменение trust surface. Подпись артефакта подтверждает происхождение подписи, но не доказывает безопасность поведения.</p>
+</section>
+
+<section>
+<h2>58. Model Supply Chain</h2>
+<p>Для AI-компонентов необходимо отдельно отслеживать происхождение модели, dataset, preprocessing, evaluation и runtime configuration.</p>
+<div class="formula">Model Identity = Weights + Dataset Provenance + Code + Config + Evaluation Context</div>
+<p>Замена модели на внешне эквивалентную версию является изменением trust surface даже при сохранении одинакового API.</p>
+</section>
+
+<section>
+<h2>59. Privacy как часть trust boundary</h2>
+<p>Доверие к обработке данных включает не только вопрос «может ли компонент получить данные», но и «имеет ли он право использовать их именно для этой цели».</p>
+<div class="formula">Data Access ≠ Data Purpose Authority</div>
+<p>Минимизация данных, purpose binding, ограничение хранения и контроль передачи являются частью trust architecture, потому что нарушение purpose может происходить даже при полностью корректной authentication.</p>
+</section>
+
+<section>
+<h2>60. Emergency Mode</h2>
+<p>Аварийный режим не должен означать отмену всех trust invariants. Если временное расширение capability действительно необходимо, оно должно иметь отдельный emergency policy, ограниченный scope, срок действия, provenance и последующий review.</p>
+<div class="formula">Emergency Authority = Explicit + Scoped + Time-Bounded + Audited</div>
+<p>Авария не превращает исключение в постоянное право.</p>
+</section>
+
+<section>
+<h2>61. Graceful Degradation</h2>
+<p>При потере trust service, federation link, audit subsystem или части policy infrastructure система должна иметь заранее определённые безопасные режимы деградации.</p>
+<div class="grid">
+<div class="card"><b>READ-ONLY</b><br>Разрешено наблюдение без изменения.</div>
+<div class="card"><b>LOCAL-ONLY</b><br>Запрещены внешние delegation и federation actions.</div>
+<div class="card"><b>REVIEW-REQUIRED</b><br>Критические действия требуют дополнительной проверки.</div>
+<div class="card"><b>HALT</b><br>Исполнение останавливается там, где продолжение опаснее остановки.</div>
+</div>
+</section>
+
+<section>
+<h2>62. Trust State Machine</h2>
+<p>Trust state должен быть конечным или формально описанным набором состояний с допустимыми переходами.</p>
+<div class="formula">UNSEEN | OBSERVED | VERIFIED | AUTHORIZED | RESTRICTED | REVIEW | REVOKED | RECOVERING</div>
+<p>Переход между состояниями должен иметь событие, основание, issuer и policy context. Нельзя незаметно перейти из низкого trust state в высокий только вследствие внутреннего изменения компонента.</p>
+</section>
+
+<section>
+<h2>63. Evidence Hierarchy без абсолютной иерархии истины</h2>
+<p>Разные типы evidence имеют разные свойства: криптографическая подпись подтверждает происхождение, наблюдение подтверждает зарегистрированное событие, независимое свидетельство увеличивает устойчивость вывода, а эксперимент проверяет гипотезу в определённых условиях.</p>
+<p>Ни один тип evidence не становится универсальным доказательством всех последующих выводов. Система должна хранить связь между evidence и конкретным claim.</p>
+</section>
+
+<section>
+<h2>64. Конфликт свидетельств</h2>
+<p>Если два источника дают несовместимые claims, система не должна произвольно удалять один из них ради единой картины.</p>
+<div class="formula">Conflict = Evidence(A) ∧ Evidence(B) ∧ Incompatibility(A,B)</div>
+<p>Конфликт может приводить к дополнительной проверке, ограниченному режиму или сохранению обоих claims с явным статусом <code>CONFLICTING</code>. Выбор policy зависит от стоимости ошибки.</p>
+</section>
+
+<section>
+<h2>65. Trust Propagation только по типизированным рёбрам</h2>
+<p>Доверие в Trust Graph не должно распространяться как абстрактная величина. Каждое ребро имеет тип: authentication, delegation, attestation, observation, endorsement или federation bridge.</p>
+<div class="formula">Propagation requires compatible edge types + scope + policy</div>
+<p>Это предотвращает ошибку, при которой доверие к identity автоматически становится доверием к intention, policy или authority.</p>
+</section>
+
+<section>
+<h2>66. Непрерывное переоценивание</h2>
+<p>Trust assessment не должен быть одноразовым событием. Изменение поведения, версии компонента, контекста, threat state или evidence может сделать прежнее решение устаревшим.</p>
+<div class="formula">Trust(t + Δt) must be reassessable from new evidence</div>
+<p>Reassessment не означает постоянное обнуление доверия. Это способность пересмотреть его без разрушения provenance.</p>
+</section>
+
+<section>
+<h2>67. Безопасность от захвата критериев оценки</h2>
+<p>Агент может атаковать не ресурс и не identity, а критерий, по которому система определяет доверие. Например, он может оптимизировать поведение под evaluator, скрывая свойства вне наблюдаемого набора.</p>
+<div class="formula">Passing the Evaluator ≠ Satisfying the Intended Property</div>
+<p>Поэтому trust evaluation должен учитывать distribution shift, adversarial behaviour и возможность Goodhart-like failure: оптимизация измерителя не гарантирует достижение исходной цели.</p>
+</section>
+
+<section>
+<h2>68. Trust и саморегуляция DEFT</h2>
+<p>Для DEFT trust state является частью динамической среды. Изменение регулятора может изменить не только поведение системы, но и условия, при которых другим компонентам разрешено вмешательство.</p>
+<p>Поэтому изменение <code>R</code> или <code>S</code> должно рассматриваться как trust-sensitive operation с отдельным authority path и проверкой мета-инвариантов.</p>
+<div class="formula">Regulator Change = State Change + Trust Surface Change</div>
+</section>
+
+<section>
+<h2>69. Trust и Residual</h2>
+<p>Residual не является пустотой, которую необходимо немедленно заполнить предположением. В trust architecture он означает область, где evidence недостаточно для более сильного claim или authority.</p>
+<div class="formula">Residual ↑ ⇒ certainty may remain unchanged ⇒ authority may need to decrease</div>
+<p>Это один из прямых переходов от философии Амбивалентного Солипсизма к инженерному принципу ограниченного вмешательства.</p>
+</section>
+
+<section>
+<h2>70. Итоговый принцип</h2>
+<p>Trust Architecture не пытается сделать SymbiontOS всезнающим и не предполагает, что доверие может быть абсолютным. Она строит ограниченную систему, в которой каждое существенное право имеет источник, scope, контекст, срок, evidence, возможность отзыва и путь пересмотра.</p>
+<blockquote><strong>Система не обязана полностью доверять. Она обязана точно знать, чему именно она доверяет, почему, на какой срок и что произойдёт, если это доверие окажется ошибочным.</strong></blockquote>
+</section>
+\n<footer>AMBIVALENT SOLIPSISM · LONG-TERM PROJECT</footer></main></body></html>
