@@ -187,6 +187,26 @@ main{width:min(var(--max),calc(100% - 30px));margin:auto;padding:22px 0 90px}nav
 <div class="quote">Задача метода не устранить Residual, а сохранить способность его замечать.</div>
 </section>
 
+<section id="schema">
+<div class="label">15 · Формат данных</div>
+<h2>Карточка ACN как машинно-читаемый объект</h2>
+<p>Чтобы методология могла перейти от текста к исследовательской базе, карточка связи может храниться как структурированный объект. Это позволяет в дальнейшем строить граф, фильтровать связи по типу лакуны, эпистемическому статусу, весу основания и риску ложной полноты.</p>
+<div class="formula">произведение + лакуна + контекст + основание + статус + контрсвязь + остаток = карточка ACN</div>
+<p>Формальная схема опубликована отдельно: <a href="./acn-schema.json"><strong>acn-schema.json</strong></a>.</p>
+<table><thead><tr><th>Поле</th><th>Назначение</th></tr></thead><tbody>
+<tr><td>source</td><td>Произведение, содержащее лакуну.</td></tr>
+<tr><td>lacuna</td><td>Конкретный вопрос и тип лакуны.</td></tr>
+<tr><td>context</td><td>Произведение или иной медиатекст, предоставляющий контекст.</td></tr>
+<tr><td>status</td><td>Эпистемический статус связи.</td></tr>
+<tr><td>basis</td><td>Основания, на которых связь предложена.</td></tr>
+<tr><td>alternatives</td><td>Альтернативные объяснения.</td></tr>
+<tr><td>counter_relation</td><td>Аргументы, ослабляющие связь.</td></tr>
+<tr><td>epistemic_weight</td><td>Качество основания, а не степень «истинности».</td></tr>
+<tr><td>false_completeness_risk</td><td>Риск принять связность модели за полноту объяснения.</td></tr>
+<tr><td>residual</td><td>Что остаётся неизвестным.</td></tr>
+</tbody></table>
+<p class="note">JSON-схема не превращает интерпретацию в объективный факт. Она только делает структуру анализа явной и пригодной для дальнейшей обработки.</p>
+</section>
 <footer>AMBIVALENT SOLIPSISM · RESEARCH · ASSOCIATIVE CONTEXT NETWORK · <a href="../">AS</a></footer>
 </main>
 </body>
