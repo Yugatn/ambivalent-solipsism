@@ -608,4 +608,164 @@ SymbiontOS объединяет эти ограничения в исполня�
 <p>Trust Architecture не пытается сделать SymbiontOS всезнающим и не предполагает, что доверие может быть абсолютным. Она строит ограниченную систему, в которой каждое существенное право имеет источник, scope, контекст, срок, evidence, возможность отзыва и путь пересмотра.</p>
 <blockquote><strong>Система не обязана полностью доверять. Она обязана точно знать, чему именно она доверяет, почему, на какой срок и что произойдёт, если это доверие окажется ошибочным.</strong></blockquote>
 </section>
+\n
+<section>
+<h2>71. Trust Kernel и минимальный корень доверия</h2>
+<p>Доверенная база не должна совпадать со всей системой. Чем меньше компонентов необходимо принять как исходно доверенные, тем меньше поверхность, через которую ошибка может стать системной.</p>
+<div class="formula">TCB = minimal mechanisms required to enforce trust invariants</div>
+<p>Trust Kernel должен содержать только те примитивы, которые необходимы для identity binding, capability enforcement, isolation, secure event ordering и revocation. Semantic inference, UI и внешние плагины не должны входить в него без строгого основания.</p>
+</section>
+
+<section>
+<h2>72. Trust Root не равен вечному доверию</h2>
+<p>Root of Trust является исходной точкой проверки, а не метафизическим источником истины. Даже root credentials и root policy должны иметь versioning, provenance, recovery procedure и контролируемый путь изменения.</p>
+<div class="formula">Root of Trust = bootstrap assumption + verification mechanism</div>
+<p>Это сохраняет собственную философскую последовательность SymbiontOS: даже фундаментальная предпосылка остаётся частью модели.</p>
+</section>
+
+<section>
+<h2>73. Boot Trust и измеряемое состояние</h2>
+<p>При запуске необходимо проверять не только бинарный код, но и критические policy, capability configuration и trust metadata.</p>
+<div class="formula">Boot State = Code + Policy + Configuration + Trust Metadata</div>
+<p>Изменение критического элемента должно быть обнаруживаемым. При невозможности проверки система должна переходить в заранее определённый restricted или recovery mode.</p>
+</section>
+
+<section>
+<h2>74. Trust Attestation</h2>
+<p>Attestation должна подтверждать конкретное измеряемое состояние компонента, а не выдавать универсальное утверждение «компоненту можно доверять».</p>
+<div class="formula">Attestation = Measurement + Identity + Context + Time + Evidence</div>
+<p>Получатель самостоятельно определяет, какие действия допустимы при таком attestation. Это предотвращает превращение одной подписи в универсальный authority token.</p>
+</section>
+
+<section>
+<h2>75. Fail-Closed и Fail-Safe</h2>
+<p>Остановка при неизвестном состоянии не всегда является безопасным решением. Для каждой capability должен быть определён режим отказа: halt, read-only, local-only, restricted или controlled continuation.</p>
+<div class="formula">Failure Policy = risk-specific safe state</div>
+<p>Так Trust Architecture не сводится к правилу «при любой неопределённости остановить всё». Безопасность оценивается относительно последствий продолжения и остановки.</p>
+</section>
+
+<section>
+<h2>76. Safety Case</h2>
+<p>Критические trust claims должны сопровождаться не только evidence, но и структурированным аргументом безопасности.</p>
+<div class="formula">Safety Case = Claim + Evidence + Argument + Assumptions + Residual Risk</div>
+<p>Assumptions должны быть явными. Если предположение нарушено, соответствующий safety claim должен автоматически считаться требующим пересмотра.</p>
+</section>
+
+<section>
+<h2>77. Assumption Registry</h2>
+<p>SymbiontOS должен хранить критические предположения, от которых зависят trust и safety claims.</p>
+<div class="grid">
+<div class="card"><b>ASSUMPTION</b><br>Что считается исходно верным.</div>
+<div class="card"><b>EVIDENCE</b><br>Почему это предположение принято.</div>
+<div class="card"><b>DEPENDENCIES</b><br>Какие компоненты от него зависят.</div>
+<div class="card"><b>BREAK CONDITION</b><br>Как обнаруживается его нарушение.</div>
+</div>
+<p>Это предотвращает скрытые аксиомы, которые со временем становятся невидимой частью системы безопасности.</p>
+</section>
+
+<section>
+<h2>78. Trust Change Management</h2>
+<p>Изменение trust architecture должно рассматриваться как отдельный класс изменений. Изменение policy, evaluator, identity provider, capability schema, audit semantics или recovery mechanism может изменить безопасность всей системы.</p>
+<div class="formula">Trust Change = Impact Analysis + Review + Versioning + Migration + Rollback</div>
+<p>Нельзя считать совместимость API доказательством сохранения trust semantics.</p>
+</section>
+
+<section>
+<h2>79. Semantic Versioning доверия</h2>
+<p>Для trust contracts необходима семантическая версия, отражающая не только программный API, но и изменение полномочий и гарантий.</p>
+<div class="grid">
+<div class="card"><b>PATCH</b><br>Не изменяет смысл trust contract.</div>
+<div class="card"><b>MINOR</b><br>Добавляет совместимую возможность без расширения существующих implicit authority.</div>
+<div class="card"><b>MAJOR</b><br>Изменяет trust semantics, scope, guarantees или assumptions.</div>
+</div>
+</section>
+
+<section>
+<h2>80. Compatibility не означает Trust Continuity</h2>
+<p>Совместимость интерфейса не означает сохранение прежнего доверия.</p>
+<div class="formula">API Compatibility ≠ Trust Compatibility</div>
+<p>Новая версия компонента может отвечать тем же запросам и при этом изменить обработку данных, policy interpretation или delegation behaviour. Поэтому trust reassessment должен быть независим от обычного compatibility check.</p>
+</section>
+
+<section>
+<h2>81. Canary Trust и ограниченное внедрение</h2>
+<p>Изменения, затрагивающие trust surface, следует по возможности вводить постепенно. Новая версия сначала получает ограниченный scope, наблюдается и только после проверки может расширять authority.</p>
+<div class="formula">New Trust Surface → Limited Scope → Observe → Review → Expand</div>
+<p>Это снижает blast radius ошибки и сохраняет возможность отката.</p>
+</section>
+
+<section>
+<h2>82. Blast Radius как измерение trust risk</h2>
+<p>Риск определяется не только вероятностью ошибки, но и количеством субъектов, ресурсов и контекстов, на которые она может распространиться.</p>
+<div class="formula">Blast Radius = affected subjects × resources × contexts × irreversibility</div>
+<p>Формула концептуальная. Её назначение — заставить architecture учитывать распространение ошибки, а не только вероятность её возникновения.</p>
+</section>
+
+<section>
+<h2>83. Trust-aware Rate Limiting</h2>
+<p>Для некоторых действий ограничение частоты является частью authority containment. Даже корректно аутентифицированный компонент может причинить чрезмерный ущерб через серию допустимых действий.</p>
+<div class="formula">Authority = scope + rate + cumulative impact</div>
+<p>Поэтому policy может ограничивать не только отдельное действие, но и накопленный эффект за окно времени.</p>
+</section>
+
+<section>
+<h2>84. Cumulative Authority</h2>
+<p>Малые полномочия могут вместе создать крупное вмешательство. Trust analysis должен учитывать композицию действий.</p>
+<div class="formula">Σ small actions ≠ necessarily small impact</div>
+<p>Для критических ресурсов policy должна уметь оценивать cumulative impact, а не только каждую операцию отдельно.</p>
+</section>
+
+<section>
+<h2>85. Anti-Confusion Boundaries</h2>
+<p>Одной из наиболее опасных ошибок является смешение разных типов сущностей: субъект, credential, профиль, модель, событие, claim и authority.</p>
+<div class="formula">Subject ≠ Credential ≠ Profile ≠ Model ≠ Claim ≠ Authority</div>
+<p>Архитектура должна сохранять эти различия и не позволять одному объекту незаметно наследовать свойства другого.</p>
+</section>
+
+<section>
+<h2>86. Trust-aware Data Lineage</h2>
+<p>Для данных важна не только provenance отдельного события, но и lineage: какие преобразования, агрегирования и модели участвовали в формировании результата.</p>
+<div class="formula">Result = f(Data, Transformations, Models, Context)</div>
+<p>Изменение любого существенного элемента должно быть отражено в lineage. Это особенно важно для AI inference и federated aggregation.</p>
+</section>
+
+<section>
+<h2>87. Counterfactual Audit</h2>
+<p>Для критических решений полезно проверять не только «почему действие произошло», но и «что изменилось бы, если удалить конкретное evidence или capability».</p>
+<div class="formula">Counterfactual Audit = Decision − selected dependency</div>
+<p>Это помогает выявлять скрытую единственную точку доверия и чрезмерно влиятельные источники.</p>
+</section>
+
+<section>
+<h2>88. Trust Canary Signals</h2>
+<p>Trust monitoring должен отслеживать не только нарушения policy, но и ранние признаки деградации: рост исключений, увеличение manual overrides, повторные revocations, необычные delegation chains и расхождение между evaluator и реальным результатом.</p>
+<p>Такие сигналы не являются доказательством компрометации. Они являются основанием для reassessment.</p>
+</section>
+
+<section>
+<h2>89. Independent Recovery Plane</h2>
+<p>Механизм восстановления не должен полностью зависеть от компонента, который может быть скомпрометирован в ходе инцидента.</p>
+<div class="formula">Recovery Authority must survive failure of the affected component</div>
+<p>Это особенно важно для revocation, credential rotation, policy rollback и восстановления trust metadata.</p>
+</section>
+
+<section>
+<h2>90. Trust Invariants как исполняемые свойства</h2>
+<p>Финальный шаг формализации состоит в том, чтобы превратить trust invariants в свойства, которые можно проверять автоматически.</p>
+<div class="grid">
+<div class="card"><b>NON-ESCALATION</b><br>Delegation не расширяет authority.</div>
+<div class="card"><b>NON-REPLAY</b><br>Expired или использованное критическое разрешение не воспроизводится.</div>
+<div class="card"><b>CONTEXT ISOLATION</b><br>Authority не пересекает границу без bridge policy.</div>
+<div class="card"><b>REVOCATION</b><br>Отзыв реально прекращает действие capability.</div>
+<div class="card"><b>PROVENANCE</b><br>Критическое решение имеет проверяемую lineage.</div>
+<div class="card"><b>RECOVERY</b><br>Компрометированное доверие не восстанавливается автоматически.</div>
+</div>
+</section>
+
+<section>
+<h2>91. Финальный синтез</h2>
+<p>Архитектура доверия SymbiontOS теперь рассматривает доверие как динамическую, контекстную и проверяемую систему отношений между субъектами, claims, evidence, capabilities и действиями.</p>
+<p>Её цель не в создании максимального количества доверия. Цель — сделать так, чтобы каждое доверие имело границы, каждое полномочие имело основание, каждое изменение имело provenance, каждая ошибка имела ограниченный blast radius, а каждое восстановление не создавало ложной уверенности.</p>
+<blockquote><strong>Доверие должно быть достаточно сильным для необходимого действия и достаточно ограниченным, чтобы ошибка этого доверия не стала необратимой властью.</strong></blockquote>
+</section>
 \n<footer>AMBIVALENT SOLIPSISM · LONG-TERM PROJECT</footer></main></body></html>
