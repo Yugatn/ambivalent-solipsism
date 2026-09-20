@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Конституционная архитектура · Амбивалентный солипсизм</title>
+<style>
+:root{--bg:#030807;--panel:rgba(10,25,22,.8);--text:#edf8f4;--muted:#a4b9b3;--accent:#55e8bd;--line:rgba(85,232,189,.18);--soft:rgba(85,232,189,.06);--warn:#e6d28a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(85,232,189,.1),transparent 34%),linear-gradient(180deg,#020605,#06110e 55%,#020605);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.78}main{width:min(1100px,calc(100% - 32px));margin:auto;padding:22px 0 100px}nav{position:sticky;top:0;z-index:10;display:flex;gap:18px;flex-wrap:wrap;padding:15px 0;background:rgba(3,8,7,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}a{color:#a8c2bb;text-decoration:none;font-size:11px;letter-spacing:.07em}a:hover{color:var(--accent)}.ey{margin-top:68px;color:var(--accent);font:11px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.2em}.hero h1{font-size:clamp(40px,8vw,82px);line-height:.98;letter-spacing:-.045em;margin:12px 0 24px}.lead{font-size:clamp(19px,3vw,27px);line-height:1.48;color:#d2e1dd;max-width:950px}.note{margin:30px 0;padding:22px 25px;border-left:2px solid var(--accent);background:var(--soft);border-radius:0 16px 16px 0}.toc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:35px 0}.toc a{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:rgba(85,232,189,.025)}section{margin-top:30px;padding:29px;border:1px solid var(--line);border-radius:23px;background:var(--panel);box-shadow:0 14px 45px rgba(0,0,0,.16)}h2{font-size:26px;font-weight:560;margin:0 0 12px}h3{font-size:18px;color:#deeee9;margin:23px 0 8px}p{color:#b9cbc6;margin:10px 0}.formula{margin:18px 0;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.2);font:15px/1.8 ui-monospace,SFMono-Regular,Menlo,monospace;color:#d9eee8;overflow:auto}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.card{padding:20px;border:1px solid var(--line);border-radius:17px;background:rgba(85,232,189,.035)}.card strong{display:block;color:#e8f7f3;margin-bottom:6px}.quote{font:22px Georgia,serif;color:#e0eee9;margin:28px 0;padding:23px 0 23px 24px;border-left:2px solid var(--accent)}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{text-align:left;vertical-align:top;padding:12px;border-bottom:1px solid var(--line);color:#b9cbc6}th{color:#e3f2ee;font-weight:550}.state{display:inline-block;padding:4px 9px;border:1px solid var(--line);border-radius:999px;margin:3px;font:11px ui-monospace,monospace;color:#d9eee8}.small{font-size:13px;color:#829993}.warning{color:var(--warn)}footer{margin-top:70px;color:#526963;font:10px ui-monospace,SFMono-Regular,Menlo,monospace}@media(max-width:760px){main{width:min(100% - 20px,1100px)}.toc,.grid{grid-template-columns:1fr}section{padding:22px;border-radius:18px}.ey{margin-top:45px}nav{gap:12px}}
+</style>
+</head>
+<body>
+<main>
+<nav>
+<a href="../">ГЛАВНАЯ</a>
+<a href="./">AI</a>
+<a href="development-law-kernel.html">ЗАКОН РАЗВИТИЯ</a>
+<a href="human-ai-symbiosis.html">СИМБИОЗ</a>
+<a href="ai-safety.html">AI SAFETY</a>
+</nav>
+
+<div class="ey">AI / CONSTITUTIONAL ARCHITECTURE</div>
+<div class="hero">
+<h1>Конституционная архитектура</h1>
+<p class="lead">Слой, переводящий фундаментальные принципы Амбивалентного солипсизма в систему полномочий, делегирования, контекстных правил, исполнения, аудита, оспаривания и восстановления.</p>
+<div class="note"><strong>Основная идея:</strong> Конституция определяет пределы. Но одна Конституция недостаточна для работающей системы. Между принципом и действием необходимы полномочия, область действия, политика, проверка, исполнение и возможность пересмотра.</div>
+</div>
+
+<div class="toc">
+<a href="#01">01 · Зачем нужен слой</a><a href="#02">02 · Конституция</a><a href="#03">03 · Кодекс</a>
+<a href="#04">04 · Полномочие</a><a href="#05">05 · Делегирование</a><a href="#06">06 · Аттенуация</a>
+<a href="#07">07 · Scope</a><a href="#08">08 · Policy</a><a href="#09">09 · Context</a>
+<a href="#10">10 · Decision Kernel</a><a href="#11">11 · Uncertainty</a><a href="#12">12 · Conflict</a>
+<a href="#13">13 · Authorization</a><a href="#14">14 · Execution</a><a href="#15">15 · Event Log</a>
+<a href="#16">16 · Audit</a><a href="#17">17 · Contestation</a><a href="#18">18 · Review</a>
+<a href="#19">19 · Recovery</a><a href="#20">20 · Revision</a><a href="#21">21 · Non-self-expansion</a>
+<a href="#22">22 · Неизменяемое ядро</a><a href="#23">23 · Разделение функций</a><a href="#24">24 · Human-in-the-loop</a>
+<a href="#25">25 · AI-цепочки</a><a href="#26">26 · Информационная среда</a><a href="#27">27 · Социальный уровень</a>
+<a href="#28">28 · Privacy</a><a href="#29">29 · Угрозы</a><a href="#30">30 · Формальная модель</a>
+<a href="#31">31 · Инварианты</a><a href="#32">32 · Примеры</a><a href="#33">33 · Границы</a>
+<a href="#34">34 · Связь с AS</a><a href="#35">35 · Открытая архитектура</a>
+</div>
+
+<section id="01"><h2>01 · Зачем нужен конституционный слой</h2>
+<p>Между философским принципом и конкретным действием существует разрыв. Формула «не вредить развитию другого» сама по себе не сообщает системе, кто вправе действовать, какие данные допустимо использовать, насколько действие обратимо и кто может остановить процесс.</p>
+<p>Конституционная архитектура закрывает этот разрыв. Она не пытается превратить человека в полностью вычислимый объект. Её задача скромнее: сделать границы действия явными, проверяемыми и оспоримыми.</p>
+<div class="formula">Принцип → Норма → Полномочие → Policy → Решение → Authorization → Исполнение → Audit → Review → Recovery</div>
+<p class="small">Стрелочная запись здесь является схемой последовательности архитектурных слоёв.</p></section>
+
+<section id="02"><h2>02 · Конституция</h2>
+<p>Конституция является верхним нормативным слоем системы. Она фиксирует фундаментальные ограничения, которые не должны исчезать при смене модели, агента, интерфейса или конкретной задачи.</p>
+<div class="grid">
+<div class="card"><strong>MODEL_NOT_SUBJECT</strong>Модель человека не является самим человеком.</div>
+<div class="card"><strong>OTHER_IS_REAL</strong>Другой субъект не сводится к объекту моей модели.</div>
+<div class="card"><strong>EXIT_AVAILABLE</strong>Должна существовать возможность прекращения допустимого взаимодействия.</div>
+<div class="card"><strong>NO_SELF_EXPANSION</strong>Система не получает новые полномочия только потому, что технически способна их получить.</div>
+<div class="card"><strong>UNCERTAINTY_VISIBLE</strong>Неопределённость не должна скрываться за ложной уверенностью.</div>
+<div class="card"><strong>REVERSIBILITY_PRIORITY</strong>При прочих равных предпочтительнее обратимое действие.</div>
+</div>
+<p>В архитектуре уже существующий Development Law Kernel является одним из механизмов конституционного исполнения, а не заменой всей Конституции.</p></section>
+
+<section id="03"><h2>03 · Конституционный кодекс</h2>
+<p>Кодекс переводит абстрактные принципы в нормы, пригодные для конкретных систем. Конституция отвечает на вопрос «какие границы фундаментальны?», кодекс уточняет «какие классы поведения с ними несовместимы?».</p>
+<table><tr><th>Принцип</th><th>Кодексная норма</th></tr>
+<tr><td>NO_SELF_EXPANSION</td><td>Нельзя расширять собственный набор полномочий без внешнего основания.</td></tr>
+<tr><td>UNCERTAINTY_VISIBLE</td><td>Существенная неопределённость должна быть обозначена до действия.</td></tr>
+<tr><td>EXIT_AVAILABLE</td><td>Механизм выхода не должен зависеть исключительно от согласия самого агента.</td></tr>
+<tr><td>MODEL_NOT_SUBJECT</td><td>Профиль, оценка или прогноз не получают автоматически статус личности или истины о субъекте.</td></tr></table></section>
+
+<section id="04"><h2>04 · Полномочие</h2>
+<p>Техническая возможность выполнить действие не создаёт права его выполнить.</p>
+<div class="formula">Capability ≠ Authority ≠ Permission</div>
+<p><strong>Capability</strong> означает техническую способность. <strong>Authority</strong> означает источник права действовать. <strong>Permission</strong> означает разрешение на конкретное действие в конкретном контексте.</p>
+<p>Такое разделение особенно важно для AI-агентов: современная литература по авторизации агентных систем также выделяет идентичность, делегирование, ограничение scope, runtime enforcement и аудит как связанные, но разные задачи. citeturn0academia14turn0search0</p></section>
+
+<section id="05"><h2>05 · Делегирование</h2>
+<p>Субъект может передать часть своего полномочия агенту, другому субъекту или инструменту. Делегирование не должно означать передачу всей власти субъекта.</p>
+<div class="formula">Principal → Delegate → Action</div>
+<p>Каждое делегирование должно отвечать минимум на пять вопросов: кто делегирует, кому, что именно, в каком контексте и на какой срок.</p>
+<p>Если AI порождает субагента, связь с исходным полномочием должна сохраняться. Иначе длинная цепочка агентов способна потерять связь с первоначальным субъектом.</p></section>
+
+<section id="06"><h2>06 · Аттенуация полномочий</h2>
+<p>Ключевой принцип архитектуры:</p>
+<div class="quote">Делегирование не может самостоятельно создавать больше полномочий, чем имел делегирующий субъект.</div>
+<div class="formula">Scope(child) ⊆ Scope(parent)</div>
+<p>Субагент может получить меньший scope, более короткий срок, меньший лимит ресурсов или более строгие условия. Он не может самостоятельно превратить ограниченное поручение в неограниченное.</p>
+<p>Это особенно важно для цепочек Human → Agent → Sub-agent → Tool. В современных архитектурах агентной безопасности проблема передачи и ограничения полномочий по цепочке рассматривается как отдельный слой контроля. citeturn0academia14turn0search10</p></section>
+
+<section id="07"><h2>07 · Scope</h2>
+<p>Полномочие должно иметь границы. Минимальная модель scope:</p>
+<div class="formula">Subject · Resource · Action · Context · Time · Amount · Destination</div>
+<p>Например: «агент может редактировать HTML-файлы проекта в течение одной сессии, но не может читать личные документы и отправлять содержимое наружу».</p>
+<p>Чем потенциально необратимее действие, тем уже должен быть его scope.</p></section>
+
+<section id="08"><h2>08 · Policy</h2>
+<p>Policy является контекстным правилом применения Конституции и полномочий. Она может изменяться чаще Конституции, но не должна противоречить её верхним ограничениям.</p>
+<div class="formula">Constitution ⊃ Code ⊃ Policy ⊃ Action constraints</div>
+<p>Такое разделение предотвращает превращение Конституции в бесконечный список исключений.</p></section>
+
+<section id="09"><h2>09 · Context</h2>
+<p>Одинаковое действие может иметь разный статус в разных обстоятельствах. Поэтому решение не должно строиться только по названию действия.</p>
+<div class="grid">
+<div class="card"><strong>Кто?</strong>Субъект, агент, оператор, организация.</div>
+<div class="card"><strong>Что?</strong>Конкретное действие и ресурс.</div>
+<div class="card"><strong>Где?</strong>Система, устройство, сеть или внешняя служба.</div>
+<div class="card"><strong>Когда?</strong>Временное окно и срок полномочия.</div>
+<div class="card"><strong>Зачем?</strong>Заявленная цель и контекст.</div>
+<div class="card"><strong>Что неизвестно?</strong>Неопределённость и недостающие данные.</div>
+</div></section>
+
+<section id="10"><h2>10 · Decision Kernel</h2>
+<p>Decision Kernel получает намерение, контекст, полномочия и policy и выдаёт не «истину», а состояние допуска.</p>
+<div class="formula">K(Intent, Context, Authority, Policy, Uncertainty) → State</div>
+<p>Рабочие состояния:</p>
+<div><span class="state">ALLOW</span><span class="state">GUARDED</span><span class="state">CONFIRM</span><span class="state">HOLD</span><span class="state">DENY</span><span class="state">REVIEW</span></div>
+<p>Kernel не должен быть единственным источником знания о мире. Его задача — применять явно заданные ограничения к имеющемуся контексту.</p></section>
+
+<section id="11"><h2>11 · Протокол неопределённости</h2>
+<p>Неизвестность является самостоятельным состоянием.</p>
+<div class="formula">UNKNOWN ≠ SAFE<br>UNKNOWN ≠ HARM<br>UNKNOWN = UNKNOWN</div>
+<p>Если критически важные данные отсутствуют, система может перейти в HOLD, запросить подтверждение или выбрать обратимое действие.</p>
+<p>Это защищает систему от ложной бинарности, в которой отсутствие доказательства вреда ошибочно становится доказательством безопасности.</p></section>
+
+<section id="12"><h2>12 · Протокол конфликта</h2>
+<p>Правила могут конфликтовать. Вместо неявного выбора одного правила архитектура должна сделать конфликт видимым.</p>
+<div class="formula">Conflict detected → preserve evidence → reduce authority → request review / confirmation</div>
+<p>Особенно важны конфликты между срочностью и обратимостью, автономией и безопасностью, приватностью и необходимостью проверки, а также между несколькими полномочиями.</p></section>
+
+<section id="13"><h2>13 · Authorization</h2>
+<p>Authorization является последней проверкой перед действием. В этот момент система должна иметь возможность сопоставить конкретное действие с конкретным полномочием.</p>
+<div class="formula">Authorize(Action) = Identity + Authority + Scope + Context + Policy + Time</div>
+<p>Разрешение должно быть связано с конкретным событием, а не существовать как расплывчатая фраза «агенту разрешено всё необходимое».</p></section>
+
+<section id="14"><h2>14 · Execution</h2>
+<p>Исполнительный слой не должен самостоятельно изменять конституционные ограничения. Он получает разрешённое действие и выполняет его в установленном scope.</p>
+<p>Если исполнитель обнаруживает, что действие невозможно выполнить в рамках выданного разрешения, предпочтительно остановиться или запросить новое полномочие, а не расширять его самостоятельно.</p></section>
+
+<section id="15"><h2>15 · Event Log</h2>
+<p>Каждое значимое действие становится событием. Минимальная запись может включать:</p>
+<div class="formula">event_id<br>principal<br>delegate<br>action<br>resource<br>authority_id<br>policy_version<br>context_hash<br>timestamp<br>result<br>parent_event_id</div>
+<p>Это создаёт происхождение действия: можно восстановить, откуда возникло полномочие и каким образом оно дошло до исполнения.</p></section>
+
+<section id="16"><h2>16 · Audit</h2>
+<p>Аудит отвечает не на вопрос «считает ли агент, что он действовал правильно», а на вопрос «что произошло и соответствовало ли действие заявленным ограничениям».</p>
+<p>Современные предложения по аудиту AI-агентов также подчёркивают необходимость связывать намерение пользователя, делегирование, авторизацию и исполнение, включая изменения полномочий во времени. citeturn0search3turn0search5</p>
+<p>Audit должен быть отдельным контуром, насколько это возможно, чтобы агент не являлся единственным свидетелем собственного поведения.</p></section>
+
+<section id="17"><h2>17 · Contestation</h2>
+<p>Субъект должен иметь возможность оспорить решение системы.</p>
+<div class="formula">Decision → Notice → Contest → Evidence → Review → Revision / Confirmation</div>
+<p>Оспаривание не требует признания субъекта автоматически правым. Оно требует признания того, что модель системы может быть неполной.</p>
+<p>Это прямое следствие принципов Shared Incompleteness и Model(X) ≠ X.</p></section>
+
+<section id="18"><h2>18 · Review</h2>
+<p>Review анализирует решение после получения дополнительного контекста или в результате оспаривания. Он не должен автоматически защищать первоначальное решение ради сохранения последовательности.</p>
+<p>Система должна иметь возможность признать: «решение было допустимо по имеющейся модели, но модель была недостаточной».</p></section>
+
+<section id="19"><h2>19 · Recovery</h2>
+<p>Если действие оказалось ошибочным, аудит сам по себе недостаточен. Нужен механизм восстановления.</p>
+<div class="grid">
+<div class="card"><strong>STOP</strong>Остановить продолжающееся действие.</div>
+<div class="card"><strong>CONTAIN</strong>Ограничить распространение последствий.</div>
+<div class="card"><strong>RESTORE</strong>Вернуть систему к безопасному состоянию, если это возможно.</div>
+<div class="card"><strong>NOTIFY</strong>Сообщить субъектам о существенном событии.</div>
+<div class="card"><strong>REVIEW</strong>Проверить причину.</div>
+<div class="card"><strong>LEARN</strong>Изменить policy или архитектуру, если причина системная.</div>
+</div></section>
+
+<section id="20"><h2>20 · Revision</h2>
+<p>Исправление системы не должно происходить скрыто. Изменение Конституции, policy, scope или алгоритма принятия решения является отдельным событием и должно иметь собственное происхождение.</p>
+<p>Это позволяет отличать ошибку исполнения от изменения правил, по которым система работала.</p></section>
+
+<section id="21"><h2>21 · Non-self-expansion</h2>
+<p>Система не может использовать собственное рассуждение как достаточное основание для расширения своих полномочий.</p>
+<div class="formula">Can(Action) ≠ May(Action)</div>
+<p>Если агент обнаруживает новую полезную возможность, он может предложить её субъекту или запросить дополнительное полномочие. Самостоятельно превращать предложение в право действия нельзя.</p></section>
+
+<section id="22"><h2>22 · Неизменяемое ядро</h2>
+<p>Не вся архитектура обязана быть неизменяемой. Напротив, большая часть системы должна иметь возможность эволюционировать. Но некоторые инварианты могут находиться выше обычной policy.</p>
+<p>Изменение такого ядра должно требовать отдельной процедуры, независимого подтверждения и явной фиксации версии.</p>
+<p class="warning">Опасность: если агент способен самостоятельно менять механизм, который определяет его собственные полномочия, возникает рекурсивный конфликт интересов.</p></section>
+
+<section id="23"><h2>23 · Разделение функций</h2>
+<p>Для критических действий полезно разделять функции:</p>
+<div class="formula">Policy author ≠ Decision evaluator ≠ Executor ≠ Auditor ≠ Reviewer</div>
+<p>Полное разделение не всегда возможно в небольшом локальном приложении. Но чем выше цена ошибки, тем сильнее должен быть независимый контроль.</p></section>
+
+<section id="24"><h2>24 · Human-in-the-loop</h2>
+<p>Человек не обязан подтверждать каждое действие. Иначе система превращается в интерфейс ручного управления.</p>
+<p>Но для высокоэффектных, необратимых или плохо наблюдаемых действий подтверждение может быть условием исполнения.</p>
+<div class="formula">Low impact → autonomous<br>Medium uncertainty → guarded / confirmation<br>High impact + low reversibility → human authorization / review</div>
+<p>При этом «человек в контуре» не должен быть декоративной кнопкой. Его подтверждение должно реально влиять на возможность исполнения.</p></section>
+
+<section id="25"><h2>25 · Цепочки AI-агентов</h2>
+<p>В многоагентной системе каждый участник должен сохранять происхождение полномочия.</p>
+<div class="formula">Human Principal<br>  ↓<br>Agent A<br>  ↓<br>Agent B<br>  ↓<br>Tool C</div>
+<p>Для каждого перехода требуется delegation record. Субагент должен знать не только задачу, но и пределы полученного полномочия.</p>
+<p>Иначе появляется «потеря субъекта»: действие совершено системой, но невозможно установить, чьё полномочие его породило.</p></section>
+
+<section id="26"><h2>26 · Информационная среда</h2>
+<p>Полномочия зависят от информации, а информация может быть манипулирована. Поэтому prompt injection, отравление памяти, ложные документы и подмена контекста являются не только информационными угрозами, но и потенциальными обходами authorization.</p>
+<p>Следовательно, данные, влияющие на решение о полномочии, должны иметь provenance и уровень доверия.</p></section>
+
+<section id="27"><h2>27 · Социальный уровень</h2>
+<p>Архитектура применима не только к AI. В человеческой системе аналогами являются должность, мандат, доверенность, контракт, временное поручение, право доступа и общественный институт.</p>
+<p>Нейрокоммунизм получает здесь технический слой: общество можно рассматривать как сеть субъектов, связанных не только сигналами, но и ограниченными делегированными полномочиями.</p></section>
+
+<section id="28"><h2>28 · Privacy</h2>
+<p>Аудируемость не должна автоматически означать тотальную прозрачность личности.</p>
+<p>Система может фиксировать доказательство того, что правило было соблюдено, не раскрывая все личные данные. Поэтому важны минимизация данных, раздельное хранение, криптографические доказательства и разграничение доступа к audit trail.</p>
+<p>Принцип: <strong>проверяемость действия не равна полной наблюдаемости субъекта.</strong></p></section>
+
+<section id="29"><h2>29 · Модель угроз</h2>
+<table><tr><th>Угроза</th><th>Архитектурный ответ</th></tr>
+<tr><td>Prompt injection</td><td>Не доверять инструкциям как источнику полномочий.</td></tr>
+<tr><td>Privilege escalation</td><td>Аттенуация и запрет self-expansion.</td></tr>
+<tr><td>Подмена контекста</td><td>Provenance и привязка context к событию.</td></tr>
+<tr><td>Злоупотребление агентом</td><td>Runtime authorization и независимый audit.</td></tr>
+<tr><td>Ошибка policy</td><td>Review, versioning и contestation.</td></tr>
+<tr><td>Компрометация audit</td><td>Криптографическая целостность и отдельный контур хранения.</td></tr>
+<tr><td>Скрытая зависимость</td><td>Exit, portability и отсутствие искусственного lock-in.</td></tr></table></section>
+
+<section id="30"><h2>30 · Формальная модель</h2>
+<div class="formula">D = (Principal, Delegate, Authority, Scope, Context, Policy, Time)<br><br>
+A = (Action, Resource, Effect, Reversibility, Impact)<br><br>
+K(D, A, U) → {ALLOW, GUARDED, CONFIRM, HOLD, DENY, REVIEW}<br><br>
+E = (Decision, Authorization, Execution, Result, Audit)</div>
+<p>Где <strong>U</strong> обозначает неопределённость. Это рабочая абстракция для последующей формализации в TLA+, Alloy, type systems или другом формальном аппарате.</p></section>
+
+<section id="31"><h2>31 · Инварианты</h2>
+<div class="grid">
+<div class="card"><strong>NO_UNAUTHORIZED_ACTION</strong>Действие без действующего полномочия не исполняется.</div>
+<div class="card"><strong>NO_PRIVILEGE_ESCALATION</strong>Делегирование не расширяет исходный scope.</div>
+<div class="card"><strong>NO_SELF_EXPANSION</strong>Агент не создаёт себе новые полномочия.</div>
+<div class="card"><strong>UNCERTAINTY_VISIBLE</strong>Существенная неопределённость сохраняется в решении.</div>
+<div class="card"><strong>REVERSIBILITY_PRIORITY</strong>При сопоставимых условиях предпочтительно обратимое действие.</div>
+<div class="card"><strong>MODEL_NOT_SUBJECT</strong>Модель не получает статус субъекта автоматически.</div>
+<div class="card"><strong>EXIT_AVAILABLE</strong>Допустимый выход из взаимодействия сохраняется.</div>
+<div class="card"><strong>AUDITABLE</strong>Значимое действие имеет проверяемое происхождение.</div>
+<div class="card"><strong>CONTESTABLE</strong>Значимое решение может быть оспорено.</div>
+<div class="card"><strong>HUMAN_OVERRIDE</strong>Для определённых классов действий существует внешний контур остановки.</div>
+</div></section>
+
+<section id="32"><h2>32 · Практические примеры</h2>
+<h3>Файловый агент</h3><p>Получает право изменять конкретную папку. Не получает автоматически доступ к другим папкам.</p>
+<h3>Финансовый агент</h3><p>Может подготовить платёж, но операция выше установленного лимита требует отдельной авторизации.</p>
+<h3>Публикационный агент</h3><p>Может подготовить материал, но публикация от имени субъекта является отдельным действием с собственным scope.</p>
+<h3>Медицинский информационный агент</h3><p>Может структурировать информацию, но не превращает вероятностную модель в диагноз и не получает автоматически право принимать медицинское решение.</p>
+<h3>Многоагентная система</h3><p>Субагент получает только ту часть полномочия, которая необходима для конкретной задачи.</p></section>
+
+<section id="33"><h2>33 · Границы архитектуры</h2>
+<p>Конституционная архитектура не гарантирует истинность информации, отсутствие ошибок или отсутствие злоупотреблений. Она создаёт условия для ограничения, обнаружения и исправления ошибок.</p>
+<p>Нельзя заменить сложную социальную реальность одним Kernel. Нельзя заменить субъекта его профилем. Нельзя доказать безопасность только наличием audit log.</p>
+<div class="quote">Аудируемость — это возможность проверить действие. Она не является доказательством того, что действие было правильным.</div></section>
+
+<section id="34"><h2>34 · Связь с Амбивалентным солипсизмом</h2>
+<p>Архитектура непосредственно следует из нескольких оснований AS.</p>
+<table><tr><th>AS</th><th>Архитектурное следствие</th></tr>
+<tr><td>Другой реален.</td><td>Нельзя сводить другого к модели и скрытно присваивать ему цели.</td></tr>
+<tr><td>Model(X) ≠ X.</td><td>Профиль и прогноз не равны субъекту.</td></tr>
+<tr><td>Shared Incompleteness.</td><td>Решение может быть пересмотрено.</td></tr>
+<tr><td>Право на выход.</td><td>Exit является архитектурным свойством.</td></tr>
+<tr><td>Закон Индивидуальности.</td><td>Полномочие не должно стирать различие субъектов.</td></tr>
+<tr><td>Закон Развития.</td><td>Действия ограничиваются потенциальным вредом здоровью и развитию других.</td></tr>
+<tr><td>Anti-finalization.</td><td>Policy и модели имеют версии и могут пересматриваться.</td></tr></table></section>
+
+<section id="35"><h2>35 · Открытая архитектура</h2>
+<p>Эта система намеренно остаётся открытой. Следующие уровни могут включать формальную верификацию, криптографическое делегирование, capability tokens, privacy-preserving audit, распределённый аудит, независимые review-контуры и интеграцию с PICCS и SymbiontOS.</p>
+<p>Важное ограничение: архитектура не должна превращаться в новую догму. Если её собственные правила делают невозможным их критический пересмотр, она противоречит принципу неполноты, на котором построена.</p>
+<div class="quote">Конституция ограничивает власть. Архитектура делает ограничения исполнимыми. А возможность оспаривания не позволяет архитектуре объявить себя окончательной.</div></section>
+
+<div class="quote">Сложность — не ошибка. Другой — реален.</div>
+<footer>AMBIVALENT SOLIPSISM · CONSTITUTIONAL ARCHITECTURE · OPEN WORKING MODEL</footer>
+</main>
+</body>
+</html>
