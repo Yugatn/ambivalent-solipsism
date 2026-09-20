@@ -96,7 +96,7 @@ bones:{name:"Опорно-двигательная система",level:"MODERA
 };
 const labels={brain:"Мозг",lungs:"Лёгкие",heart:"Сердце",liver:"Печень",gut:"Кишечник",reproductive:"Репродуктивная система",bones:"Опорно-двигательная система",mouth:"Полость рта"};
 let state={factor:"alcohol",organ:"brain",view:"body",quiet:false,mode:"visual"};
-const factorsEl=document.getElementById("factors"),dataEl=document.getElementById("data"),body=document.getElementById("body"),brain=document.getElementById("brain");
+const factorsEl=document.getElementById("factors"),dataEl=document.getElementById("data"),body=document.getElementById("bodyViewport"),brain=document.getElementById("brainViewport");
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 function renderFactors(){const q=(document.getElementById("factorSearch")?.value||"").toLowerCase().trim();const shown=factors.filter(f=>f.label.toLowerCase().includes(q));document.getElementById("factorCount").textContent=shown.length+"/"+factors.length;factorsEl.innerHTML=shown.map(f=>'<button class="factor '+(state.factor===f.id?'active':'')+'" data-factor="'+f.id+'" aria-pressed="'+(state.factor===f.id)+'"><span class="dot"></span>'+esc(f.label)+(f.pending?' <span class="muted">· скоро</span>':'')+'</button>').join("");factorsEl.querySelectorAll(".factor").forEach(b=>b.onclick=()=>{state.factor=b.dataset.factor;state.organ=null;render()})}
 function renderView(){body.hidden=state.view!=="body";brain.hidden=state.view!=="brain";document.getElementById("modeTitle").textContent=state.view==="brain"?"BRAIN":"BODY";document.body.classList.toggle("mode-evidence",state.mode==="evidence")}
