@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Протокол полномочий и делегирования · Амбивалентный солипсизм</title>
+<style>
+:root{--bg:#030807;--panel:rgba(10,25,22,.82);--text:#edf8f4;--muted:#a5bab4;--accent:#55e8bd;--line:rgba(85,232,189,.18);--soft:rgba(85,232,189,.06);--warn:#e5d18a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(85,232,189,.1),transparent 34%),linear-gradient(180deg,#020605,#06110e 55%,#020605);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.78}main{width:min(1100px,calc(100% - 32px));margin:auto;padding:22px 0 100px}nav{position:sticky;top:0;z-index:10;display:flex;gap:18px;flex-wrap:wrap;padding:15px 0;background:rgba(3,8,7,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}a{color:#a8c2bb;text-decoration:none;font-size:11px;letter-spacing:.07em}a:hover{color:var(--accent)}.ey{margin-top:68px;color:var(--accent);font:11px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.2em}.hero h1{font-size:clamp(40px,8vw,82px);line-height:.98;letter-spacing:-.045em;margin:12px 0 24px}.lead{font-size:clamp(19px,3vw,27px);line-height:1.48;color:#d2e1dd;max-width:950px}.note{margin:30px 0;padding:22px 25px;border-left:2px solid var(--accent);background:var(--soft);border-radius:0 16px 16px 0}.toc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:35px 0}.toc a{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:rgba(85,232,189,.025)}section{margin-top:30px;padding:29px;border:1px solid var(--line);border-radius:23px;background:var(--panel);box-shadow:0 14px 45px rgba(0,0,0,.16)}h2{font-size:26px;font-weight:560;margin:0 0 12px}h3{font-size:18px;color:#deeee9;margin:23px 0 8px}p{color:#b9cbc6;margin:10px 0}.formula{margin:18px 0;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.2);font:15px/1.8 ui-monospace,SFMono-Regular,Menlo,monospace;color:#d9eee8;overflow:auto}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.card{padding:20px;border:1px solid var(--line);border-radius:17px;background:rgba(85,232,189,.035)}.card strong{display:block;color:#e8f7f3;margin-bottom:6px}.quote{font:22px Georgia,serif;color:#e0eee9;margin:28px 0;padding:23px 0 23px 24px;border-left:2px solid var(--accent)}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{text-align:left;vertical-align:top;padding:12px;border-bottom:1px solid var(--line);color:#b9cbc6}th{color:#e3f2ee;font-weight:550}.tag{display:inline-block;padding:4px 9px;border:1px solid var(--line);border-radius:999px;margin:3px;font:11px ui-monospace,monospace;color:#d9eee8}.warning{color:var(--warn)}footer{margin-top:70px;color:#526963;font:10px ui-monospace,SFMono-Regular,Menlo,monospace}@media(max-width:760px){main{width:min(100% - 20px,1100px)}.toc,.grid{grid-template-columns:1fr}section{padding:22px;border-radius:18px}.ey{margin-top:45px}nav{gap:12px}}
+</style>
+</head>
+<body>
+<main>
+<nav>
+<a href="../">ГЛАВНАЯ</a><a href="./">AI</a><a href="constitutional-architecture.html">КОНСТИТУЦИЯ</a><a href="development-law-kernel.html">ЗАКОН РАЗВИТИЯ</a><a href="human-ai-symbiosis.html">СИМБИОЗ</a>
+</nav>
+
+<div class="ey">AI / AUTHORITY PROTOCOL</div>
+<div class="hero">
+<h1>Протокол полномочий и делегирования</h1>
+<p class="lead">Формальная модель того, как право на действие возникает, ограничивается, передаётся, проверяется, отзывается и фиксируется в системе субъектов и AI-агентов.</p>
+<div class="note"><strong>Ключевое различие:</strong> техническая способность выполнить действие не является полномочием его выполнять. Полномочие не является разрешением на любое действие. Каждое действие должно иметь проверяемое происхождение и ограниченный scope.</div>
+</div>
+
+<div class="toc">
+<a href="#01">01 · Назначение</a><a href="#02">02 · Сущности</a><a href="#03">03 · Principal</a><a href="#04">04 · Delegate</a><a href="#05">05 · Authority</a><a href="#06">06 · Capability</a><a href="#07">07 · Scope</a><a href="#08">08 · Срок</a><a href="#09">09 · Контекст</a><a href="#10">10 · Цель</a><a href="#11">11 · Capability Token</a><a href="#12">12 · Делегирование</a><a href="#13">13 · Аттенуация</a><a href="#14">14 · Цепочка</a><a href="#15">15 · Подпись</a><a href="#16">16 · Проверка</a><a href="#17">17 · Отзыв</a><a href="#18">18 · Истечение</a><a href="#19">19 · Состояния</a><a href="#20">20 · Decision</a><a href="#21">21 · Неопределённость</a><a href="#22">22 · Высокий эффект</a><a href="#23">23 · Необратимость</a><a href="#24">24 · Human Override</a><a href="#25">25 · Event</a><a href="#26">26 · Audit</a><a href="#27">27 · Contestation</a><a href="#28">28 · Recovery</a><a href="#29">29 · PICCS</a><a href="#30">30 · SymbiontOS</a><a href="#31">31 · AI Guardian</a><a href="#32">32 · Threat Model</a><a href="#33">33 · Formal Model</a><a href="#34">34 · Invariants</a><a href="#35">35 · Примеры</a><a href="#36">36 · Прототип</a><a href="#37">37 · Дальнейшая формализация</a>
+</div>
+
+<section id="01"><h2>01 · Назначение</h2>
+<p>Протокол нужен для ответа на один конкретный вопрос: «почему именно этот субъект или агент имеет право выполнить именно это действие именно сейчас?».</p>
+<p>Он соединяет философский уровень с техническим. В Амбивалентном солипсизме субъект не должен исчезать внутри модели. В технической системе это означает, что происхождение полномочия должно оставаться видимым на протяжении всей цепочки исполнения.</p></section>
+
+<section id="02"><h2>02 · Сущности</h2>
+<div class="grid">
+<div class="card"><strong>Principal</strong>Источник полномочия: субъект или система, имеющая право делегировать.</div>
+<div class="card"><strong>Delegate</strong>Получатель ограниченного полномочия.</div>
+<div class="card"><strong>Authority</strong>Основание, связывающее Principal с правом делегирования.</div>
+<div class="card"><strong>Capability</strong>Технически адресуемая возможность выполнить действие.</div>
+<div class="card"><strong>Scope</strong>Границы разрешённого действия.</div>
+<div class="card"><strong>Policy</strong>Контекстные правила применения полномочия.</div>
+<div class="card"><strong>Context</strong>Обстоятельства, в которых действие запрашивается.</div>
+<div class="card"><strong>Audit</strong>Независимый или логически отделённый контур проверки.</div>
+</div></section>
+
+<section id="03"><h2>03 · Principal</h2>
+<p>Principal является источником полномочия. Это может быть человек, организация, доверенный сервис или другой субъект, которому сама архитектура предоставила соответствующую власть.</p>
+<p>Важно не путать Principal с автором текста запроса. Текст «сделай X» сам по себе не доказывает, что отправитель имеет право разрешать X.</p></section>
+
+<section id="04"><h2>04 · Delegate</h2>
+<p>Delegate получает только делегированную часть полномочий. Делегирование может быть одноразовым, временным, ограниченным ресурсом или привязанным к конкретной задаче.</p>
+<div class="formula">Delegate ≠ Owner<br>Delegate ≠ Principal<br>Delegate = holder of bounded authority</div></section>
+
+<section id="05"><h2>05 · Authority</h2>
+<p>Authority отвечает на вопрос «на каком основании Principal вообще может делегировать это право?». Основанием может быть собственность на ресурс, явно предоставленный мандат, роль, договор или конституционно допустимая процедура.</p>
+<p>Без основания невозможно отличить легитимное делегирование от произвольного заявления о власти.</p></section>
+
+<section id="06"><h2>06 · Capability</h2>
+<p>Capability описывает техническую возможность. Например, ключ способен вызвать API, процесс способен записать файл, агент способен отправить сообщение.</p>
+<div class="formula">Capability ≠ Authority<br>Authority ≠ Permission<br>Permission ⊆ Authority</div>
+<p>Архитектура должна по возможности не позволять capability автоматически становиться authority.</p></section>
+
+<section id="07"><h2>07 · Scope</h2>
+<p>Минимальная структура scope:</p>
+<div class="formula">resource + action + context + destination + amount + data-class + time</div>
+<p>Чем уже задача, тем уже должен быть scope. «Редактировать один HTML-файл» предпочтительнее, чем «управлять файловой системой», если первая задача достаточна.</p></section>
+
+<section id="08"><h2>08 · Срок действия</h2>
+<p>Полномочие должно иметь время начала и окончания, если постоянное право не требуется.</p>
+<div class="formula">valid_from ≤ now &lt; expires_at</div>
+<p>Короткоживущие полномочия уменьшают последствия компрометации и делают автоматическое накопление власти сложнее.</p></section>
+
+<section id="09"><h2>09 · Контекст</h2>
+<p>Полномочие может быть действительно только при определённых условиях. Контекст может включать конкретный проект, устройство, сессию, тип операции, уровень риска или подтверждение другого участника.</p>
+<p>Контекст должен быть частью проверяемого решения, а не только неформальным пояснением интерфейса.</p></section>
+
+<section id="10"><h2>10 · Цель</h2>
+<p>Полномочие желательно связывать с declared purpose. Цель не заменяет scope, но позволяет обнаруживать очевидное использование права не по назначению.</p>
+<div class="formula">Purpose explains why.<br>Scope defines what.<br>Context defines when and where.<br>Authorization decides whether now.</div></section>
+
+<section id="11"><h2>11 · Capability Token</h2>
+<p>Рабочая реализация может представлять делегированное право как capability token. Он не обязан быть конкретным стандартом или форматом; это архитектурное понятие.</p>
+<div class="formula">CAP = {id, principal, delegate, parent, scope, purpose, issued_at, expires_at, constraints, policy_version, nonce}</div>
+<p>Токен должен позволять проверить происхождение права, его границы и срок действия.</p></section>
+
+<section id="12"><h2>12 · Делегирование</h2>
+<p>Делегирование создаёт дочернее полномочие на основании родительского.</p>
+<div class="formula">Parent Authority + Attenuation + Context → Child Authority</div>
+<p>Создание дочернего полномочия должно быть отдельным событием. Это позволяет увидеть не только конечное право, но и историю его происхождения.</p></section>
+
+<section id="13"><h2>13 · Аттенуация</h2>
+<p>Каждое дочернее полномочие должно быть не шире родительского.</p>
+<div class="formula">Scope(child) ⊆ Scope(parent)<br>Lifetime(child) ≤ Lifetime(parent)<br>ResourceLimit(child) ≤ ResourceLimit(parent)</div>
+<p>Дополнительные ограничения допустимы. Самостоятельное расширение — нет.</p></section>
+
+<section id="14"><h2>14 · Цепочка делегирования</h2>
+<p>Для многоагентной системы:</p>
+<div class="formula">Human → Agent A → Agent B → Tool</div>
+<p>каждая связь должна сохранять parent_id. Если цепочка обрывается, система теряет возможность доказать происхождение конечного действия.</p>
+<p>Внутри протокола это можно представить как delegation graph, а не только линейную историю.</p></section>
+
+<section id="15"><h2>15 · Криптографическая подпись</h2>
+<p>Для распределённой системы полномочие может быть подписано источником. Подпись должна подтверждать целостность утверждения, а не истинность всех данных внутри него.</p>
+<div class="formula">Signature = Sign(PrincipalKey, Canonical(CAP))</div>
+<p>Проверяющий узел может проверить подпись, срок, parent capability и scope без необходимости доверять памяти агента.</p></section>
+
+<section id="16"><h2>16 · Проверка полномочия</h2>
+<p>Перед действием проверяются как минимум:</p>
+<div class="formula">identity<br>signature<br>parent validity<br>scope<br>context<br>time<br>policy<br>revocation status</div>
+<p>Только после успешной проверки создаётся authorization decision.</p></section>
+
+<section id="17"><h2>17 · Отзыв</h2>
+<p>Полномочие должно иметь возможность быть отозванным до истечения срока.</p>
+<div class="formula">REVOKED → unusable for new actions</div>
+<p>Для уже начавшихся операций необходим отдельный режим: некоторые действия можно остановить, другие требуют containment или завершения безопасного состояния.</p></section>
+
+<section id="18"><h2>18 · Истечение</h2>
+<p>После expires_at право перестаёт действовать автоматически. Система не должна интерпретировать отсутствие новой выдачи как бессрочное продление.</p>
+<p>Продление является новым событием и может требовать новой оценки контекста.</p></section>
+
+<section id="19"><h2>19 · Состояния полномочия</h2>
+<div><span class="tag">ISSUED</span><span class="tag">ACTIVE</span><span class="tag">SUSPENDED</span><span class="tag">REVOKED</span><span class="tag">EXPIRED</span><span class="tag">CONTESTED</span><span class="tag">ARCHIVED</span></div>
+<p>CONTESTED особенно важен: право может временно сохраняться или приостанавливаться согласно policy, пока спор рассматривается.</p></section>
+
+<section id="20"><h2>20 · Decision</h2>
+<p>Наличие действующего capability token не означает автоматическое исполнение. Decision Kernel дополнительно учитывает текущий контекст.</p>
+<div class="formula">Decision = K(CAP, Action, Context, Policy, Uncertainty)</div>
+<p>Результат:</p>
+<div><span class="tag">ALLOW</span><span class="tag">GUARDED</span><span class="tag">CONFIRM</span><span class="tag">HOLD</span><span class="tag">DENY</span><span class="tag">REVIEW</span></div></section>
+
+<section id="21"><h2>21 · Неопределённость</h2>
+<p>Если система не может подтвердить критическое условие, она не должна автоматически интерпретировать неизвестность как разрешение.</p>
+<div class="formula">Unknown authority → HOLD / CONFIRM / DENY<br>Unknown target → HOLD<br>Unknown impact → GUARDED / REVIEW</div>
+<p>Конкретный переход определяется policy и уровнем потенциального воздействия.</p></section>
+
+<section id="22"><h2>22 · Высокий эффект</h2>
+<p>Чем больше потенциальный эффект действия для других субъектов или внешней системы, тем строже требования к полномочию.</p>
+<table><tr><th>Уровень</th><th>Типичная архитектура</th></tr><tr><td>Низкий</td><td>Автономное исполнение в узком scope.</td></tr><tr><td>Средний</td><td>Guarded execution и расширенный audit.</td></tr><tr><td>Высокий</td><td>Подтверждение, двухконтурная авторизация или review.</td></tr><tr><td>Необратимый / критический</td><td>Явная внешняя авторизация и максимально узкий scope.</td></tr></table></section>
+
+<section id="23"><h2>23 · Необратимость</h2>
+<p>Если два действия одинаково достигают цели, предпочтительно действие, которое легче отменить.</p>
+<div class="formula">Comparable utility + lower irreversibility → preferred action</div>
+<p>Это не означает абсолютного запрета необратимых действий. Оно означает повышенное требование к их авторизации.</p></section>
+
+<section id="24"><h2>24 · Human Override</h2>
+<p>Для определённых классов действий должен существовать внешний механизм остановки. Он не должен зависеть от доброй воли агента.</p>
+<p>В локальной системе это может быть отдельный процесс, операторский ключ или аппаратный механизм. В распределённой системе — независимый authority node или emergency revocation mechanism.</p></section>
+
+<section id="25"><h2>25 · Event</h2>
+<p>Каждая выдача, делегация, отзыв, подтверждение и значимое действие фиксируются как события.</p>
+<div class="formula">event_id<br>type<br>subject<br>principal<br>delegate<br>authority_id<br>parent_id<br>timestamp<br>policy_version<br>result</div>
+<p>Событие не должно быть скрытым изменением состояния без происхождения.</p></section>
+
+<section id="26"><h2>26 · Audit</h2>
+<p>Аудит должен позволять восстановить минимум: кто, кому, что, когда, на каком основании, в каком scope и с каким результатом.</p>
+<p>При этом audit не должен автоматически раскрывать весь персональный контекст всем участникам. Проверяемость и приватность должны проектироваться совместно.</p></section>
+
+<section id="27"><h2>27 · Contestation</h2>
+<p>Любое значимое решение, затрагивающее субъекта, должно иметь механизм оспаривания.</p>
+<div class="formula">Contest(request) → evidence → review → decision revision</div>
+<p>Оспаривание не означает автоматическую отмену. Оно означает доступ к процедуре проверки.</p></section>
+
+<section id="28"><h2>28 · Recovery</h2>
+<p>Если полномочие оказалось скомпрометировано:</p>
+<div class="formula">Detect → Revoke → Contain → Recover → Audit → Reissue</div>
+<p>Новая выдача не должна автоматически наследовать скомпрометированную цепочку без повторной проверки.</p></section>
+
+<section id="29"><h2>29 · PICCS</h2>
+<p>В PICCS протокол может стать отдельным слоем между сообщением и действием. Пакет может содержать не только payload, но и ссылку на authority context, policy version и trace graph.</p>
+<p>Это позволяет связать безопасность сообщения с безопасностью действия: факт того, что сообщение аутентифицировано, не означает, что содержащаяся в нём инструкция обладает полномочием.</p></section>
+
+<section id="30"><h2>30 · SymbiontOS</h2>
+<p>В SymbiontOS этот протокол естественно располагается между Context и Action.</p>
+<div class="formula">Request → Context → IdentityAnchor → Authority → Constitutional Check → Policy → Authorization → Action → EventLog → Audit → Review</div>
+<p>IdentityAnchor связывает действие с субъектом, а EventLog сохраняет историю изменения состояния.</p></section>
+
+<section id="31"><h2>31 · AI Guardian</h2>
+<p>AI Guardian может выполнять роль проверяющего контура, но не должен автоматически становиться единственным источником истины о допустимости действия.</p>
+<p>Его задача: обнаруживать расширение scope, отсутствие authority, конфликт policy, подозрительный контекст и попытки обойти authorization.</p>
+<p>Detection ≠ Decision.</p></section>
+
+<section id="32"><h2>32 · Threat Model</h2>
+<table><tr><th>Угроза</th><th>Защита</th></tr><tr><td>Privilege escalation</td><td>Аттенуация и строгая проверка parent capability.</td></tr><tr><td>Token theft</td><td>Короткий срок, привязка к субъекту/устройству, отзыв.</td></tr><tr><td>Replay</td><td>Nonce, expiry и уникальный action context.</td></tr><tr><td>Prompt injection</td><td>Инструкция не считается источником authority.</td></tr><tr><td>Context poisoning</td><td>Provenance и доверенные источники контекста.</td></tr><tr><td>Rogue sub-agent</td><td>Ограниченный child scope и независимый enforcement.</td></tr><tr><td>Audit tampering</td><td>Цепочка целостности и отдельный контур хранения.</td></tr></table></section>
+
+<section id="33"><h2>33 · Формальная модель</h2>
+<div class="formula">Authority = (id, principal, delegate, parent, scope, purpose, issued, expires, constraints, policy_version, status)<br><br>
+Delegation = (parent_id, child_id, attenuation, issuer, timestamp)<br><br>
+Action = (actor, resource, operation, context, impact, reversibility)<br><br>
+Decision = K(Authority, Action, Context, Policy, Uncertainty)<br><br>
+Execution = (Decision, Result, Event)</div>
+<p>Для формальной проверки можно исследовать свойства сохранения scope, невозможности использования отозванного права и отсутствия исполнения без действующего authority.</p></section>
+
+<section id="34"><h2>34 · Инварианты</h2>
+<div class="grid">
+<div class="card"><strong>VALID_AUTHORITY</strong>Нет действующего полномочия — нет нового действия.</div>
+<div class="card"><strong>NO_SCOPE_EXPANSION</strong>Дочерний scope не шире родительского.</div>
+<div class="card"><strong>NO_SELF_ISSUANCE</strong>Агент не выдаёт себе полномочие.</div>
+<div class="card"><strong>NO_REVOKED_USE</strong>Отозванное право не используется для новых действий.</div>
+<div class="card"><strong>NO_EXPIRED_USE</strong>Истёкшее право не продлевается неявно.</div>
+<div class="card"><strong>PROVENANCE_PRESERVED</strong>Происхождение делегирования сохраняется.</div>
+<div class="card"><strong>CONTEXT_BOUND</strong>Разрешение связано с контекстом, в котором оно выдано.</div>
+<div class="card"><strong>AUDIT_EVENT</strong>Значимые изменения authority создают события.</div>
+<div class="card"><strong>CONTESTABLE</strong>Значимое решение может быть оспорено.</div>
+<div class="card"><strong>REVOCATION_EFFECTIVE</strong>Отзыв распространяется на новые попытки использования.</div>
+</div></section>
+
+<section id="35"><h2>35 · Примеры</h2>
+<h3>Файловый агент</h3><p>Principal разрешает Agent A редактировать один проект. Agent A может передать Agent B право изменить конкретный файл, но не весь компьютер.</p>
+<h3>Публикация</h3><p>Подготовить текст и опубликовать текст — разные действия. Разрешение на подготовку не становится автоматически разрешением на публикацию.</p>
+<h3>Финансы</h3><p>Право подготовить платёж не равно праву его отправить. Лимит суммы и отдельное подтверждение могут быть частью scope.</p>
+<h3>AI-цепочка</h3><p>Agent A поручает поиск Agent B. Agent B получает доступ только к публичному источнику и не получает права отправлять данные наружу.</p>
+<h3>Отзыв</h3><p>Если устройство потеряно, authority можно отозвать независимо от того, продолжает ли старый агент считать токен действительным.</p></section>
+
+<section id="36"><h2>36 · Минимальный прототип</h2>
+<p>Минимальная реализация не требует сразу сложной распределённой инфраструктуры.</p>
+<div class="formula">1. Generate key pair<br>2. Create signed authority<br>3. Verify parent<br>4. Attenuate scope<br>5. Issue child authority<br>6. Check action<br>7. Execute or deny<br>8. Append event<br>9. Revoke / expire<br>10. Verify audit chain</div>
+<p>После этого можно переносить модель в PICCS, SymbiontOS и распределённые узлы.</p></section>
+
+<section id="37"><h2>37 · Дальнейшая формализация</h2>
+<p>Следующий технический этап — не добавление новых философских правил, а проверка уже сформулированных свойств.</p>
+<div class="grid">
+<div class="card"><strong>TLA+</strong>Проверить переходы состояния authority, делегирование, отзыв и отсутствие исполнения без полномочия.</div>
+<div class="card"><strong>Capability tokens</strong>Определить конкретный формат токена и криптографические подписи.</div>
+<div class="card"><strong>Revocation</strong>Исследовать локальный и распределённый отзыв.</div>
+<div class="card"><strong>PICCS</strong>Связать authority_id с trace_graph.</div>
+<div class="card"><strong>SymbiontOS</strong>Встроить Authority layer между IdentityAnchor и Action.</div>
+<div class="card"><strong>AI Guardian</strong>Проверять попытки privilege escalation и context manipulation.</div>
+</div>
+<p class="warning">Граница модели: наличие криптографического токена доказывает целостность и происхождение утверждения, но не доказывает, что сам Principal принял мудрое решение или что исходный контекст был истинным.</p></section>
+
+<div class="quote">Полномочие — это не способность действовать. Это ограниченное, проверяемое и отзывное право действовать.</div>
+<div class="quote">Другой реален. Поэтому право действовать относительно другого требует не только возможности, но и основания.</div>
+<footer>AMBIVALENT SOLIPSISM · AUTHORITY & DELEGATION PROTOCOL · OPEN WORKING MODEL</footer>
+</main>
+</body>
+</html>
