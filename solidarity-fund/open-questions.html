@@ -27,6 +27,12 @@ ul,ol{padding-left:25px}li{margin:7px 0;color:#bdcbc8}.tag{display:inline-block;
 .status{border-left:3px solid var(--a);padding:12px 16px;background:rgba(95,240,200,.045);border-radius:0 12px 12px 0}
 footer{margin-top:90px;padding-top:22px;border-top:1px solid var(--line2);color:#536360;font:10px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em}
 @media(max-width:700px){main{width:min(100% - 20px,1160px);padding-top:12px}nav{top:5px;margin:0 -2px 34px}nav a{font-size:12px;padding:7px 8px}h1{font-size:clamp(45px,15vw,70px)}h2{margin-top:54px}.lead{font-size:18px}.formula,.quote,.note{padding:18px}table{font-size:14px;display:block;overflow-x:auto}th,td{min-width:155px}}
+
+.hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 34px}.meta{padding:9px 13px;border:1px solid var(--line);border-radius:999px;background:rgba(95,240,200,.04);color:#b9d2cc;font:12px ui-monospace,SFMono-Regular,Menlo,monospace}.meta b{color:var(--a2)}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:28px 0 52px}.toc a{display:block;padding:14px 16px;border:1px solid var(--line2);border-radius:14px;background:rgba(7,18,22,.7);color:#c8d8d5;text-decoration:none}.toc a:hover{border-color:var(--line);color:var(--a2);transform:translateY(-1px)}
+.issue{position:relative;padding:20px 20px 20px 24px;border:1px solid var(--line2);border-radius:16px;background:linear-gradient(145deg,rgba(9,22,27,.95),rgba(5,13,16,.95));overflow:hidden}.issue:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--a);opacity:.8}.issue .q{font-size:17px;color:#edf8f5;margin:0 0 8px}.issue .why{font-size:14px;color:#93a9a5;margin:0}.priority{display:inline-block;margin-bottom:10px;padding:4px 8px;border-radius:999px;border:1px solid var(--line);color:var(--a2);font:10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em}
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:28px 0}.kpi .card{text-align:center}.kpi strong{display:block;font-size:28px;color:var(--a2);line-height:1.1}.kpi span{display:block;margin-top:6px;color:#839692;font-size:12px}
+@media(max-width:700px){.kpi{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body><main>
@@ -43,6 +49,11 @@ footer{margin-top:90px;padding-top:22px;border-top:1px solid var(--line2);color:
 <p class="lead">Эта страница фиксирует вопросы, на которые концепция Фонда солидарности пока не должна отвечать окончательно. Открытый вопрос здесь не является слабостью проекта. Это граница между тем, что уже можно формализовать, и тем, что требует эксперимента, юридической проверки, инженерной реализации, эмпирических данных или общественного обсуждения.</p>
 
 <div class="formula"><strong>Хорошая модель должна уметь показывать не только то, что она знает, но и то, чего она пока не знает.</strong></div>
+<div class="hero-meta"><span class="meta"><b>64</b> исследовательских раздела</span><span class="meta"><b>6</b> ключевых контуров риска</span><span class="meta"><b>OPEN</b> рабочий статус</span><span class="meta"><b>v0.1</b> концептуальная спецификация</span></div>
+<div class="toc">
+<a href="#priority">Карта приоритетов</a><a href="#research">Исследовательская повестка</a><a href="#threats">Матрица угроз</a><a href="#pilot">Путь к пилоту</a>
+</div>
+<div class="kpi"><div class="card"><strong>6</strong><span>контуров</span></div><div class="card"><strong>10</strong><span>минимальных исследований</span></div><div class="card"><strong>5</strong><span>статусов вопросов</span></div><div class="card"><strong>0</strong><span>единого score человека</span></div></div>
 
 <div class="grid">
 <div class="card"><h3>01 · Экономика</h3><p>Может ли микровклад сохранять смысл после комиссий, налогов, операционных расходов и стоимости привлечения?</p></div>
@@ -349,6 +360,50 @@ Audit receipt</pre>
   publish version</pre>
 <p>Если программа не может ясно описать эти элементы, её не следует считать готовой к реальным деньгам.</p></section>
 
+<section id="priority"><h2>Карта приоритетов</h2>
+<p>Не все открытые вопросы имеют одинаковую срочность. Приоритет определяется не важностью человека или программы, а потенциальным ущербом от запуска механизма без ответа.</p>
+<div class="grid">
+<div class="issue"><span class="priority">P0 · ДО ПИЛОТА</span><p class="q">Законна ли выбранная конструкция?</p><p class="why">Без ответа нельзя переходить к реальным денежным операциям.</p></div>
+<div class="issue"><span class="priority">P0 · ДО ПИЛОТА</span><p class="q">Можно ли независимо проверить список участников и случайный выбор?</p><p class="why">Это базовое условие процедурной проверяемости.</p></div>
+<div class="issue"><span class="priority">P0 · ДО ПИЛОТА</span><p class="q">Как защищаются персональные данные?</p><p class="why">Прозрачность не должна требовать публикации частной жизни.</p></div>
+<div class="issue"><span class="priority">P1 · ПИЛОТ</span><p class="q">Какова реальная unit economics?</p><p class="why">Арифметика фонда должна быть подтверждена реальными операционными расходами.</p></div>
+<div class="issue"><span class="priority">P1 · ПИЛОТ</span><p class="q">Как часто возникают ошибки и спорные случаи?</p><p class="why">Пилот должен показать стоимость человеческого review.</p></div>
+<div class="issue"><span class="priority">P2 · МАСШТАБ</span><p class="q">Как измерять долгосрочный результат?</p><p class="why">Это вопрос эффективности программы, а не допуска к ней.</p></div>
+</div></section>
+
+<section id="research"><h2>Исследовательская повестка</h2>
+<p>Каждый открытый вопрос должен постепенно превращаться в проверяемую задачу. У вопроса должны быть объект исследования, необходимое свидетельство и критерий пересмотра.</p>
+<table><tr><th>Направление</th><th>Гипотеза</th><th>Что считать свидетельством</th></tr>
+<tr><td>Экономика</td><td>микровклад может быть эффективен при пакетной обработке</td><td>фактическая стоимость операции и полный cost model</td></tr>
+<tr><td>Случайность</td><td>выбор можно сделать воспроизводимым и проверяемым</td><td>независимый verifier получает тот же результат</td></tr>
+<tr><td>Приватность</td><td>проверяемость совместима с минимизацией данных</td><td>threat model + тест деанонимизации</td></tr>
+<tr><td>Антифрод</td><td>один субъект может получить один шанс без тотальной идентификации</td><td>результаты adversarial-тестирования</td></tr>
+<tr><td>AI</td><td>AI снижает операционную нагрузку без автономного определения ценности человека</td><td>benchmark ошибок + human-review protocol</td></tr>
+<tr><td>Результат</td><td>помощь может измеряться через изменение конкретных возможностей</td><td>валидированный outcome framework</td></tr></table>
+</section>
+
+<section id="threats"><h2>Матрица угроз как часть открытых вопросов</h2>
+<p>Threat model должен обновляться вместе с архитектурой. Новая защита создаёт новые сценарии атак, поэтому безопасность не является разовой сертификацией.</p>
+<table><tr><th>Субъект угрозы</th><th>Цель</th><th>Защита</th><th>Открытый вопрос</th></tr>
+<tr><td>Внешний атакующий</td><td>фиктивные заявки</td><td>anti-Sybil, rate limits</td><td>достаточна ли защита без чрезмерной идентификации?</td></tr>
+<tr><td>Инсайдер</td><td>изменение списка</td><td>snapshot, разделение полномочий</td><td>может ли один оператор изменить исход незаметно?</td></tr>
+<tr><td>Атакующий на случайность</td><td>предсказуемый выбор</td><td>commitment, независимая энтропия</td><td>можно ли доказать отсутствие манипуляции?</td></tr>
+<tr><td>Атакующий на приватность</td><td>деанонимизация</td><td>минимизация данных</td><td>какие квазиидентификаторы остаются?</td></tr>
+<tr><td>Ошибка AI</td><td>ложный отказ</td><td>REVIEW, human override</td><td>где обязательна ручная проверка?</td></tr></table>
+</section>
+
+<section id="pilot"><h2>Путь от вопроса к пилоту</h2>
+<div class="grid">
+<div class="card"><h3>01 · Формулировка</h3><p>Вопрос записывается без заранее заданного ответа.</p></div>
+<div class="card"><h3>02 · Гипотеза</h3><p>Фиксируется проверяемое предположение и его ограничения.</p></div>
+<div class="card"><h3>03 · Тест</h3><p>Определяется эксперимент, симуляция, аудит или юридическая проверка.</p></div>
+<div class="card"><h3>04 · Evidence</h3><p>Результат сохраняется вместе с источником и версией.</p></div>
+<div class="card"><h3>05 · Решение</h3><p>Статус меняется только при наличии достаточного основания.</p></div>
+<div class="card"><h3>06 · Пересмотр</h3><p>Новые данные могут вернуть вопрос в OPEN или RESEARCH.</p></div>
+</div>
+<div class="formula">Question → Hypothesis → Test → Evidence → Decision → Review</div>
+</section>
+
 <section><h2>45 · Какие вопросы нужно закрыть до пилота</h2>
 <div class="grid">
 <div class="card"><span class="tag">LEGAL</span><h3>Правовая модель</h3><p>Юридическая квалификация, налоги, платежи, защита потребителей и трансграничные операции.</p></div>
@@ -380,7 +435,7 @@ Audit receipt</pre>
 
 <section><h2>48 · Главный эксперимент</h2>
 <p>До глобальной модели нужен маленький эксперимент без реальных денег или с минимальным безопасным бюджетом.</p>
-<div class="flow">
+<div class="grid">
 <div class="card"><h3>01</h3><p>Смоделировать участников.</p></div>
 <div class="card"><h3>02</h3><p>Сформировать eligible-set.</p></div>
 <div class="card"><h3>03</h3><p>Зафиксировать snapshot.</p></div>
@@ -467,7 +522,7 @@ Audit receipt</pre>
 
 <section><h2>58 · Связь с механикой фонда</h2>
 <p>Открытые вопросы не заменяют операционную спецификацию. Они работают рядом с ней.</p>
-<div class="formula">Принцип → Механика → Тест → Наблюдение → Открытый вопрос → Новая версия</div>
+<div class="formula">Принцип · Механика · Тест · Наблюдение · Открытый вопрос · Новая версия</div>
 <p>Механика отвечает на вопрос «как система должна работать по текущей версии». Открытые вопросы отвечают на вопрос «что ещё необходимо проверить, прежде чем считать эту версию достаточной».</p>
 </section>
 
