@@ -1,1 +1,294 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SymbiontOS · Архитектура доверия · Амбивалентный Солипсизм</title><style>:root{--bg:#02050a;--t:#eef7f5;--m:#91a7a7;--a:#45f0c3;--l:rgba(69,240,195,.17)}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(69,240,195,.07),transparent 36%),var(--bg);color:var(--t);font-family:system-ui,sans-serif;line-height:1.75}main{width:min(980px,calc(100% - 30px));margin:auto;padding:32px 0 90px}.nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px}.nav a{border:1px solid var(--l);padding:7px 12px;border-radius:999px;color:var(--m);text-decoration:none;font:10px monospace}.ey{color:#45f0c3aa;font:11px monospace;letter-spacing:.18em}h1{font-size:clamp(34px,7vw,62px);line-height:1.05;margin:12px 0}.lead{font-size:18px;color:#c6d5d2;max-width:800px;margin-bottom:42px}section{padding:27px;margin:22px 0;border:1px solid var(--l);border-radius:20px;background:rgba(7,16,21,.75)}h2{font-size:25px;font-weight:500;margin-top:0}h3{color:var(--a);font-weight:500}p,li{color:#b9c9c6}blockquote{padding:17px 20px;border-left:2px solid var(--a);background:rgba(69,240,195,.035)}footer{margin-top:60px;color:#50605e;font:9px monospace}</style></head><body><main><div class="nav"><a href="./">РАЗДЕЛ</a><a href="../">ГЛАВНОЕ МЕНЮ</a></div><div class="ey">02 / SYMBIONTOS</div><h1>SymbiontOS · Архитектура доверия</h1><p class="lead">Архитектура, trust chain, разделение уровней и least privilege.</p><footer>AMBIVALENT SOLIPSISM · LONG-TERM PROJECT</footer></main></body></html>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SymbiontOS · Архитектура доверия · Амбивалентный Солипсизм</title><style>:root{--bg:#02050a;--t:#eef7f5;--m:#91a7a7;--a:#45f0c3;--l:rgba(69,240,195,.17)}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(69,240,195,.07),transparent 36%),var(--bg);color:var(--t);font-family:system-ui,sans-serif;line-height:1.75}main{width:min(980px,calc(100% - 30px));margin:auto;padding:32px 0 90px}.nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px}.nav a{border:1px solid var(--l);padding:7px 12px;border-radius:999px;color:var(--m);text-decoration:none;font:10px monospace}.ey{color:#45f0c3aa;font:11px monospace;letter-spacing:.18em}h1{font-size:clamp(34px,7vw,62px);line-height:1.05;margin:12px 0}.lead{font-size:18px;color:#c6d5d2;max-width:800px;margin-bottom:42px}section{padding:27px;margin:22px 0;border:1px solid var(--l);border-radius:20px;background:rgba(7,16,21,.75)}h2{font-size:25px;font-weight:500;margin-top:0}h3{color:var(--a);font-weight:500}p,li{color:#b9c9c6}blockquote{padding:17px 20px;border-left:2px solid var(--a);background:rgba(69,240,195,.035)}footer{margin-top:60px;color:#50605e;font:9px monospace}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.card{padding:17px;border:1px solid rgba(69,240,195,.11);border-radius:14px;background:rgba(255,255,255,.015)}.card b{color:var(--a);font:12px monospace}.formula{font:15px monospace;color:#d8fff5;overflow:auto;padding:15px;border:1px solid rgba(69,240,195,.1);border-radius:12px;margin:18px 0}code{color:#8ff7d7;background:rgba(69,240,195,.05);padding:2px 5px;border-radius:4px}</style></head><body><main><div class="nav"><a href="./">РАЗДЕЛ</a><a href="../">ГЛАВНОЕ МЕНЮ</a><a href="#model">МОДЕЛЬ</a><a href="#chain">TRUST CHAIN</a><a href="#threats">THREAT MODEL</a><a href="#recovery">ВОССТАНОВЛЕНИЕ</a></div><div class="ey">02 / SYMBIONTOS</div><h1>SymbiontOS · Архитектура доверия</h1><p class="lead">Архитектура, trust chain, разделение уровней и least privilege.</p>
+<section id="model">
+<h2>1. Что означает доверие в SymbiontOS</h2>
+<p>В SymbiontOS доверие не является единым числом и не означает «считать компонент хорошим». Доверие является ограниченным техническим отношением между субъектом, компонентом, утверждением, полномочием и контекстом.</p>
+<div class="formula">Trust = evidence + provenance + authority + context + time + revocation</div>
+<p>Компонент может быть надёжным для одной операции и не иметь полномочий для другой. Подтверждённое происхождение события не доказывает истинность интерпретации. Репутация не заменяет capability. Высокая уверенность модели не расширяет её права.</p>
+<blockquote><strong>Доверие в SymbiontOS не передаётся целиком. Передаётся только конкретно обоснованное право.</strong></blockquote>
+</section>
+
+<section>
+<h2>2. Философское основание trust model</h2>
+<p>Архитектура доверия непосредственно следует из принципов Амбивалентного Солипсизма: «Другой реален» и <code>Reality = Model + Residual</code>.</p>
+<p>Если любая модель частична, нельзя строить безопасность на предположении, что один компонент знает всю систему. Если другой субъект реален, его идентичность нельзя заменить оценкой, профилем или репутацией.</p>
+<div class="grid">
+<div class="card"><b>MODEL</b><br>Описание, необходимое для действия.</div>
+<div class="card"><b>RESIDUAL</b><br>То, что модель не знает.</div>
+<div class="card"><b>CAPABILITY</b><br>То, что компонент может технически сделать.</div>
+<div class="card"><b>AUTHORITY</b><br>То, что ему разрешено делать.</div>
+</div>
+<p>Критическое различие: <strong>способность выполнить действие не является правом выполнить действие</strong>.</p>
+</section>
+
+<section>
+<h2>3. Пятиуровневая архитектура доверия</h2>
+<p>Базовая архитектура сохраняет пять слоёв. Они не являются взаимозаменяемыми:</p>
+<div class="grid">
+<div class="card"><b>PICCS-CORE</b><br>Минимальные правила идентичности, контекста, capability и защищённого исполнения.</div>
+<div class="card"><b>PICCS-HUB</b><br>Оркестрация контекстов, маршрутизация и проверка допустимости межкомпонентного взаимодействия.</div>
+<div class="card"><b>FEDERATION</b><br>Распределённое взаимодействие между независимыми узлами и субъектами.</div>
+<div class="card"><b>PLUGIN API</b><br>Ограниченная поверхность расширения. Плагин не получает полномочия ядра по факту подключения.</div>
+<div class="card"><b>EUGENE UI</b><br>Пользовательское представление доверия, контекста, запросов разрешения и результатов проверки.</div>
+</div>
+<p>Связь слоёв организуется через явно определённые контракты. Верхний слой не должен обходить ограничения нижнего, а нижний слой не должен незаметно принимать семантические решения верхнего.</p>
+</section>
+
+<section>
+<h2>4. Trust Chain</h2>
+<p>Trust Chain описывает не «цепочку доверенных людей», а проверяемую последовательность происхождения права и данных.</p>
+<div class="formula">Identity → Authentication → Context → Capability → Policy Check → Action → Event → Audit → Review</div>
+<p>Каждый этап отвечает на отдельный вопрос:</p>
+<ul>
+<li><strong>Identity:</strong> кто является источником или адресатом.</li>
+<li><strong>Authentication:</strong> почему система считает заявленную идентичность подтверждённой.</li>
+<li><strong>Context:</strong> в какой ситуации действует полномочие.</li>
+<li><strong>Capability:</strong> какое действие технически доступно.</li>
+<li><strong>Policy Check:</strong> почему действие допустимо сейчас.</li>
+<li><strong>Action:</strong> что фактически произошло.</li>
+<li><strong>Event:</strong> какой неизменяемый след оставлен.</li>
+<li><strong>Audit:</strong> как действие и его основание проверяются.</li>
+<li><strong>Review:</strong> как решение может быть пересмотрено.</li>
+</ul>
+<p>Потеря одного звена не должна автоматически компенсироваться доверием к другому звену.</p>
+</section>
+
+<section>
+<h2>5. Identity, Authentication и Subject</h2>
+<p>Идентичность является ссылкой на субъект в определённом контексте. Authentication подтверждает соответствие предъявленного идентификатора субъекту или его credential. Ни одно из них не доказывает намерение субъекта.</p>
+<div class="formula">Authenticated Identity ≠ Intent<br>Identity ≠ Reputation<br>Credential ≠ Authority</div>
+<p>Смена credential не должна автоматически означать смену субъекта, а наличие исторической репутации не должно автоматически давать новые capabilities.</p>
+</section>
+
+<section>
+<h2>6. Capability Security</h2>
+<p>SymbiontOS использует принцип минимально достаточных полномочий. Компонент получает только те capabilities, которые необходимы для конкретной задачи, контекста и срока действия.</p>
+<div class="formula">Granted Capability = minimum required scope ∩ allowed policy</div>
+<p>Capability должна быть:</p>
+<ul>
+<li>явно предоставлена;</li>
+<li>ограничена ресурсом или действием;</li>
+<li>ограничена контекстом;</li>
+<li>по возможности ограничена временем;</li>
+<li>отзываема;</li>
+<li>проверяема через audit trail.</li>
+</ul>
+<blockquote><strong>Default deny.</strong> Отсутствие доказанного разрешения не является разрешением.</blockquote>
+</section>
+
+<section>
+<h2>7. Capability Delegation</h2>
+<p>Передача полномочия не должна создавать больше власти, чем имел исходный делегирующий субъект.</p>
+<div class="formula">Delegated Authority ⊆ Parent Authority</div>
+<p>Делегация должна сохранять scope, context, expiry и revocation conditions. Плагин, агент или федеративный узел не может получить универсальное право только потому, что его вызвал доверенный компонент.</p>
+<p>Цепочки делегирования должны быть ограничены по глубине или сопровождаться проверяемой политикой, иначе небольшое первоначальное право может превратиться в неограниченную транзитивную власть.</p>
+</section>
+
+<section>
+<h2>8. Контекстная привязка</h2>
+<p>Одинаковое действие может быть допустимым в одном контексте и недопустимым в другом.</p>
+<div class="formula">Authority = capability + context + purpose + epoch</div>
+<p>PICCS поэтому рассматривает контекст как часть безопасности, а не как метаданные для интерфейса. Контекст включает участников, цель, видимость, срок хранения, временную эпоху и ограничения передачи.</p>
+<p>Контекстный перенос требует отдельного основания. Наличие доступа к данным не означает права использовать их для другой цели.</p>
+</section>
+
+<section>
+<h2>9. Trust не переносится автоматически</h2>
+<p>Доверие к компоненту не распространяется автоматически на его выводы.</p>
+<div class="grid">
+<div class="card"><b>TRUSTED SOURCE</b><br>Источник может быть аутентифицирован.</div>
+<div class="card"><b>TRUSTED RECORD</b><br>Событие может иметь подтверждённое происхождение.</div>
+<div class="card"><b>TRUSTED INFERENCE</b><br>Вывод имеет обоснованный метод.</div>
+<div class="card"><b>TRUSTED ACTION</b><br>Действие прошло отдельную проверку полномочий.</div>
+</div>
+<p>Нельзя незаметно заменить одно другим. Надёжный журнал не делает каждую интерпретацию истинной. Надёжная модель не делает каждое её решение допустимым.</p>
+</section>
+
+<section>
+<h2>10. Provenance и доказуемость</h2>
+<p>Каждое критическое утверждение должно иметь provenance:</p>
+<div class="formula">Claim = source + event + timestamp + context + epistemic status + transformation history</div>
+<p>Для решения дополнительно фиксируются версия модели, версия политики, набор использованных утверждений, инициатор, capability и фактический результат.</p>
+<p>Это позволяет определить, где возникла ошибка: в наблюдении, записи, реконструкции, интерпретации, policy check или самом действии.</p>
+</section>
+
+<section>
+<h2>11. Epistemic Trust</h2>
+<p>Trust model должен различать степень подтверждённости знания и право действовать на основании этого знания.</p>
+<div class="formula">Observed ≠ True<br>Inferred ≠ Observed<br>Confidence ≠ Authority</div>
+<p>Даже наблюдаемое событие может быть неполным или ошибочно идентифицированным. Поэтому epistemic status хранится явно и не преобразуется автоматически в более сильный статус.</p>
+<p>Особенно важны состояния <code>UNKNOWN</code> и <code>CONFLICTING</code>. Они не являются авариями trust system.</p>
+</section>
+
+<section>
+<h2>12. Доверие к AI и моделям</h2>
+<p>AI-компонент рассматривается как probabilistic inference component, а не как источник абсолютной истины.</p>
+<div class="formula">Model Confidence ≠ Truth<br>Model Confidence ≠ Authority<br>Prediction ≠ Fact</div>
+<p>AI может предлагать реконструкцию, классификацию, прогноз или действие. Но отдельный policy layer должен решать, имеет ли данный компонент право выполнять соответствующее действие.</p>
+<p>Система должна сохранять модель, версию, входные данные и epistemic status настолько, насколько это допустимо контекстом и требованиями приватности.</p>
+</section>
+
+<section id="threats">
+<h2>13. Threat Model</h2>
+<p>Trust architecture должна учитывать не только компрометацию компонентов, но и ошибки доверия.</p>
+<div class="grid">
+<div class="card"><b>IDENTITY SPOOFING</b><br>Подмена идентичности или credential.</div>
+<div class="card"><b>CAPABILITY ESCALATION</b><br>Получение полномочий сверх исходного scope.</div>
+<div class="card"><b>CONTEXT CONFUSION</b><br>Использование разрешения одного контекста в другом.</div>
+<div class="card"><b>MODEL POISONING</b><br>Систематическое искажение модели или обучающих данных.</div>
+<div class="card"><b>REPUTATION HIJACK</b><br>Использование чужой истории доверия.</div>
+<div class="card"><b>EVENT TAMPERING</b><br>Изменение или удаление истории.</div>
+<div class="card"><b>POLICY BYPASS</b><br>Обход слоя принятия решений.</div>
+<div class="card"><b>TRUST TRANSITIVITY ABUSE</b><br>Превращение локального доверия в неограниченное.</div>
+<div class="card"><b>SELF-VALIDATION</b><br>Использование собственного действия как подтверждения его основания.</div>
+<div class="card"><b>METAPOLICY ATTACK</b><br>Изменение механизма проверки так, чтобы он начал пропускать запрещённые переходы.</div>
+</div>
+<p>Особенно опасен meta-level attack: система может быть защищена на уровне обычных действий, но атакована через механизм, который определяет, какие действия считаются допустимыми.</p>
+</section>
+
+<section>
+<h2>14. Trust Boundary</h2>
+<p>Границы доверия проходят между компонентами, а не только вокруг всей системы.</p>
+<div class="formula">Kernel | Event Fabric | DEFT | PICCS | Plugin | Federation | UI</div>
+<p>Переход через границу требует явного протокола. Компонент не получает права читать, изменять или делегировать чужой authority state только потому, что находится в той же вычислительной среде.</p>
+</section>
+
+<section>
+<h2>15. Kernel как корень исполнения</h2>
+<p>Kernel отвечает за минимальный execution substrate: память, процессы, IPC, capabilities и изоляцию. Semantic policy не должна получать скрытый путь изменения фундаментальных ограничений через обычный inference layer.</p>
+<p>Это обеспечивает принцип:</p>
+<blockquote><strong>Semantic intelligence may request an action; the execution substrate decides whether the request is technically and authoritatively admissible.</strong></blockquote>
+</section>
+
+<section>
+<h2>16. Event Fabric как доверенная история</h2>
+<p>Event Fabric не объявляет события истинными во всех смыслах. Его задача — сохранить проверяемую историю того, что система зафиксировала как событие.</p>
+<div class="formula">Event Integrity ≠ Event Interpretation</div>
+<p>Неизменяемость журнала защищает provenance, но не превращает ошибочно записанное событие в объективную истину. Поэтому исправление происходит добавлением нового события или новой реконструкции, а не скрытым переписыванием истории.</p>
+</section>
+
+<section>
+<h2>17. Federation Trust</h2>
+<p>Федеративный узел не должен считаться доверенным целиком. Доверие задаётся по конкретным операциям и ресурсам.</p>
+<div class="formula">Federation Trust = node identity + protocol proof + scope + context + freshness</div>
+<p>Удалённый узел может иметь право передать событие, но не иметь права интерпретировать его от имени другого субъекта. Он может участвовать в consensus, но не получать capability для изменения чужой identity.</p>
+</section>
+
+<section>
+<h2>18. Plugin Trust</h2>
+<p>Plugin API является controlled extension surface. Подключение плагина не должно означать доверие к его коду, намерениям или выводам.</p>
+<p>Плагин должен работать в sandboxed capability scope, иметь декларативные требования и проходить проверку совместимости политики. Обновление плагина считается изменением trust surface и требует повторной оценки.</p>
+<div class="formula">Install ≠ Trust<br>Trust ≠ Unlimited Capability<br>Update ≠ Continuity of Trust</div>
+</section>
+
+<section>
+<h2>19. Eugene UI как слой представления доверия</h2>
+<p>Eugene UI не должен скрывать неопределённость ради удобства. Пользователь должен понимать, является ли сообщение фактом, выводом, запросом, предупреждением или неподтверждённым утверждением.</p>
+<p>UI должен показывать как минимум:</p>
+<ul>
+<li>источник;</li>
+<li>контекст;</li>
+<li>epistemic status;</li>
+<li>время и свежесть;</li>
+<li>основание действия;</li>
+<li>необходимые разрешения;</li>
+<li>возможность отмены или пересмотра, если она существует.</li>
+</ul>
+<p>Интерфейс не создаёт authority. Он только делает существующие authority relations наблюдаемыми для пользователя.</p>
+</section>
+
+<section>
+<h2>20. Revocation</h2>
+<p>Доверие и полномочия должны иметь механизм отзыва. Отзыв может происходить при компрометации credential, изменении контекста, нарушении policy, истечении срока или обнаружении ошибки.</p>
+<div class="formula">Valid Capability(t) = Granted ∧ InScope ∧ NotExpired ∧ NotRevoked</div>
+<p>Особенно важно, чтобы отзыв не требовал доверия к тому же самому компоненту, чья компрометация является причиной отзыва.</p>
+</section>
+
+<section>
+<h2>21. Recovery и доверенное восстановление</h2>
+<p>После нарушения trust boundary система должна иметь возможность вернуться в известное состояние доверия.</p>
+<div class="grid">
+<div class="card"><b>ISOLATE</b><br>Изолировать подозрительный компонент.</div>
+<div class="card"><b>PRESERVE</b><br>Сохранить forensic и event history.</div>
+<div class="card"><b>REVOKE</b><br>Отозвать связанные capabilities.</div>
+<div class="card"><b>RECONSTRUCT</b><br>Восстановить состояние из проверяемой истории.</div>
+<div class="card"><b>REAUTHORIZE</b><br>Выдать новые полномочия только после проверки.</div>
+<div class="card"><b>REVIEW</b><br>Проверить, не была ли скомпрометирована сама policy.</div>
+</div>
+<p>Восстановление не должно означать автоматическое восстановление прежнего доверия.</p>
+</section>
+
+<section id="recovery">
+<h2>22. Trust Lifecycle</h2>
+<div class="formula">Provision → Authenticate → Authorize → Observe → Audit → Reassess → Revoke / Renew → Recover</div>
+<p>Доверие является процессом, а не постоянным свойством объекта. Каждая новая версия компонента, изменение context, policy или threat state может потребовать reassessment.</p>
+</section>
+
+<section>
+<h2>23. Self-Validation запрещена</h2>
+<p>Система не должна считать собственное действие независимым доказательством правильности модели, которая это действие породила.</p>
+<div class="formula">Hypothesis → Action → Outcome<br>не означает<br>Hypothesis → Proof</div>
+<p>Иначе агент способен создать самоподтверждающийся цикл: модель вызывает действие, действие изменяет среду, новое состояние интерпретируется как подтверждение исходной модели.</p>
+</section>
+
+<section>
+<h2>24. Trust и Law of Development</h2>
+<p>Trust architecture должна защищать не только ресурсы, но и возможность субъектов сохранять собственное развитие.</p>
+<p>Это означает, что capability restrictions должны быть необходимыми, соразмерными, проверяемыми и по возможности обратимыми. Ограничение должно быть связано с конкретным риском или необходимостью, а не с абстрактной ценностью субъекта.</p>
+<div class="formula">Protection ≠ Domination<br>Safety ≠ Unlimited Control</div>
+</section>
+
+<section>
+<h2>25. Trust Invariants</h2>
+<ul>
+<li><strong>Least Privilege</strong> — минимально достаточные полномочия.</li>
+<li><strong>Explicit Authority</strong> — полномочие должно иметь источник.</li>
+<li><strong>Context Binding</strong> — полномочие связано с контекстом.</li>
+<li><strong>Non-Transitive Trust</strong> — доверие не распространяется автоматически.</li>
+<li><strong>Revocability</strong> — полномочие может быть отозвано.</li>
+<li><strong>Provenance</strong> — происхождение критических утверждений проверяемо.</li>
+<li><strong>Epistemic Separation</strong> — факт, вывод и предположение различаются.</li>
+<li><strong>Authority Separation</strong> — знание не создаёт власть.</li>
+<li><strong>Subject Non-Reduction</strong> — цифровая модель не заменяет субъекта.</li>
+<li><strong>Anti-Self-Validation</strong> — действие не доказывает собственное основание.</li>
+<li><strong>Fault Containment</strong> — ошибка ограничивается своим scope.</li>
+<li><strong>Recoverability</strong> — существует путь к восстановлению доверия.</li>
+</ul>
+</section>
+
+<section>
+<h2>26. Формальная модель доверия</h2>
+<p>Для исследовательской формализации доверие можно представлять как отношение:</p>
+<div class="formula">T(s, o, a, c, t) → {allow, deny, unknown, review}</div>
+<p>где <code>s</code> — субъект или компонент, <code>o</code> — объект, <code>a</code> — действие, <code>c</code> — контекст, <code>t</code> — момент времени.</p>
+<p>Ключевое отличие от бинарного trust score состоит в наличии состояния <code>unknown</code> и необходимости <code>review</code>. Система не обязана искусственно превращать недостаток информации в allow или deny без соответствующей policy.</p>
+</section>
+
+<section>
+<h2>27. Связь с DEFT и PICCS</h2>
+<p><strong>PICCS</strong> ограничивает перенос контекста, полномочий и вмешательства при неопределённости.</p>
+<p><strong>DEFT</strong> рассматривает динамику состояния, регуляторов и жизнеспособности системы, включая риск потери пластичности при самомодификации.</p>
+<p><strong>Trust Architecture</strong> обеспечивает слой, в котором происхождение, authority, delegation, revocation и recovery становятся проверяемыми.</p>
+<blockquote>AS задаёт философское ограничение. PICCS ограничивает вмешательство. DEFT формализует динамическую жизнеспособность. Trust Architecture ограничивает путь, которым доверие превращается в действие.</blockquote>
+</section>
+
+<section>
+<h2>28. Что защищает архитектура доверия</h2>
+<div class="grid">
+<div class="card"><b>SUBJECT</b><br>Идентичность не сводится к профилю.</div>
+<div class="card"><b>CONTEXT</b><br>Разрешение не переносится автоматически.</div>
+<div class="card"><b>MODEL</b><br>Вывод не становится фактом.</div>
+<div class="card"><b>AUTHORITY</b><br>Capability ограничена scope.</div>
+<div class="card"><b>HISTORY</b><br>Provenance не исчезает при пересмотре.</div>
+<div class="card"><b>FUTURE</b><br>Сохраняется возможность отзыва, коррекции и восстановления.</div>
+</div>
+</section>
+
+<section>
+<h2>29. Итог</h2>
+<p>Архитектура доверия SymbiontOS не пытается создать систему, где «всё доверено». Она создаёт систему, где доверие является локальным, проверяемым, ограниченным, контекстным и отзывным.</p>
+<p>Её фундаментальная задача состоит в том, чтобы разорвать опасную цепочку, в которой наблюдение превращается в интерпретацию, интерпретация в уверенность, уверенность в полномочие, а полномочие в необратимое вмешательство.</p>
+<div class="formula">Evidence ≠ Authority<br>Authority ≠ Truth<br>Trust ≠ Absolute Trust<br>Capability ≠ Permission<br>Model ≠ Subject<br>Action ≠ Proof</div>
+<blockquote><strong>Доверие в SymbiontOS — это не вера в систему. Это ограниченное, проверяемое основание для конкретного действия в конкретном контексте.</strong></blockquote>
+</section>
+
+<footer>AMBIVALENT SOLIPSISM · LONG-TERM PROJECT</footer></main></body></html>
