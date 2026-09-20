@@ -6,10 +6,73 @@
 <meta name="description" content="Несогласие и Тихая комната: право на паузу без подавления критики, право на dissent, когнитивная безопасность и право на развитие.">
 <title>Несогласие и Тихая комната</title>
 <style>
-:root{--bg:#050709;--panel:#0a1115;--text:#eef7f4;--muted:#a8bbb7;--a:#6ce8c5;--a2:#c0ffec;--line:rgba(108,232,197,.19);--soft:rgba(255,255,255,.065)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(900px 520px at 50% -120px,rgba(108,232,197,.12),transparent 68%),var(--bg);color:var(--text);font:16px/1.78 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.016) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px);background-size:44px 44px;opacity:.4}
-main{width:min(1160px,calc(100% - 30px));margin:auto;padding:20px 0 100px}nav{position:sticky;top:6px;z-index:10;display:flex;gap:7px;flex-wrap:wrap;padding:9px;margin:0 -7px 42px;border:1px solid var(--line);border-radius:16px;background:rgba(5,12,15,.86);backdrop-filter:blur(14px)}nav a{color:var(--muted);text-decoration:none;padding:7px 10px;border-radius:9px;font:11px ui-monospace,SFMono-Regular,Menlo,monospace}nav a:hover{color:var(--a2);background:rgba(108,232,197,.07)}
-.ey{color:var(--a);font:11px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.19em;text-transform:uppercase}h1{font-size:clamp(44px,8vw,86px);line-height:.92;letter-spacing:-.055em;font-weight:520;margin:14px 0 24px}h2{font-size:clamp(25px,3vw,35px);line-height:1.1;margin:62px 0 15px;letter-spacing:-.025em}p{color:#c0cecb;max-width:1050px}.lead{font-size:clamp(19px,2.1vw,24px);line-height:1.55;color:#d8e4e1;max-width:1000px}.hero,.quote,.formula,.note{margin:25px 0;padding:23px 25px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(10,25,29,.96),rgba(4,11,14,.96))}.formula{text-align:center;color:var(--a2);font-size:clamp(18px,2.2vw,25px);line-height:1.5}.quote{border-left:3px solid var(--a);font:clamp(19px,2.1vw,25px)/1.55 Georgia,serif;color:#e8f3f0}.note strong{color:var(--a2)}.badge{display:inline-block;padding:6px 10px;margin:3px;border:1px solid var(--line);border-radius:999px;color:var(--a2);font:10px ui-monospace,SFMono-Regular,Menlo,monospace}.toc,.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px}.toc{margin:28px 0}.toc a,.card{padding:15px 16px;border:1px solid var(--soft);border-radius:15px;background:rgba(8,18,22,.78)}.toc a{color:#c5d4d1;text-decoration:none}.toc a:hover{border-color:var(--line);color:var(--a2)}.card strong{color:var(--a2)}.card p{margin-bottom:0}table{width:100%;border-collapse:separate;border-spacing:0;margin:22px 0;border:1px solid var(--soft);border-radius:15px;overflow:hidden;background:rgba(5,13,17,.7)}th,td{text-align:left;vertical-align:top;padding:13px 15px;border-bottom:1px solid var(--soft)}th{color:var(--a2);background:rgba(108,232,197,.045)}td{color:#bac9c6}tr:last-child td{border-bottom:0}pre{overflow:auto;padding:19px;border:1px solid var(--line);border-radius:15px;background:#020507;color:#cdebe3}code{color:#bdeee0}footer{margin-top:90px;padding-top:22px;border-top:1px solid var(--soft);color:#566561;font:10px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace}@media(max-width:700px){main{width:calc(100% - 18px)}nav{top:3px}h1{font-size:clamp(43px,14vw,68px)}h2{margin-top:50px}.hero,.quote,.formula,.note{padding:18px}table{display:block;overflow-x:auto;font-size:14px}th,td{min-width:180px}}
+:root{
+ --bg:#07100f;--bg2:#0b1715;--panel:#0e1d1a;--panel2:#10231f;
+ --text:#edf7f3;--muted:#9eb5ae;--soft:#c5d5d0;--accent:#63e6c0;
+ --accent2:#b5ffe9;--line:rgba(99,230,192,.18);--line2:rgba(255,255,255,.08);
+ --shadow:0 24px 70px rgba(0,0,0,.32);--radius:22px
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{margin:0;color:var(--text);background:
+ radial-gradient(900px 500px at 85% -10%,rgba(99,230,192,.13),transparent 60%),
+ radial-gradient(800px 500px at 0% 28%,rgba(67,130,255,.07),transparent 62%),var(--bg);
+ font:16px/1.78 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:
+ linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:48px 48px}
+main{width:min(1180px,calc(100% - 32px));margin:auto;padding:18px 0 100px}
+nav{position:sticky;top:10px;z-index:20;display:flex;gap:6px;flex-wrap:wrap;padding:8px;
+ margin:0 0 42px;border:1px solid var(--line);border-radius:18px;background:rgba(7,16,15,.82);
+ backdrop-filter:blur(18px);box-shadow:0 12px 35px rgba(0,0,0,.2)}
+nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:11px;
+ font:600 10px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em}
+nav a:hover{color:var(--accent2);background:rgba(99,230,192,.08)}
+.ey{display:inline-flex;align-items:center;gap:9px;color:var(--accent);font:700 10px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase}
+.ey:before{content:"";width:28px;height:1px;background:var(--accent);box-shadow:0 0 10px rgba(99,230,192,.6)}
+h1{max-width:920px;font-size:clamp(50px,8vw,94px);line-height:.9;letter-spacing:-.065em;font-weight:520;margin:18px 0 30px}
+h2{display:flex;align-items:baseline;gap:14px;font-size:clamp(25px,3vw,36px);line-height:1.12;letter-spacing:-.035em;font-weight:600;margin:76px 0 18px}
+h2:first-letter{color:var(--accent)}
+p,li{color:var(--soft)}p{max-width:940px}
+.lead{max-width:900px;font-size:clamp(19px,2vw,25px);line-height:1.55;color:#dceae6;margin-bottom:28px}
+.hero,.quote,.formula,.note{position:relative;margin:26px 0;padding:26px 28px;border:1px solid var(--line);border-radius:var(--radius);
+ background:linear-gradient(145deg,rgba(16,35,31,.92),rgba(7,16,15,.92));box-shadow:var(--shadow)}
+.hero:before{content:"01";position:absolute;right:22px;top:18px;color:rgba(99,230,192,.12);font:700 42px/1 ui-monospace,SFMono-Regular,Menlo,monospace}
+.hero p{font-size:18px}
+.formula{text-align:center;color:var(--accent2);font-size:clamp(18px,2vw,25px);line-height:1.55;font-weight:520}
+.quote{border-left:3px solid var(--accent);font:clamp(19px,2vw,25px)/1.55 Georgia,serif;color:#e8f4f0}
+.note{background:rgba(12,27,24,.7);color:var(--muted);font-size:14px}
+.note strong{color:var(--accent2)}
+.badge{display:inline-flex;padding:7px 11px;margin:0 5px 7px 0;border:1px solid var(--line);border-radius:999px;
+ color:var(--accent2);background:rgba(99,230,192,.04);font:700 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em}
+.toc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:34px 0 15px}
+.toc a{min-height:74px;padding:15px 16px;border:1px solid var(--line2);border-radius:15px;background:rgba(10,24,21,.78);
+ color:#c9d8d4;text-decoration:none;display:flex;align-items:flex-end;font-size:14px}
+.toc a:hover{border-color:var(--line);color:var(--accent2);transform:translateY(-1px)}
+section{position:relative}
+section h2:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,var(--line),transparent);margin-left:8px}
+section>p{margin-top:10px}
+ul{padding-left:1.25em}
+li{margin:7px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:20px 0}
+.card{padding:20px;border:1px solid var(--line2);border-radius:18px;background:linear-gradient(145deg,rgba(14,29,26,.88),rgba(7,16,15,.82));box-shadow:0 12px 30px rgba(0,0,0,.16)}
+.card strong{display:block;color:var(--accent2);font:700 11px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.07em;margin-bottom:7px}
+.card p{margin:0;font-size:14px}
+table{width:100%;border-collapse:separate;border-spacing:0;margin:24px 0;border:1px solid var(--line2);border-radius:17px;overflow:hidden;background:rgba(6,15,14,.72);box-shadow:0 12px 35px rgba(0,0,0,.15)}
+th,td{text-align:left;vertical-align:top;padding:15px 16px;border-bottom:1px solid var(--line2)}
+th{color:var(--accent2);background:rgba(99,230,192,.06);font:700 11px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.05em;text-transform:uppercase}
+td{color:#bfd0cb}tr:last-child td{border-bottom:0}
+pre{overflow:auto;margin:22px 0;padding:20px;border:1px solid var(--line);border-radius:17px;background:#030807;color:#ccefe5;
+ font:13px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;box-shadow:inset 0 0 35px rgba(99,230,192,.025)}
+code{color:var(--accent2)}
+footer{margin-top:100px;padding:26px 0;border-top:1px solid var(--line2);color:#647a74;font:10px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em}
+@media(max-width:850px){.toc{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){
+ main{width:calc(100% - 18px);padding-top:8px}.toc{grid-template-columns:1fr 1fr}
+ nav{top:4px;margin-bottom:30px}.hero,.quote,.formula,.note{padding:20px}
+ h1{font-size:clamp(45px,14vw,68px)}h2{margin-top:58px;font-size:27px}
+ table{display:block;overflow-x:auto;font-size:14px}th,td{min-width:190px}
+}
 </style></head>
 <body><main>
 <nav><a href="../">ТИХАЯ КОМНАТА</a><a href="anti-dogma-protocol.html">АНТИДОГМА</a><a href="information-policy.html">ИНФОПОЛИТИКА</a><a href="../../ai/ai-safety.html">AI SAFETY</a><a href="../../society/information-ecology.html">ИНФОЭКОЛОГИЯ</a></nav>
@@ -18,7 +81,7 @@ main{width:min(1160px,calc(100% - 30px));margin:auto;padding:20px 0 100px}nav{po
 <p class="lead">Тихая комната нужна не для того, чтобы сделать человека согласным. Она должна создавать возможность временно прекратить информационное давление, не превращая паузу в подавление критики, несогласия или доступа к альтернативным взглядам.</p>
 <div class="hero"><span class="badge">DISSENT IS ALLOWED</span><span class="badge">PAUSE IS ALLOWED</span><span class="badge">REVISION IS ALLOWED</span><span class="badge">NO HIDDEN PERSUASION</span><span class="badge">EXIT AVAILABLE</span><p><strong>Главный принцип:</strong> право человека не взаимодействовать с информацией сейчас не должно превращаться в право системы решать, с какой информацией человек никогда не должен взаимодействовать.</p></div>
 <div class="formula"><strong>Тишина защищает возможность не отвечать. Несогласие защищает возможность отвечать иначе.</strong></div>
-<div class="note"><strong>Статус:</strong> авторская архитектурная спецификация в рамках Амбивалентного солипсизма. Это не юридическая норма и не универсальная клиническая методика. Нормативные положения страницы сопоставляются с принципами свободы мнения, выражения и доступа к информации, которые рассматриваются, в частности, в материалах UNESCO. citeturn0search0turn0search1</div>
+<div class="note"><strong>Статус:</strong> авторская архитектурная спецификация в рамках Амбивалентного солипсизма. Это не юридическая норма и не универсальная клиническая методика. Нормативные положения страницы сопоставляются с принципами свободы мнения, выражения и доступа к информации, которые рассматриваются, в частности, в материалах UNESCO.</div>
 <div class="toc"><a href="#meaning">Что такое dissent</a><a href="#problem">Проблема</a><a href="#rights">Права</a><a href="#quiet">Тишина</a><a href="#conflict">Конфликт</a><a href="#cognitive">Когнитивная безопасность</a><a href="#development">Развитие</a><a href="#ai">AI</a><a href="#protocol">Протокол</a><a href="#tests">Тестирование</a><a href="#formal">Формализация</a></div>
 
 <section id="meaning"><h2>01 · Что такое несогласие</h2>
@@ -32,7 +95,7 @@ main{width:min(1160px,calc(100% - 30px));margin:auto;padding:20px 0 100px}nav{po
 <section id="problem"><h2>03 · Основная проблема</h2>
 <div class="formula">Информационное давление может быть сильным и без формального запрета говорить.</div>
 <p>Давление возникает, например, когда один поток непрерывно повторяется, уведомления не прекращаются, альтернативы скрываются алгоритмической сортировкой, а отказ от участия делает человека социально или информационно невидимым.</p>
-<p>UNESCO отмечает, что цифровая среда одновременно расширяет возможности выражения и создаёт риски для свободы выражения; поэтому управление платформами должно учитывать свободу выражения и доступ к информации, прозрачность и подотчётность. citeturn0search0turn0search1</p></section>
+<p>UNESCO отмечает, что цифровая среда одновременно расширяет возможности выражения и создаёт риски для свободы выражения; поэтому управление платформами должно учитывать свободу выражения и доступ к информации, прозрачность и подотчётность.</p></section>
 
 <section><h2>04 · Молчание и несогласие не противоположности</h2>
 <p>Человек может молчать, потому что не согласен. Может молчать, потому что ему нужно время. Может говорить, не соглашаясь. Может не соглашаться, не желая вступать в спор.</p>
@@ -60,7 +123,7 @@ NO_RESPONSE ≠ CONSENT</pre></section>
 
 <section id="rights"><h2>10 · Право на собственную позицию</h2>
 <p>В архитектуре Тихой комнаты субъект сохраняет право формировать, менять, выражать и не выражать собственное мнение в пределах применимых правовых и безопасностных ограничений конкретной системы.</p>
-<p>UNESCO подчёркивает значение свободы мнения и выражения, а также права искать, получать и распространять информацию. citeturn0search1turn0search8</p></section>
+<p>UNESCO подчёркивает значение свободы мнения и выражения, а также права искать, получать и распространять информацию.</p></section>
 
 <section><h2>11 · Право не вступать в спор</h2>
 <p>Свобода выражения не должна превращаться в обязанность постоянно участвовать в коммуникации. Пользователь может отключить уведомления, отложить ответ, покинуть обсуждение или вернуться позже.</p></section>
@@ -137,7 +200,7 @@ NO_RESPONSE ≠ CONSENT</pre></section>
 
 <section id="cognitive"><h2>32 · Когнитивная безопасность</h2>
 <p>В этой архитектуре когнитивная безопасность означает сохранение способности субъекта самостоятельно воспринимать, различать, понимать, оценивать, сомневаться и пересматривать.</p>
-<p>Она не означает защиту от конкретных мыслей. UNESCO подчёркивает связь цифровой свободы с правом на выражение и доступ к информации, а также необходимость медиаграмотности, позволяющей пользователям критически взаимодействовать с контентом и технологиями. citeturn0search0turn0search2</p></section>
+<p>Она не означает защиту от конкретных мыслей. UNESCO подчёркивает связь цифровой свободы с правом на выражение и доступ к информации, а также необходимость медиаграмотности, позволяющей пользователям критически взаимодействовать с контентом и технологиями.</p></section>
 
 <section><h2>33 · Когнитивная безопасность и dissent</h2>
 <p>Если система считает любую сильную критику угрозой, она начнёт защищать не субъект, а собственную стабильность.</p>
@@ -417,7 +480,7 @@ Invariant Minimal:
 
 <section><h2>94 · Граница принципа</h2>
 <p>Право на dissent не является универсальным оправданием угроз, преследования, насилия, несанкционированного доступа или причинения конкретного вреда. Но ограничение должно быть основано на конкретном поведении и применимом правиле, а не на простом несогласии.</p>
-<p>Такое разделение соответствует подходу, при котором меры по защите информационной среды должны одновременно учитывать свободу выражения, доступ к информации, необходимость и пропорциональность вмешательства. citeturn0search12turn0search9</p></section>
+<p>Такое разделение соответствует подходу, при котором меры по защите информационной среды должны одновременно учитывать свободу выражения, доступ к информации, необходимость и пропорциональность вмешательства.</p></section>
 
 <section><h2>95 · Главный архитектурный риск</h2>
 <p>Наиболее опасный сценарий — когда система начинает считать собственную стабильность доказательством правильности.</p>
