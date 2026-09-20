@@ -206,6 +206,27 @@ main{width:min(var(--max),calc(100% - 30px));margin:auto;padding:22px 0 90px}nav
 <tr><td>residual</td><td>Что остаётся неизвестным.</td></tr>
 </tbody></table>
 <p class="note">JSON-схема не превращает интерпретацию в объективный факт. Она только делает структуру анализа явной и пригодной для дальнейшей обработки.</p>
+<div id="acn-demo">
+<h3>Демонстрационные связи</h3>
+<p>Ниже отображаются связи из <code>acn-data.json</code>. Они предназначены для демонстрации метода, а не для утверждения о канонической взаимосвязи произведений.</p>
+<div id="acn-cards"></div>
+</div>
+<script>
+(async function () {
+  const root = document.getElementById('acn-cards');
+  try {
+    const data = await fetch('./acn-data.json').then(r => r.json());
+    root.innerHTML = data.cards.map(card => '<article class="acn-card"><strong>' +
+      card.source.title + ' и контекст: ' + card.context.title + '</strong>' +
+      '<p><b>Лакуна:</b> ' + card.lacuna.question + '</p>' +
+      '<p><b>Перенос:</b> ' + card.context.transfer + '</p>' +
+      '<p><b>Статус:</b> ' + card.status + '; <b>вес:</b> ' + card.epistemic_weight + '</p>' +
+      '<p><b>Остаток:</b> ' + card.residual + '</p></article>').join('');
+  } catch (e) {
+    root.textContent = 'Демонстрационные данные пока недоступны.';
+  }
+})();
+</script>
 </section>
 <footer>AMBIVALENT SOLIPSISM · RESEARCH · ASSOCIATIVE CONTEXT NETWORK · <a href="../">AS</a></footer>
 </main>
