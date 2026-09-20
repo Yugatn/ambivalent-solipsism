@@ -1,1 +1,426 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SymbiontOS · Модель состояния · Амбивалентный Солипсизм</title><style>:root{--bg:#02050a;--t:#eef7f5;--m:#91a7a7;--a:#45f0c3;--l:rgba(69,240,195,.17)}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(69,240,195,.07),transparent 36%),var(--bg);color:var(--t);font-family:system-ui,sans-serif;line-height:1.75}main{width:min(980px,calc(100% - 30px));margin:auto;padding:32px 0 90px}.nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px}.nav a{border:1px solid var(--l);padding:7px 12px;border-radius:999px;color:var(--m);text-decoration:none;font:10px monospace}.ey{color:#45f0c3aa;font:11px monospace;letter-spacing:.18em}h1{font-size:clamp(34px,7vw,62px);line-height:1.05;margin:12px 0}.lead{font-size:18px;color:#c6d5d2;max-width:800px;margin-bottom:42px}section{padding:27px;margin:22px 0;border:1px solid var(--l);border-radius:20px;background:rgba(7,16,21,.75)}h2{font-size:25px;font-weight:500;margin-top:0}h3{color:var(--a);font-weight:500}p,li{color:#b9c9c6}blockquote{padding:17px 20px;border-left:2px solid var(--a);background:rgba(69,240,195,.035)}footer{margin-top:60px;color:#50605e;font:9px monospace}</style></head><body><main><div class="nav"><a href="./">РАЗДЕЛ</a><a href="../">ГЛАВНОЕ МЕНЮ</a></div><div class="ey">03 / SYMBIONTOS</div><h1>SymbiontOS · Модель состояния</h1><p class="lead">Состояния, переходы, неизвестность и сокращение контекста.</p><footer>AMBIVALENT SOLIPSISM · LONG-TERM PROJECT</footer></main></body></html>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SymbiontOS · Модель состояния · Амбивалентный Солипсизм</title><style>:root{--bg:#02050a;--t:#eef7f5;--m:#91a7a7;--a:#45f0c3;--l:rgba(69,240,195,.17)}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(69,240,195,.07),transparent 36%),var(--bg);color:var(--t);font-family:system-ui,sans-serif;line-height:1.75}main{width:min(980px,calc(100% - 30px));margin:auto;padding:32px 0 90px}.nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px}.nav a{border:1px solid var(--l);padding:7px 12px;border-radius:999px;color:var(--m);text-decoration:none;font:10px monospace}.ey{color:#45f0c3aa;font:11px monospace;letter-spacing:.18em}h1{font-size:clamp(34px,7vw,62px);line-height:1.05;margin:12px 0}.lead{font-size:18px;color:#c6d5d2;max-width:800px;margin-bottom:42px}section{padding:27px;margin:22px 0;border:1px solid var(--l);border-radius:20px;background:rgba(7,16,21,.75)}h2{font-size:25px;font-weight:500;margin-top:0}h3{color:var(--a);font-weight:500}p,li{color:#b9c9c6}blockquote{padding:17px 20px;border-left:2px solid var(--a);background:rgba(69,240,195,.035)}footer{margin-top:60px;color:#50605e;font:9px monospace}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.card{padding:17px;border:1px solid var(--l);border-radius:14px;background:rgba(255,255,255,.015)}.card b{color:var(--a);font:12px monospace}.formula{font:15px monospace;color:#d8fff5;overflow:auto;padding:15px;border:1px solid var(--l);border-radius:12px;margin:18px 0}code{color:#8ff7d7;background:rgba(69,240,195,.05);padding:2px 5px;border-radius:4px}</style></head><body><main><div class="nav"><a href="./">РАЗДЕЛ</a><a href="../">ГЛАВНОЕ МЕНЮ</a></div><div class="ey">03 / SYMBIONTOS</div><h1>SymbiontOS · Модель состояния</h1><p class="lead">Состояния, переходы, неизвестность и сокращение контекста.</p>
+<section id="overview">
+<h2>1. Что такое состояние SymbiontOS</h2>
+<p>Состояние SymbiontOS — это не снимок всех внутренних переменных системы. Это минимальное, контекстно связанное описание того, что необходимо знать для безопасного продолжения, изменения или остановки вычислительного процесса.</p>
+<div class="formula">State = Observable Context + Internal Dynamics + Authority + Uncertainty + History</div>
+<p>Модель состояния поэтому должна одновременно описывать вычислительное состояние, состояние регуляторов, контекст взаимодействия, доверие, доступные capabilities, epistemic status и остаточную неопределённость.</p>
+<blockquote><strong>Состояние не равно полной реальности системы. Состояние является моделью, достаточной для определённых действий в определённом контексте.</strong></blockquote>
+</section>
+
+<section>
+<h2>2. Философское основание</h2>
+<p>Модель состояния непосредственно следует из принципа <code>Reality = Model + Residual</code>. Любое состояние является моделью, а значит, имеет область применимости и остаток неизвестного.</p>
+<p>«Другой реален» означает, что состояние одного субъекта не может автоматически заменить состояние другого. В распределённой системе необходимо различать собственное состояние узла, наблюдаемое состояние другого узла и реконструкцию этого состояния.</p>
+<div class="grid">
+<div class="card"><b>SELF STATE</b><br>Состояние, доступное самому компоненту.</div>
+<div class="card"><b>OBSERVED STATE</b><br>То, что наблюдает другой компонент.</div>
+<div class="card"><b>RECONSTRUCTED STATE</b><br>Модель, построенная по событиям и evidence.</div>
+<div class="card"><b>RESIDUAL</b><br>То, что не восстановлено или принципиально неизвестно.</div>
+</div>
+</section>
+
+<section>
+<h2>3. Состояние как типизированный объект</h2>
+<p>Состояния должны иметь явную структуру. Не следует хранить всё как неразличимый набор полей.</p>
+<div class="formula">S = (id, epoch, context, variables, modes, capabilities, trust, uncertainty, provenance)</div>
+<ul>
+<li><strong>id</strong> — идентификатор экземпляра или субъекта;</li>
+<li><strong>epoch</strong> — временная эпоха состояния;</li>
+<li><strong>context</strong> — условия, в которых состояние действительно;</li>
+<li><strong>variables</strong> — наблюдаемые и внутренние параметры;</li>
+<li><strong>modes</strong> — режимы исполнения;</li>
+<li><strong>capabilities</strong> — доступные полномочия;</li>
+<li><strong>trust</strong> — актуальный trust state;</li>
+<li><strong>uncertainty</strong> — неизвестность и конфликт evidence;</li>
+<li><strong>provenance</strong> — происхождение элементов состояния.</li>
+</ul>
+</section>
+
+<section>
+<h2>4. State Vector и State Object</h2>
+<p>Для математической динамики может использоваться состояние <code>x(t)</code>, но инженерная система требует более богатого объекта.</p>
+<div class="formula">X(t) = (x(t), A(t), R(t), C(t), T(t), U(t), H(t))</div>
+<p>Здесь <code>x</code> описывает операционное состояние, <code>A</code> — активный policy или action regime, <code>R</code> — регулятор, <code>C</code> — контекст, <code>T</code> — trust state, <code>U</code> — uncertainty, <code>H</code> — релевантную историю.</p>
+<p>Такое расширение позволяет связать State Model с DEFT, PICCS и Trust Architecture.</p>
+</section>
+
+<section>
+<h2>5. State Layers</h2>
+<div class="grid">
+<div class="card"><b>PHYSICAL</b><br>CPU, memory, storage, device и network state.</div>
+<div class="card"><b>EXECUTION</b><br>Processes, IPC, scheduling и execution context.</div>
+<div class="card"><b>COGNITIVE</b><br>Model state, beliefs, inference и uncertainty.</div>
+<div class="card"><b>POLICY</b><br>Активные правила и ограничения.</div>
+<div class="card"><b>TRUST</b><br>Identity, claims, capabilities и revocation.</div>
+<div class="card"><b>SOCIAL</b><br>Состояния взаимодействия с другими субъектами.</div>
+<div class="card"><b>META</b><br>Состояние регуляторов, evaluator и механизмов изменения.</div>
+</div>
+<p>Разделение слоёв не означает независимость. Состояния могут влиять друг на друга, но переходы через trust и meta boundaries должны быть явными.</p>
+</section>
+
+<section>
+<h2>6. State Transition</h2>
+<p>Состояние изменяется не произвольно, а через типизированные события и transition rules.</p>
+<div class="formula">S(t+1) = Transition(S(t), Event(t), Policy(t), Context(t))</div>
+<p>Каждый переход должен иметь источник события, инициатора, контекст, policy decision и результат.</p>
+<p>Недопустимый переход не должен быть «исправлен» постфактум изменением истории. Он должен быть отвергнут, изолирован или переведён в review state согласно policy.</p>
+</section>
+
+<section>
+<h2>7. State Machine</h2>
+<p>Базовая жизненная модель компонента:</p>
+<div class="formula">CREATED | INITIALIZING | ACTIVE | DEGRADED | SUSPENDED | ISOLATED | RECOVERING | TERMINATED</div>
+<p>Дополнительные состояния могут описывать trust, sleep/wake, federation и emergency modes.</p>
+<p>Важно различать операционное состояние и trust state. Компонент может быть технически ACTIVE, но иметь RESTRICTED trust.</p>
+</section>
+
+<section>
+<h2>8. Wake и Sleep</h2>
+<p>В DEFT рабочее и восстановительное состояние являются различными динамическими режимами.</p>
+<div class="grid">
+<div class="card"><b>WAKE</b><br>Обработка, обучение, взаимодействие и оптимизация текущего режима.</div>
+<div class="card"><b>SLEEP</b><br>Регуляризация, восстановление пластичности и пересмотр доминирующих режимов.</div>
+</div>
+<p>Переключение должно зависеть от наблюдаемых критериев, например деградации пластичности, накопления rigidity или других сигналов, а не от произвольного таймера.</p>
+<div class="formula">σ(t) = Switch(State(t), Plasticity(t), Risk(t), Policy(t))</div>
+</section>
+
+<section>
+<h2>9. Контекст как часть состояния</h2>
+<p>Контекст не является внешним комментарием к состоянию. Для многих действий он является частью самого определения допустимого состояния.</p>
+<div class="formula">State Validity = State × Context × Epoch</div>
+<p>Одно и то же внутреннее значение может означать разные вещи в разных контекстах. Поэтому context loss может делать ранее корректную интерпретацию недействительной.</p>
+</section>
+
+<section>
+<h2>10. Context Reduction</h2>
+<p>ContextReducer должен уменьшать сложность представления, не превращая неизвестное в ложную определённость.</p>
+<div class="formula">C' = Reduce(C) with preserved safety-relevant invariants</div>
+<p>Сокращение контекста допустимо только при сохранении информации, необходимой для policy, trust, safety и восстановления.</p>
+<p>То, что удалено из оперативного представления, не должно автоматически считаться несуществующим.</p>
+</section>
+
+<section>
+<h2>11. Unknown и Partial State</h2>
+<p>SymbiontOS должен поддерживать частично известные состояния.</p>
+<div class="formula">S = Known ∪ Unknown ∪ Conflicting</div>
+<p><code>UNKNOWN</code> означает отсутствие достаточного evidence. <code>CONFLICTING</code> означает наличие несовместимых evidence. Ни одно состояние не должно автоматически превращаться в произвольное значение ради удобства вычисления.</p>
+</section>
+
+<section>
+<h2>12. State Provenance</h2>
+<p>Каждое критическое поле состояния должно иметь происхождение, если его изменение может повлиять на authority, safety или irreversible action.</p>
+<div class="formula">Field = Value + Source + Time + Context + Transformation</div>
+<p>Это позволяет отличить непосредственно наблюдаемое значение от inference, агрегата или реконструкции.</p>
+</section>
+
+<section>
+<h2>13. Event Sourcing</h2>
+<p>История изменений должна быть представлена как последовательность событий, достаточная для проверки переходов.</p>
+<div class="formula">State(t) = Replay(Events[0...t], InitialState)</div>
+<p>Полное восстановление из событий не всегда необходимо или возможно. Поэтому допускаются проверенные snapshots, связанные с соответствующей event lineage.</p>
+</section>
+
+<section>
+<h2>14. Snapshot Trust</h2>
+<p>Snapshot является утверждением о состоянии в определённый момент. Он должен иметь epoch, provenance, integrity и описание того, какие части состояния он действительно покрывает.</p>
+<div class="formula">Snapshot ≠ Complete State unless Coverage is Proven</div>
+<p>Нельзя восстанавливать критический authority state из snapshot, если неизвестно, какие policy или revocation events произошли после его создания.</p>
+</section>
+
+<section>
+<h2>15. State Consistency</h2>
+<p>В распределённой системе разные узлы могут видеть разные состояния. Поэтому необходимо различать local consistency, causal consistency и более сильные guarantees там, где они действительно требуются.</p>
+<div class="formula">Observed State A ≠ Observed State B ≠ Global State</div>
+<p>Несовпадение наблюдений само по себе не является ошибкой. Ошибкой становится скрытое предположение о едином состоянии там, где протокол его не гарантирует.</p>
+</section>
+
+<section>
+<h2>16. Causality</h2>
+<p>Для событий, влияющих друг на друга, должна быть доступна информация о причинном порядке.</p>
+<div class="formula">e₁ precedes e₂ ⇒ e₂ may depend on e₁</div>
+<p>В распределённой среде timestamp не всегда достаточен для установления причинности. Поэтому могут использоваться sequence numbers, logical clocks или другие механизмы causal ordering.</p>
+</section>
+
+<section>
+<h2>17. State Conflict</h2>
+<p>Если две реконструкции состояния несовместимы, система должна сохранить сам конфликт и его provenance.</p>
+<div class="formula">Conflict State = {S₁, S₂, Evidence₁, Evidence₂, ResolutionStatus}</div>
+<p>Resolution может быть автоматическим, policy-driven или переданным на review. Сам факт конфликта не должен исчезать после выбора одного варианта.</p>
+</section>
+
+<section>
+<h2>18. Authority State</h2>
+<p>Capability является частью состояния, но не должна быть просто флагом доступа.</p>
+<div class="formula">Capability = Scope + Context + Time + Purpose + Revocation</div>
+<p>Изменение authority state должно порождать отдельное событие и audit record.</p>
+</section>
+
+<section>
+<h2>19. State и Trust</h2>
+<p>Операционное состояние и trust state связаны, но не идентичны.</p>
+<div class="formula">OperationalState ≠ TrustState</div>
+<p>Компонент может продолжать работу при пониженном доверии, но в ограниченном режиме. Это позволяет локализовать ошибку без необоснованной остановки всей системы.</p>
+</section>
+
+<section>
+<h2>20. State и Residual</h2>
+<p>Residual является частью модели состояния в форме явно обозначенной неизвестности.</p>
+<div class="formula">State = Model(State) + Residual(State)</div>
+<p>Цель не состоит в том, чтобы минимизировать Residual любой ценой. Агрессивное заполнение неизвестного предположениями может уменьшить видимую неопределённость, одновременно увеличив реальный риск.</p>
+</section>
+
+<section>
+<h2>21. State Compression</h2>
+<p>Для эффективной работы система должна сокращать состояние. Но compression должна быть safety-aware.</p>
+<div class="formula">Compressed State ⊇ safety-critical information</div>
+<p>Необязательно сохранять каждую деталь, но нельзя терять сведения, необходимые для восстановления authority, provenance, причинности и критических ограничений.</p>
+</section>
+
+<section>
+<h2>22. State Garbage Collection</h2>
+<p>Удаление устаревшего состояния должно учитывать audit, legal, privacy и recovery requirements. «Старое» не означает «бесполезное».</p>
+<p>Удаляемый объект должен иметь lifecycle policy: retention, archival, anonymization или destruction. Критические trust events не должны исчезать вследствие обычной оптимизации памяти.</p>
+</section>
+
+<section>
+<h2>23. State Ownership</h2>
+<p>Для каждого изменяемого компонента должна существовать явная authority boundary.</p>
+<div class="formula">Who may mutate state? = explicit capability + policy</div>
+<p>Чтение состояния и право его изменения должны рассматриваться отдельно. Наличие read capability не создаёт write authority.</p>
+</section>
+
+<section>
+<h2>24. Atomicity и Transition Safety</h2>
+<p>Критические переходы должны быть атомарными относительно соответствующих invariants. Нельзя оставить систему между двумя несовместимыми trust или policy states.</p>
+<div class="formula">Invariant(S_before) ∧ ValidTransition ⇒ Invariant(S_after)</div>
+<p>Если атомарность технически невозможна, переход должен иметь промежуточное состояние, которое явно считается restricted или recovering.</p>
+</section>
+
+<section>
+<h2>25. Recovery State</h2>
+<p>Восстановление является самостоятельным состоянием, а не мгновенным возвратом в ACTIVE.</p>
+<div class="formula">RECOVERING = verified subset + unresolved residual + restricted authority</div>
+<p>Полные capabilities возвращаются только после прохождения определённых recovery conditions.</p>
+</section>
+
+<section>
+<h2>26. State Invariants</h2>
+<ul>
+<li>Невозможен переход к authority, для которого нет основания.</li>
+<li>Unknown не маскируется под verified.</li>
+<li>Revoked capability не становится действующей через старый snapshot.</li>
+<li>Context loss не превращается автоматически в context validity.</li>
+<li>Изменение policy фиксируется как событие.</li>
+<li>Компрометация не должна незаметно менять историю.</li>
+<li>Recovery не восстанавливает автоматически отозванные права.</li>
+<li>Критические transition имеют provenance.</li>
+<li>Сжатие состояния сохраняет safety-critical information.</li>
+<li>Модель состояния не объявляется полной реальностью.</li>
+</ul>
+</section>
+
+<section>
+<h2>27. Formal State Transition System</h2>
+<p>Для формализации можно представить SymbiontOS как labelled transition system.</p>
+<div class="formula">M = (S, E, P, T, I)</div>
+<ul>
+<li><code>S</code> — множество допустимых состояний;</li>
+<li><code>E</code> — множество событий;</li>
+<li><code>P</code> — множество применимых policy;</li>
+<li><code>T</code> — отношение перехода;</li>
+<li><code>I</code> — набор invariants.</li>
+</ul>
+<p>Переход существует только тогда, когда событие и policy совместимы с текущим состоянием:</p>
+<div class="formula">T(S,e,p)=S' only if Guard(S,e,p)=true</div>
+</section>
+
+<section>
+<h2>28. State Observability</h2>
+<p>Нельзя управлять состоянием, которое система не способна наблюдать в достаточной степени. Но наблюдаемость также не означает полное знание.</p>
+<div class="formula">Observable ≠ Fully Known</div>
+<p>Для каждого критического механизма следует определять минимальный observability set: какие признаки необходимы для обнаружения опасного перехода.</p>
+</section>
+
+<section>
+<h2>29. State Estimation</h2>
+<p>Когда внутреннее состояние напрямую недоступно, используется estimation.</p>
+<div class="formula">Estimated State = f(Observations, History, Model)</div>
+<p>Оценка должна хранить epistemic status и uncertainty. Она не должна незаметно подменять собой непосредственное наблюдение.</p>
+</section>
+
+<section>
+<h2>30. State Estimation и AI</h2>
+<p>AI может использоваться для state estimation, anomaly detection и prediction, но его вывод является частью модели, а не абсолютным состоянием системы.</p>
+<div class="formula">AI Estimate ≠ Ground Truth</div>
+<p>Критические решения должны учитывать confidence, calibration, distribution shift и возможность adversarial manipulation.</p>
+</section>
+
+<section>
+<h2>31. State and DEFT</h2>
+<p>В DEFT состояние включает не только распределение системы, но и динамику регуляторов.</p>
+<div class="formula">X(t) = (μ(t), A(t), R(t), S(t), Π(t), C(t), U(t))</div>
+<p><code>μ</code> представляет состояние распределения, <code>A</code> — генератор или оператор динамики, <code>R</code> — регулятор, <code>S</code> — метарегулятор, <code>Π</code> — показатель пластичности, <code>C</code> — контекст, <code>U</code> — residual uncertainty.</p>
+<p>Это позволяет формализовать wake/sleep dynamics, switching и meta-control как переходы состояния.</p>
+</section>
+
+<section>
+<h2>32. Nonautonomous State</h2>
+<p>Система не обязана иметь один фиксированный закон эволюции.</p>
+<div class="formula">∂t μt = Aπ(t)[μt]</div>
+<p>Policy и контекст могут меняться во времени, поэтому состояние должно включать текущий режим policy и соответствующую эпоху.</p>
+</section>
+
+<section>
+<h2>33. State-dependent Regulator</h2>
+<p>Регулятор может зависеть от состояния системы.</p>
+<div class="formula">A(t) = Aπ(t, X(t))</div>
+<p>Это создаёт feedback loop. Чтобы он не стал самоподтверждающимся или нестабильным, transition policy должна ограничивать скорость и область изменения регулятора.</p>
+</section>
+
+<section>
+<h2>34. Meta-State</h2>
+<p>SymbiontOS должен различать обычное состояние и состояние механизмов, которые изменяют состояние.</p>
+<div class="formula">MetaState = Policy + Evaluator + Regulator + TrustMechanism</div>
+<p>Изменение MetaState является более чувствительным переходом, чем обычное изменение operational state.</p>
+</section>
+
+<section>
+<h2>35. State Transition и PICCS</h2>
+<p>PICCS может рассматривать переход как потенциальное вмешательство:</p>
+<div class="formula">Intervention = transition that changes another subject's viable state</div>
+<p>Чем выше неопределённость и необратимость перехода, тем более строгими должны быть evidence, authority и review requirements.</p>
+</section>
+
+<section>
+<h2>36. State Viability</h2>
+<p>Не каждое достижимое состояние является желательным или жизнеспособным.</p>
+<div class="formula">V = {s ∈ S | future continuation remains admissible}</div>
+<p>DEFT связывает состояние с viability region и возможностью продолжать развитие без потери критических invariants.</p>
+</section>
+
+<section>
+<h2>37. State Reachability</h2>
+<p>Для безопасности важно знать не только текущее состояние, но и какие состояния достижимы из него.</p>
+<div class="formula">Reach(S₀) = {S | S₀ can transition to S under admissible events}</div>
+<p>Особое внимание требуется состояниям, которые трудно обратимы, нарушают trust invariants или сокращают будущую способность к восстановлению.</p>
+</section>
+
+<section>
+<h2>38. Irreversibility</h2>
+<p>Необратимость является характеристикой перехода, а не только состояния.</p>
+<div class="formula">Risk(transition) ↑ with impact × uncertainty × irreversibility</div>
+<p>Поэтому одинаковое evidence может быть достаточным для обратимого локального действия и недостаточным для необратимого изменения состояния другого субъекта.</p>
+</section>
+
+<section>
+<h2>39. State Budget</h2>
+<p>Ресурсом является не только вычислительная мощность. Система должна учитывать бюджет неопределённости, authority, пластичности и recoverability.</p>
+<div class="grid">
+<div class="card"><b>UNCERTAINTY BUDGET</b><br>Сколько неизвестного допустимо.</div>
+<div class="card"><b>AUTHORITY BUDGET</b><br>Какой объём вмешательства допустим.</div>
+<div class="card"><b>PLASTICITY BUDGET</b><br>Сколько способности к изменению сохраняется.</div>
+<div class="card"><b>RECOVERY BUDGET</b><br>Насколько много ошибок система ещё способна пережить.</div>
+</div>
+</section>
+
+<section>
+<h2>40. State Entropy</h2>
+<p>Энтропия состояния может быть полезным индикатором разнообразия, но не должна автоматически трактоваться как «хорошо» или «плохо».</p>
+<p>Слишком низкое разнообразие может указывать на rigidity, а слишком высокое — на потерю coherence. DEFT поэтому рассматривает entropy совместно с viability, stability и plasticity.</p>
+</section>
+
+<section>
+<h2>41. State Collapse</h2>
+<p>State collapse означает потерю различимых режимов, контекстов или возможностей восстановления.</p>
+<div class="formula">Collapse = loss of viable distinctions</div>
+<p>Опасность заключается не только в текущей ошибке, но и в том, что после collapse система может потерять способность обнаружить сам факт произошедшего изменения.</p>
+</section>
+
+<section>
+<h2>42. State Fork</h2>
+<p>При конфликте или неопределённости система может временно поддерживать несколько гипотез состояния.</p>
+<div class="formula">S = {S₁, S₂, ... , Sₙ} with explicit uncertainty</div>
+<p>Fork не означает принятие всех гипотез за истину. Он означает сохранение нескольких допустимых моделей до появления дополнительного evidence.</p>
+</section>
+
+<section>
+<h2>43. State Merge</h2>
+<p>Слияние состояний должно сохранять provenance и конфликты, а не просто выбирать одно значение.</p>
+<div class="formula">Merge(S₁,S₂) = Combined Evidence + Conflict Status + Resolution</div>
+<p>Автоматическое merge допустимо только при наличии доказанных merge invariants.</p>
+</section>
+
+<section>
+<h2>44. State Serialization</h2>
+<p>Сериализация состояния должна включать schema version, epoch, integrity information и минимальный provenance.</p>
+<div class="formula">Serialized State = Data + Schema + Epoch + Integrity + Provenance</div>
+<p>Иначе старое состояние может быть ошибочно прочитано как актуальное или получить новый смысл после изменения схемы.</p>
+</section>
+
+<section>
+<h2>45. State Schema Evolution</h2>
+<p>Изменение схемы состояния является потенциально trust-sensitive изменением. Новая схема должна определять, какие старые поля сохраняют смысл, какие становятся неизвестными и какие требуют миграции.</p>
+<div class="formula">Migration ≠ Reinterpretation without evidence</div>
+</section>
+
+<section>
+<h2>46. State Security Boundaries</h2>
+<p>Не всё состояние должно быть доступно каждому компоненту. Read scope должен соответствовать задаче, а sensitive state должен иметь собственные boundaries.</p>
+<div class="formula">Visible State ⊆ Authorized State</div>
+<p>Сокращение видимости является частью privacy и capability security.</p>
+</section>
+
+<section>
+<h2>47. State Privacy</h2>
+<p>Модель состояния может содержать сведения о субъекте, поведении, отношениях и внутренних процессах. Поэтому state architecture должна учитывать purpose limitation, minimization, retention и controlled disclosure.</p>
+<p>«Система знает» и «компоненту разрешено узнать» являются разными утверждениями.</p>
+</section>
+
+<section>
+<h2>48. State and Other Subjects</h2>
+<p>Состояние другого субъекта всегда является частично реконструированным представлением, если субъект не предоставил соответствующую информацию сам.</p>
+<div class="formula">Model(Other) ≠ Other</div>
+<p>Это прямое техническое выражение принципа «Другой реален»: модель другого субъекта не даёт права подменять его собственную перспективу.</p>
+</section>
+
+<section>
+<h2>49. State Intervention Contract</h2>
+<p>Изменение состояния другого субъекта требует explicit intervention contract: кто инициирует изменение, какое состояние изменяется, почему это необходимо, какие evidence используются, какой scope вмешательства и как восстановить исходное состояние.</p>
+<div class="formula">Intervention Contract = Actor + Target + Purpose + Evidence + Scope + Reversibility</div>
+</section>
+
+<section>
+<h2>50. Formal Verification Targets</h2>
+<p>Для формальной проверки модели состояния особенно важны:</p>
+<ul>
+<li>сохранение invariants при каждом допустимом переходе;</li>
+<li>отсутствие несанкционированного authority escalation;</li>
+<li>корректность causal ordering;</li>
+<li>безопасность recovery transitions;</li>
+<li>сохранение provenance при serialization и merge;</li>
+<li>невозможность использовать revoked state как действующий authority;</li>
+<li>ограничение meta-state transitions;</li>
+<li>сохранение viability-critical information при context reduction.</li>
+</ul>
+</section>
+
+<section>
+<h2>51. Связь с остальной архитектурой SymbiontOS</h2>
+<div class="grid">
+<div class="card"><b>AS</b><br>Определяет философское ограничение полноты модели.</div>
+<div class="card"><b>PICCS</b><br>Ограничивает вмешательство в состояние другого.</div>
+<div class="card"><b>TRUST</b><br>Определяет, кто и при каких условиях может изменять состояние.</div>
+<div class="card"><b>DEFT</b><br>Описывает динамику, viability, plasticity и регуляторы.</div>
+<div class="card"><b>EVENT FABRIC</b><br>Сохраняет историю переходов.</div>
+<div class="card"><b>SYMBIONTOS</b><br>Исполняет state model в вычислительной среде.</div>
+</div>
+</section>
+
+<section>
+<h2>52. Итог</h2>
+<p>Модель состояния SymbiontOS — это не таблица переменных и не попытка создать полный цифровой двойник реальности. Это формальная граница между тем, что система знает, тем, что она предполагает, тем, что она может сделать, и тем, что остаётся неизвестным.</p>
+<p>Хорошая state model должна сохранять не только текущее состояние, но и происхождение этого состояния, условия его применимости, допустимые переходы, residual uncertainty и возможность восстановления.</p>
+<blockquote><strong>Состояние — это не то, чем система «является» целиком. Это проверяемая модель того, что системе разрешено считать актуальным для конкретного действия, в конкретном контексте и в конкретный момент.</strong></blockquote>
+</section>
+<footer>AMBIVALENT SOLIPSISM · LONG-TERM PROJECT</footer></main></body></html>
