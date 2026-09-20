@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yugatn.github.io/ambivalent-solipsism/research/acn-schema.json",
+  "title": "Associative Context Network Card",
+  "description": "Схема карточки связи Ассоциативно-контекстуальной сети. Предназначена для фиксации лакун, контекстов, интерпретаций, эпистемического статуса и остатка неизвестного.",
+  "type": "object",
+  "required": ["id", "source", "lacuna", "context", "status", "basis", "residual"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "source": {
+      "type": "object",
+      "required": ["title", "medium"],
+      "properties": {
+        "title": {"type": "string"},
+        "medium": {"type": "string", "enum": ["film", "series", "book", "game", "other"]},
+        "year": {"type": ["integer", "null"], "minimum": 1800, "maximum": 2200}
+      },
+      "additionalProperties": false
+    },
+    "lacuna": {
+      "type": "object",
+      "required": ["question", "types"],
+      "properties": {
+        "question": {"type": "string"},
+        "types": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": ["сюжетная", "психическая", "причинная", "онтологическая", "идентичностная", "темпоральная", "этическая", "технологическая", "космологическая", "текстовая", "интерпретационная", "личная", "остаточная"]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "context": {
+      "type": "object",
+      "required": ["title", "transfer"],
+      "properties": {
+        "title": {"type": "string"},
+        "medium": {"type": "string", "enum": ["film", "series", "book", "game", "other"]},
+        "year": {"type": ["integer", "null"], "minimum": 1800, "maximum": 2200},
+        "transfer": {"type": "string"},
+        "effect": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "relation": {
+      "type": "object",
+      "properties": {
+        "direction": {"type": "string"},
+        "reversible": {"type": "boolean"},
+        "type": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "status": {
+      "type": "string",
+      "enum": ["канон", "авторское свидетельство", "интерпретация", "гипотеза", "личная ассоциация"]
+    },
+    "basis": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string"}
+    },
+    "alternatives": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "counter_relation": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "epistemic_weight": {
+      "type": "string",
+      "enum": ["низкий", "средний", "высокий"],
+      "description": "Оценка качества основания, а не истинности самой связи."
+    },
+    "false_completeness_risk": {
+      "type": "string",
+      "enum": ["низкий", "средний", "высокий"]
+    },
+    "residual": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  },
+  "additionalProperties": false
+}
