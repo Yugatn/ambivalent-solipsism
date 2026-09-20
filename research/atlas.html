@@ -30,12 +30,12 @@ footer{padding:25px 20px;border-top:1px solid var(--line);color:var(--muted);fon
 <body>
 <div class="shell">
 <header>
-  <div class="brand">PERCEPTION ATLAS <small>// MAP OF EVIDENCE</small></div>
-  <nav class="nav"><a href="../">← НАЗАД</a><a href="../">⌂ AS</a><a href="./">RESEARCH</a><button class="ctrl" id="quiet">QUIET ROOM</button><button class="ctrl" id="clear">CLEAR</button></nav>
+  <div class="brand">PERCEPTION ATLAS <small>// MAP OF EVIDENCE · v2</small></div>
+  <nav class="nav"><a href="../">← НАЗАД</a><a href="../">⌂ AS</a><a href="./">RESEARCH</a><button class="ctrl" id="evidence">EVIDENCE</button><button class="ctrl" id="quiet">QUIET ROOM</button><button class="ctrl" id="clear">CLEAR</button></nav>
 </header>
 <div class="layout">
 <aside class="factors" aria-label="Факторы">
-  <div class="kicker">FACTORS</div>
+  <div class="kicker">FACTORS · <span id="factorCount"></span></div><div style="padding:0 14px 14px"><input id="factorSearch" aria-label="Поиск фактора" placeholder="Поиск…" style="width:100%;box-sizing:border-box;background:#05080b;border:1px solid var(--line);color:var(--fg);padding:9px 10px;font:11px monospace"></div>
   <div id="factors"></div>
 </aside>
 <section class="stage" id="stage">
@@ -66,7 +66,7 @@ footer{padding:25px 20px;border-top:1px solid var(--line);color:var(--muted);fon
     <path class="organ region" data-id="cerebellum" d="M480 320c75-25 135 25 95 85-40 45-115 25-130-20z" tabindex="0"/>
     <circle class="pulse" cx="180" cy="165" r="3"/><circle class="pulse" cx="320" cy="300" r="3"/>
   </svg>
-  <div class="legend">MODEL: FACTOR → MECHANISM → FUNCTION/EFFECT → EVIDENCE → LIMITATIONS</div>
+  <div class="legend">MODEL: FACTOR → MECHANISM → FUNCTION / EFFECT → EVIDENCE → LIMITATIONS · CLICK REGION · ESC CLEAR</div>
 </section>
 <aside class="data" id="data" aria-live="polite"></aside>
 </div>
@@ -99,15 +99,15 @@ const labels={brain:"Мозг",lungs:"Лёгкие",heart:"Сердце",liver:"
 let state={factor:"alcohol",organ:"brain",view:"body",quiet:false,mode:"visual"};
 const factorsEl=document.getElementById("factors"),dataEl=document.getElementById("data"),body=document.getElementById("body"),brain=document.getElementById("brain");
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
-function renderFactors(){factorsEl.innerHTML=factors.map(f=>'<button class="factor '+(state.factor===f.id?'active':'')+'" data-factor="'+f.id+'" aria-pressed="'+(state.factor===f.id)+'"><span class="dot"></span>'+esc(f.label)+(f.pending?' <span class="muted">· скоро</span>':'')+'</button>').join("");factorsEl.querySelectorAll(".factor").forEach(b=>b.onclick=()=>{state.factor=b.dataset.factor;state.organ=null;render()})}
+function renderFactors(){const q=(document.getElementById("factorSearch")?.value||"").toLowerCase().trim();const shown=factors.filter(f=>f.label.toLowerCase().includes(q));document.getElementById("factorCount").textContent=shown.length+"/"+factors.length;factorsEl.innerHTML=shown.map(f=>'<button class="factor '+(state.factor===f.id?'active':'')+'" data-factor="'+f.id+'" aria-pressed="'+(state.factor===f.id)+'"><span class="dot"></span>'+esc(f.label)+(f.pending?' <span class="muted">· скоро</span>':'')+'</button>').join("");factorsEl.querySelectorAll(".factor").forEach(b=>b.onclick=()=>{state.factor=b.dataset.factor;state.organ=null;render()})}
 function renderView(){body.hidden=state.view!=="body";brain.hidden=state.view!=="brain";document.getElementById("modeTitle").textContent=state.view==="brain"?"BRAIN":"BODY";document.body.classList.toggle("mode-evidence",state.mode==="evidence")}
 function renderRegions(){document.querySelectorAll(".region").forEach(r=>{const id=r.dataset.id;const d=(common[state.factor]||{})[id];r.classList.toggle("impact",!!d);r.classList.toggle("active",state.organ===id)})}
 function renderPanel(){const d=(common[state.factor]||{})[state.organ];const f=factors.find(x=>x.id===state.factor);if(!d){dataEl.innerHTML='<div class="empty"><div><div style="font-size:28px;margin-bottom:10px">◌</div><b>'+esc(f?.label||"Фактор")+'</b><p>Данные ещё проходят методологическую верификацию. В атласе лучше показать отсутствие проверенного знания, чем заполнить пробел предположением.</p></div></div>';return}
-dataEl.innerHTML='<div class="label">'+esc(f.label)+' → '+esc(d.name)+'</div><h1>'+esc(d.name)+'</h1><div class="sub">Карта доказательств, а не приговор.</div><div class="chips">'+d.mechanisms.map(x=>'<span class="chip">'+esc(x)+'</span>').join("")+'</div><div class="block"><div class="label">УРОВЕНЬ ДОКАЗАТЕЛЬНОСТИ</div><span class="badge">'+esc(d.level)+'</span></div><div class="block"><div class="label">ПРИЧИННОСТЬ / СВЯЗЬ</div><div>'+esc(d.causality)+'</div></div><div class="block"><div class="label">ЧТО ИЗВЕСТНО</div>'+d.known.map(x=>'<p class="fact">'+esc(x)+'</p>').join("")+'</div><div class="block"><div class="label">ЧЕГО ЭТО НЕ ДОКАЗЫВАЕТ</div><div class="caveat">'+d.not.map(x=>'<div>'+esc(x)+'</div>').join("")+'</div></div><div class="block"><div class="label">ИСТОЧНИКИ</div>'+d.sources.map(s=>'<a class="source" href="'+s[1]+'" target="_blank" rel="noopener">'+esc(s[0])+'<small>Открыть первичный/официальный источник ↗</small></a>').join("")+'</div><div class="block muted">Статус записи: рабочая редакция · проверять дату последнего обзора перед публикацией.</div>'}
+dataEl.innerHTML='<div class="label">'+esc(f.label)+' → '+esc(d.name)+'</div><h1>'+esc(d.name)+'</h1><div class="sub">Карта доказательств, а не диагноз. Уровень уверенности относится к конкретному утверждению, а не ко всему фактору.</div><div class="chips">'+d.mechanisms.map(x=>'<span class="chip">'+esc(x)+'</span>').join("")+'</div><div class="block"><div class="label">УРОВЕНЬ ДОКАЗАТЕЛЬНОСТИ</div><span class="badge">'+esc(d.level)+'</span></div><div class="block"><div class="label">ПРИЧИННОСТЬ / СВЯЗЬ</div><div>'+esc(d.causality)+'</div></div><div class="block"><div class="label">ЧТО ИЗВЕСТНО</div>'+d.known.map(x=>'<p class="fact">'+esc(x)+'</p>').join("")+'</div><div class="block"><div class="label">ЧЕГО ЭТО НЕ ДОКАЗЫВАЕТ</div><div class="caveat">'+d.not.map(x=>'<div>'+esc(x)+'</div>').join("")+'</div></div><div class="block"><div class="label">ИСТОЧНИКИ</div>'+d.sources.map(s=>'<a class="source" href="'+s[1]+'" target="_blank" rel="noopener">'+esc(s[0])+'<small>Открыть первичный/официальный источник ↗</small></a>').join("")+'</div><div class="block"><div class="label">КАК ЧИТАТЬ</div><p class="muted">HIGH — несколько независимых линий данных или хорошо установленная причинная связь для указанного исхода. MODERATE — данные поддерживают связь, но остаются существенные ограничения, неоднородность или неопределённость причинности.</p><p class="muted">Механистические, клеточные и животные данные не равны доказательству клинического эффекта у человека. Корреляция не равна причинности.</p></div><div class="block muted">Статус записи: рабочая редакция · дата ревизии: 20.09.2026.</div>'}
 function render(){renderFactors();renderView();renderRegions();renderPanel()}
 document.querySelectorAll(".organ").forEach(r=>{r.addEventListener("click",()=>{state.organ=state.organ===r.dataset.id?null:r.dataset.id;render()});r.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();state.organ=r.dataset.id;render()}})});
 document.getElementById("toggleView").onclick=()=>{state.view=state.view==="body"?"brain":"body";state.organ=state.view==="brain"?"pfc":"brain";render()};
-document.getElementById("clear").onclick=()=>{state.factor=null;state.organ=null;render()};
+document.getElementById("clear").onclick=()=>{state.factor="alcohol";state.organ=null;state.mode="visual";render()};document.getElementById("evidence").onclick=()=>{state.mode=state.mode==="evidence"?"visual":"evidence";document.getElementById("evidence").textContent=state.mode==="evidence"?"EVIDENCE: ON":"EVIDENCE";render()};document.getElementById("factorSearch").addEventListener("input",renderFactors);
 document.getElementById("quiet").onclick=e=>{state.quiet=!state.quiet;document.body.classList.toggle("quiet",state.quiet);e.currentTarget.textContent=state.quiet?"QUIET: ON":"QUIET ROOM"};
 document.querySelectorAll("[data-mode]").forEach(()=>{});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){state.organ=null;render()}});
