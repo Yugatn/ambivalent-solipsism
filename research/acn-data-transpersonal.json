@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "data_version": "0.1",
+  "data_version": "0.2",
   "updated": "2026-09-20",
   "cluster": {
     "id": "transpersonal_subject",
@@ -80,6 +80,14 @@
           "twelve-monkeys-1995",
           "primer-2004",
           "dark-2017"
+        ]
+      },
+      {
+        "id": "temporal-agency",
+        "title": "Временная агентность",
+        "nodes": [
+          "donnie-darko-2001",
+          "butterfly-effect-2004"
         ]
       }
     ]
@@ -245,7 +253,7 @@
       "effect": "Повторение актёров создаёт визуальный код, допускающий чтение фильма как сети связанных душ, но не устанавливает буквально единую душу.",
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -332,7 +340,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -375,7 +383,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -465,7 +473,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -507,7 +515,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -549,7 +557,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -591,7 +599,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -633,7 +641,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -675,7 +683,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -717,7 +725,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -759,7 +767,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -801,7 +809,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -842,7 +850,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -884,7 +892,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -926,7 +934,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -968,7 +976,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -1010,7 +1018,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -1051,7 +1059,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -1093,7 +1101,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -1135,7 +1143,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -1177,7 +1185,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -1219,7 +1227,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -1260,7 +1268,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -1302,7 +1310,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -1344,7 +1352,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -1386,7 +1394,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -1428,7 +1436,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -1470,7 +1478,7 @@
       "effect": null,
       "model_basis": null,
       "chain_basis": null,
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "contestation": "absent",
       "causality": "not_established",
       "alternatives": [],
@@ -1485,6 +1493,92 @@
         "чужое тело",
         "время"
       ]
+    },
+    {
+      "id": "donnie-darko-2001",
+      "source": {
+        "title": "Донни Дарко",
+        "original": "Donnie Darko",
+        "author": "Richard Kelly",
+        "year": "2001",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Может ли субъект участвовать в восстановлении временной структуры через собственную жертву?",
+        "description": "Произведение используется как художественная модель; его онтологическое объяснение не принимается как установленный факт."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Может ли субъект участвовать в восстановлении временной структуры через собственную жертву?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "время",
+        "жертва",
+        "петля"
+      ]
+    },
+    {
+      "id": "butterfly-effect-2004",
+      "source": {
+        "title": "Эффект бабочки",
+        "original": "The Butterfly Effect",
+        "author": "Eric Bress, J. Mackye Gruber",
+        "year": "2004",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Может ли субъект изменять собственную биографию, не разрушая непрерывность самого себя?",
+        "description": "Произведение используется как художественная модель; его онтологическое объяснение не принимается как установленный факт."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Может ли субъект изменять собственную биографию, не разрушая непрерывность самого себя?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "биография",
+        "изменение прошлого",
+        "ветвление"
+      ]
     }
   ],
   "edges": [
@@ -1494,7 +1588,7 @@
       "to": "groundhog-day-1993",
       "link_type": "ontological_kinship",
       "strength": "medium",
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "causality": "not_established",
       "basis": "Общая модель субъекта в цикле: «Фонтан» связывает цикл с воплощениями и принятием смерти, «День сурка» связывает петлю с внутренней трансформацией."
     },
@@ -1504,7 +1598,7 @@
       "to": "man-from-earth-2007",
       "link_type": "ontological_kinship",
       "strength": "medium",
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "causality": "not_established",
       "basis": "Общая модель субъекта, проходящего через историю: Стэндинг странствует по воплощениям, Олдман продолжает существование в одном теле."
     },
@@ -1514,7 +1608,7 @@
       "to": "interview-vampire-1994",
       "link_type": "motif_similarity",
       "strength": "medium",
-      "epistemic_status": "viewer_association",
+      "epistemic_status": "personal_association",
       "causality": "unknown",
       "basis": "Общий мотив субъекта, проходящего через века и наблюдающего исчезновение близких."
     },
@@ -1524,7 +1618,7 @@
       "to": "slaughterhouse-five-1969",
       "link_type": "ontological_kinship",
       "strength": "high",
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "causality": "not_established",
       "basis": "Сопоставление множественности жизненных траекторий с нелинейным существованием моментов."
     },
@@ -1534,7 +1628,7 @@
       "to": "arrival-2016",
       "link_type": "ontological_kinship",
       "strength": "medium",
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "causality": "not_established",
       "basis": "Нелинейное восприятие времени: «Господин Никто» моделирует множество биографических траекторий, «Прибытие» целостное восприятие жизни."
     },
@@ -1544,7 +1638,7 @@
       "to": "enemy-2013",
       "link_type": "ontological_kinship",
       "strength": "medium",
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "causality": "not_established",
       "basis": "«Господин Никто» моделирует несколько версий биографии, «Враг» материализует проблему альтернативной версии субъекта как двойника."
     },
@@ -1554,7 +1648,7 @@
       "to": "midnight-library-2020",
       "link_type": "ontological_kinship",
       "strength": "medium",
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "causality": "not_established",
       "basis": "Сопоставление множества возможных жизней с моделью выбора между ними."
     },
@@ -1564,7 +1658,7 @@
       "to": "dark-2017",
       "link_type": "ontological_kinship",
       "strength": "medium",
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "causality": "not_established",
       "basis": "Замкнутая временная петля и субъект как элемент собственной причинной цепи."
     },
@@ -1574,7 +1668,7 @@
       "to": "floor13-var",
       "link_type": "motif_similarity",
       "strength": "medium",
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "causality": "not_established",
       "basis": "Оба произведения исследуют идентичность субъекта при разрыве между телом, происхождением и уровнем существования."
     },
@@ -1584,7 +1678,7 @@
       "to": "milligan-case",
       "link_type": "motif_similarity",
       "strength": "low",
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "causality": "not_established",
       "basis": "Осторожное сопоставление множественности проявлений субъекта; художественная модель не является клинической моделью диссоциативного расстройства."
     },
@@ -1594,7 +1688,7 @@
       "to": "floor13-var",
       "link_type": "ontological_kinship",
       "strength": "medium",
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "causality": "not_established",
       "basis": "Сопоставление переноса субъекта в чужое тело и перемещения сознания между моделируемыми уровнями."
     },
@@ -1604,9 +1698,49 @@
       "to": "predestination-2014",
       "link_type": "ontological_kinship",
       "strength": "high",
-      "epistemic_status": "critical_interpretation",
+      "epistemic_status": "interpretation",
       "causality": "not_established",
       "basis": "Замкнутая петля и встреча разных временных состояний субъекта."
+    },
+    {
+      "id": "e-heinlein-predestination",
+      "from": "heinlein-zombies-1959",
+      "to": "predestination-2014",
+      "link_type": "direct_adaptation",
+      "strength": "high",
+      "epistemic_status": "canon",
+      "causality": "established",
+      "basis": "Predestination (2014) является экранизацией рассказа Роберта Хайнлайна —All You Zombies— (1959)."
+    },
+    {
+      "id": "e-fountain-donnie",
+      "from": "fountain-2006",
+      "to": "donnie-darko-2001",
+      "link_type": "ontological_kinship",
+      "strength": "medium",
+      "epistemic_status": "interpretation",
+      "causality": "not_established",
+      "basis": "Оба произведения позволяют исследовать связь смерти, временной структуры и преобразования субъекта, но используют разные художественные механизмы."
+    },
+    {
+      "id": "e-nobody-butterfly",
+      "from": "nobody-2009",
+      "to": "butterfly-effect-2004",
+      "link_type": "ontological_kinship",
+      "strength": "medium",
+      "epistemic_status": "interpretation",
+      "causality": "not_established",
+      "basis": "«Господин Никто» моделирует пространство возможных биографий, а «Эффект бабочки» попытку изменить конфигурацию собственной биографии."
+    },
+    {
+      "id": "e-nobody-cloud",
+      "from": "nobody-2009",
+      "to": "cloud-atlas-2004",
+      "link_type": "ontological_kinship",
+      "strength": "high",
+      "epistemic_status": "interpretation",
+      "causality": "not_established",
+      "basis": "Модель ветвящегося субъекта позволяет дополнительно интерпретировать связь между разными биографиями «Облачного Атласа»; это не утверждение об авторском влиянии."
     }
   ]
 }
