@@ -1188,6 +1188,67 @@
             }
         }
 
+        /* =====================================================
+           PROJECT STATUS INDICATOR
+        ===================================================== */
+
+        .project-status {
+            width: min(260px, 78vw);
+            margin: 34px auto 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 7px;
+            font-family: "JetBrains Mono", monospace;
+            text-align: center;
+        }
+
+        .project-status-label {
+            font-size: 8px;
+            letter-spacing: .12em;
+            color: rgba(145, 167, 167, .48);
+            text-transform: uppercase;
+        }
+
+        .project-status-value {
+            font-size: 9px;
+            letter-spacing: .08em;
+            color: rgba(238, 247, 245, .62);
+        }
+
+        .project-status-lights {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+        }
+
+        .project-status-light {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            opacity: .28;
+            box-shadow: 0 0 0 transparent;
+        }
+
+        .project-status-light.yellow {
+            background: #f2c94c;
+            opacity: .9;
+            box-shadow: 0 0 8px rgba(242, 201, 76, .35);
+        }
+
+        .project-status-light.red {
+            background: #e05252;
+        }
+
+        .project-status-note {
+            font-size: 7px;
+            letter-spacing: .09em;
+            color: rgba(145, 167, 167, .34);
+            text-transform: uppercase;
+        }
+
+
     </style>
 </head>
 
@@ -2793,6 +2854,16 @@
         <!-- =================================================
              FOOTER
         ================================================== -->
+
+        <div class="project-status" role="status" aria-label="Проект находится в разработке. Готовность 35 процентов.">
+            <div class="project-status-label">Статус проекта</div>
+            <div class="project-status-value">ГОТОВНОСТЬ · 35%</div>
+            <div class="project-status-lights" aria-hidden="true">
+                <span class="project-status-light yellow"></span>
+                <span class="project-status-light red"></span>
+            </div>
+            <div class="project-status-note">в разработке</div>
+        </div>
 
         <footer class="footer">
             AMBIVALENT SOLIPSISM · DEVELOPMENT · SOCIETY · AI · SYMBIONTOS
