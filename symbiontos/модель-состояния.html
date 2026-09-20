@@ -423,4 +423,279 @@
 <p>Хорошая state model должна сохранять не только текущее состояние, но и происхождение этого состояния, условия его применимости, допустимые переходы, residual uncertainty и возможность восстановления.</p>
 <blockquote><strong>Состояние — это не то, чем система «является» целиком. Это проверяемая модель того, что системе разрешено считать актуальным для конкретного действия, в конкретном контексте и в конкретный момент.</strong></blockquote>
 </section>
+
+<section>
+<h2>53. State Contract</h2>
+<p>Каждый критический state object должен иметь контракт, определяющий его семантику, область применимости и допустимые переходы.</p>
+<div class="formula">State Contract = Schema + Semantics + Invariants + Transition Rules + Provenance</div>
+<p>Schema описывает структуру, Semantics определяет смысл полей, Invariants задают ограничения, Transition Rules определяют допустимые изменения, Provenance показывает происхождение значения.</p>
+</section>
+
+<section>
+<h2>54. State Identity и State Version</h2>
+<p>Необходимо различать identity субъекта и identity конкретного состояния.</p>
+<div class="formula">StateID = SubjectID + Epoch + Version + Integrity</div>
+<p>Изменение состояния не должно создавать двусмысленность между старой и новой версиями. Для критических переходов используется monotonic versioning или иной механизм обнаружения rollback.</p>
+</section>
+
+<section>
+<h2>55. Monotonic State и Anti-Rollback</h2>
+<p>Некоторые элементы состояния должны двигаться только вперёд относительно определённой шкалы: sequence number, revocation epoch, security generation или recovery generation.</p>
+<div class="formula">version(t+1) &gt; version(t)</div>
+<p>Это не означает, что вся система обязана быть монотонной. Монотонность применяется только к тем полям, для которых возврат назад создаёт риск replay или повторного предоставления authority.</p>
+</section>
+
+<section>
+<h2>56. State Freshness</h2>
+<p>Актуальность состояния является отдельным свойством от его целостности.</p>
+<div class="formula">Freshness = Age + Epoch Validity + Causal Position</div>
+<p>Целостный snapshot может быть устаревшим. Поэтому integrity не заменяет freshness.</p>
+</section>
+
+<section>
+<h2>57. State Lease</h2>
+<p>Для временных capabilities, sessions и некоторых распределённых состояний может использоваться lease. Истечение lease автоматически ограничивает действие состояния без необходимости доказывать отдельный отказ.</p>
+<div class="formula">ValidState = Integrity ∧ Freshness ∧ LeaseActive</div>
+<p>Lease должен быть ограничен контекстом и не должен незаметно превращаться в бессрочное право.</p>
+</section>
+
+<section>
+<h2>58. State Authority Separation</h2>
+<p>Источник данных о состоянии не обязательно должен обладать правом изменять состояние.</p>
+<div class="formula">State Witness ≠ State Authority</div>
+<p>Наблюдатель может сообщить событие, но policy engine или владелец capability принимает решение о переходе. Это снижает риск, при котором один источник одновременно создаёт факт и назначает последствия этого факта.</p>
+</section>
+
+<section>
+<h2>59. State Witnesses</h2>
+<p>Для критических состояний можно использовать несколько независимых witness sources. Их независимость должна оцениваться по provenance и common-mode dependencies, а не по количеству источников.</p>
+<div class="formula">Independent Evidence ≠ Multiple Copies of One Source</div>
+<p>Три компонента, использующие одну модель, один identity provider и один feed, не создают три независимых свидетельства.</p>
+</section>
+
+<section>
+<h2>60. State Quorum</h2>
+<p>Для некоторых распределённых переходов допустимо требовать quorum, но quorum должен быть семантическим, а не только числовым.</p>
+<div class="formula">Quorum = sufficient independent authority + evidence + context</div>
+<p>Большинство скомпрометированных или зависимых узлов не превращается автоматически в истину.</p>
+</section>
+
+<section>
+<h2>61. State Lease и Federation</h2>
+<p>Федеративный узел не должен передавать бессрочное право только потому, что состояние было когда-то подтверждено. Federation grants должны иметь scope, epoch, expiry и условия отзыва.</p>
+<div class="formula">Federated State = Local Acceptance + Remote Evidence + Bridge Policy</div>
+</section>
+
+<section>
+<h2>62. State Projection</h2>
+<p>Компонент часто получает не полное состояние, а projection — специально ограниченное представление.</p>
+<div class="formula">Projection(S) = authorized subset of S preserving required invariants</div>
+<p>Projection должна явно определять, какие поля отсутствуют. Отсутствующее поле не должно интерпретироваться как false, zero или safe.</p>
+</section>
+
+<section>
+<h2>63. State Materialization</h2>
+<p>Projection может быть материализована в локальный cache. Такой cache должен сохранять источник, epoch, freshness и ограничения на использование.</p>
+<div class="formula">Cache = Value + Provenance + Freshness + Scope</div>
+<p>Локальная копия состояния не получает дополнительных полномочий только потому, что стала локальной.</p>
+</section>
+
+<section>
+<h2>64. State Reconciliation</h2>
+<p>При расхождении локальных состояний reconciliation должен учитывать causal history, authority и provenance.</p>
+<div class="formula">Reconcile(S₁,S₂) = Policy(Evidence, Causality, Authority, Context)</div>
+<p>Простое правило «последнее значение побеждает» допустимо только там, где доказано, что оно сохраняет необходимые invariants.</p>
+</section>
+
+<section>
+<h2>65. State Tombstones</h2>
+<p>Удалённый или отозванный объект иногда должен оставлять tombstone. Иначе старый узел может интерпретировать отсутствие объекта как отсутствие самого события удаления.</p>
+<div class="formula">Deleted ≠ Never Existed</div>
+<p>Tombstone особенно важен для revocation, identity rotation и distributed garbage collection.</p>
+</section>
+
+<section>
+<h2>66. State Resurrection Protection</h2>
+<p>После удаления, отзыва или завершения capability система должна препятствовать её восстановлению из старого snapshot, cache или задержанного события.</p>
+<div class="formula">RevokedState + OldEvidence ≠ ValidState</div>
+<p>Это требует согласованности между revocation epoch, snapshots, caches и event replay.</p>
+</section>
+
+<section>
+<h2>67. State Checkpoint</h2>
+<p>Checkpoint должен фиксировать не только значения, но и минимальный causal boundary, после которого события считаются частью следующей эпохи.</p>
+<div class="formula">Checkpoint = State + Causal Cut + Integrity + Provenance</div>
+<p>Это позволяет восстанавливать систему без скрытого смешивания событий до и после checkpoint.</p>
+</section>
+
+<section>
+<h2>68. State Recovery Graph</h2>
+<p>Восстановление можно представить как граф допустимых recovery transitions, а не как единственную кнопку rollback.</p>
+<div class="formula">Recovery Graph = Verified States + Recovery Transitions + Preconditions</div>
+<p>Разные классы повреждений могут требовать разных путей восстановления. Recovery не должно восстанавливать authority, которая была отозвана независимо от технического повреждения.</p>
+</section>
+
+<section>
+<h2>69. State Forensics</h2>
+<p>После инцидента необходимо иметь возможность реконструировать не только конечное состояние, но и цепочку переходов, которая к нему привела.</p>
+<div class="formula">Forensic State = Snapshot + Event Lineage + Policy History + Trust History</div>
+<p>Forensics должны сохранять distinction между наблюдаемым фактом и последующей интерпретацией.</p>
+</section>
+
+<section>
+<h2>70. State Differential</h2>
+<p>Для аудита полезно вычислять не только snapshot, но и минимальное различие между состояниями.</p>
+<div class="formula">ΔS = Diff(S_before, S_after)</div>
+<p>Критические изменения должны быть классифицированы: data, capability, policy, trust, context, regulator или meta-state.</p>
+</section>
+
+<section>
+<h2>71. State Policy Shadow</h2>
+<p>Перед применением критического перехода система может вычислять его последствия в shadow mode без фактического изменения authority.</p>
+<div class="formula">ShadowTransition(S,e,p) → predicted ΔS</div>
+<p>Shadow result не является доказательством будущего поведения. Его задача — обнаружить очевидные invariant violations до commit.</p>
+</section>
+
+<section>
+<h2>72. State Transaction Boundary</h2>
+<p>Связанные изменения состояния должны объединяться в transaction boundary, если промежуточное состояние само по себе опасно.</p>
+<div class="formula">Commit only if all required invariants hold</div>
+<p>Если транзакция невозможна, система должна явно поддерживать intermediate state и его ограничения.</p>
+</section>
+
+<section>
+<h2>73. State Backpressure</h2>
+<p>При слишком быстром потоке событий система не должна бесконечно накапливать неподтверждённые изменения.</p>
+<div class="formula">EventRate &gt; ProcessingCapacity ⇒ controlled degradation</div>
+<p>Backpressure может переводить компонент в queued, read-only или review-required mode. Потеря событий не должна маскироваться под отсутствие событий.</p>
+</section>
+
+<section>
+<h2>74. State Congestion</h2>
+<p>Перегрузка state pipeline сама является состоянием, которое должно быть наблюдаемым.</p>
+<p>Если backlog растёт, freshness ухудшается, а decision latency увеличивается. Поэтому congestion должен влиять на допустимый authority scope.</p>
+<div class="formula">Congestion ↑ ⇒ Freshness ↓ ⇒ Authority may need restriction</div>
+</section>
+
+<section>
+<h2>75. State Drift</h2>
+<p>State drift возникает, когда локальная модель постепенно расходится с источником, который она должна представлять.</p>
+<div class="formula">Drift = distance(Model_t, Reference_t) under defined metric</div>
+<p>Метрика drift должна быть контекстной. Для разных state domains различие может измеряться временем, causal divergence, schema difference или domain-specific distance.</p>
+</section>
+
+<section>
+<h2>76. Model-State Drift</h2>
+<p>Особенно важен drift между внутренней моделью системы и фактической динамикой среды.</p>
+<div class="formula">Model Drift ≠ System Failure, but unchecked drift can invalidate decisions</div>
+<p>Обнаружение drift должно инициировать reassessment, а не автоматически объявлять одну из моделей ложной.</p>
+</section>
+
+<section>
+<h2>77. State Calibration</h2>
+<p>Если состояние содержит probabilistic estimates, необходимо проверять calibration. Уверенность модели должна соответствовать частоте фактических исходов в сопоставимых условиях.</p>
+<div class="formula">Calibration = agreement between stated confidence and observed frequency</div>
+<p>Плохая calibration ограничивает использование оценки для высокорисковых transitions.</p>
+</section>
+
+<section>
+<h2>78. State Distribution Shift</h2>
+<p>State estimator, обученный на одной среде, может работать иначе после изменения distribution.</p>
+<div class="formula">P_train(X,Y) ≠ P_runtime(X,Y) ⇒ reassess estimator validity</div>
+<p>Distribution shift не обязательно означает ошибку модели, но означает изменение условий, при которых прежние guarantees могли быть получены.</p>
+</section>
+
+<section>
+<h2>79. State Adversarial Robustness</h2>
+<p>Злоумышленник может воздействовать непосредственно на признаки состояния, а не на конечное решение: spoofing, poisoning, replay, selective disclosure или manipulation of observability.</p>
+<div class="formula">Attack Surface = State Inputs + State Transitions + State Interpretation</div>
+<p>Поэтому threat model должен рассматривать весь lifecycle состояния.</p>
+</section>
+
+<section>
+<h2>80. State Boundary Attack</h2>
+<p>Особый класс угроз возникает, когда adversary заставляет систему неверно определить границу между состояниями, контекстами или субъектами.</p>
+<p>Примеры: перенос authority между контекстами, confusion между identity и role, использование старой эпохи как текущей, или подмена локального state projection полным state.</p>
+</section>
+
+<section>
+<h2>81. State Invariant Budget</h2>
+<p>Не все invariants имеют одинаковую критичность. Они могут быть разделены на safety-critical, security-critical, availability-critical и semantic invariants.</p>
+<div class="formula">Invariant Priority = consequence of violation × detectability × reversibility</div>
+<p>Это позволяет рационально распределять вычислительный и verification budget.</p>
+</section>
+
+<section>
+<h2>82. State Observability Budget</h2>
+<p>Полная наблюдаемость может быть слишком дорогой или несовместимой с privacy. Поэтому система должна определять минимальный набор сигналов, достаточный для конкретного safety claim.</p>
+<div class="formula">Required Observability = minimum evidence needed for bounded decision</div>
+</section>
+
+<section>
+<h2>83. State Minimality</h2>
+<p>Минимальность состояния не означает минимальное количество полей. Это принцип хранения только той информации, которая необходима для текущих guarantees, recovery и доказуемости переходов.</p>
+<div class="formula">Minimal State = sufficient information, not smallest representation</div>
+</section>
+
+<section>
+<h2>84. State Duality: Operational и Epistemic</h2>
+<p>Полезно различать два измерения состояния: что система делает и что система считает известным о происходящем.</p>
+<div class="formula">State = Operational State + Epistemic State</div>
+<p>Это предотвращает опасное смешение факта «система находится в режиме X» с утверждением «система уверена, что находится в режиме X».</p>
+</section>
+
+<section>
+<h2>85. State Commitment</h2>
+<p>Некоторые переходы требуют epistemic commitment: система должна явно зафиксировать, какую гипотезу она принимает для продолжения работы.</p>
+<div class="formula">Commit(H) = explicit assumption + scope + expiry + reassessment condition</div>
+<p>Такое commitment не превращает гипотезу в абсолютную истину.</p>
+</section>
+
+<section>
+<h2>86. State Hysteresis</h2>
+<p>Быстро меняющиеся сигналы могут вызывать опасное переключение между режимами. Для некоторых переходов допустима hysteresis: разные thresholds для входа и выхода из режима.</p>
+<div class="formula">Enter threshold ≠ Exit threshold</div>
+<p>Это особенно применимо к wake/sleep, degraded/recovery и trust downgrade/restore transitions.</p>
+</section>
+
+<section>
+<h2>87. State Oscillation</h2>
+<p>Если система постоянно переключается между состояниями, это может быть признаком неустойчивой policy, плохой calibration или слишком чувствительного evaluator.</p>
+<p>Oscillation следует отличать от нормальной динамики. Для критических режимов должны быть определены anti-flapping mechanisms.</p>
+</section>
+
+<section>
+<h2>88. State Liveness и Safety</h2>
+<p>State invariants защищают safety, но система также должна сохранять liveness: возможность продолжать допустимую работу.</p>
+<div class="formula">Safety: nothing forbidden occurs</div>
+<div class="formula">Liveness: something admissible eventually occurs</div>
+<p>SymbiontOS не должен достигать safety исключительно через постоянную остановку. Это связывает state model с Law of Development и viability.</p>
+</section>
+
+<section>
+<h2>89. State Deadlock</h2>
+<p>Взаимные policy dependencies могут привести к состоянию, из которого ни один компонент не может продолжить работу.</p>
+<div class="formula">Deadlock = no admissible transition from a reachable state</div>
+<p>Для критических путей необходимо анализировать deadlock, livelock и dependency cycles.</p>
+</section>
+
+<section>
+<h2>90. State Recovery without False Certainty</h2>
+<p>После инцидента система не должна заменять неизвестное предположением о полном восстановлении.</p>
+<div class="formula">Recovered State = Verified subset + Residual uncertainty</div>
+<p>Recovery completion означает выполнение recovery criteria, а не исчезновение epistemic uncertainty.</p>
+</section>
+
+<section>
+<h2>91. State Model как контракт между слоями</h2>
+<p>State Model является общей семантической границей между kernel, Event Fabric, Cognitive Runtime, PolicyEngine, Trust Architecture, Audit и UI.</p>
+<div class="formula">Shared State Semantics > Shared Storage Format</div>
+<p>Компонентам необязательно использовать одно физическое представление состояния. Но они должны одинаково интерпретировать критические state semantics.</p>
+</section>
+
+<section>
+<h2>92. Финальный принцип модели состояния</h2>
+<p>SymbiontOS должен сохранять не иллюзию полного знания, а способность действовать при неполном знании без потери контроля над собственными переходами.</p>
+<blockquote><strong>Хорошее состояние — это не состояние, в котором системе кажется, что она всё знает. Это состояние, в котором она точно различает известное, предполагаемое, неизвестное и допустимое к действию.</strong></blockquote>
+</section>
 <footer>AMBIVALENT SOLIPSISM · LONG-TERM PROJECT</footer></main></body></html>
