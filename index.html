@@ -1241,6 +1241,14 @@
             background: #e05252;
         }
 
+        .project-status-top {
+            margin-top: 24px;
+        }
+
+        .project-status-top + .section {
+            margin-top: clamp(42px, 5vw, 65px);
+        }
+
         .project-status-note {
             font-size: 7px;
             letter-spacing: .09em;
@@ -1301,7 +1309,22 @@
      00 — СЮЖЕТ ИКС
 ================================================== -->
 
-        <section class="section">
+                <!-- =================================================
+             PROJECT STATUS
+        ================================================== -->
+
+        <div class="project-status project-status-top" role="status" aria-label="Проект находится в разработке. Готовность 35 процентов.">
+            <div class="project-status-label">Статус проекта</div>
+            <div class="project-status-value">ГОТОВНОСТЬ · 35%</div>
+            <div class="project-status-lights" aria-hidden="true">
+                <span class="project-status-light yellow"></span>
+                <span class="project-status-light green"></span>
+            </div>
+            <div class="project-status-note">в разработке</div>
+        </div>
+
+
+<section class="section">
 
             <div class="section-title">
                 <div class="section-number">00 / STORY X</div>
@@ -2885,16 +2908,6 @@
              FOOTER
         ================================================== -->
 
-        <div class="project-status" role="status" aria-label="Проект находится в разработке. Готовность 35 процентов.">
-            <div class="project-status-label">Статус проекта</div>
-            <div class="project-status-value">ГОТОВНОСТЬ · 35%</div>
-            <div class="project-status-lights" aria-hidden="true">
-                <span class="project-status-light yellow"></span>
-                <span class="project-status-light green"></span>
-            </div>
-            <div class="project-status-note">в разработке</div>
-        </div>
-
         <footer class="footer">
             AMBIVALENT SOLIPSISM · DEVELOPMENT · SOCIETY · AI · SYMBIONTOS
         </footer>
@@ -2997,394 +3010,3 @@
 
 
                         if (activeCard) {
-
-                            activeCard.classList.remove(
-                                "active"
-                            );
-
-                        }
-
-
-                        activeCard = this;
-
-
-                        this.classList.add(
-                            "active"
-                        );
-
-                    }
-
-                    /*
-                     * Второе касание:
-                     * переход по ссылке.
-                     */
-
-                    else {
-
-                        this.classList.remove(
-                            "active"
-                        );
-
-                        activeCard = null;
-
-                    }
-
-                },
-                {
-                    passive: false
-                }
-            );
-
-        });
-
-
-        /* =====================================================
-           CLOSE DESCRIPTION OUTSIDE CARD
-        ===================================================== */
-
-        document.addEventListener(
-            "touchstart",
-            function(event) {
-
-                if (
-                    activeCard &&
-                    !activeCard.contains(
-                        event.target
-                    )
-                ) {
-
-                    activeCard.classList.remove(
-                        "active"
-                    );
-
-                    activeCard = null;
-
-                }
-
-            },
-            {
-                passive: true
-            }
-        );
-
-
-        /* =====================================================
-           NEURAL NETWORK
-        ===================================================== */
-
-        const canvas =
-            document.getElementById(
-                "neuralCanvas"
-            );
-
-
-        const ctx =
-            canvas.getContext("2d");
-
-
-        let nodes = [];
-
-
-        /* =====================================================
-           RESIZE CANVAS
-        ===================================================== */
-
-        function resizeCanvas() {
-
-            const dpr =
-                Math.min(
-                    window.devicePixelRatio || 1,
-                    2
-                );
-
-
-            canvas.width =
-                window.innerWidth * dpr;
-
-
-            canvas.height =
-                window.innerHeight * dpr;
-
-
-            canvas.style.width =
-                window.innerWidth + "px";
-
-
-            canvas.style.height =
-                window.innerHeight + "px";
-
-
-            ctx.setTransform(
-                dpr,
-                0,
-                0,
-                dpr,
-                0,
-                0
-            );
-
-
-            createNodes();
-
-
-            drawNetwork();
-
-        }
-
-
-        /* =====================================================
-           CREATE NODES
-        ===================================================== */
-
-        function createNodes() {
-
-            const width =
-                window.innerWidth;
-
-
-            const height =
-                window.innerHeight;
-
-
-            const count =
-                width < 760
-
-                    ? 24
-
-                    : Math.min(
-                        48,
-                        Math.floor(
-                            width *
-                            height /
-                            26000
-                        )
-                    );
-
-
-            nodes = [];
-
-
-            for (
-                let i = 0;
-                i < count;
-                i++
-            ) {
-
-                nodes.push({
-
-                    x:
-                        Math.random() *
-                        width,
-
-                    y:
-                        Math.random() *
-                        height,
-
-                    radius:
-                        Math.random() *
-                        1.4 +
-                        .45
-
-                });
-
-            }
-
-        }
-
-
-        /* =====================================================
-           DRAW NETWORK
-        ===================================================== */
-
-        function drawNetwork() {
-
-            const width =
-                window.innerWidth;
-
-
-            const height =
-                window.innerHeight;
-
-
-            ctx.clearRect(
-                0,
-                0,
-                width,
-                height
-            );
-
-
-            /* -----------------------------------------------
-               CONNECTIONS
-            ------------------------------------------------ */
-
-            for (
-                let i = 0;
-                i < nodes.length;
-                i++
-            ) {
-
-                const distances = [];
-
-
-                for (
-                    let j = 0;
-                    j < nodes.length;
-                    j++
-                ) {
-
-                    if (i === j) {
-                        continue;
-                    }
-
-
-                    const dx =
-                        nodes[i].x -
-                        nodes[j].x;
-
-
-                    const dy =
-                        nodes[i].y -
-                        nodes[j].y;
-
-
-                    const distance =
-                        Math.sqrt(
-                            dx * dx +
-                            dy * dy
-                        );
-
-
-                    distances.push({
-                        index: j,
-                        distance
-                    });
-
-                }
-
-
-                distances.sort(
-                    (a, b) =>
-                        a.distance -
-                        b.distance
-                );
-
-
-                const nearest =
-                    distances.slice(0, 2);
-
-
-                nearest.forEach(item => {
-
-                    if (
-                        item.distance > 240
-                    ) {
-                        return;
-                    }
-
-
-                    const node =
-                        nodes[item.index];
-
-
-                    const alpha =
-                        Math.max(
-                            0,
-                            .085 -
-                            item.distance /
-                            4000
-                        );
-
-
-                    ctx.beginPath();
-
-
-                    ctx.moveTo(
-                        nodes[i].x,
-                        nodes[i].y
-                    );
-
-
-                    ctx.lineTo(
-                        node.x,
-                        node.y
-                    );
-
-
-                    ctx.strokeStyle =
-                        `rgba(
-                            69,
-                            240,
-                            195,
-                            ${alpha}
-                        )`;
-
-
-                    ctx.lineWidth = .55;
-
-
-                    ctx.stroke();
-
-                });
-
-            }
-
-
-            /* -----------------------------------------------
-               NODES
-            ------------------------------------------------ */
-
-            nodes.forEach(node => {
-
-                ctx.beginPath();
-
-
-                ctx.arc(
-                    node.x,
-                    node.y,
-                    node.radius,
-                    0,
-                    Math.PI * 2
-                );
-
-
-                ctx.fillStyle =
-                    "rgba(69,240,195,.28)";
-
-
-                ctx.fill();
-
-            });
-
-        }
-
-
-        /* =====================================================
-           EVENTS
-        ===================================================== */
-
-        window.addEventListener(
-            "resize",
-            resizeCanvas
-        );
-
-
-        window.addEventListener(
-            "scroll",
-            drawNetwork,
-            {
-                passive: true
-            }
-        );
-
-
-        /* =====================================================
-           START
-        ===================================================== */
-
-        resizeCanvas();
-
-    </script>
-
-</body>
-</html>
