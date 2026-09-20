@@ -1,0 +1,1612 @@
+{
+  "schema_version": "1.0",
+  "data_version": "0.1",
+  "updated": "2026-09-20",
+  "cluster": {
+    "id": "transpersonal_subject",
+    "title": "Трансперсональный субъект",
+    "description": "Гипотетический исследовательский кластер о единстве субъекта при множественности жизней, тел, эпох, временных линий и вариантов существования.",
+    "central_question": "Что обеспечивает единство субъекта, если он существует во множестве жизней, тел и временных линий?",
+    "residual": {
+      "primary_question": "Является ли единство субъекта онтологической структурой или нарративной конструкцией?",
+      "secondary_questions": [
+        "Требует ли единство субъекта памяти, личности, информации или иной непрерывности?",
+        "Может ли один субъект существовать в нескольких временных траекториях одновременно?",
+        "Где проходит граница между трансперсональной моделью и художественным приёмом?"
+      ]
+    },
+    "core_ids": [
+      "star-rover-1915",
+      "nobody-2009",
+      "cloud-atlas-2004",
+      "heinlein-zombies-1959"
+    ],
+    "subclusters": [
+      {
+        "id": "loop",
+        "title": "Петля",
+        "nodes": [
+          "groundhog-day-1993",
+          "edge-of-tomorrow-2014",
+          "russian-doll-2019",
+          "palm-springs-2020"
+        ]
+      },
+      {
+        "id": "immortal-subject",
+        "title": "Бессмертный субъект",
+        "nodes": [
+          "man-from-earth-2007",
+          "interview-vampire-1994",
+          "only-lovers-2013",
+          "age-adaline-2015"
+        ]
+      },
+      {
+        "id": "nonlinear-time",
+        "title": "Нелинейное время",
+        "nodes": [
+          "slaughterhouse-five-1969",
+          "arrival-2016",
+          "time-travelers-wife-2003",
+          "your-name-2016"
+        ]
+      },
+      {
+        "id": "double",
+        "title": "Двойник",
+        "nodes": [
+          "enemy-2013",
+          "double-2013",
+          "coherence-2013",
+          "one-i-love-2014"
+        ]
+      },
+      {
+        "id": "literary-branching",
+        "title": "Литературное ветвление",
+        "nodes": [
+          "midnight-library-2020",
+          "harry-august-2014",
+          "replay-1986",
+          "life-after-life-2013"
+        ]
+      },
+      {
+        "id": "closed-loop",
+        "title": "Замкнутая петля",
+        "nodes": [
+          "looper-2012",
+          "twelve-monkeys-1995",
+          "primer-2004",
+          "dark-2017"
+        ]
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "star-rover-1915",
+      "source": {
+        "title": "Смирительная рубашка",
+        "original": "The Star Rover / The Jacket",
+        "author": "Jack London",
+        "year": "1915",
+        "media_type": "literary",
+        "role": "ontological_core",
+        "relation_to_core": null,
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Как субъект сохраняет единство при переходе между телами и жизнями?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": "Роман даёт одну из наиболее ранних и развитых художественных форм трансперсонального субъекта в западной литературе; идея реинкарнации существовала задолго до Лондона и не выводится из его произведения.",
+      "chain_basis": null,
+      "epistemic_status": "canon",
+      "contestation": "absent",
+      "causality": null,
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что делает странствующий субъект тем же самым субъектом при смене тел и эпох?",
+        "secondary_questions": [
+          "Можно ли отделить трансперсональную модель от художественной метафоры?"
+        ]
+      },
+      "atlas_ref": null,
+      "tags": [
+        "воплощения",
+        "тело",
+        "транс"
+      ]
+    },
+    {
+      "id": "nobody-2009",
+      "source": {
+        "title": "Господин Никто",
+        "original": "Mr. Nobody",
+        "author": "Jaco Van Dormael",
+        "year": "2009",
+        "media_type": "cinematic",
+        "role": "ontological_core",
+        "relation_to_core": null,
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Что делает субъект единым при множестве возможных биографий?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "canon",
+      "contestation": "absent",
+      "causality": null,
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "ветвление",
+        "выбор",
+        "возможные жизни"
+      ]
+    },
+    {
+      "id": "cloud-atlas-2004",
+      "source": {
+        "title": "Облачный Атлас",
+        "original": "Cloud Atlas",
+        "author": "David Mitchell",
+        "year": "2004",
+        "media_type": "literary",
+        "role": "ontological_core",
+        "relation_to_core": null,
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Является ли повторяющийся субъект одной сущностью, паттерном или нарративной связью?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": "Литературная структура связывает шесть жизней мотивом кометного родимого пятна; вопрос о том, является ли это одной сущностью, остаётся частью интерпретации.",
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "canon",
+      "contestation": "absent",
+      "causality": null,
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Является ли повторяющийся субъект одной сущностью, паттерном или нарративной конструкцией?",
+        "secondary_questions": [
+          "Что делает шесть жизней одним субъектом?",
+          "Какова роль памяти при отсутствии непрерывной биографической памяти?"
+        ]
+      },
+      "atlas_ref": null,
+      "tags": [
+        "шесть жизней",
+        "реинкарнация",
+        "родимое пятно"
+      ]
+    },
+    {
+      "id": "cloud-atlas-2012",
+      "source": {
+        "title": "Облачный Атлас",
+        "original": "Cloud Atlas",
+        "author": "The Wachowskis, Tom Tykwer",
+        "year": "2012",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "mediated_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Что означает визуальное повторение актёров: одна душа, сеть связанных жизней или художественный код?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": "Повторение актёров создаёт визуальный код, допускающий чтение фильма как сети связанных душ, но не устанавливает буквально единую душу.",
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Создаёт ли визуальный код повторяющихся актёров модель одной души или только сеть ассоциаций?",
+        "secondary_questions": [
+          "Как различать авторский код и зрительскую интерпретацию?"
+        ]
+      },
+      "atlas_ref": null,
+      "tags": [
+        "визуальный код",
+        "шесть историй"
+      ],
+      "mediator": "cloud-atlas-2004"
+    },
+    {
+      "id": "heinlein-zombies-1959",
+      "source": {
+        "title": "All You Zombies",
+        "original": "—All You Zombies—",
+        "author": "Robert A. Heinlein",
+        "year": "1959",
+        "media_type": "literary",
+        "role": "ontological_core",
+        "relation_to_core": null,
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Может ли субъект быть собственной причиной и одновременно родителем, ребёнком и возлюбленным?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "canon",
+      "contestation": "absent",
+      "causality": null,
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "замкнутая петля",
+        "самопричинность"
+      ]
+    },
+    {
+      "id": "fountain-2006",
+      "source": {
+        "title": "Фонтан",
+        "original": "The Fountain",
+        "author": "Darren Aronofsky",
+        "year": "2006",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Что сохраняется от субъекта при циклическом переходе между жизнью, смертью и трансформацией?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "цикл",
+        "смерть",
+        "трансформация"
+      ]
+    },
+    {
+      "id": "i-origins-2014",
+      "source": {
+        "title": "Я — начало",
+        "original": "I Origins",
+        "author": "Mike Cahill",
+        "year": "2014",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Что означает совпадение радужек: реинкарнацию, статистическую аномалию или иной механизм?",
+        "description": "Совпадение рисунка радужки подаётся как аномалия, которая в рамках фильма может поддерживать гипотезу реинкарнации; биологический механизм реинкарнации фильмом не установлен."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что именно должно сохраняться между жизнями, чтобы говорить о том же субъекте?",
+        "secondary_questions": [
+          "Может ли совпадение биологических признаков быть достаточным основанием для трансцендентной интерпретации?"
+        ]
+      },
+      "atlas_ref": null,
+      "tags": [
+        "радужка",
+        "реинкарнация",
+        "научная фантастика"
+      ]
+    },
+    {
+      "id": "predestination-2014",
+      "source": {
+        "title": "Патруль времени",
+        "original": "Predestination",
+        "author": "Michael Spierig, Peter Spierig",
+        "year": "2014",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Как субъект соотносится с собственной причинностью в замкнутой временной структуре?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": "Документированная экранизация рассказа Роберта Хайнлайна «—All You Zombies—» (1959).",
+      "epistemic_status": "canon",
+      "contestation": "absent",
+      "causality": "established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Если субъект является собственной причиной, что обеспечивает различие между его версиями?",
+        "secondary_questions": [
+          "Остаётся ли свобода возможной внутри замкнутой причинной структуры?"
+        ]
+      },
+      "atlas_ref": null,
+      "tags": [
+        "Хайнлайн",
+        "петля",
+        "самопричинность"
+      ]
+    },
+    {
+      "id": "groundhog-day-1993",
+      "source": {
+        "title": "День сурка",
+        "original": "Groundhog Day",
+        "author": "Harold Ramis",
+        "year": "1993",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Что происходит с субъектом, который не может выйти из временной петли?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "петля",
+        "трансформация"
+      ]
+    },
+    {
+      "id": "edge-of-tomorrow-2014",
+      "source": {
+        "title": "Грань будущего",
+        "original": "Edge of Tomorrow",
+        "author": "Doug Liman",
+        "year": "2014",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Является ли повторение времени механизмом обучения и накопления опыта?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "петля",
+        "обучение"
+      ]
+    },
+    {
+      "id": "russian-doll-2019",
+      "source": {
+        "title": "Русская кукла",
+        "original": "Russian Doll",
+        "author": "Natasha Lyonne, Leslye Headland, Amy Poehler",
+        "year": "2019",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Может ли повторение смерти функционировать как структура психической интеграции?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "петля",
+        "интеграция"
+      ]
+    },
+    {
+      "id": "palm-springs-2020",
+      "source": {
+        "title": "Палм-Спрингс",
+        "original": "Palm Springs",
+        "author": "Max Barbakow",
+        "year": "2020",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Что меняется, когда временная петля становится общим опытом двух субъектов?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "петля",
+        "отношения"
+      ]
+    },
+    {
+      "id": "man-from-earth-2007",
+      "source": {
+        "title": "Человек с Земли",
+        "original": "The Man from Earth",
+        "author": "Richard Schenkman",
+        "year": "2007",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Что делает субъект тем же самым при тысячелетней длительности одного тела?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "бессмертие",
+        "длительность"
+      ]
+    },
+    {
+      "id": "interview-vampire-1994",
+      "source": {
+        "title": "Интервью с вампиром",
+        "original": "Interview with the Vampire",
+        "author": "Neil Jordan",
+        "year": "1994",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Как непрерывность субъекта изменяется при бессмертии и утрате близких?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "бессмертие",
+        "память"
+      ]
+    },
+    {
+      "id": "only-lovers-2013",
+      "source": {
+        "title": "Выживут только любовники",
+        "original": "Only Lovers Left Alive",
+        "author": "Jim Jarmusch",
+        "year": "2013",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Как меняется субъект при многовековой длительности существования?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "бессмертие",
+        "созерцание"
+      ]
+    },
+    {
+      "id": "age-adaline-2015",
+      "source": {
+        "title": "Век Адалин",
+        "original": "The Age of Adaline",
+        "author": "Lee Toland Krieger",
+        "year": "2015",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Как непрерывность личности связана с неизменностью тела?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "бессмертие",
+        "тело"
+      ]
+    },
+    {
+      "id": "slaughterhouse-five-1969",
+      "source": {
+        "title": "Бойня номер пять",
+        "original": "Slaughterhouse-Five",
+        "author": "Kurt Vonnegut",
+        "year": "1969",
+        "media_type": "literary",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Что означает существование субъекта вне линейной последовательности времени?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "нелинейное время"
+      ]
+    },
+    {
+      "id": "arrival-2016",
+      "source": {
+        "title": "Прибытие",
+        "original": "Arrival",
+        "author": "Denis Villeneuve",
+        "year": "2016",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Как изменяется субъективность, если жизнь воспринимается целиком?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "время",
+        "восприятие"
+      ]
+    },
+    {
+      "id": "time-travelers-wife-2003",
+      "source": {
+        "title": "Жена путешественника во времени",
+        "original": "The Time Traveler's Wife",
+        "author": "Audrey Niffenegger",
+        "year": "2003",
+        "media_type": "literary",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Как сохраняется идентичность при встрече с разными возрастами самого себя?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "время",
+        "идентичность"
+      ]
+    },
+    {
+      "id": "your-name-2016",
+      "source": {
+        "title": "Твоё имя",
+        "original": "Your Name",
+        "author": "Makoto Shinkai",
+        "year": "2016",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Что связывает два субъекта при обмене телами и разрыве времени?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "обмен телами",
+        "время"
+      ]
+    },
+    {
+      "id": "enemy-2013",
+      "source": {
+        "title": "Враг",
+        "original": "Enemy",
+        "author": "Denis Villeneuve",
+        "year": "2013",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Что происходит с идентичностью при встрече с двойником?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "двойник",
+        "идентичность"
+      ]
+    },
+    {
+      "id": "double-2013",
+      "source": {
+        "title": "Двойник",
+        "original": "The Double",
+        "author": "Richard Ayoade",
+        "year": "2013",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Может ли альтернативная версия субъекта вытеснить исходную?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "двойник"
+      ]
+    },
+    {
+      "id": "coherence-2013",
+      "source": {
+        "title": "Когерентность",
+        "original": "Coherence",
+        "author": "James Ward Byrkit",
+        "year": "2013",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Что происходит с идентичностью при контакте с параллельными версиями себя?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "двойник",
+        "параллельные версии"
+      ]
+    },
+    {
+      "id": "one-i-love-2014",
+      "source": {
+        "title": "Единственная моя любовь",
+        "original": "The One I Love",
+        "author": "Charlie McDowell",
+        "year": "2014",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Что происходит, когда субъект встречает более подходящую альтернативную версию близкого человека?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "двойник",
+        "отношения"
+      ]
+    },
+    {
+      "id": "midnight-library-2020",
+      "source": {
+        "title": "Полночная библиотека",
+        "original": "The Midnight Library",
+        "author": "Matt Haig",
+        "year": "2020",
+        "media_type": "literary",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Является ли субъектом тот, кто существует во всех ветках, или тот, кто выбирает между ними?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "ветвление",
+        "выбор"
+      ]
+    },
+    {
+      "id": "harry-august-2014",
+      "source": {
+        "title": "Первые пятнадцать жизней Гарри Огаста",
+        "original": "The First Fifteen Lives of Harry August",
+        "author": "Claire North",
+        "year": "2014",
+        "media_type": "literary",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Остаётся ли субъект тем же при последовательном повторении одной жизни с памятью?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "повторные жизни",
+        "память"
+      ]
+    },
+    {
+      "id": "replay-1986",
+      "source": {
+        "title": "Реплей",
+        "original": "Replay",
+        "author": "Ken Grimwood",
+        "year": "1986",
+        "media_type": "literary",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Что делает субъект тем же при повторном проживании биографии?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "повторная жизнь"
+      ]
+    },
+    {
+      "id": "life-after-life-2013",
+      "source": {
+        "title": "Жизнь после жизни",
+        "original": "Life After Life",
+        "author": "Kate Atkinson",
+        "year": "2013",
+        "media_type": "literary",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Является ли повторение жизни одной непрерывной биографией или множеством субъектных траекторий?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "ветвление",
+        "биография"
+      ]
+    },
+    {
+      "id": "looper-2012",
+      "source": {
+        "title": "Петля времени",
+        "original": "Looper",
+        "author": "Rian Johnson",
+        "year": "2012",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Может ли субъект встретить собственную будущую версию и стать её причиной?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "петля",
+        "двойник"
+      ]
+    },
+    {
+      "id": "twelve-monkeys-1995",
+      "source": {
+        "title": "Двенадцать обезьян",
+        "original": "12 Monkeys",
+        "author": "Terry Gilliam",
+        "year": "1995",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Может ли попытка изменить прошлое быть причиной того, что уже произошло?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "петля",
+        "причинность"
+      ]
+    },
+    {
+      "id": "primer-2004",
+      "source": {
+        "title": "Простейший",
+        "original": "Primer",
+        "author": "Shane Carruth",
+        "year": "2004",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Как множественные временные версии одного субъекта меняют причинность?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "петля",
+        "копии"
+      ]
+    },
+    {
+      "id": "dark-2017",
+      "source": {
+        "title": "Тьма",
+        "original": "Dark",
+        "author": "Baran bo Odar, Jantje Friese",
+        "year": "2017",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Может ли субъект быть частью собственной причинной цепи?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "петля",
+        "самопричинность"
+      ]
+    },
+    {
+      "id": "source-code-2011",
+      "source": {
+        "title": "Исходный код",
+        "original": "Source Code",
+        "author": "Duncan Jones",
+        "year": "2011",
+        "media_type": "cinematic",
+        "role": "ontological_variant",
+        "relation_to_core": "parallel_realization",
+        "mediator": null,
+        "abstraction_level": "textual"
+      },
+      "lacuna": {
+        "question": "Как соотносятся субъект, чужое тело, память и повторяющаяся временная траектория?",
+        "description": "Элемент модели оставляет открытым вопрос о природе непрерывности субъекта."
+      },
+      "lacuna_types": [
+        "онтологическая",
+        "идентичностная"
+      ],
+      "context": null,
+      "transferred": null,
+      "effect": null,
+      "model_basis": null,
+      "chain_basis": null,
+      "epistemic_status": "critical_interpretation",
+      "contestation": "absent",
+      "causality": "not_established",
+      "alternatives": [],
+      "counter_links": [],
+      "false_completeness": "medium",
+      "residual": {
+        "primary_question": "Что обеспечивает непрерывность субъекта в данной модели?",
+        "secondary_questions": []
+      },
+      "atlas_ref": null,
+      "tags": [
+        "чужое тело",
+        "время"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-fountain-groundhog",
+      "from": "fountain-2006",
+      "to": "groundhog-day-1993",
+      "link_type": "ontological_kinship",
+      "strength": "medium",
+      "epistemic_status": "critical_interpretation",
+      "causality": "not_established",
+      "basis": "Общая модель субъекта в цикле: «Фонтан» связывает цикл с воплощениями и принятием смерти, «День сурка» связывает петлю с внутренней трансформацией."
+    },
+    {
+      "id": "e-star-man-earth",
+      "from": "star-rover-1915",
+      "to": "man-from-earth-2007",
+      "link_type": "ontological_kinship",
+      "strength": "medium",
+      "epistemic_status": "critical_interpretation",
+      "causality": "not_established",
+      "basis": "Общая модель субъекта, проходящего через историю: Стэндинг странствует по воплощениям, Олдман продолжает существование в одном теле."
+    },
+    {
+      "id": "e-atlas-interview",
+      "from": "cloud-atlas-2004",
+      "to": "interview-vampire-1994",
+      "link_type": "motif_similarity",
+      "strength": "medium",
+      "epistemic_status": "viewer_association",
+      "causality": "unknown",
+      "basis": "Общий мотив субъекта, проходящего через века и наблюдающего исчезновение близких."
+    },
+    {
+      "id": "e-nobody-slaughterhouse",
+      "from": "nobody-2009",
+      "to": "slaughterhouse-five-1969",
+      "link_type": "ontological_kinship",
+      "strength": "high",
+      "epistemic_status": "critical_interpretation",
+      "causality": "not_established",
+      "basis": "Сопоставление множественности жизненных траекторий с нелинейным существованием моментов."
+    },
+    {
+      "id": "e-nobody-arrival",
+      "from": "nobody-2009",
+      "to": "arrival-2016",
+      "link_type": "ontological_kinship",
+      "strength": "medium",
+      "epistemic_status": "critical_interpretation",
+      "causality": "not_established",
+      "basis": "Нелинейное восприятие времени: «Господин Никто» моделирует множество биографических траекторий, «Прибытие» целостное восприятие жизни."
+    },
+    {
+      "id": "e-nobody-enemy",
+      "from": "nobody-2009",
+      "to": "enemy-2013",
+      "link_type": "ontological_kinship",
+      "strength": "medium",
+      "epistemic_status": "critical_interpretation",
+      "causality": "not_established",
+      "basis": "«Господин Никто» моделирует несколько версий биографии, «Враг» материализует проблему альтернативной версии субъекта как двойника."
+    },
+    {
+      "id": "e-nobody-midnight-library",
+      "from": "nobody-2009",
+      "to": "midnight-library-2020",
+      "link_type": "ontological_kinship",
+      "strength": "medium",
+      "epistemic_status": "critical_interpretation",
+      "causality": "not_established",
+      "basis": "Сопоставление множества возможных жизней с моделью выбора между ними."
+    },
+    {
+      "id": "e-zombies-dark",
+      "from": "heinlein-zombies-1959",
+      "to": "dark-2017",
+      "link_type": "ontological_kinship",
+      "strength": "medium",
+      "epistemic_status": "critical_interpretation",
+      "causality": "not_established",
+      "basis": "Замкнутая временная петля и субъект как элемент собственной причинной цепи."
+    },
+    {
+      "id": "e-predestination-floor13",
+      "from": "predestination-2014",
+      "to": "floor13-var",
+      "link_type": "motif_similarity",
+      "strength": "medium",
+      "epistemic_status": "critical_interpretation",
+      "causality": "not_established",
+      "basis": "Оба произведения исследуют идентичность субъекта при разрыве между телом, происхождением и уровнем существования."
+    },
+    {
+      "id": "e-cloud-milligan",
+      "from": "cloud-atlas-2004",
+      "to": "milligan-case",
+      "link_type": "motif_similarity",
+      "strength": "low",
+      "epistemic_status": "critical_interpretation",
+      "causality": "not_established",
+      "basis": "Осторожное сопоставление множественности проявлений субъекта; художественная модель не является клинической моделью диссоциативного расстройства."
+    },
+    {
+      "id": "e-source-code-floor13",
+      "from": "source-code-2011",
+      "to": "floor13-var",
+      "link_type": "ontological_kinship",
+      "strength": "medium",
+      "epistemic_status": "critical_interpretation",
+      "causality": "not_established",
+      "basis": "Сопоставление переноса субъекта в чужое тело и перемещения сознания между моделируемыми уровнями."
+    },
+    {
+      "id": "e-looper-predestination",
+      "from": "looper-2012",
+      "to": "predestination-2014",
+      "link_type": "ontological_kinship",
+      "strength": "high",
+      "epistemic_status": "critical_interpretation",
+      "causality": "not_established",
+      "basis": "Замкнутая петля и встреча разных временных состояний субъекта."
+    }
+  ]
+}
