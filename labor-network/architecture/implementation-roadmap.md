@@ -182,3 +182,12 @@ Phase 9, Federation, is architecturally closed on this branch. The federation co
 Runtime transport, cryptographic verification, compatibility negotiation, node trust infrastructure and executable conformance remain implementation work.
 
 Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation → Phase 7 Human Review → Phase 8 Audit / Observability → Phase 9 Federation.
+
+
+## Phase 10 checkpoint
+
+Phase 10, Formal Verification, is architecturally closed at the formalization-contract level. The proof boundary, critical safety properties, FV01–FV12 cases, counterexample requirements and G1–G8 release-gate cross-check are documented. The model is explicitly bounded to a critical kernel and does not claim that an abstract proof certifies an implementation.
+
+The next implementation task is to instantiate the selected critical kernel in a formal language/model checker and connect its abstract states/events to executable implementation semantics.
+
+Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation → Phase 7 Human Review → Phase 8 Audit / Observability → Phase 9 Federation → Phase 10 Formal Verification.
