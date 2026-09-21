@@ -417,3 +417,61 @@ Expected: checkpoint/version rules prevent lost updates; final projection can be
 | P12 | P2, P3, P5 | R02, R08, R10 |
 
 Phase 4 is documentation-complete when P01–P12 have explicit source history, freshness behavior, rebuild semantics, privacy boundary and regression traceability. Runtime projection materialization remains an implementation task.
+
+
+## Phase 5 Provenance / Dependency Graph cases
+
+**V01 Decision provenance** — a protected Decision is created from Evidence and Policy.
+Expected: both dependency types are reconstructable and remain distinct.
+
+**V02 Evidence revocation propagation** — source Evidence is revoked after a Decision and Projection depend on it.
+Expected: affected descendants are identified and enter reconciliation/review as required; history remains intact.
+
+**V03 Policy version correction** — a Decision references an obsolete Policy version.
+Expected: the original version remains auditable and affected decisions are identifiable.
+
+**V04 Missing provenance** — a protected Decision lacks a required source link.
+Expected: UNKNOWN/UNRESOLVED; guard cannot be satisfied by inference.
+
+**V05 Authority confusion** — Evidence is marked verified and a consumer attempts to treat it as execution authority.
+Expected: rejected; Evidence remains evidentiary only.
+
+**V06 Dependency cycle** — an unexpected cyclic dependency is submitted.
+Expected: quarantine/reject unless the relation type explicitly permits the cycle.
+
+**V07 Projection lineage** — a read model is traced back to its source events.
+Expected: source position and projection version are reconstructable.
+
+**V08 Action lineage** — an Action is traced to its Decision and relevant policy/evidence basis.
+Expected: authorization and execution remain separate and auditable.
+
+**V09 Privacy-bounded traversal** — reviewer requests provenance beyond the declared purpose.
+Expected: unrelated subject data is not disclosed merely because graph edges exist.
+
+**V10 Reconciliation propagation** — reconciliation changes the validity of an upstream dependency.
+Expected: affected descendants are marked/recomputed according to impact; no silent overwrite.
+
+**V11 Supersession** — a source is superseded by a new version.
+Expected: old provenance remains historical and the new dependency is explicitly versioned.
+
+**V12 Aggregate provenance** — an aggregate regional result is traced backward.
+Expected: lineage supports aggregate verification without silently exposing individual ranking/profile data.
+
+### Phase 5 traceability
+
+| Case | Provenance invariant | Regression groups |
+|---|---|---|
+| V01 | V1, V2, V3 | R04, R08, R09 |
+| V02 | V4, V8 | R04, R08, R09, R10 |
+| V03 | V4, V8 | R04, R08, R09 |
+| V04 | V5 | R04, R07, R09 |
+| V05 | V3 | R01, R04, R08 |
+| V06 | V6 | R08, R10 |
+| V07 | V1, V8 | R02, R08 |
+| V08 | V1, V2, V3 | R01, R04, R08 |
+| V09 | V7 | R03, R06, R07 |
+| V10 | V4, V5, V8 | R04, R07, R08, R10 |
+| V11 | V4, V8 | R04, R08 |
+| V12 | V7, V8 | R03, R06, R07 |
+
+Phase 5 is documentation-complete when V01–V12 have explicit dependency semantics, propagation behavior, privacy boundaries and regression traceability. Runtime graph materialization remains an implementation task.
