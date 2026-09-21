@@ -13,7 +13,7 @@ pub enum FavoriteState {
     Right,
 }
 
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct FavoriteStateMachine {
     state: FavoriteState,
     applied_operations: BTreeSet<OperationId>,
