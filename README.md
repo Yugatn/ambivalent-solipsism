@@ -77,3 +77,25 @@ Research Concept / Methodological Prototype.
 - **Auditability by Construction** — значимые действия и решения оставляют проверяемый след.
 
 Архитектура связывает PICCS, DEFT, CTO, Event Fabric, Cell Principle, Symbiont Protocol и SymbiontOS в единую формальную линию, не заменяя существующие положения проекта.
+## Eugene Messenger
+
+**Формальная архитектура защищённого коммуникационного контура.**
+
+Eugene Messenger связывает принцип субъектности и когнитивной безопасности с формальной проверкой переходов, конкурентного исполнения и извлечённого runtime.
+
+- [Формальная архитектура Eugene Messenger](PROJECTS/EUGENE_MESSENGER_FORMAL_ARCHITECTURE.md)
+
+Ключевые расширения:
+
+- Certified Transition System и ValidState;
+- Coq как основной proof assistant и Iris для concurrent reasoning;
+- Unified System Refinement для связи concrete и abstract execution;
+- trace integrity, authenticity, non-interference и linearizability;
+- adversarial scheduler с явно заданными safety и liveness assumptions;
+- semantic bridge между Coq, OCaml extraction и WASM;
+- сохранение UNKNOWN и Residual как валидных эпистемических состояний;
+- строгое разделение Detection, Decision и Action;
+- сохранение AI Security Agent в пределах ограниченных capabilities;
+- явное различение specification, proof, extraction, runtime и testing.
+
+Этот слой является аддитивным: он не заменяет существующую архитектуру проекта и не является заявлением о завершённой механической верификации.
