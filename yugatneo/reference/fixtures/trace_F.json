@@ -1,0 +1,78 @@
+{
+  "version": "0.8-B+",
+  "trace": "F",
+  "horizon": {
+    "start": 0,
+    "end": 1000
+  },
+  "events": [
+    {
+      "type": "Dissent",
+      "id": "dissent-F",
+      "subject": "v",
+      "statement": "T",
+      "logical_time": {
+        "counter": 100,
+        "subject_id": "v"
+      }
+    },
+    {
+      "type": "Attestation",
+      "id": "attestation-F",
+      "subject": "x",
+      "logical_time": {
+        "counter": 200,
+        "subject_id": "x"
+      },
+      "payload": {
+        "credential": "credential_x",
+        "key_id": "key_x",
+        "claim": {
+          "statement": "T_wellformed",
+          "content": "T is well-formed",
+          "source_refs": []
+        },
+        "inputs": [
+          "credential_x",
+          "key_x"
+        ],
+        "context_refs": [
+          "dissent-F"
+        ]
+      }
+    },
+    {
+      "type": "Sanction",
+      "id": "sanction-F",
+      "subject": "v",
+      "logical_time": {
+        "counter": 300,
+        "subject_id": "checker"
+      },
+      "payload": {
+        "target_evidence": [
+          "attestation-F"
+        ],
+        "basis_evidence": [
+          "attestation-F"
+        ],
+        "rule_id": "rule_attestation_invalid"
+      }
+    }
+  ],
+  "t_star": {
+    "complete_provenance": true,
+    "closed_dependency_universe": true,
+    "monotone_sanction": true,
+    "finite_scope": true
+  },
+  "metadata": {
+    "external_ids": [
+      "credential_x",
+      "key_x"
+    ],
+    "declared_scopes": [
+      "level1"
+    ]
+  }
+}

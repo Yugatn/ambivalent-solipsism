@@ -1,0 +1,38 @@
+name: Yugatneo Level 1 Reference
+
+on:
+  push:
+    paths:
+      - 'yugatneo/reference/**'
+      - '.github/workflows/yugatneo-reference.yml'
+  pull_request:
+    paths:
+      - 'yugatneo/reference/**'
+      - '.github/workflows/yugatneo-reference.yml'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: yugatneo/reference
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo fmt --check
+      - run: cargo test
+      - run: cargo clippy -- -D warnings
+      - name: JSON regression CLI
+        run: |
+          for f in fixtures/trace_*.json; do
+            cargo run --quiet -- --input "$f" --strict >/dev/null
+          done
+      - name: CBOR round-trip CLI
+        run: |
+          set -e
+          mkdir -p target/phase3-cbor
+          for f in fixtures/trace_*.json; do
+            name=$(basename "$f" .json)
+            cargo run --quiet -- --input "$f" --output "target/phase3-cbor/$name.cbor" >/dev/null
+            cargo run --quiet -- --input "target/phase3-cbor/$name.cbor" --strict >/dev/null
+          done
