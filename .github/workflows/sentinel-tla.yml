@@ -1,0 +1,34 @@
+name: PICCS Sentinel TLA+ Model Check
+
+on:
+  push:
+    paths:
+      - "antivirus/formal/**"
+      - ".github/workflows/sentinel-tla.yml"
+  pull_request:
+    paths:
+      - "antivirus/formal/**"
+      - ".github/workflows/sentinel-tla.yml"
+  workflow_dispatch:
+
+jobs:
+  tlc:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Fetch TLA+ tools
+        run: |
+          curl -fL             https://github.com/tlaplus/tlaplus/releases/download/v1.7.4/tla2tools.jar             -o tla2tools.jar
+
+      - name: Run TLC
+        working-directory: antivirus/formal
+        run: |
+          java -cp ../../tla2tools.jar tlc2.TLC             -config Sentinel.cfg             Sentinel.tla
