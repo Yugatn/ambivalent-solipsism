@@ -99,6 +99,9 @@ Eugene Messenger связывает принцип субъектности и �
 - [Assurance Roadmap v3 — Meta-Assurance](PROJECTS/EUGENE_MESSENGER_ASSURANCE_ROADMAP_V3.md)
 
 - [Продуктовая архитектура Eugene Messenger: лента, режимы свайпа и архив](PROJECTS/EUGENE_MESSENGER_PRODUCT_ARCHITECTURE.md)
+- [Исполняемый Domain Prototype](eugene-messenger/)
+- [ADR 0001–007: Domain Decisions](eugene-messenger/ADR/0001-007-domain-decisions.md)
+- [Claim Registry](eugene-messenger/claims/REGISTRY.yaml)
 
 
 Ключевые расширения:
