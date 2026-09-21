@@ -234,3 +234,13 @@
 - [Формальные инварианты](invariants.md)
 
 Этот слой фиксирует минимальные контракты данных, границы федерации и свойства, которые реализация не должна нарушать.
+
+
+## 29 · Migration Audit и Traceability
+
+- [Content-Level Audit](content-audit.md)
+- [Migration Map](migration-map.md)
+- [Traceability Matrix](traceability-matrix.md)
+- [Regression Suite](regression-suite.md)
+
+Эти документы контролируют не только наличие исходных файлов, но и сохранение их смыслового содержания после декомпозиции.
