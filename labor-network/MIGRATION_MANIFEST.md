@@ -110,3 +110,23 @@ Migration reaches 100% only when:
 - legacy bridge can be made read-only.
 
 Until these conditions are met, legacy files must remain preserved.
+
+
+## File migration status — current checkpoint
+
+Все 66 рабочих файлов верхнего уровня labor-network, кроме README.md, имеют копию в новой структурированной иерархии.
+
+README.md намеренно остаётся в корне как навигационный индекс раздела и не считается резервным доменным документом.
+
+Исходные файлы верхнего уровня не удаляются.
+
+### Status
+
+- migratable root files: 66
+- copied to structured destinations: 66
+- missing structured copies: 0
+- root README: intentionally retained
+- legacy deletion: 0
+- migration file coverage: 100%
+
+Следующий этап — не копирование файлов, а семантическая консолидация: объединить содержимое дублирующихся структурированных модулей и устранить расхождения между ранними копиями и последними версиями исходных документов.
