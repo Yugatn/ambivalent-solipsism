@@ -1,9 +1,9 @@
 ---- MODULE Control_AlwaysTrue ----
-EXTENDS Naturals
+EXTENDS TLC
 VARIABLE x
 
-Init == x = 0
-Next == x' = x + 1
+Init == x = FALSE
+Next == x' = ~x
 AlwaysTrue == x = x
 Spec == Init /\ [][Next]_x
 ====
