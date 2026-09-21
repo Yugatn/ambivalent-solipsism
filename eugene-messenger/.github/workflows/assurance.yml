@@ -1,0 +1,40 @@
+name: Eugene Messenger Assurance
+
+on:
+  push:
+    paths: ["eugene-messenger/**"]
+  pull_request:
+    paths: ["eugene-messenger/**"]
+
+jobs:
+  anti-replay-reference:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run reference and adversarial tests
+        run: python -m pytest eugene-messenger/tests -q
+      - name: Traceability check
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          required = [
+              "eugene-messenger/spec/AntiReplay.tla",
+              "eugene-messenger/spec/AntiReplay.cfg",
+              "eugene-messenger/spec/AntiReplay_Broken.tla",
+              "eugene-messenger/tests/test_anti_replay.py",
+              "eugene-messenger/tests/test_replay_attack.py",
+              "eugene-messenger/spec-registry.yaml",
+              "eugene-messenger/assurance-case.html",
+          ]
+          missing = [p for p in required if not Path(p).exists()]
+          if missing: raise SystemExit("Missing assurance artifacts: " + ", ".join(missing))
+          print("Traceability: PASS")
+          PY
+      - name: Assurance summary
+        run: |
+          echo "AntiReplay"
+          echo "Specification       PRESENT"
+          echo "Reference tests     PASS"
+          echo "Replay attack test  PASS"
+          echo "Traceability        PASS"
+          echo "TLC model check     PENDING: install TLC before enabling model execution"
