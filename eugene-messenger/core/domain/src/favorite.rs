@@ -85,6 +85,7 @@ mod tests {
             operation_id: OperationId(id),
             message_id: MessageId(7),
             target,
+            previous_state: FavoriteState::None,
             device_id: device,
             logical_time: HlcTimestamp {
                 wall_time_ms: time,
