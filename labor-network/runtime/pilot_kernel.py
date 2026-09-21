@@ -121,3 +121,44 @@ class PilotKernel:
             "action": self.action.value,
             "events": str(len(self.history)),
         }
+
+
+# Durable conformance boundary
+
+class DurableKernelStore:
+    """Small append-only JSON store for pilot conformance experiments.
+
+    This is intentionally a reference persistence adapter, not a production
+    database or security boundary.
+    """
+
+    def __init__(self, path: str):
+        import json
+        from pathlib import Path
+        self._json = json
+        self.path = Path(path)
+
+    def append(self, record: Dict[str, str]) -> None:
+        records = self.load()
+        records.append(dict(record))
+        tmp = self.path.with_suffix(self.path.suffix + ".tmp")
+        tmp.write_text(self._json.dumps(records, sort_keys=True), encoding="utf-8")
+        tmp.replace(self.path)
+
+    def load(self) -> list[Dict[str, str]]:
+        if not self.path.exists():
+            return []
+        return self._json.loads(self.path.read_text(encoding="utf-8"))
+
+    def event_ids(self) -> FrozenSet[str]:
+        return frozenset(r["event_id"] for r in self.load() if "event_id" in r)
+
+
+def record_event_durably(kernel: PilotKernel, store: DurableKernelStore, event: Event) -> bool:
+    """Apply an event only once according to the durable event identity set."""
+    if event.event_id in store.event_ids():
+        return False
+    accepted = kernel.record_event(event)
+    if accepted:
+        store.append({"event_id": event.event_id, "kind": event.kind})
+    return accepted
