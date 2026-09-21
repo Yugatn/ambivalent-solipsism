@@ -1,0 +1,36 @@
+schema_version: claim/v1
+
+claim:
+  required:
+    - id
+    - statement
+    - scope
+    - assumptions
+    - falsification_criteria
+    - formal_model
+    - spec_revision
+    - hash
+
+  hash:
+    algorithm: sha256
+    canonical_fields:
+      - statement
+      - scope
+      - assumptions
+      - falsification_criteria
+      - formal_model
+      - spec_revision
+
+  status:
+    enum:
+      - assumed
+      - specified
+      - falsifiable
+      - modeled
+      - executed
+      - model_checked
+      - conformance
+      - adversarial
+      - reproducible
+      - invalidated
+      - stale
