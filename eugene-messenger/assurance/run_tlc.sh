@@ -21,6 +21,8 @@ run_model() {
 }
 
 run_model AntiReplay_Protocol.tla AntiReplay.cfg pass "$EVIDENCE_DIR/positive.log"
+run_model Control_AlwaysTrue.tla ../assurance/Control_AlwaysTrue.cfg pass "$EVIDENCE_DIR/control_true.log"
+run_model Control_AlwaysFalse.tla ../assurance/Control_AlwaysFalse.cfg counterexample "$EVIDENCE_DIR/control_false.log"
 run_model AntiReplay_Broken.tla AntiReplay_Broken.cfg counterexample "$EVIDENCE_DIR/broken.log"
 sha256sum "$EVIDENCE_DIR"/*.log > "$EVIDENCE_DIR/checksums.sha256"
 cat > "$EVIDENCE_DIR/manifest.json" <<EOF
