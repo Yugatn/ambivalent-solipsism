@@ -9,7 +9,7 @@
         maximum-scale=1.0, user-scalable=no"
     >
 
-    <title>АМБИВАЛЕНТНЫЙ СОЛИПСИЗМ · PSY-TOOLS</title>
+    <title>АМБИВАЛЕНТНЫЙ СОЛИПСИЗМ · ЕДИНАЯ ЭКОСИСТЕМА</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1304,7 +1304,67 @@
         }
 
 
-    .subsection-title{margin:34px 0 14px;padding:10px 0 0;border-top:1px solid rgba(69,240,195,.14)}.subsection-title .subsection-number{font:9px monospace;letter-spacing:.16em;color:rgba(69,240,195,.55)}.subsection-title h3{margin:6px 0 0;font-size:18px;font-weight:500}</style>
+    .subsection-title{margin:34px 0 14px;padding:10px 0 0;border-top:1px solid rgba(69,240,195,.14)}.subsection-title .subsection-number{font:9px monospace;letter-spacing:.16em;color:rgba(69,240,195,.55)}.subsection-title h3{margin:6px 0 0;font-size:18px;font-weight:500}
+        /* =====================================================
+           ECOSYSTEM NAVIGATION
+        ===================================================== */
+
+        .ecosystem-nav {
+            width: min(1180px, 94vw);
+            margin: 28px auto 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px;
+            border: 1px solid rgba(69,240,195,.12);
+            border-radius: 18px;
+            background: rgba(2,8,12,.58);
+            backdrop-filter: blur(12px);
+        }
+
+        .ecosystem-nav a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 34px;
+            padding: 7px 13px;
+            border: 1px solid rgba(69,240,195,.10);
+            border-radius: 10px;
+            color: rgba(238,247,245,.72);
+            text-decoration: none;
+            font: 9px "JetBrains Mono", monospace;
+            letter-spacing: .06em;
+            transition: border-color .2s ease, color .2s ease, background .2s ease;
+        }
+
+        .ecosystem-nav a:hover,
+        .ecosystem-nav a:focus-visible {
+            color: var(--text);
+            border-color: rgba(69,240,195,.42);
+            background: rgba(69,240,195,.055);
+        }
+
+        .ecosystem-nav .nav-primary {
+            color: var(--accent);
+        }
+
+        @media (max-width: 760px) {
+            .ecosystem-nav {
+                width: min(390px, 94vw);
+                gap: 6px;
+                padding: 8px;
+            }
+
+            .ecosystem-nav a {
+                flex: 1 1 auto;
+                min-height: 32px;
+                padding: 7px 9px;
+                font-size: 8px;
+            }
+        }
+
+</style>
 </head>
 
 
@@ -1344,6 +1404,21 @@
             </div>
 
             <div class="header-line"></div>
+
+
+            <nav class="ecosystem-nav" aria-label="Навигация по экосистеме">
+                <a class="nav-primary" href="./philosophy/">Философия</a>
+                <a href="./development-law/">Развитие и этика</a>
+                <a href="./human/">Человек</a>
+                <a href="./research/">Исследования</a>
+                <a href="./artificial-intelligence/">Технология</a>
+                <a href="./PROJECTS/">Проекты</a>
+                <a href="./BOOK/">Книга</a>
+                <a href="./CRITIQUE.md">Критика</a>
+                <a href="./ECOSYSTEM_ARCHITECTURE.md">Архитектура</a>
+            </nav>
+
+
 
         </header>
 
