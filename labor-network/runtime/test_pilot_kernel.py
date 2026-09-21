@@ -178,3 +178,27 @@ class DurableBoundaryTests(unittest.TestCase):
             second = PilotKernel()
             self.assertFalse(record_event_durably(second, store, e))
             self.assertEqual(store.event_ids(), frozenset({"durable-2"}))
+
+
+class DurableDecisionAuditTests(unittest.TestCase):
+    def test_decision_is_versioned_and_durable(self):
+        import tempfile
+        from pathlib import Path
+        from pilot_kernel import DurableDecision, DurableKernelStore, decision_records, record_decision_durably
+        with tempfile.TemporaryDirectory() as d:
+            store = DurableKernelStore(str(Path(d) / "state.json"))
+            record_decision_durably(store, DurableDecision("d1", True, "policy-v1", "completed"))
+            records = decision_records(store)
+            self.assertEqual(records[0]["decision_id"], "d1")
+            self.assertEqual(records[0]["policy_version"], "policy-v1")
+
+    def test_audit_is_separate_and_purpose_bound(self):
+        import tempfile
+        from pathlib import Path
+        from pilot_kernel import DurableKernelStore, append_audit_record, decision_records
+        with tempfile.TemporaryDirectory() as d:
+            store = DurableKernelStore(str(Path(d) / "state.json"))
+            append_audit_record(store, audit_id="a1", event="decision.created", purpose="pilot-audit")
+            self.assertEqual(decision_records(store), [])
+            audit = [r for r in store.load() if r.get("audit_id") == "a1"]
+            self.assertEqual(audit[0]["purpose"], "pilot-audit")
