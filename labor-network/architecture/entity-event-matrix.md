@@ -126,3 +126,24 @@ Projection is a derived read layer. The following canonical projection families 
 ### Phase 4 matrix closure
 
 Every protected projection family must have a declared source-event set, freshness class, rebuild basis, access scope, correction behavior and protected-use boundary before implementation.
+
+
+## Phase 5 Provenance dependency cross-check
+
+| Dependency class | Source | Target | Required semantics |
+|---|---|---|---|
+| causal | Event | Event/Action | causation is explicit; correlation is not causation |
+| evidentiary | Evidence | Decision/PolicyDecision | supports evaluation; does not grant authority |
+| policy | Policy/PolicyDecision | Decision | constrains outcome; version is recorded |
+| projection | Event/Event lineage | Projection | derived read state; rebuildable |
+| execution | Decision | Action | authorization and actual execution remain separate |
+| review | Evidence/Decision | Human Review | review basis remains traceable |
+| reconciliation | Correction/Reconciliation event | affected descendants | impact propagation without history rewrite |
+
+### Graph closure rules
+
+1. Every protected Decision and Projection has a declared provenance entry point.
+2. Every dependency edge has a typed semantic relation and creation/version metadata.
+3. Revocation, supersession and correction propagate to descendants according to impact, without deleting source lineage.
+4. Missing source lineage is UNKNOWN/UNRESOLVED and cannot silently satisfy a protected guard.
+5. Graph traversal is bounded by purpose and access policy; provenance does not authorize access to unrelated subject data.
