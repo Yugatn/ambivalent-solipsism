@@ -218,3 +218,40 @@ Constraints:
 The same review requirements apply to these six entities. Changes affecting authority, purpose, scope, privacy, subject control, provenance, lifecycle or impact classification require architectural review.
 
 The extended entities do not alter the nine-object core contract and must remain interoperable with Event, State, Decision, Action, Policy and Audit.
+
+
+## Phase 1 lifecycle consistency matrix
+
+| Entity | Lifecycle owner | Canonical events | State representation | Review / recovery |
+|---|---|---|---|---|
+| Subject | Subject / system | create, update, consent, restrict, exit | contextual status | correction, audit |
+| Organization | Organization | register, update, suspend | organization status | governance review |
+| Opportunity | Organization / publisher | publish, pause, fill, expire, withdraw | Opportunity state | authority guard, recovery |
+| Engagement | parties / system | propose, accept, activate, pause, complete, terminate | Engagement state | dispute/recovery |
+| Evidence | source / verifier | assert, verify, challenge, expire, revoke | Evidence state | provenance review |
+| Decision | authorized decision process | propose, evaluate, permit, deny, review, reverse | Decision state | human review where required |
+| Action | authorized actor | execute, fail, compensate | execution record | audit/recovery |
+| Event | event producer | append, acknowledge, reconcile | event history | idempotency/replay |
+| PolicyDecision | policy engine | evaluate, review, supersede | policy outcome | policy/version review |
+| AuditRecord | audit subsystem | record, integrity-check, retain, restrict | audit status | integrity/recovery |
+| Permission | granting authority | grant, modify, expire, revoke | permission status | authority review |
+| Dispute | dispute process | open, acknowledge, investigate, resolve, escalate, withdraw | Dispute state | review/reconciliation |
+| Support | support provider | offer, request, approve, activate, suspend, complete, revoke | Support state | eligibility review |
+| Resource | resource owner | register, update, allocate, release | availability | policy/recovery |
+| Relation | source / authorized process | assert, confirm, expire, revoke | relation validity | provenance review |
+
+### Phase 1 closure criteria
+
+Phase 1 is closed only when:
+
+1. each core entity has a stable schema contract;
+2. each stateful entity has explicit lifecycle states or an explicitly documented non-stateful model;
+3. mutating events are mapped to guards and invariants;
+4. Decision and Action remain separate;
+5. Evidence and Decision remain separate;
+6. Permission and technical access remain separate;
+7. state reconstruction can rely on event history;
+8. recovery paths are defined for protected transitions;
+9. schema changes with normative impact require architectural review.
+
+Current result: **contract coverage is defined for all 15 Phase 1 entities; lifecycle mappings are documented at the architectural level. Runtime schema validation remains a future implementation task.**
