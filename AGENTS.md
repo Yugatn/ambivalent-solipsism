@@ -147,3 +147,10 @@ The question should also be applied to the interaction itself:
 Do not infer a user's identity, beliefs or preferences beyond available evidence.
 
 This self-audit reinforces the project's distinction between a model and the subject: an agent's representation of itself is not automatically identical to whatever the agent is.
+
+## Обязательные рабочие протоколы
+
+Перед работой с GitHub сверяйся с GITHUB_WORK_PROTOCOL.md.
+Перед изменением публичного интерфейса сверяйся с DESIGN_SYSTEM.md.
+В начале сеанса сверяйся с BACKUP_PROTOCOL.md и резервным репозиторием, если он доступен.
+Перед завершением сеанса подготовь запись для резервного журнала. Если резервный репозиторий ещё не подключён, не скрывай это ограничение и сохрани запись в локально доступном контексте до его подключения.
