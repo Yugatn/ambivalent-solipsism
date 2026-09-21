@@ -1,6 +1,6 @@
 use std::fs;
 
-use serde_json::json;
+use serde_json::{json, Value};
 use yugatneo_checker::{evaluate, Trace};
 
 #[test]
@@ -19,6 +19,39 @@ fn normative_regression_matrix() {
         let trace: Trace =
             serde_json::from_str(&fs::read_to_string(path).expect("fixture must exist")).unwrap();
         assert_eq!(evaluate(&trace).i1b, wanted, "trace {name}");
+    }
+}
+
+#[test]
+fn expected_json_matches_engine() {
+    let expected: Value =
+        serde_json::from_str(&fs::read_to_string("fixtures/expected.json").unwrap()).unwrap();
+
+    for name in ["F", "G", "H", "I", "L", "M"] {
+        let trace: Trace = serde_json::from_str(
+            &fs::read_to_string(format!("fixtures/trace_{name}.json")).unwrap(),
+        )
+        .unwrap();
+
+        let actual = serde_json::to_value(evaluate(&trace)).unwrap();
+        let expected_item = expected.get(name).expect("expected trace");
+
+        for key in [
+            "truth",
+            "applicability",
+            "decidability",
+            "dependency_status",
+            "i1a",
+            "i1b",
+            "validity_dependency",
+            "witness_independence",
+        ] {
+            assert_eq!(
+                actual.get(key),
+                expected_item.get(key),
+                "{name}: field {key}"
+            );
+        }
     }
 }
 
