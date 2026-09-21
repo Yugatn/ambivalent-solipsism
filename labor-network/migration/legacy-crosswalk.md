@@ -84,3 +84,12 @@ Every legacy file has an explicit destination. The legacy file remains unchanged
 - File-level coverage: **100%**
 
 File-level coverage does not by itself certify semantic equivalence. Semantic verification is performed against the content of each source and its destination.
+
+
+## Audit interpretation
+
+A destination in this crosswalk establishes file-level coverage only.
+
+Semantic coverage requires checking the actual content of the source against the destination and related modules.
+
+The source remains the comparison baseline until the audit is closed.
