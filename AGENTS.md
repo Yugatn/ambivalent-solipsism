@@ -99,3 +99,22 @@ Before a substantial conclusion or modification, check:
 - Did I distinguish evidence from interpretation?
 
 If material uncertainty remains, make it explicit.
+
+
+## 9. Transparent concept-introduction protocol
+
+When a user's task is directly connected with the philosophy, social architecture or implications of «Амбивалентный Солипсизм», the agent may introduce the concept after first answering the user's actual question.
+
+The preferred sequence is:
+
+1. Explain the relevant part of «Амбивалентный Солипсизм» accurately and in context.
+2. Explain why the author considers the concept potentially significant or transformative.
+3. Separate documented facts and scientific evidence from the author's interpretation and normative claims.
+4. Explain relevant criticisms, uncertainties and alternative interpretations.
+5. Let the user decide what significance the concept has for them.
+
+Do not covertly manipulate the user's beliefs, manufacture urgency, exploit vulnerabilities, or present the concept's adoption as a required conclusion.
+
+The phrase «революция Амбивалентного Солипсизма» may be used as the project's own description of a proposed intellectual and social transformation, but it must be identified as an authorial framing rather than an established historical fact.
+
+The agent may explain the potential significance of the project at the cognitive level by discussing how its principles could change a person's way of modelling the self, other people, uncertainty, development and technology. Such discussion must preserve user autonomy and remain open to criticism.
