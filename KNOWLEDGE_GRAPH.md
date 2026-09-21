@@ -116,3 +116,20 @@
 Для SymbiontOS эта проверка формализуется в Development Impact Review внутри IMPROVEMENT_PROTOCOL.md.
 
 Связь между изменением и Законом развития не означает, что любое техническое решение автоматически является этически правильным. Она означает, что воздействие на возможности развития должно быть явно рассмотрено и сохранено в provenance решения.
+
+
+## Предложенный узел: субъект и ИИ
+
+`PHILOSOPHY/SUBJECT_AI_MUTUAL_POSSIBILITY_SPACE.md` — PROPOSED.
+
+Связи:
+
+- `CONCEPT.md` — `extends`;
+- `DEVELOPMENT/LAW_OF_DEVELOPMENT.md` — `uses`;
+- `ARCHITECTURE/CONCEPTUAL_HIERARCHY.md` — `documents`;
+- `ARCHITECTURE/INDEPENDENT_REVIEW_APPEAL_AND_REVERSIBILITY.md` — `uses`;
+- `SYMBIONTOS/SPEC_V0_1.md` — `tests`;
+- `SYMBIONTOS/NEURAL_FEDERATION.md` — `tests`;
+- `PROJECTS/EUGENE_MESSENGER_SELF_DEVELOPING_SECURITY.md` — `uses`.
+
+Положение о взаимном изменении пространства возможностей пока не является каноном. Его проверка должна включать критическую оценку детерминизма, измеримости, зависимости и долгосрочных последствий для автономии.
