@@ -173,3 +173,32 @@ The documented E01–E15 cases now have explicit traceability to the existing re
 5. Projection access remains subject to privacy, purpose limitation and human-review controls already established by G1–G8.
 
 Phase 4 release-gate cross-check is documentation-complete for P01–P12. Runtime projection implementation and executable release testing remain unclaimed.
+
+
+## Phase 5 Provenance release-gate cross-check
+
+| Provenance case | Release gates | Required property |
+|---|---|---|
+| V01 Decision provenance | G1, G4, G8 | Evidence, Policy and Decision dependencies remain distinct and reconstructable |
+| V02 Evidence revocation | G1, G4, G7, G8 | affected descendants are identified without rewriting history |
+| V03 Policy version correction | G1, G4, G8 | obsolete policy basis remains historical and affected decisions are identifiable |
+| V04 Missing provenance | G4, G7, G8 | missing lineage remains UNKNOWN/UNRESOLVED |
+| V05 Authority confusion | G1, G4, G8 | verified Evidence cannot become Action authority |
+| V06 Dependency cycle | G4, G8 | invalid causal/dependency structure is quarantined or explicitly modeled |
+| V07 Projection lineage | G2, G4, G8 | read representation remains traceable to source history |
+| V08 Action lineage | G1, G4, G8 | authorization and execution remain separate |
+| V09 Privacy-bounded traversal | G2, G3, G5, G6, G8 | provenance access does not broaden privacy scope |
+| V10 Reconciliation propagation | G1, G4, G7, G8 | corrections propagate to affected descendants without silent overwrite |
+| V11 Supersession | G4, G8 | historical provenance remains auditable across versions |
+| V12 Aggregate provenance | G2, G3, G6, G7, G8 | aggregate verification does not expose hidden individual profiling |
+
+### Phase 5 release rules
+
+1. Provenance is explanatory and evidentiary; it does not grant authority.
+2. A complete graph does not make an unsupported claim true; source verification remains independent.
+3. Missing lineage is an epistemic condition and cannot silently become a negative subject status.
+4. Propagation identifies affected descendants but does not retroactively falsify historical events.
+5. Provenance traversal remains bounded by purpose, permission and data minimization.
+6. Changes to dependency semantics that affect authority, privacy or impact require architectural review.
+
+Phase 5 release-gate cross-check is documentation-complete for V01–V12. Runtime graph execution remains unclaimed.
