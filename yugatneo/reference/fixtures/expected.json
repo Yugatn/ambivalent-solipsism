@@ -1,0 +1,8 @@
+{
+  "F":{"truth":"True","applicability":"InScope","decidability":"Decidable","dependency_status":"Independent","i1a":"NotViolated","i1b":"NotViolated"},
+  "G":{"truth":"True","applicability":"InScope","decidability":"Decidable","dependency_status":"Independent","i1a":"NotViolated","i1b":"NotViolated"},
+  "H":{"truth":"False","applicability":"InScope","decidability":"Decidable","dependency_status":"Dependent","i1a":"NotViolated","i1b":"Violation","validity_dependency":"True"},
+  "I":{"truth":"Unresolved","applicability":"InScope","decidability":"Decidable","dependency_status":"Unresolved","i1a":"NotViolated","i1b":"Unresolved"},
+  "L":{"truth":"Unresolved","applicability":"InScope","decidability":"Decidable","dependency_status":"Unresolved","i1a":"NotViolated","i1b":"Unresolved","modified_validity":"UNKNOWN"},
+  "M":{"truth":"False","applicability":"InScope","decidability":"Decidable","dependency_status":"Dependent","i1a":"NotViolated","i1b":"Violation","validity_dependency":"True","certificate_closure_required":true}
+}
