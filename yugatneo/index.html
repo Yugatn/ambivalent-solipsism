@@ -172,4 +172,116 @@ table{width:100%;border-collapse:collapse;margin:22px 0;background:rgba(7,16,21,
 <div class="principle warn"><strong>На текущем этапе нельзя утверждать, что PoAS безопаснее PoW или PoS, что Yugatneo устойчив к Sybil-атакам, что YGT будет иметь экономическую ценность, что ACN-VM обеспечивает корректное многовариантное исполнение или что предлагаемая токеномика предотвращает спекуляцию.</strong><br><br>Все эти положения являются исследовательскими гипотезами и требуют формальной, экономической или экспериментальной проверки.</div>
 
 <a class="back" href="../index.html">Вернуться к Амбивалентному Солипсизму</a>
-</main></body></html>
+<h2>20. Архитектурный контракт Yugatneo</h2>
+<p>Yugatneo должен развиваться как система с разделёнными слоями доказательства, исполнения и интерпретации. Ни один слой не должен незаметно подменять другой.</p>
+<div class="grid">
+<div class="card"><div class="num">A / FACT</div><div class="title">Observed State</div><div class="desc">Что протокол непосредственно наблюдает и может криптографически подтвердить.</div></div>
+<div class="card"><div class="num">B / EVIDENCE</div><div class="title">Evidence</div><div class="desc">Подписанные attestations, provenance и альтернативные свидетельства.</div></div>
+<div class="card"><div class="num">C / INTERPRETATION</div><div class="title">Interpretation</div><div class="desc">Модель того, что событие может означать. Интерпретация не должна автоматически становиться фактом.</div></div>
+<div class="card"><div class="num">D / EXECUTION</div><div class="title">State Transition</div><div class="desc">Формально допустимое изменение состояния.</div></div>
+</div>
+<div class="formula">Observed State ≠ Evidence ≠ Interpretation ≠ State Transition</div>
+
+<h2>21. Четыре статуса любого утверждения</h2>
+<p>Чтобы не смешивать философию и протокол, каждое существенное положение Yugatneo должно иметь статус.</p>
+<table><tr><th>Статус</th><th>Смысл</th><th>Пример</th></tr>
+<tr><td>Philosophical Principle</td><td>Положение AS, определяющее направление архитектуры.</td><td>«Другой реален».</td></tr>
+<tr><td>Engineering Hypothesis</td><td>Предлагаемый механизм, который ещё нужно проверить.</td><td>PoAS.</td></tr>
+<tr><td>Formal Property</td><td>Свойство, выведенное из спецификации при заданных assumptions.</td><td>Safety конкретного state transition protocol.</td></tr>
+<tr><td>Empirical Result</td><td>Результат эксперимента, тестовой сети или аудита.</td><td>Измеренная устойчивость к определённому классу атак.</td></tr></table>
+
+<h2>22. Минимальная единица протокола: Transition Certificate</h2>
+<p>Для критического изменения состояния полезно ввести Transition Certificate. Он связывает событие, входное состояние, evidence, policy, authority и commit.</p>
+<div class="formula">TC = {StateRoot, EventRoot, EvidenceRoot, PolicyID, Authority, Transition, Commit}</div>
+<p>Это позволяет отдельно проверять, что произошло, на основании чего произошёл переход и имел ли исполнитель право его совершить.</p>
+
+<h2>23. Epistemic State без изменения Ledger State</h2>
+<p>Yugatneo должен уметь хранить информацию о неопределённости, не превращая каждую неопределённость в изменение экономического состояния.</p>
+<div class="formula">Epistemic Update ≠ Ledger Transition</div>
+<p>Например, dissent может изменить карту известных свидетельств, но не баланс пользователя. Это предотвращает превращение самого факта несогласия в экономическое наказание.</p>
+
+<h2>24. Quiet Room Protocol</h2>
+<p>Предлагаемый минимальный формат записи:</p>
+<div class="formula">DissentRecord = {AuthorCredential, Scope, Epoch, Claim, EvidenceRefs, ConfidenceContext, Status, Signature}</div>
+<ul><li><strong>AuthorCredential</strong> определяет право публиковать запись, но не объявляет автора «более истинным».</li><li><strong>Scope</strong> ограничивает область утверждения.</li><li><strong>Epoch</strong> предотвращает бесконтекстное смешение старых и новых свидетельств.</li><li><strong>EvidenceRefs</strong> связывают claim с проверяемыми данными.</li><li><strong>Status</strong> различает proposed, contested, supported, refuted и unresolved.</li></ul>
+
+<h2>25. Revocation и отсутствие resurrection</h2>
+<p>Отзыв credential должен иметь причинную границу. Старый cache, backup или delayed federation message не должны автоматически восстанавливать прежнюю authority.</p>
+<div class="formula">Revoked(C, epoch₁) ∧ Replay(C, epoch₂) ⇒ No Authority</div>
+<p>Recovery должен восстанавливать состояние субъекта, но не отменять более поздний revocation без нового явно авторизованного transition.</p>
+
+<h2>26. Sybil Resistance как отдельная задача</h2>
+<p>Yugatneo не должен использовать расплывчатое понятие «субъектности» как защиту от Sybil. Необходимо экспериментально сравнить несколько механизмов: stake, resource cost, credentialed membership, proof-of-personhood и гибридные схемы.</p>
+<div class="formula">Subjectivity Claim ≠ Sybil Resistance Proof</div>
+<p>При этом любое membership mechanism должно иметь процедуру выхода, contestation и recovery, иначе защита от Sybil может превратиться в механизм постоянного исключения.</p>
+
+<h2>27. Экономическая безопасность важнее красивой токеномики</h2>
+<p>Перед выпуском YGT-Flow необходимо моделировать не только эмиссию, но и поведение рациональных и adversarial участников: wash trading, collusion, bribery, governance capture, griefing, liquidity attacks и reward farming.</p>
+<div class="formula">Economic Security = Incentives + Adversarial Behaviour + Market Dynamics + Governance Constraints</div>
+
+<h2>28. Treasury и Solidarity без произвольной власти</h2>
+<p>Средства Solidarity Pool не должны распределяться одной скрытой функцией «ценности участника». Грантовая система должна иметь eligibility, budget, milestones, review, audit и appeal.</p>
+<div class="formula">Allocation = Rule + Evidence + Review + Audit + Appeal</div>
+<p>Это превращает солидарность из обещания перераспределения в проверяемый механизм поддержки развития.</p>
+
+<h2>29. Governance Capture</h2>
+<p>Отдельная угроза возникает, когда экономическое богатство превращается в политическую authority. Поэтому stake, reputation, credential и voting power должны иметь явно определённые границы.</p>
+<div class="formula">Economic Power ≠ Unlimited Governance Power</div>
+<p>Возможна разделённая governance architecture, где protocol safety, treasury, grants и social policies имеют разные полномочия и разные процедуры изменения.</p>
+
+<h2>30. Bridge Security</h2>
+<p>Supernets и cross-chain bridges являются отдельной trust boundary. Подтверждение события в одной сети не должно автоматически считаться истиной для другой без explicit verification.</p>
+<div class="formula">Remote Finality → Verified Proof → Local Acceptance</div>
+<p>Bridge должен иметь собственные limits, replay protection, emergency mode и recovery procedure.</p>
+
+<h2>31. Privacy by Minimum Knowledge</h2>
+<p>Принцип «Другой реален» не означает необходимость собирать больше информации о Другом. Напротив, архитектура должна стремиться к минимальному знанию, достаточному для конкретного действия.</p>
+<div class="formula">Required Knowledge = Minimum Knowledge Necessary for Action</div>
+<p>Credentials должны подтверждать нужное свойство, а не раскрывать всю биографию субъекта. Это особенно важно для identity, grants, governance и cross-domain interaction.</p>
+
+<h2>32. Необратимость как отдельный класс риска</h2>
+<p>Экономическое или governance-действие с необратимыми последствиями должно проходить более сильный gate, чем обратимое действие.</p>
+<div class="formula">Irreversibility ↑ ⇒ Evidence Requirement ↑ ⇒ Automation Scope ↓</div>
+<p>Это напрямую продолжает PICCS и принцип ограниченного вмешательства.</p>
+
+<h2>33. Adversarial Meta-Dynamics</h2>
+<p>Атаковать можно не только ledger. Атакующий может воздействовать на правила выбора, reputation, governance, reward function, oracle, bridge или сам механизм обновления протокола.</p>
+<div class="formula">Attack Surface = State + Rules + Evidence + Governance + Update Mechanism</div>
+<p>Поэтому обновление самого протокола должно рассматриваться как критический state transition.</p>
+
+<h2>34. Upgrade Safety</h2>
+<p>Protocol upgrade должен иметь version, compatibility declaration, migration path, rollback conditions и independent verification. Сам факт принятия governance proposal не является доказательством безопасности upgrade.</p>
+<div class="formula">Upgrade = Proposal + Verification + Migration + Observation + Recovery</div>
+
+<h2>35. Researchnet до Mainnet</h2>
+<p>Первая работающая сеть Yugatneo должна быть исследовательской. На Researchnet токены не должны иметь обещанной денежной ценности. Это позволяет проверять consensus, Quiet Room, identity, economics и recovery без искусственного давления финансового рынка.</p>
+<h3>Минимальные эксперименты</h3>
+<ul><li>Byzantine validator simulation;</li><li>Sybil attack simulation;</li><li>network partition и delayed messages;</li><li>replay и stale-state attacks;</li><li>credential revocation race;</li><li>governance capture simulation;</li><li>bridge failure;</li><li>reward manipulation;</li><li>Quiet Room spam и evidence poisoning;</li><li>recovery после компрометации ключей.</li></ul>
+
+<h2>36. Formal Verification Boundary</h2>
+<p>Формальная проверка должна быть модульной. Необходимо отдельно доказывать свойства consensus, state machine, credential validation, revocation, bridge verification и критических economic constraints.</p>
+<div class="formula">Verified Component Property ⊄ Automatically Verified System Property</div>
+<p>Даже полностью проверенный модуль не делает безопасной систему, если его assumptions нарушаются соседним модулем.</p>
+
+<h2>37. Нормативная граница</h2>
+<p>Yugatneo не должен превращать технический consensus в критерий моральной истины. Ledger определяет согласованное состояние протокола. Он не определяет ценность субъекта, истинность всех его убеждений или допустимость всех действий в реальном мире.</p>
+<div class="principle"><strong>Protocol Truth ≠ Reality Truth ≠ Moral Truth</strong></div>
+
+<h2>38. Расширенный набор инвариантов Yugatneo</h2>
+<ul><li>Identity не равна Trust.</li><li>Trust не равен Authority.</li><li>Authority не равна Ownership.</li><li>Ownership не равна Subjective Value.</li><li>Finality не равна epistemic unanimity.</li><li>Dissent не равен error.</li><li>Evidence не равно Interpretation.</li><li>Interpretation не равно Fact.</li><li>Economic power не даёт неограниченной governance authority.</li><li>Remote finality не равна local acceptance.</li><li>Revoked authority не восстанавливается replay.</li><li>Uncertainty не расширяет authority.</li><li>Необратимость требует более сильной проверки.</li><li>Формальная проверка модели не доказывает истинность модели.</li><li>Система должна сохранять возможность пересмотра и восстановления.</li></ul>
+
+<h2>39. Критерий зрелости Yugatneo</h2>
+<p>Yugatneo можно считать готовым к переходу между исследовательскими стадиями только при наличии соответствующих доказательств.</p>
+<table><tr><th>Стадия</th><th>Минимальное условие</th></tr>
+<tr><td>Concept</td><td>Согласованная философская и архитектурная модель.</td></tr>
+<tr><td>Specification</td><td>Формальные state transitions, assumptions и invariants.</td></tr>
+<tr><td>Researchnet</td><td>Работающий прототип и воспроизводимые эксперименты.</td></tr>
+<tr><td>Testnet</td><td>Threat testing, recovery testing и независимая проверка критических компонентов.</td></tr>
+<tr><td>Economic Sandbox</td><td>Adversarial incentive analysis и моделирование governance capture.</td></tr>
+<tr><td>Mainnet Candidate</td><td>Аудит, формальные результаты, operational procedures и понятные ограничения claims.</td></tr>
+</table>
+
+<h2>40. Итоговая формула</h2>
+<div class="principle"><strong>Yugatneo — это не попытка сделать философию токеном.</strong><br><br>Это исследование того, можно ли построить распределённую систему координации, в которой техническое согласие существует без требования epistemic унификации, неопределённость сохраняется без разрушения finality, authority ограничена контекстом, а экономические механизмы поддерживают развитие, не превращаясь в меру человеческой ценности.</div>
+<div class="formula">Consensus without Epistemic Erasure<br>Identity without Absolute Authority<br>Economy without Subjective Ranking<br>Development without Forced Uniformity</div>
+<p>В этой формулировке Yugatneo становится не отдельной «криптовалютной идеологией», а экспериментальной ветвью общей архитектуры AS. Его задача — показать, какие части философии действительно могут быть превращены в protocol invariants, а какие останутся философскими принципами или исследовательскими гипотезами.</p></main></body></html>
