@@ -515,7 +515,68 @@ section,.card{background:linear-gradient(180deg,rgba(10,23,28,.96),rgba(7,16,21,
 <p>Если нарушена критическая предпосылка эксперимента, система должна пометить результат как недействительный или неполный, а не продолжать выдавать его как нормальный результат.</p>
 <p>Это не означает, что эксперимент нужно скрывать. Напротив, failed run сохраняется в Audit Trail с причиной остановки.</p></section>
 
-<section><h2>83. Следующее развитие</h2>
+<section><h2>83. Semantic Versioning of Knowledge</h2>
+<p>Версия модели и версия знания, полученного из неё, не одно и то же. Изменение модели может сохранить часть старых выводов, ослабить другие и сделать третьи неприменимыми.</p>
+<table><thead><tr><th>Статус вывода</th><th>Смысл</th></tr></thead><tbody>
+<tr><td>Preserved</td><td>Изменение модели не затрагивает основание вывода.</td></tr>
+<tr><td>Revalidated</td><td>Вывод требует повторной проверки.</td></tr>
+<tr><td>Weakened</td><td>Новая версия уменьшает область применимости.</td></tr>
+<tr><td>Invalidated</td><td>Основание вывода больше не выполняется.</td></tr>
+<tr><td>Unknown</td><td>Невозможно установить влияние изменения.</td></tr>
+</tbody></table></section>
+
+<section><h2>84. Knowledge Dependency Graph</h2>
+<p>Выводы могут зависеть друг от друга. Поэтому удаление или изменение одного предположения может затронуть целое семейство результатов.</p>
+<div class="formula">Assumption → Model Rule → Intermediate Finding → Conclusion</div>
+<p>Граф зависимостей позволяет находить affected conclusions после изменения модели и предотвращает сохранение выводов, потерявших основание.</p></section>
+
+<section><h2>85. Evidence Ledger</h2>
+<p>Для каждого существенного утверждения полезно хранить отдельную запись: claim, supporting runs, contradicting runs, assumptions, residual и текущий статус.</p>
+<div class="grid3">
+<div class="card"><h3>Support</h3><p>Какие результаты поддерживают утверждение.</p></div>
+<div class="card"><h3>Contradiction</h3><p>Какие результаты ему противоречат.</p></div>
+<div class="card"><h3>Residual</h3><p>Что остаётся неустановленным.</p></div>
+</div></section>
+
+<section><h2>86. Negative Evidence</h2>
+<p>Не только подтверждения, но и отсутствие ожидаемого эффекта должно учитываться. Однако отсутствие наблюдения различается с доказательством отсутствия, особенно при неполной наблюдаемости.</p>
+<div class="formula">No Detection ≠ Detection of Absence</div></section>
+
+<section><h2>87. Selection Effects</h2>
+<p>Если в эксперимент попадают только определённые сценарии, агенты или данные, результат может быть обусловлен самим способом отбора.</p>
+<ul><li>selection bias;</li><li>survivorship bias;</li><li>availability bias;</li><li>sampling imbalance;</li><li>filter-induced distortion.</li></ul>
+<p>Поэтому условия включения и исключения должны входить в экспериментальный паспорт.</p></section>
+
+<section><h2>88. Distribution Shift</h2>
+<p>Результат может перестать переноситься, если распределение входных данных изменилось.</p>
+<div class="formula">Training / Calibration Distribution ≠ Deployment Distribution</div>
+<p>Симуляции должны проверять не только известные условия, но и разумные сдвиги распределения.</p></section>
+
+<section><h2>89. Agent Heterogeneity</h2>
+<p>Средний агент часто скрывает важные различия. В агентных моделях следует по возможности сохранять неоднородность целей, ресурсов, знаний, стратегий и ограничений.</p>
+<div class="formula">Population ≠ Mean Agent</div>
+<p>Агрегация допустима как отдельный аналитический слой, но не должна незаметно заменять исходное пространство субъектов.</p></section>
+
+<section><h2>90. Emergence Audit</h2>
+<p>Если на уровне системы появляется свойство, которого нет в правилах отдельного агента, необходимо различать действительное emergent behavior и артефакт реализации или агрегирования.</p>
+<table><thead><tr><th>Проверка</th><th>Вопрос</th></tr></thead><tbody>
+<tr><td>Replication</td><td>Возникает ли эффект в независимых запусках?</td></tr>
+<tr><td>Scale</td><td>Меняется ли он при изменении размера системы?</td></tr>
+<tr><td>Implementation</td><td>Не является ли он особенностью кода?</td></tr>
+<tr><td>Aggregation</td><td>Не создаётся ли эффект выбранной метрикой?</td></tr>
+</tbody></table></section>
+
+<section><h2>91. Boundary Conditions</h2>
+<p>Каждое существенное утверждение должно по возможности сопровождаться условиями, при которых оно перестаёт выполняться.</p>
+<div class="formula">Finding + Valid Domain + Failure Boundary</div>
+<p>Так формулировка становится проверяемой и не расширяется за пределы исходного эксперимента.</p></section>
+
+<section><h2>92. Reversibility Test</h2>
+<p>Если вмешательство заявлено как обратимое, симуляция должна отдельно проверять не только возможность вернуть параметр, но и восстановление состояния системы.</p>
+<div class="formula">Reverse Input ≠ Guaranteed State Recovery</div>
+<p>Путь системы может иметь значение. Поэтому reversibility следует проверять по состоянию и последствиям, а не только по формальному возврату входного параметра.</p></section>
+
+<section><h2>93. Следующее развитие</h2>
 <ul><li>единый формат Scenario Definition;</li><li>версионирование моделей;</li><li>детерминированные seeded runs;</li><li>экспорт EventLog;</li><li>сравнение нескольких моделей одного явления;</li><li>автоматический sensitivity analysis;</li><li>TLA+ модели для Symbiont-компонентов;</li><li>отдельный статистический слой;</li><li>causal graph visualization;</li><li>связь симуляций с PICCS и Event Fabric без прямого control authority.</li></ul></section>
 
 <blockquote>Симуляция не доказывает, что реальность устроена как модель. Она показывает, что произойдёт внутри модели, если её предположения принять временно.</blockquote>
