@@ -1,0 +1,22 @@
+name: Eugene Messenger domain
+
+on:
+  push:
+    paths:
+      - "eugene-messenger/**"
+  pull_request:
+    paths:
+      - "eugene-messenger/**"
+
+jobs:
+  rust-domain:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: eugene-messenger
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo fmt --all -- --check
+      - run: cargo test --workspace
+      - run: cargo check --workspace
