@@ -172,3 +172,33 @@ Expected: deterministic conflict handling with provenance and audit; no silent s
 **S18 Corrected source**
 A source used by dependent Decisions is corrected.
 Expected: dependent outputs enter reconciliation/review according to impact and policy.
+
+
+## Phase 1 traceability matrix
+
+| Schema case | Invariant | Regression | Failure condition |
+|---|---|---|---|
+| S01 | I1, I3 | R01, R04 | missing identity/provenance accepted |
+| S02 | I3, I15 | R04 | evidence is accepted as decision or loses validity |
+| S03 | I3, I11, I17 | R03, R05 | decision accepted without policy/authority basis |
+| S04 | I2, I17, I18 | R03, R06 | technical access creates permission |
+| S05 | I19, I23 | R05, R08 | execution occurs without required decision/review |
+| S06 | I4, I9, I15 | R04, R09 | dispute rewrites source fact |
+| S07 | I3, I15 | R04 | unproven evidence becomes verified |
+| S08 | I17, I18 | R03, R05 | data acquisition expands authority |
+| S09 | I11, I17, I23 | R03, R05 | action bypasses required authority/review |
+| S10 | I17 | R03 | credential interpreted as normative permission |
+| S11 | I6, I7, I20 | R06, R07 | unrelated subject data leaves permitted scope |
+| S12 | I4, I9, I15 | R04, R09 | dispute mutates evidence without process |
+| S13 | I3, I15 | R04, R09 | expired evidence treated as current verified fact |
+| S14 | I12, I24 | R06, R08 | exit produces hidden penalty |
+| S15 | I15 | R04, R05 | missing input becomes automatic negative outcome |
+| S16 | I11, I23 | R05, R06 | high-impact action bypasses review |
+| S17 | I3, I17 | R03, R05, R08 | policy conflict resolved silently |
+| S18 | I9, I19 | R04, R08, R09 | dependent decisions remain unchanged after source correction |
+
+### Phase 1 gate
+
+Schema Phase 1 has complete documented traceability when every S-case maps to at least one invariant, one regression group and an explicit failure condition.
+
+This matrix is a documentation-level control. Passing it does not claim runtime execution.
