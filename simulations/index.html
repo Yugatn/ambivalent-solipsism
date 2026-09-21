@@ -757,7 +757,81 @@ section,.card{background:linear-gradient(180deg,rgba(10,23,28,.96),rgba(7,16,21,
 <div class="formula">Philosophical Hypothesis ≠ Physical Law ≠ Simulation Result</div>
 <p>Это продолжает главный принцип раздела: модель может быть формально строгой, но её онтологический статус должен оставаться явно указанным.</p></section>
 
-<section><h2>124. Следующее развитие</h2>
+<section><h2>124. Архитектура раздела</h2>
+<p>При росте проекта симуляции разделяются на независимые исследовательские домены. Это уменьшает смешение физических, когнитивных, социальных и вычислительных гипотез.</p>
+<div class="grid3">
+<div class="card"><div class="num">LAYER A</div><h3>Foundations</h3><p>Эпистемология, субъект, наблюдение, Residual, границы квантовой аналогии.</p></div>
+<div class="card"><div class="num">LAYER B</div><h3>Subject & Cognition</h3><p>Субъект-зависимое наблюдение, внимание, интерпретация, cognitive interaction.</p></div>
+<div class="card"><div class="num">LAYER C</div><h3>Agents & Society</h3><p>Агенты, конфликты, координация, институты, экономика и социальные сети.</p></div>
+<div class="card"><div class="num">LAYER D</div><h3>Information</h3><p>Медиа, распространение, фильтрация, feedback loops и информационная экология.</p></div>
+<div class="card"><div class="num">LAYER E</div><h3>Infrastructure</h3><p>Сети, ресурсы, зависимости, каскадные отказы и устойчивость.</p></div>
+<div class="card"><div class="num">LAYER F</div><h3>Formal Systems</h3><p>Event Fabric, SymbiontOS, TLA+, invariants, causal reconstruction.</p></div>
+</div></section>
+
+<section><h2>125. Подраздел: Foundations</h2>
+<p>Фундаментальный слой исследует вопрос о том, что именно считается наблюдаемым и как субъект входит в модель.</p>
+<ul><li>Reality, Model и Residual;</li><li>субъект как наблюдатель и участник;</li><li>measurement back-action;</li><li>эпистемическая суперпозиция;</li><li>граница между философской гипотезой и физическим утверждением;</li><li>идентификация неизвестного.</li></ul>
+<a class="button" href="foundations/">Открыть подраздел</a></section>
+
+<section><h2>126. Подраздел: Subject & Cognition</h2>
+<p>Здесь исследуется динамика субъектов без сведения субъекта к одному score.</p>
+<ul><li>Identity и State;</li><li>attention и cognitive load;</li><li>Subject-World Feedback;</li><li>различия моделей разных субъектов;</li><li>наблюдение и интерпретация;</li><li>Viability как производный показатель, а не ценность субъекта.</li></ul>
+<a class="button" href="subject-cognition/">Открыть подраздел</a></section>
+
+<section><h2>127. Подраздел: Agents & Society</h2>
+<p>Агентные модели исследуют взаимодействие множества субъектов с неодинаковыми целями, ресурсами, знаниями и стратегиями.</p>
+<ul><li>агентный конфликт;</li><li>координация;</li><li>кооперация и конкуренция;</li><li>институты и правила;</li><li>Goodhart Drift;</li><li>внешние эффекты;</li><li>эмерджентные свойства.</li></ul>
+<a class="button" href="agents-society/">Открыть подраздел</a></section>
+
+<section><h2>128. Подраздел: Information & Media</h2>
+<p>Информационный слой исследует, как содержание, повторение, структура сети и внимание меняют траекторию субъектов и системы.</p>
+<ul><li>Media Impact;</li><li>information exposure;</li><li>attention competition;</li><li>filtering;</li><li>network diffusion;</li><li>feedback amplification;</li><li>information ecology.</li></ul>
+<a class="button" href="information/">Открыть подраздел</a></section>
+
+<section><h2>129. Подраздел: Infrastructure & Civilization</h2>
+<p>Здесь объединяются экономика, ресурсы, инфраструктура и длительные системные последствия.</p>
+<ul><li>цивилизационная модель;</li><li>ресурсные ограничения;</li><li>инфраструктурная взаимозависимость;</li><li>каскадные отказы;</li><li>resilience;</li><li>recovery;</li><li>долгосрочные feedback loops.</li></ul>
+<a class="button" href="civilization/">Открыть подраздел</a></section>
+
+<section><h2>130. Подраздел: Formal & Verified Simulation</h2>
+<p>Формальный слой связывает симуляции с SymbiontOS и Event Fabric. Здесь должны находиться модели, которые можно описать через состояния, события, переходы и проверяемые свойства.</p>
+<div class="formula">EventLog → Reconstruction → State → Transition → Invariant Check</div>
+<ul><li>TLA+ specifications;</li><li>TypeOK;</li><li>Safety;</li><li>Liveness;</li><li>causal consistency;</li><li>reconstruction determinism;</li><li>scheduler и Cell Model.</li></ul>
+<a class="button" href="formal/">Открыть подраздел</a></section>
+
+<section><h2>131. Общий каталог экспериментов</h2>
+<p>Каждый подраздел использует единый формат эксперимента. Это позволяет сравнивать модели разных уровней без смешения их epistemic статусов.</p>
+<table><thead><tr><th>Поле</th><th>Содержание</th></tr></thead><tbody>
+<tr><td>Experiment ID</td><td>Уникальный идентификатор.</td></tr>
+<tr><td>Domain</td><td>Foundations, Cognition, Society, Information, Infrastructure или Formal.</td></tr>
+<tr><td>Hypothesis</td><td>Что проверяется.</td></tr>
+<tr><td>Falsifier</td><td>Что могло бы опровергнуть гипотезу.</td></tr>
+<tr><td>Model Version</td><td>Точная версия модели.</td></tr>
+<tr><td>Inputs</td><td>Данные и параметры.</td></tr>
+<tr><td>Seed</td><td>Параметры случайности, если применимо.</td></tr>
+<tr><td>Intervention</td><td>Что изменялось исследователем.</td></tr>
+<tr><td>Observations</td><td>Наблюдаемые результаты.</td></tr>
+<tr><td>Residual</td><td>Что осталось неизвестным.</td></tr>
+<tr><td>Claim Status</td><td>Epistemic status результата.</td></tr>
+<tr><td>Audit</td><td>Provenance и история запуска.</td></tr>
+</tbody></table></section>
+
+<section><h2>132. Правило межподраздельной связи</h2>
+<p>Один эксперимент может ссылаться на результаты другого подраздела, но не наследует автоматически его выводы как доказанные факты.</p>
+<div class="formula">Cross-domain Reference ≠ Cross-domain Proof</div>
+<p>Например, результат информационной симуляции может стать входом для агентной модели, но его epistemic status должен сохраняться.</p></section>
+
+<section><h2>133. Roadmap развития</h2>
+<div class="grid3">
+<div class="card"><h3>Phase I</h3><p>Разделить текущие материалы по доменам.</p></div>
+<div class="card"><h3>Phase II</h3><p>Вынести независимые интерактивные симуляции в отдельные страницы.</p></div>
+<div class="card"><h3>Phase III</h3><p>Создать единый Experiment Schema.</p></div>
+<div class="card"><h3>Phase IV</h3><p>Добавить воспроизводимые runs и provenance.</p></div>
+<div class="card"><h3>Phase V</h3><p>Связать формальные модели с TLA+ и Event Fabric.</p></div>
+<div class="card"><h3>Phase VI</h3><p>Создать межподраздельный исследовательский граф.</p></div>
+</div></section>
+
+<section><h2>134. Следующее развитие</h2>
 <ul><li>единый формат Scenario Definition;</li><li>версионирование моделей;</li><li>детерминированные seeded runs;</li><li>экспорт EventLog;</li><li>сравнение нескольких моделей одного явления;</li><li>автоматический sensitivity analysis;</li><li>TLA+ модели для Symbiont-компонентов;</li><li>отдельный статистический слой;</li><li>causal graph visualization;</li><li>связь симуляций с PICCS и Event Fabric без прямого control authority.</li></ul></section>
 
 <blockquote>Симуляция не доказывает, что реальность устроена как модель. Она показывает, что произойдёт внутри модели, если её предположения принять временно.</blockquote>
