@@ -98,6 +98,9 @@ Eugene Messenger связывает принцип субъектности и �
 - [Формальная архитектура Eugene Messenger](PROJECTS/EUGENE_MESSENGER_FORMAL_ARCHITECTURE.md)
 - [Assurance Roadmap v3 — Meta-Assurance](PROJECTS/EUGENE_MESSENGER_ASSURANCE_ROADMAP_V3.md)
 
+- [Продуктовая архитектура Eugene Messenger: лента, режимы свайпа и архив](PROJECTS/EUGENE_MESSENGER_PRODUCT_ARCHITECTURE.md)
+
+
 Ключевые расширения:
 
 - Certified Transition System и ValidState;
