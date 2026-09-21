@@ -155,3 +155,12 @@ Phase 6, Policy Engine / Impact Evaluation, is architecturally closed on this br
 This checkpoint does not claim runtime certification, executable conformance, deployment readiness or production safety. Those remain implementation and integration work.
 
 Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation.
+
+
+## Phase 7 checkpoint
+
+Phase 7, Human Review, is architecturally closed on this branch. The review contract, H01–H10 scenarios and G1–G8 release-gate cross-check are documented. The architecture keeps review bounded by purpose, evidence minimization, reviewer independence, deadlines, contestability and historical traceability. Human Review cannot become unrestricted subject profiling or direct Action execution.
+
+Runtime review queue, assignment, SLA enforcement, notification, persistence and executable conformance remain implementation work.
+
+Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation → Phase 7 Human Review.
