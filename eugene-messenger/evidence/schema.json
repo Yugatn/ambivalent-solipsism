@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Eugene Messenger Evidence Record",
+  "type": "object",
+  "required": ["claim_id", "claim_hash", "spec_hash", "toolchain", "inputs", "outputs", "result", "reproduce_command", "timestamp"],
+  "properties": {
+    "claim_id": {"type": "string", "minLength": 1},
+    "claim_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "spec_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "toolchain": {
+      "type": "object",
+      "required": ["tla_version", "java_version"],
+      "properties": {
+        "tla_version": {"type": "string"},
+        "java_version": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "inputs": {"type": "object", "required": ["tla_file", "cfg_file"], "additionalProperties": {"type": "string"}},
+    "outputs": {"type": "object", "required": ["model_check_result"], "additionalProperties": {"type": "string"}},
+    "result": {
+      "type": "object",
+      "required": ["model_checked", "counterexample_found"],
+      "properties": {
+        "model_checked": {"type": "boolean"},
+        "counterexample_found": {"type": "boolean"},
+        "invariant_violated": {"type": ["string", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "reproduce_command": {"type": "string"},
+    "timestamp": {"type": "string"},
+    "signature": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}
