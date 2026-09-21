@@ -145,3 +145,100 @@ Each claim must enter the Registry with explicit scope, assumptions, falsificati
 8. Threat-model tests.
 9. Formal claim definitions.
 10. Reference implementation and conformance evidence.
+
+
+## Conversation Domain Model
+
+The product layer now has an explicit domain boundary between presentation gestures and persistent conversation state.
+
+### Feed direction
+
+`FeedDirection = Down | Up` is a presentation preference. Down is the primary Eugene Messenger mode: newer messages enter from the top and the user navigates the conversation by swiping from top toward bottom. Up preserves the conventional messenger behavior. Switching direction never changes protocol ordering, sequence numbers, timestamps, delivery/read state, cryptographic state, or message identity.
+
+### Two Favorite folders
+
+A message may belong to one of two symmetric personal collections:
+
+- **Left, Important** — messages the user considers important.
+- **Right, Interesting** — messages the user wants to keep as interesting.
+
+A message is placed by physically dragging it beyond the corresponding screen edge. A partial gesture is cancelled; only a committed threshold crossing changes domain state.
+
+`FavoriteState = None | Left | Right`.
+
+The two collections are mutually exclusive for a single message. Moving a message from one side to the other is an explicit state transition. Removing a favorite is an explicit domain command, not an accidental consequence of scrolling.
+
+The folders are orthogonal to Archive: archiving a message does not remove its favorite state, and restoring a message does not change its favorite state. This permits an archived message to remain in Important or Interesting.
+
+### Gesture protocol
+
+The UI emits domain-level events rather than directly mutating message state:
+
+`SwipeBegin(direction)`, `SwipeDrag(distance)`, `SwipeCommit(direction)`, `SwipeCancel`, `FavoriteRemove`.
+
+Only `SwipeCommit` can mutate `FavoriteState`. The threshold, atomicity, idempotence and conflict-resolution rules belong to Conversation State, not to the renderer.
+
+### Multi-device semantics
+
+Favorite changes are user-owned conversation-state mutations. They must carry a monotonic operation identifier and device/session identity. The initial implementation uses deterministic last-operation ordering for convergence; the protocol must not infer semantic importance from wall-clock time alone. A later CRDT implementation may replace this mechanism without changing the UI contract.
+
+### Archive
+
+`ArchiveState = Active | Archived | Restored | Deleted`. Archive is independent of feed direction and favorites. Deleted is terminal at the domain layer unless an explicit recovery policy is introduced.
+
+### Hidden archive command
+
+The archive can expose a local unlock session through the normal message-search surface. The command is deliberately not represented as a visible password field. The secret is not persisted in search history, telemetry, sync payloads, logs, or accessibility labels. Unlock state is temporary and scoped to the local device/session. This is an access-control UX layer, not a replacement for encryption at rest.
+
+### Core invariants
+
+- **Favorite exclusivity:** one message cannot simultaneously be in Left and Right.
+- **Favorite atomicity:** no externally observable intermediate favorite state exists during a committed gesture.
+- **Archive/Favorite orthogonality:** archive transitions do not mutate favorite state.
+- **UI/protocol independence:** changing feed direction cannot mutate protocol ordering or cryptographic state.
+- **Secret non-disclosure:** the hidden archive command is absent from ordinary search results, history, telemetry and synchronization.
+
+These invariants are registered as assurance targets but remain unproven until executable tests and formal models produce evidence.
+
+## Reference Domain Types
+
+A future Rust core should expose equivalent domain types without coupling them to UI widgets:
+
+```rust
+pub enum FeedDirection { Down, Up }
+pub enum FavoriteState { None, Left, Right }
+pub enum ArchiveState { Active, Archived, Restored, Deleted }
+
+pub struct FavoriteOperation {
+    pub message_id: MessageId,
+    pub target: FavoriteState,
+    pub operation_id: OperationId,
+    pub device_id: DeviceId,
+}
+```
+
+The renderer translates a physical gesture into these commands; storage and synchronization persist the resulting domain event. The protocol remains the source of truth for message ordering.
+
+## Telegram-inspired product patterns and layer boundaries
+
+The architecture may borrow mature interaction patterns from Telegram without copying its implementation or protocol. Patterns are classified before implementation:
+
+| Pattern | Layer | Protocol impact |
+|---|---|---|
+| Chat list, pinned chats, folders, mute | Presentation | None or local preference |
+| Replies, forwarding, reactions | Conversation State | Message references / mutations |
+| Drafts | Conversation State | Optional synchronization |
+| Delivery and read states | Protocol | Acknowledgement events |
+| Multi-device synchronization | Protocol | Replicated conversation state |
+| Media and documents | Protocol + Storage | Content addressing, transfer and integrity |
+| Archive and two Favorite folders | Conversation State | Replicated user-owned state |
+
+This keeps Telegram-inspired usability separate from Eugene Messenger's protocol and assurance claims.
+
+## Assurance targets introduced by this domain model
+
+The following targets are intentionally not promoted to `model_checked`:
+
+`FeedDirectionInvariant`, `FavoriteStateAtomicity`, `FavoriteFolderSymmetry`, `ArchiveFavoriteOrthogonality`, `ArchiveUnlockRateLimit`, `HiddenArchiveSecretNonDisclosure`, and `ProtocolOrderingIndependentOfUI`.
+
+Each requires executable tests and, where appropriate, a TLA+ model before a stronger assurance status is allowed.
