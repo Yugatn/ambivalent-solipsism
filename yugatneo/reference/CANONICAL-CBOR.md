@@ -1,64 +1,64 @@
-# Yugatneo Canonical Serialization Profile
+# Yugatneo Canonical CBOR Profile
 
-This document removes the ambiguity between generic CBOR and the Yugatneo identifier contract.
+Version: 0.8-B+
+Status: Normative for Level 1
 
-## 1. Encoding
+## 1. Deterministic encoding
 
-The Level 1 implementation uses deterministic CBOR compatible with RFC 8949 deterministic encoding.
+Yugatneo Level 1 uses the core deterministic CBOR requirements of RFC 8949:
 
-Rules:
+- preferred serialization;
+- definite-length arrays, maps and strings;
+- deterministic map-key ordering;
+- minimal integer and length encodings.
 
-- no floating point values;
-- no indefinite-length strings, arrays or maps;
-- unsigned integers use the shortest permitted representation;
-- negative integers use the shortest permitted representation;
-- text strings are UTF-8;
-- map keys are text strings only;
-- map keys are ordered by deterministic CBOR key encoding;
-- arrays preserve semantic order unless the schema explicitly declares canonical sorting.
+The implementation additionally forbids floating-point values and CBOR tags in the current Level 1 protocol profile.
 
-## 2. Event ordering
+## 2. Map ordering
 
-Events are canonically ordered by:
+Map keys are ordered by the bytewise lexicographic ordering of their deterministic CBOR encodings.
 
-1. LogicalTime.counter;
-2. LogicalTime.subject_id;
-3. physical_time;
-4. EventID.
+This is the ordering specified by RFC 8949 section 4.2.1.
 
-Physical time is never used as primary semantic time.
+## 3. Decoder policy
 
-## 3. Identifier domains
+The decoder:
 
-Identifiers are domain separated:
+1. parses exactly one CBOR data item;
+2. rejects trailing bytes;
+3. rejects floats;
+4. rejects tags;
+5. canonicalizes the decoded value;
+6. compares the canonical bytes with the supplied bytes;
+7. rejects the input if the bytes differ.
 
-- EventID: `YUGATNEO/EVENT/v1`
-- EvidenceID: `YUGATNEO/EVIDENCE/v1`
-- TraceID: `YUGATNEO/TRACE/v1`
-- WitnessID: `YUGATNEO/WITNESS/v1`
+This makes non-canonical input an explicit protocol error rather than an accepted alternative representation.
 
-The identifier field itself is omitted from the hashed object.
+## 4. JSON boundary
 
-Conceptually:
+JSON is an authoring and review representation.
 
-`ID = SHA-256(domain || canonical_cbor(object_without_id))`
+JSON is not hashed directly.
 
-## 4. JSON
+A JSON trace is converted to the same deterministic CBOR representation before identifier hashing.
 
-JSON is a review and fixture-authoring representation. It is not hashed.
+## 5. Identifier domains
 
-JSON key order is not semantically significant.
+The existing domain-separated SHA-256 identifier contract remains:
 
-A conforming implementation MUST produce identical canonical bytes when the same semantic object is parsed repeatedly.
+ID = SHA-256(domain || 0x00 || canonical_cbor(object_without_id))
 
-## 5. Determinism test
+Domains:
 
-A valid Level 1 implementation MUST satisfy:
+- YUGATNEO/EVENT/v1
+- YUGATNEO/EVIDENCE/v1
+- YUGATNEO/TRACE/v1
+- YUGATNEO/WITNESS/v1
 
-`canonicalize(parse(canonicalize(x))) == canonicalize(x)`
+## 6. What this profile does not prove
 
-byte-for-byte.
+Deterministic serialization proves reproducibility of representation. It does not prove semantic correctness, validity-rule completeness, T-star completeness, or protocol security.
 
-## 6. Boundary
+## Reference
 
-Canonical serialization does not prove protocol correctness. It only makes the represented state reproducible.
+RFC 8949 section 4.2 defines deterministic CBOR requirements, including preferred serialization, prohibition of indefinite-length items, and bytewise lexicographic ordering of deterministically encoded map keys.
