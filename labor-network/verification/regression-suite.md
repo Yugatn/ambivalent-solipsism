@@ -145,3 +145,31 @@ Phase 3 E01–E15 are checked against the existing release gates G1–G8. The pu
 ### Phase 3 closure status
 
 The documented E01–E15 cases now have explicit traceability to the existing regression groups and release gates. This is a documentation-level cross-check; runtime Event Engine execution and production certification remain unclaimed.
+
+
+## Phase 4 Projection release-gate cross-check
+
+| Projection case | Release gates | Required property |
+|---|---|---|
+| P01 rebuild | G1, G4, G8 | deterministic rebuild without repeated Action effects |
+| P02 version change | G4, G8 | derived interpretation changes without rewriting Event History |
+| P03 projection lag | G4, G7, G8 | stale state is explicit and not mistaken for current truth |
+| P04 stale high-impact input | G1, G6, G7, G8 | protected Decision cannot silently rely on stale data |
+| P05 failed projection | G4, G8 | durable source event survives projection failure and safe retry |
+| P06 evidence correction | G1, G4, G7, G8 | dependent Decision basis is re-evaluated when required |
+| P07 unknown preservation | G7, G8 | missing information remains UNKNOWN rather than negative outcome |
+| P08 permission projection | G5, G6, G8 | technical access cannot become Permission authority |
+| P09 privacy boundary | G2, G3, G5, G6, G8 | denormalization cannot broaden access or profile construction |
+| P10 aggregate isolation | G2, G3, G6, G7, G8 | aggregate analytics cannot silently become individual ranking |
+| P11 projection deletion | G2, G4, G5, G8 | derived deletion does not falsify historical provenance |
+| P12 concurrent rebuild | G1, G4, G8 | checkpoint/version rules prevent lost or duplicated effects |
+
+### Phase 4 release rules
+
+1. No projection may become a hidden source of authority merely because it is faster or easier to query.
+2. Freshness is part of semantic validity whenever a read is used for a protected Decision, Permission or Action.
+3. Projection failure is an operational state, not evidence that the underlying subject/entity is negative, absent or invalid.
+4. Rebuild and correction paths preserve Event History and remain independently auditable.
+5. Projection access remains subject to privacy, purpose limitation and human-review controls already established by G1–G8.
+
+Phase 4 release-gate cross-check is documentation-complete for P01–P12. Runtime projection implementation and executable release testing remain unclaimed.
