@@ -22,3 +22,17 @@ This matrix records the executable reference-kernel coverage for K01–K10. A te
 This percentage means that each currently defined Critical Kernel obligation has at least one executable conformance test in the reference implementation. It does not mean the whole STСеть runtime is implemented, secure, deployed or production-ready.
 
 The next conformance layer must map these same obligations to durable storage, API boundaries, authorization, event processing and any federated runtime components introduced by the pilot.
+
+
+## Durable boundary status
+
+The reference conformance layer now includes an append-only JSON persistence adapter for Event identity and two executable tests covering duplicate delivery and history across a new kernel instance.
+
+| Boundary | Reference status | Production status |
+|---|---|---|
+| In-memory K01–K10 | covered | not certified |
+| Durable Event identity | covered | not certified |
+| Cross-instance duplicate suppression | covered | not certified |
+| Durable audit/history | not yet implemented | not certified |
+| Durable authorization/policy state | not yet implemented | not certified |
+| API/network boundary | not yet implemented | not certified |
