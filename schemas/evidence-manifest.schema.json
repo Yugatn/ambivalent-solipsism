@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yugatn.github.io/ambivalent-solipsism/schemas/evidence-manifest.schema.json",
+  "title": "Eugene Messenger Evidence Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "claim_id",
+    "claim_hash",
+    "source_revision",
+    "toolchain",
+    "results",
+    "checksums",
+    "manifest_hash"
+  ],
+  "properties": {
+    "claim_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "source_revision": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "toolchain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tla_version", "tla_sha256", "java_version"],
+      "properties": {
+        "tla_version": {"type": "string", "minLength": 1},
+        "tla_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "java_version": {"type": "string", "minLength": 1}
+      }
+    },
+    "results": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["positive", "broken"],
+      "properties": {
+        "positive": {
+          "enum": ["pass", "counterexample", "infrastructure_failure"]
+        },
+        "broken": {
+          "enum": ["pass", "counterexample", "infrastructure_failure"]
+        }
+      }
+    },
+    "checksums": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^sha256:[a-f0-9]{64}$"
+      }
+    },
+    "manifest_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    }
+  }
+}
