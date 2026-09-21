@@ -36,7 +36,7 @@ echo "CONFIG=$CONFIG"
 echo "TLC_JAR=$TLC_JAR"
 
 set +e
-java -jar "$TLC_JAR" -config "$CONFIG" "$MODEL" >"$TMP_OUTPUT" 2>&1
+java -XX:+UseParallelGC -jar "$TLC_JAR" -workers 1 -config "$CONFIG" "$MODEL" >"$TMP_OUTPUT" 2>&1
 TLC_EXIT=$?
 set -e
 
@@ -52,7 +52,7 @@ fi
 
 if grep -Fq 'No error has been found.' "$TMP_OUTPUT"; then
   ACTUAL="pass"
-elif grep -Eiq 'Invariant .* is violated|Temporal properties were violated|Deadlock reached|property .* is violated' "$TMP_OUTPUT"; then
+elif grep -Eiq 'Invariant .* is violated|The invariant .* is equal to FALSE|Temporal properties were violated|Deadlock reached|property .* is violated' "$TMP_OUTPUT"; then
   ACTUAL="counterexample"
 else
   echo "VERDICT=INFRASTRUCTURE_FAILURE"
