@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 env:
   TLA_BUILD: "2026.08.11.125311"
@@ -35,7 +36,7 @@ jobs:
       - name: Install assurance dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install pytest pyyaml jsonschema
+          python -m pip install pytest pyyaml jsonschema rfc8785
 
       - name: Validate YAML registry
         run: |
@@ -133,6 +134,13 @@ jobs:
       - name: Evidence schema validation
         run: |
           python scripts/assurance/validate_evidence_schema.py
+
+      - name: Manifest and trace assurance tests
+        run: |
+          pytest -q tests/assurance
+
+      - name: Validate promotion invariants
+        run: python assurance/validate_promotions.py
 
       - name: Cargo formatting and tests
         if: hashFiles('eugene-messenger/Cargo.toml') != ''
