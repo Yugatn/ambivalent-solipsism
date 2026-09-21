@@ -1,0 +1,115 @@
+name: Eugene Messenger Simulation E2E
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "simulations/**"
+      - "claims/registry.yaml"
+      - ".github/workflows/sim-e2e.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  receiver-identity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Generate receiver keypair
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          private = os.urandom(32)
+          # X25519 public key is derived by the receiver binary during verification.
+          # For the simulation transport, the sender receives the public key from a
+          # deterministic helper using the same Rust primitive.
+          Path("receiver_private.key").write_bytes(private)
+          PY
+      - name: Build simulation
+        run: cargo build --manifest-path simulations/Cargo.toml
+      - name: Derive receiver public key
+        run: |
+          cat > /tmp/derive.rs <<'RS'
+          use x25519_dalek::{PublicKey, StaticSecret};
+          use std::fs;
+          fn main() {
+            let b: [u8;32] = fs::read("receiver_private.key").unwrap().try_into().unwrap();
+            let s = StaticSecret::from(b);
+            fs::write("receiver_public.key", PublicKey::from(&s).as_bytes()).unwrap();
+          }
+          RS
+          rustc /tmp/derive.rs -o /tmp/derive             --extern x25519_dalek=$(find target/debug/deps -name 'libx25519_dalek-*.rlib' | head -1)             -L dependency=target/debug/deps
+          /tmp/derive
+      - name: Upload receiver identity
+        uses: actions/upload-artifact@v4
+        with:
+          name: receiver-identity
+          path: |
+            receiver_private.key
+            receiver_public.key
+
+  sender:
+    needs: receiver-identity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/download-artifact@v4
+        with:
+          name: receiver-identity
+      - name: Encrypt
+        env:
+          PLAINTEXT: "hello from Eugene Messenger"
+        run: cargo run --manifest-path simulations/Cargo.toml -p sim-sender -- receiver_public.key
+      - name: Assert no plaintext in encrypted artifact
+        run: |
+          ! grep -F "hello from Eugene Messenger" encrypted_message.json
+          rm -f sender_x25519_private.key
+      - name: Upload ciphertext
+        uses: actions/upload-artifact@v4
+        with:
+          name: encrypted-message
+          path: |
+            encrypted_message.json
+            sender_x25519_public.key
+            sender_trace.json
+
+  receiver:
+    needs: sender
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/download-artifact@v4
+        with:
+          name: receiver-identity
+      - uses: actions/download-artifact@v4
+        with:
+          name: encrypted-message
+      - name: Decrypt and verify
+        env:
+          EXPECTED_PLAINTEXT: "hello from Eugene Messenger"
+        run: cargo run --manifest-path simulations/Cargo.toml -p sim-receiver -- encrypted_message.json receiver_private.key
+      - name: Tamper negative control
+        run: |
+          cp encrypted_message.json tampered.json
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path("tampered.json")
+          s=p.read_text()
+          s=s.replace('"ciphertext": "', '"ciphertext": "A', 1)
+          p.write_text(s)
+          PY
+          if cargo run --quiet --manifest-path simulations/Cargo.toml -p sim-receiver -- tampered.json receiver_private.key; then
+            echo "FAIL: tampered ciphertext was accepted"
+            exit 1
+          fi
+      - name: Upload receiver evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: receiver-evidence
+          path: receiver_result.json
