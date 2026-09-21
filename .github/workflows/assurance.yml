@@ -51,6 +51,9 @@ jobs:
               print(f"PASS: YAML parse {path}")
           PY
 
+      - name: Validate claim registry integrity
+        run: python scripts/assurance/validate_registry.py
+
       - name: Run assurance unit tests
         run: pytest -q tests/assurance
 
