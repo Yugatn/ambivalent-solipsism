@@ -73,7 +73,46 @@ Yugatneo
 Consensus, ledger, epistemic layer, ACN-VM, economy, governance
 
 Constitutional Layer
-Ограничение эволюции Yugatneo</div><p>Constitutional layer не определяет абсолютную истину. Он определяет границы, внутри которых протокол может изменяться, сохраняя заявленную архитектурную идентичность.</p><h2>11. Open Problems</h2><ul><li>Формальная семантика I-5 и проверка explicit, distributed и emergent global ranking.</li><li>Разделение Truth, Applicability и Decidability.</li><li>Формальная модель Evidence Coverage.</li><li>Условия legitimate reversion и bounded exit delay.</li><li>Корректная дефиниция InvariantDistance.</li><li>Доказательство finite-depth checker architecture.</li><li>Композиция constitutional checks между trust domains.</li><li>Защита от poisoning evidence и capture checker'а.</li><li>Формальная модель recovery после нарушения.</li><li>Связь LTL-подобного языка с machine-checked verification.</li><li>Определение допустимых emergency amendments.</li></ul><h2>12. Что пока нельзя утверждать</h2><div class="note"><ul><li>Нельзя утверждать, что инварианты уже неизменяемы.</li><li>Нельзя утверждать, что checker не может быть захвачен.</li><li>Нельзя утверждать, что I-5 защищён от distributed или emergent global ranking.</li><li>Нельзя утверждать, что I-13 и I-14 уже имеют machine-checked semantics.</li><li>Нельзя утверждать, что erosion detection решена.</li><li>Нельзя утверждать, что formal language достаточен для всей конституции.</li><li>Нельзя утверждать production safety до reference implementation и adversarial validation.</li></ul></div><h2>13. Итоговая модель</h2><div class="formula">Preserve Identity
+Ограничение эволюции Yugatneo</div><p>Constitutional layer не определяет абсолютную истину. Он определяет границы, внутри которых протокол может изменяться, сохраняя заявленную архитектурную идентичность.</p><h2>11. Open Problems</h2><ul><li>Формальная семантика I-5 и проверка explicit, distributed и emergent global ranking.</li><li>Разделение Truth, Applicability и Decidability.</li><li>Формальная модель Evidence Coverage.</li><li>Условия legitimate reversion и bounded exit delay.</li><li>Корректная дефиниция InvariantDistance.</li><li>Доказательство finite-depth checker architecture.</li><li>Композиция constitutional checks между trust domains.</li><li>Защита от poisoning evidence и capture checker'а.</li><li>Формальная модель recovery после нарушения.</li><li>Связь LTL-подобного языка с machine-checked verification.</li><li>Определение допустимых emergency amendments.</li><li>Формальная семантика Evidence Arbitration.</li><li>Граница Meta-Check без скрытой authority hierarchy.</li><li>Формат Boundary Statement для всех существенных слоёв.</li></ul><h2>12. Что пока нельзя утверждать</h2><div class="note"><ul><li>Нельзя утверждать, что инварианты уже неизменяемы.</li><li>Нельзя утверждать, что checker не может быть захвачен.</li><li>Нельзя утверждать, что I-5 защищён от distributed или emergent global ranking.</li><li>Нельзя утверждать, что I-13 и I-14 уже имеют machine-checked semantics.</li><li>Нельзя утверждать, что erosion detection решена.</li><li>Нельзя утверждать, что formal language достаточен для всей конституции.</li><li>Нельзя утверждать production safety до reference implementation и adversarial validation.</li><li>Нельзя утверждать, что Evidence Arbitration исключает скрытую иерархию.</li><li>Нельзя утверждать, что Meta-Check невозможно превратить в новый центр authority.</li></ul></div>
+<h2>14. Evidence Arbitration</h2>
+<p>Разные evidence providers не образуют заранее заданную иерархию. Их результаты могут быть совместимыми, частично покрывающими друг друга или противоречащими.</p>
+<div class="formula">Arbitration(e₁,e₂) ∈ {
+  CONFLICT,
+  UNRESOLVED,
+  SUBSUMED,
+  COMPOSED
+}</div>
+<table><tr><th>Outcome</th><th>Условие</th></tr>
+<tr><td>CONFLICT</td><td>Оба evidence валидны в своём scope, но их claims несовместимы.</td></tr>
+<tr><td>UNRESOLVED</td><td>Недостаточно оснований определить отношение между claims.</td></tr>
+<tr><td>SUBSUMED</td><td>Один evidence формально покрывает claim другого в том же или более узком scope.</td></tr>
+<tr><td>COMPOSED</td><td>Evidence дополняют друг друга без устранения их отдельных ограничений.</td></tr></table>
+<p><strong>CONFLICT не является ошибкой.</strong> Он является допустимым epistemic outcome. При конфликте нельзя автоматически назначать приоритет по происхождению evidence. Upgrade, затронутый unresolved conflict, не получает PASS только из-за авторитета одного provider.</p>
+
+<h2>15. AAS Self-Validation Boundary</h2>
+<p>Формальная рекурсия имеет конечную глубину.</p>
+<div class="formula">Level 0: Invariants
+Level 1: Constitutional Check
+Level 2: Meta-Check of Evidence Compliance
+Level 3: does not exist</div>
+<p>Meta-Check проверяет соответствие AAS evidence собственному Experimental Contract, provenance, isolation, knowledge boundaries, reproduction data и заявленному coverage. Он не устанавливает истинность самих invariants, корректность модели среды или полноту Objective Library.</p>
+<p>За этой границей остаются независимая adversarial science, эмпирическое наблюдение и человеческое исследовательское сообщество. Они не превращаются в следующий protocol authority.</p>
+
+<h2>16. Boundary Statement</h2>
+<p>Каждый существенный слой Yugatneo должен явно описывать собственные возможности и границы. Boundary Statement является anti-inflation mechanism.</p>
+<div class="formula">Boundary Statement = {
+  Can,
+  Cannot,
+  CheckedBy,
+  ChecksAbove,
+  RecursionBoundary,
+  OutsideProtocol
+}</div>
+<p>Если слой начинает использовать собственный evidence как authority, расширять scope без декларации или выдавать отсутствие обнаружения за доказанную безопасность, это рассматривается как epistemic boundary violation.</p>
+
+<h2>17. Constitutional Status</h2>
+<div class="note"><strong>Spec-level only.</strong> Evidence Arbitration, Meta-Check и Boundary Statement пока не являются machine-checked механизмами. Их наличие в спецификации не увеличивает production readiness.</div>
+<h2>13. Итоговая модель</h2><div class="formula">Preserve Identity
 Preserve Agency
 Preserve Epistemic Pluralism
 Preserve Exit
