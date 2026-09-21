@@ -275,3 +275,64 @@ class DurableAuthorizationTests(unittest.TestCase):
             ))
         finally:
             d.cleanup()
+
+
+class ApiBoundaryTests(unittest.TestCase):
+    def test_api_request_uses_persisted_authorization_path(self):
+        import tempfile
+        from pathlib import Path
+        from pilot_kernel import (
+            ActionRequest,
+            DurableDecision,
+            DurableKernelStore,
+            PilotKernel,
+            record_decision_durably,
+            handle_action_request,
+        )
+        with tempfile.TemporaryDirectory() as d:
+            store = DurableKernelStore(str(Path(d) / "state.json"))
+            record_decision_durably(
+                store, DurableDecision("api-1", True, "policy-v1", "completed")
+            )
+            kernel = PilotKernel()
+            kernel.resolve_evidence()
+            kernel.decide(permitted=True)
+            request = ActionRequest("req-1", "api-1", "policy-v1", "completed", True, "protected")
+            self.assertTrue(handle_action_request(kernel, store, request))
+            self.assertEqual(kernel.action, ActionState.EXECUTED)
+
+    def test_api_request_cannot_bypass_missing_decision(self):
+        import tempfile
+        from pathlib import Path
+        from pilot_kernel import ActionRequest, DurableKernelStore, PilotKernel, handle_action_request
+        with tempfile.TemporaryDirectory() as d:
+            store = DurableKernelStore(str(Path(d) / "state.json"))
+            kernel = PilotKernel()
+            kernel.resolve_evidence()
+            kernel.decide(permitted=True)
+            request = ActionRequest("req-2", "missing", "policy-v1", "completed", True, "protected")
+            with self.assertRaises(ValueError):
+                handle_action_request(kernel, store, request)
+
+    def test_api_policy_mismatch_is_blocked(self):
+        import tempfile
+        from pathlib import Path
+        from pilot_kernel import (
+            ActionRequest,
+            DurableDecision,
+            DurableKernelStore,
+            PilotKernel,
+            record_decision_durably,
+            handle_action_request,
+        )
+        with tempfile.TemporaryDirectory() as d:
+            store = DurableKernelStore(str(Path(d) / "state.json"))
+            record_decision_durably(
+                store, DurableDecision("api-3", True, "policy-v1", "completed")
+            )
+            kernel = PilotKernel()
+            kernel.resolve_evidence()
+            kernel.decide(permitted=True)
+            request = ActionRequest("req-3", "api-3", "policy-v2", "completed", True, "protected")
+            with self.assertRaises(ValueError):
+                handle_action_request(kernel, store, request)
