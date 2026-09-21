@@ -346,3 +346,27 @@ State показывает текущую конфигурацию, Event сох
 
 - [Regional](regional/README.md)
 - [Regional Analytics](regional/analytics.md)
+
+
+## 41 · Security Layer
+
+- [Security](security/README.md)
+- [Authorization Enforcement](security/authorization-enforcement.md)
+- [Abuse Prevention](security/abuse-prevention.md)
+- [Incident Response](security/incident-response.md)
+
+## 42 · Verification Layer
+
+- [Verification](verification/README.md)
+- [Invariant Tests](verification/invariant-tests.md)
+- [State Tests](verification/state-tests.md)
+- [Policy Tests](verification/policy-tests.md)
+- [Migration Tests](verification/migration-tests.md)
+
+## 43 · Integration Layer
+
+- [Integration](integration/README.md)
+- [API Contract](integration/api-contract.md)
+- [Legacy Bridge](integration/legacy-bridge.md)
+
+Legacy Bridge существует только на период миграции и не создаёт второй канон.
