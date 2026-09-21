@@ -328,7 +328,7 @@ SNT04_Provenance ==
 
 SNT05_ResidualPreservation ==
   (epistemic = "UNKNOWN" \/ epistemic = "CONFLICTING")
-    => actionTaken # "RECOVER"
+    => (actionTaken \\in ReversibleActions)
 
 SNT06_ReversiblePreference ==
   actionTaken \in ReversibleActions
