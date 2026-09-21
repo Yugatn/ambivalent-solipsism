@@ -140,6 +140,6 @@ Until these conditions are met, legacy files must remain preserved.
 
 File-level migration is **100% complete**.
 
-Pairwise semantic verification is substantially advanced. Verified pairs are recorded in `migration/semantic-audit.md`. Known intentional refinements remain explicitly distinguished from accidental content loss.
+Pairwise semantic verification is closed for the identified 66-file migration set. Verified pairs and intentional refinements are recorded in `migration/semantic-audit.md`.
 
-The remaining work is final source-to-block verification for any unverified legacy material, followed by cross-module consistency and regression validation.
+The migration and semantic gates are closed. Runtime execution is intentionally not claimed by this documentation. Future work proceeds as versioned architecture development and must use the canonical modules and regression suite.
