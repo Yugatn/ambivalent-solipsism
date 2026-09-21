@@ -164,3 +164,12 @@ Phase 7, Human Review, is architecturally closed on this branch. The review cont
 Runtime review queue, assignment, SLA enforcement, notification, persistence and executable conformance remain implementation work.
 
 Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation → Phase 7 Human Review.
+
+
+## Phase 8 checkpoint
+
+Phase 8, Audit / Observability, is architecturally closed on this branch. The contract, A01–A10 scenarios and G1–G8 release-gate cross-check are documented. AuditRecord remains distinct from telemetry and unrestricted surveillance; audit access is itself auditable; aggregate observability cannot silently become individual profiling; and audit failure/retention/correction semantics are explicit.
+
+Runtime audit storage, tamper-evidence implementation, retention enforcement, alerting and executable conformance remain implementation work.
+
+Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation → Phase 7 Human Review → Phase 8 Audit / Observability.
