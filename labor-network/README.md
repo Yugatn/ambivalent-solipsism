@@ -244,3 +244,22 @@
 - [Regression Suite](regression-suite.md)
 
 Эти документы контролируют не только наличие исходных файлов, но и сохранение их смыслового содержания после декомпозиции.
+
+
+## 30 · Domain Layer
+
+Предметная модель вынесена в отдельный доменный слой:
+
+- [Domain README](domain/README.md)
+- [Subject](domain/subject.md)
+- [Opportunity](domain/opportunity.md)
+- [Engagement](domain/engagement.md)
+- [Evidence](domain/evidence.md)
+- [Development](domain/development.md)
+- [Support](domain/support.md)
+- [Employer](domain/employer.md)
+- [Regional Development](domain/regional-development.md)
+- [Reputation](domain/reputation.md)
+- [Self-Employment](domain/self-employment.md)
+
+Доменный слой не зависит от конкретной БД, UI или транспортного протокола.
