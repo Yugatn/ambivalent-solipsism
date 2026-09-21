@@ -33,3 +33,15 @@
 ## Principle
 
 > Формализация считается завершённой только тогда, когда нормативное утверждение имеет проверяемое техническое следствие.
+
+
+## State and Action coverage
+
+| Requirement | State | Event | Decision | Action |
+|---|---|---|---|---|
+| status change | state machine | state event | policy if required | optional |
+| permission change | permission state | permission event | authority policy | access effect |
+| evidence correction | evidence state | evidence event | reconciliation | correction |
+| dispute | dispute state | dispute event | review | resolution effect |
+| high-impact consequence | target state | action event | reviewed decision | audited action |
+
