@@ -62,3 +62,16 @@ The reference runtime now requires an explicit persisted Decision for protected 
 | Review completion guard | covered | not certified |
 | Denied Decision blocks execution | covered | not certified |
 | API/network authorization boundary | not yet implemented | not certified |
+
+
+## API boundary checkpoint
+
+The reference runtime now exposes a bounded ActionRequest entry point that delegates to the durable authorization boundary. The API-facing path cannot execute a protected Action without a matching persisted Decision, policy version and review state.
+
+| Boundary | Reference status | Production status |
+|---|---|---|
+| API request enters through authorization | covered | not certified |
+| Missing Decision blocked at API boundary | covered | not certified |
+| Policy mismatch blocked at API boundary | covered | not certified |
+| Direct protected execution from API payload | not exposed | not certified |
+| Network transport/authentication | not implemented | not certified |
