@@ -23,3 +23,14 @@ run_model() {
 run_model AntiReplay_Protocol.tla AntiReplay.cfg pass "$EVIDENCE_DIR/positive.log"
 run_model AntiReplay_Broken.tla AntiReplay_Broken.cfg counterexample "$EVIDENCE_DIR/broken.log"
 sha256sum "$EVIDENCE_DIR"/*.log > "$EVIDENCE_DIR/checksums.sha256"
+cat > "$EVIDENCE_DIR/manifest.json" <<EOF
+{
+  "schema_version": 1,
+  "claim_id": "AntiReplay",
+  "source_revision": "${GITHUB_SHA:-unknown}",
+  "tool": "TLA+ TLC",
+  "positive_verdict": "PASS",
+  "negative_verdict": "EXPECTED_COUNTEREXAMPLE",
+  "evidence_files": ["positive.log", "broken.log", "checksums.sha256"]
+}
+EOF
