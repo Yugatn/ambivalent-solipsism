@@ -56,3 +56,7 @@ conformant означает, что реализация соответству�
 audited означает отдельную внешнюю проверку.
 
 Наличие прототипа, теста или модели само по себе не означает доказанную безопасность.
+
+## Domain prototype
+
+The executable domain layer is under core/domain. It adds platform-independent FavoriteState, HLC ordering, normalized swipe semantics, ArchiveState and HiddenArchive session primitives. It deliberately does not claim model-checked assurance.
