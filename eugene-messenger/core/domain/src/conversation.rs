@@ -12,6 +12,25 @@ pub struct ConversationState {
     pub messages: BTreeMap<MessageId, MessageState>,
     applied_operations: BTreeSet<OperationId>,
     winning_favorite_operations: BTreeMap<MessageId, FavoriteOperation>,
+    #[test]
+    fn undo_is_a_new_append_only_operation() {
+        let mut state = ConversationState::new();
+        state.insert_message(MessageState::new(MessageId(9)));
+        assert!(state.apply_favorite(op(1, 9, 1, FavoriteState::Left)).unwrap());
+
+        let undo = state.undo_favorite(
+            MessageId(9),
+            OperationId(2),
+            DeviceId(1),
+            HlcTimestamp { wall_time_ms: 2, counter: 0, device_id: DeviceId(1) },
+        ).unwrap();
+
+        assert_eq!(undo.previous_state, FavoriteState::Left);
+        assert_eq!(undo.target, FavoriteState::None);
+        assert_eq!(state.messages[&MessageId(9)].favorite, FavoriteState::None);
+        assert_eq!(state.applied_operation_count(), 2);
+    }
+
 }
 
 impl ConversationState {
