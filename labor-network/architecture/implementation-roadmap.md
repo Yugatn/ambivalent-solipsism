@@ -116,3 +116,24 @@ Phase 1 считается завершённой только после:
 - фиксации миграции версий схемы.
 
 После этого можно переходить к Phase 2 — State Machines.
+
+
+## Current phase alignment
+
+The roadmap numbering above is a historical planning sequence and no longer matches the completed architectural work one-to-one. The current implementation track has advanced through the following documented gates:
+
+- Phase 0: Canon and migration — **closed** for the current 66-file migration set.
+- Phase 1: Schema — **architecturally closed**; 15 canonical entity contracts, lifecycle consistency and S01–S18 validation are documented.
+- Phase 2: State Machines — **architecturally closed**; state classification, protected transitions and T16–T25 are documented.
+- Phase 3: Event Engine — **architecturally closed at contract/regression level**; event envelope, idempotency, causality, ordering, replay, reconciliation and E01–E15 are documented and cross-checked against G1–G8.
+- Runtime execution — **not claimed**; implementation and executable validation remain future work.
+
+### Concept and project preservation
+
+The migration did **not** replace the broader Ambivalent Solipsism concept or its independent projects. The Social Labor Network is being developed as one applied architectural branch of the existing ecosystem.
+
+The canonical repository root continues to contain the wider concept and project layers, including the philosophy/concept documents and project areas for PROF-MAP, PSY-TOOLS-related work, Eugene Messenger, PICCS, Symbiont, Cinema Catharsis and infrastructure/transport projects. The labor-network migration concerns the STСеть branch and its 66 legacy files; it is not a migration of the entire repository into labor-network/.
+
+The current queue is therefore **not a backlog of untransferred concept/project files**. The remaining queue concerns implementation and cross-project integration: executable schemas, state/event runtime, policy execution, provenance/reconciliation, review, audit, federation, formal verification and pilots.
+
+Legacy STСеть files remain preserved as non-canonical comparison material. Broader AS/project documents remain in their existing canonical project locations unless a separate migration is explicitly initiated.
