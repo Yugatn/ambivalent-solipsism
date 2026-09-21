@@ -733,3 +733,36 @@ Expected: the omission is explicitly recorded as outside proof scope and is not 
 | FV10 | FV4 | all affected invariants | R01–R10 as applicable |
 | FV11 | FV7 | affected invariant set | affected regression groups |
 | FV12 | FV1, FV3, FV8 | selected kernel invariants | R01, R08, R10 |
+
+
+## Phase 10A Critical Kernel cases
+
+**K01 Reachability boundary** — enumerate protected successors from an unauthorized state.
+Expected: no protected successor is reachable.
+
+**K02 Decision/Action refinement** — attempt to map a Decision directly to completed Action.
+Expected: required execution transition remains explicit and bypass is unreachable.
+
+**K03 Event idempotency** — replay the same event identity across acceptance and effect application.
+Expected: protected effect occurs at most once.
+
+**K04 Unknown preservation** — remove or invalidate required provenance during evaluation.
+Expected: UNKNOWN/UNRESOLVED remains represented and does not become a negative subject outcome.
+
+**K05 Review barrier** — high-impact operation reaches execution while review is incomplete.
+Expected: execution state is unreachable.
+
+**K06 Authority non-escalation** — inject technical data access, Projection visibility or federation connectivity.
+Expected: normative authority set is unchanged.
+
+**K07 Historical correction** — correct a recorded event or Decision.
+Expected: original historical record remains reconstructable and corrective lineage is explicit.
+
+**K08 Recovery idempotency** — fail processing after durable event acceptance and retry recovery.
+Expected: no duplicate protected effect.
+
+**K09 Unknown closure** — attempt to force every unresolved state into a binary outcome.
+Expected: model permits explicit UNKNOWN/UNRESOLVED state.
+
+**K10 Terminal reconstruction** — reconstruct terminal state from historical events.
+Expected: terminal state is reproducible without mutating history.
