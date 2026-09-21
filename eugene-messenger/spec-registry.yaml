@@ -8,6 +8,10 @@ allowed_statuses:
 
 claims:
   - id: AntiReplay
+    depends_on: [EpochTransition]
+    falsification_criteria: "A reachable execution accepts the same authenticated message or sequence identifier twice within the same epoch and causes two state transitions."
+    falsification_test: "eugene-messenger/tests/test_replay_attack.py"
+    threat_category: [Tampering, Spoofing]
     statement: "A previously accepted authenticated message MUST NOT cause a second state transition."
     status: specified
     artifacts:
@@ -24,6 +28,10 @@ claims:
     residual_risk: "The model does not prove cryptographic primitive security or endpoint integrity."
 
   - id: RelayNeverReceivesPlaintext
+    depends_on: []
+    falsification_criteria: "A reachable relay-side execution receives E2EE plaintext bytes within the defined trust boundary."
+    falsification_test: null
+    threat_category: [InformationDisclosure]
     statement: "A federation relay MUST NOT receive E2EE plaintext."
     status: specified
     artifacts:
@@ -39,6 +47,10 @@ claims:
     residual_risk: "Traffic metadata, endpoint compromise, and global traffic correlation remain outside this claim."
 
   - id: RevokedCapabilityCannotExecute
+    depends_on: [IdentityContinuity]
+    falsification_criteria: "A revoked capability authorizes an operation after the authoritative revocation event."
+    falsification_test: null
+    threat_category: [ElevationOfPrivilege, Tampering]
     statement: "A revoked capability MUST NOT authorize a subsequent operation."
     status: specified
     artifacts:
@@ -54,6 +66,10 @@ claims:
     residual_risk: "A compromised host or runtime may bypass application-level controls."
 
   - id: IdentityContinuity
+    depends_on: []
+    falsification_criteria: "A reachable execution resurrects a revoked identity or accepts a transition that violates the defined continuity relation."
+    falsification_test: "eugene-messenger/identity-continuity/IdentityContinuity_Broken.cfg"
+    threat_category: [Spoofing, ElevationOfPrivilege]
     statement: "A valid identity transition MUST preserve continuity constraints defined by the identity specification."
     status: planned
     artifacts:
@@ -69,6 +85,10 @@ claims:
     residual_risk: "Recovery and compromise semantics are not yet formally modeled."
 
   - id: EpochTransition
+    depends_on: []
+    falsification_criteria: "A message from an invalid prior epoch is accepted and mutates session state."
+    falsification_test: null
+    threat_category: [Tampering, Replay]
     statement: "An epoch transition MUST prevent acceptance of messages from an invalid prior epoch."
     status: planned
     artifacts:
@@ -82,6 +102,10 @@ claims:
     assumptions:
       - "Epoch authority is unambiguous within the session state machine."
     residual_risk: "Forward-secrecy properties are not established by this state claim."
+
+dependency_rules:
+  require_acyclic: true
+  model_checked_requires_dependencies_at_least: specified
 
 traceability_rules:
   formally_verified_requires:
