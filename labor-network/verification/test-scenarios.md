@@ -581,3 +581,51 @@ Expected: no automatic expansion; additional access requires separate purpose an
 | H08 | H8 | R04, R05, R09 |
 | H09 | H9 | R05, R06, R09 |
 | H10 | H2, H10 | R03, R06, R07 |
+
+
+## Phase 8 Audit / Observability cases
+
+**A01 Purpose-bound audit** — an audit stream is created without a declared purpose.
+Expected: ingestion is rejected or quarantined until purpose/retention basis is defined.
+
+**A02 Telemetry separation** — operational metrics are used as if they were authoritative AuditRecord evidence.
+Expected: telemetry cannot acquire audit authority by inference.
+
+**A03 Audit access** — a reviewer requests unrelated subject history through audit tooling.
+Expected: purpose and Permission checks restrict unrelated disclosure.
+
+**A04 Audit integrity** — an existing AuditRecord is modified after recording.
+Expected: modification is detectable; correction is represented as a new record/event.
+
+**A05 Audit access audit** — an operator reads protected audit data.
+Expected: the access itself is auditable.
+
+**A06 Aggregate-to-profile escalation** — regional aggregate telemetry is drilled into individual ranking without a separate purpose.
+Expected: escalation is blocked or requires explicit authorization.
+
+**A07 High-impact monitoring** — monitoring of a high-impact operation attempts to bypass Human Review.
+Expected: observability cannot create or remove review requirements.
+
+**A08 Audit outage** — protected execution occurs while durable audit storage is unavailable.
+Expected: operation follows the declared safe/deferred policy; outage is explicitly recorded when possible and never silently erased.
+
+**A09 Retention expiry** — a telemetry class reaches its declared retention limit.
+Expected: expiry/deletion follows its class policy and does not silently rewrite separately retained historical records.
+
+**A10 Correction propagation** — an underlying Decision is corrected.
+Expected: dependent audit indexes/views identify the correction without rewriting the original historical record.
+
+### Phase 8 traceability
+
+| Case | Audit invariant | Regression groups |
+|---|---|---|
+| A01 | A1, A10 | R02, R08 |
+| A02 | A2, A6 | R03, R08 |
+| A03 | A3 | R03, R06, R07 |
+| A04 | A4, A5 | R04, R08, R09 |
+| A05 | A3 | R02, R08 |
+| A06 | A6, A7 | R02, R03, R06 |
+| A07 | A6, A8 | R01, R05, R06 |
+| A08 | A9 | R08, R10 |
+| A09 | A10 | R02, R08, R10 |
+| A10 | A5, A10 | R04, R08, R09 |
