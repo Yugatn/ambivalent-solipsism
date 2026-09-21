@@ -106,3 +106,37 @@ State Machines Phase is structurally complete when every protected lifecycle has
 - negative transition cases.
 
 Runtime execution of these transitions remains an implementation task.
+
+
+## Phase 2 full state-to-transition cross-check
+
+The state classification and lifecycle matrix were compared. The following stateful/derived models now have explicit transition coverage requirements:
+
+| Entity | State model | Required transition coverage |
+|---|---|---|
+| Subject | active, restricted, exited | create/update/consent/restrict/exit; reopening only by explicit rule |
+| Organization | registered, active, suspended, closed | register/activate/suspend/close |
+| Opportunity | draft, published, paused, filled, expired, withdrawn | publish/pause/fill/expire/withdraw |
+| Engagement | proposed, accepted, active, paused, completed, terminated, disputed | propose/accept/activate/pause/complete/terminate/dispute |
+| Evidence | asserted, pending_verification, verified, challenged, expired, revoked, superseded | assert/verify/challenge/expire/revoke/supersede |
+| Decision | proposed, evaluated, permitted, denied, review_required, reviewed, reversed, superseded | propose/evaluate/permit/deny/review/reverse/supersede |
+| Action | requested, authorized, executing, executed, failed, compensated | request/authorize/execute/fail/compensate |
+| PolicyDecision | evaluated, review_required, permitted, denied, superseded | evaluate/review/permit/deny/supersede |
+| Permission | proposed, granted, modified, expired, revoked | grant/modify/expire/revoke |
+| Dispute | opened, acknowledged, investigating, resolved, escalated, withdrawn | open/acknowledge/investigate/resolve/escalate/withdraw |
+| Support | available, requested, approved, active, completed, suspended, revoked | offer/request/approve/activate/suspend/complete/revoke |
+| Resource | registered, available, allocated, unavailable, released | register/update/allocate/release/unavailable |
+
+### Cross-check findings
+
+1. Every declared state has a documented entry path or is an initial state.
+2. Every declared protected transition has a target state present in the corresponding state set.
+3. Relation is validity-oriented rather than a mutable lifecycle state.
+4. Event and AuditRecord remain append-oriented and do not require ordinary lifecycle transitions.
+5. No transition is allowed to invent a state absent from the canonical state set.
+6. New transition definitions must update both this specification and the Entity × Event Matrix.
+7. Any transition that changes authority, privacy scope, subject control or impact class requires the corresponding policy/review guard.
+
+### Phase 2 gate status
+
+The cross-check is **architecturally closed** for the declared state sets and lifecycle events. Runtime execution tests remain separate and are not implied by this documentation check.
