@@ -204,3 +204,13 @@
 - [Архитектурный review](architecture-review.md)
 
 Этот слой связывает provenance, policy decisions и исправления: ошибка в исходных данных может быть прослежена до зависимых решений, а высокоэффектные действия получают формализованный пересмотр.
+
+
+## 26 · State Machines и Safety Kernel
+
+- [State Machines](state-machines.md)
+- [Спецификация переходов](state-transition-spec.md)
+- [Safety Kernel](safety-kernel.md)
+- [Формальная верификация](formal-verification.md)
+
+Этот слой превращает архитектурные инварианты в допустимые состояния, переходы, защитные проверки и формально проверяемые свойства.
