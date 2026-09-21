@@ -31,5 +31,4 @@ def extract(text: str, model: str, claim_id: str, expected_invariant: str) -> di
 if __name__ == "__main__":
     if len(sys.argv) != 5:
         raise SystemExit("usage: trace_extractor.py <output> <model> <claim> <expected_invariant>")
-    text = open(sys.argv[1], encoding="utf-8").read()
-    print(json.dumps(extract(text, sys.argv[2], sys.argv[3], sys.argv[4]), ensure_ascii=False, indent=2))
+    print(json.dumps(extract(open(sys.argv[1], encoding="utf-8").read(), sys.argv[2], sys.argv[3], sys.argv[4]), ensure_ascii=False, indent=2))
