@@ -162,3 +162,30 @@ def record_event_durably(kernel: PilotKernel, store: DurableKernelStore, event: 
     if accepted:
         store.append({"event_id": event.event_id, "kind": event.kind})
     return accepted
+
+
+@dataclass
+class DurableDecision:
+    decision_id: str
+    permitted: bool
+    policy_version: str
+    review_state: str
+
+
+def record_decision_durably(store: DurableKernelStore, decision: DurableDecision) -> None:
+    """Persist a versioned Decision as an immutable pilot record."""
+    store.append({
+        "decision_id": decision.decision_id,
+        "permitted": str(decision.permitted).lower(),
+        "policy_version": decision.policy_version,
+        "review_state": decision.review_state,
+    })
+
+
+def decision_records(store: DurableKernelStore) -> list[Dict[str, str]]:
+    return [r for r in store.load() if "decision_id" in r]
+
+
+def append_audit_record(store: DurableKernelStore, *, audit_id: str, event: str, purpose: str) -> None:
+    """Persist a purpose-bound audit record separately from decision state."""
+    store.append({"audit_id": audit_id, "event": event, "purpose": purpose})
