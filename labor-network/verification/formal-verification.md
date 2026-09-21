@@ -90,3 +90,67 @@ Formal models, assumptions, invariants and verification results MUST be versione
 - FV8: formal proof is not conflated with runtime or production certification.
 
 Initial formalization should target the critical kernel before attempting to model the entire network.
+
+
+## Phase 10A Critical Formal Kernel
+
+Before selecting a concrete model checker, the formal target is narrowed to a minimal critical kernel. This prevents proof scope from expanding faster than the executable implementation can be mapped to it.
+
+### Kernel state
+
+The kernel state consists of:
+
+- aggregate state and protected transition status;
+- Permission/authority context;
+- Evidence validity and provenance status;
+- PolicyDecision status and impact class;
+- Human Review status where required;
+- Event identity and processed-event set;
+- immutable historical event references;
+- Action execution status;
+- explicit UNKNOWN/UNRESOLVED markers.
+
+### Kernel transitions
+
+The minimum transition vocabulary is:
+
+1. propose protected operation;
+2. evaluate evidence/provenance;
+3. evaluate policy and impact;
+4. require/complete human review;
+5. create normative Decision;
+6. authorize/start/complete Action;
+7. record Event;
+8. reject/quarantine invalid event;
+9. correct/revoke/supersede dependent information;
+10. recover after processing failure.
+
+### Kernel proof obligations
+
+K01 — unauthorized transitions are unreachable.
+
+K02 — a Decision cannot directly imply completed Action without the required execution path.
+
+K03 — one event identity cannot create duplicate protected effects.
+
+K04 — unresolved evidence/provenance cannot produce a negative subject outcome merely through absence.
+
+K05 — high-impact operations cannot reach protected execution while mandatory Human Review is incomplete.
+
+K06 — technical data possession, Projection access or federation connectivity cannot expand normative authority.
+
+K07 — correction preserves the original historical event and creates an explicit corrective path.
+
+K08 — recovery cannot duplicate a completed protected effect.
+
+K09 — UNKNOWN/UNRESOLVED remains representable throughout the kernel.
+
+K10 — terminal historical records remain reconstructable.
+
+### Refinement boundary
+
+The kernel is a proof target, not a replacement architecture. Each future executable implementation component MUST map to one or more kernel state variables, transitions or explicit out-of-scope behavior. Any implementation behavior without a documented mapping is not covered by the kernel proof.
+
+### Phase 10A status
+
+The critical formal kernel is structurally specified. Concrete model-checker syntax and executable refinement are the next implementation step and are not claimed here.
