@@ -576,7 +576,65 @@ section,.card{background:linear-gradient(180deg,rgba(10,23,28,.96),rgba(7,16,21,
 <div class="formula">Reverse Input ≠ Guaranteed State Recovery</div>
 <p>Путь системы может иметь значение. Поэтому reversibility следует проверять по состоянию и последствиям, а не только по формальному возврату входного параметра.</p></section>
 
-<section><h2>93. Следующее развитие</h2>
+<section><h2>93. Epistemic State Machine</h2>
+<p>Знание симуляции не должно переходить из гипотезы в подтверждённый вывод одним шагом. Для каждого claim полезно хранить формальный жизненный цикл.</p>
+<div class="formula">HYPOTHESIS → TESTED → SUPPORTED / CONTESTED / INCONCLUSIVE → REVALIDATION</div>
+<p>Переходы должны зависеть от evidence, а не от количества запусков или уверенности интерфейса.</p></section>
+
+<section><h2>94. Claim Registry</h2>
+<p>Каждое существенное утверждение получает идентификатор и связывается с моделью, экспериментами, предположениями и границами применимости.</p>
+<table><thead><tr><th>Поле</th><th>Содержание</th></tr></thead><tbody>
+<tr><td>Claim ID</td><td>Уникальный идентификатор утверждения.</td></tr>
+<tr><td>Status</td><td>Текущее epistemic состояние.</td></tr>
+<tr><td>Evidence</td><td>Поддерживающие и противоречащие результаты.</td></tr>
+<tr><td>Model Versions</td><td>Версии моделей, на которых основан вывод.</td></tr>
+<tr><td>Domain</td><td>Проверенная область применимости.</td></tr>
+<tr><td>Residual</td><td>Неустранённая неопределённость.</td></tr>
+</tbody></table></section>
+
+<section><h2>95. Contradiction Handling</h2>
+<p>Противоречащие результаты не должны автоматически удаляться или усредняться. Сначала проверяется происхождение данных, версии моделей, условия эксперимента и возможные различия контекста.</p>
+<div class="grid3">
+<div class="card"><h3>Data Conflict</h3><p>Различаются наблюдения.</p></div>
+<div class="card"><h3>Model Conflict</h3><p>Различаются механизмы.</p></div>
+<div class="card"><h3>Context Conflict</h3><p>Различаются условия применимости.</p></div>
+<div class="card"><h3>Implementation Conflict</h3><p>Различаются реализации.</p></div>
+<div class="card"><h3>Unresolved</h3><p>Причина расхождения пока неизвестна.</p></div>
+</div></section>
+
+<section><h2>96. Counterfactual Ledger</h2>
+<p>Контрфактические сценарии следует хранить отдельно от наблюдаемых результатов. Иначе гипотетическая траектория может незаметно получить статус фактического события.</p>
+<div class="formula">Observed Run ≠ Counterfactual Run ≠ Prediction</div>
+<p>Каждый контрфактический результат должен быть связан с конкретной моделью и набором изменённых предположений.</p></section>
+
+<section><h2>97. Causal Sufficiency</h2>
+<p>Наличие причинной зависимости внутри модели ещё не означает, что модель содержит все существенные причины реального процесса.</p>
+<div class="formula">Causal Relation in Model ≠ Complete Causal Explanation</div>
+<p>Неучтённые переменные остаются частью Residual. Поэтому causal claim должен иметь явно указанную область и ограничения.</p></section>
+
+<section><h2>98. Temporal Leakage</h2>
+<p>При работе с временными данными нельзя позволять будущей информации влиять на состояние модели в прошлом. Для каждого события должен существовать временной контекст.</p>
+<div class="formula">Future Information → forbidden in Past State Reconstruction</div>
+<p>Это особенно важно для Event Fabric, DEFT reconstruction и обучающих симуляций.</p></section>
+
+<section><h2>99. Causal Order Integrity</h2>
+<p>Логическое причинное отношение должно отличаться от простого порядка записей. Поздняя запись не обязательно является причиной более раннего события, а одинаковая временная метка не означает одинаковую причинность.</p>
+<p>Для распределённых экспериментов следует использовать causal context, parent events и epoch information там, где это необходимо.</p></section>
+
+<section><h2>100. Leakage Between Experiments</h2>
+<p>Один эксперимент не должен незаметно менять состояние другого, если такая зависимость не является частью его спецификации.</p>
+<div class="formula">Experiment A State ⟂ Experiment B State</div>
+<p>Если эксперименты намеренно связаны, связь должна быть явно зарегистрирована в provenance graph.</p></section>
+
+<section><h2>101. Baseline Integrity</h2>
+<p>Baseline должен быть определён до вмешательства и не изменяться задним числом для улучшения результата.</p>
+<ul><li>фиксировать baseline version;</li><li>сохранять исходные параметры;</li><li>не смешивать baseline и treatment data;</li><li>отдельно фиксировать изменения среды.</li></ul></section>
+
+<section><h2>102. Statistical Stopping</h2>
+<p>Если эксперимент использует статистические критерии, правило остановки должно быть определено заранее. Нельзя бесконечно добавлять прогоны до момента, когда результат станет желаемым.</p>
+<p>Для вероятностных моделей также необходимо различать ожидаемый эффект, дисперсию, доверительный или credible interval и фактическое число независимых наблюдений.</p></section>
+
+<section><h2>103. Следующее развитие</h2>
 <ul><li>единый формат Scenario Definition;</li><li>версионирование моделей;</li><li>детерминированные seeded runs;</li><li>экспорт EventLog;</li><li>сравнение нескольких моделей одного явления;</li><li>автоматический sensitivity analysis;</li><li>TLA+ модели для Symbiont-компонентов;</li><li>отдельный статистический слой;</li><li>causal graph visualization;</li><li>связь симуляций с PICCS и Event Fabric без прямого control authority.</li></ul></section>
 
 <blockquote>Симуляция не доказывает, что реальность устроена как модель. Она показывает, что произойдёт внутри модели, если её предположения принять временно.</blockquote>
