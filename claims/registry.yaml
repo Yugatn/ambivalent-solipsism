@@ -1,0 +1,397 @@
+schema_version: registry/v1
+
+registry:
+  id: eugene-messenger-assurance
+  version: "0.1.0"
+  status: active
+  specification:
+    repository: Yugatn/ambivalent-solipsism
+    assurance_roadmap: PROJECTS/EUGENE_MESSENGER_ASSURANCE_ROADMAP_V3.md
+
+claims:
+  - id: AntiReplay
+    status: specified
+    level: 2
+
+    statement: >
+      Within the declared protocol scope, a previously accepted message
+      cannot be accepted again as a new message for the same identity epoch.
+
+    scope:
+      environment:
+        network: asynchronous
+        adversary:
+          network_control: true
+          endpoint_compromise: false
+      timing:
+        model: unbounded
+      subjects:
+        identity_model: single_identity
+        federation: false
+      cryptography:
+        model: symbolic
+        perfect_cryptography: true
+        side_channels: excluded
+      out_of_scope:
+        - traffic_analysis
+        - endpoint_compromise
+        - quantum_adversary
+        - implementation_memory_corruption
+
+    assumptions:
+      - id: AsyncNetwork
+        statement: Network delivery is asynchronous and may reorder, delay, duplicate, or drop messages.
+        status: valid
+      - id: NoEndpointCompromise
+        statement: The adversary cannot compromise the endpoint state or trusted cryptographic boundary.
+        status: valid
+      - id: EpochMonotonicity
+        statement: An accepted identity epoch does not move backwards.
+        status: valid
+
+    falsification_criteria:
+      - id: replay-within-epoch
+        description: >
+          A message accepted once is accepted again without a legitimate
+          protocol transition.
+      - id: replay-across-epoch
+        description: >
+          A message from a previous epoch is accepted as fresh in a later epoch.
+      - id: epoch-rollback
+        description: >
+          Protocol state permits an older epoch to become authoritative again.
+
+    formal_model:
+      type: tla+
+      path: theories/AssuranceState.tla
+      protocol_model: pending
+      config: pending
+
+    implementation:
+      conformance_tests: pending
+      runtime_component: pending
+
+    evidence:
+      required:
+        - claim_hash
+        - source_revision
+        - model_revision
+        - toolchain_hash
+        - configuration_hash
+        - manifest_hash
+        - provenance
+        - signature
+      current: null
+
+    dependencies:
+      claims: []
+      assumptions:
+        - AsyncNetwork
+        - NoEndpointCompromise
+        - EpochMonotonicity
+
+    invalidation:
+      triggers:
+        - assumption_invalidated
+        - scope_changed
+        - statement_changed
+        - falsification_criteria_changed
+        - formal_model_changed
+        - toolchain_changed
+        - evidence_integrity_failure
+      demotion_target: specified
+
+    composition:
+      composable: true
+      operators:
+        - conjunction
+        - refinement
+
+  - id: IdentityContinuity
+    status: specified
+    level: 2
+
+    statement: >
+      Within the declared protocol scope, an identity transition preserves
+      the protocol-defined continuity relation and does not silently create
+      a second authoritative identity state.
+
+    scope:
+      environment:
+        network: asynchronous
+        adversary:
+          network_control: true
+          endpoint_compromise: false
+      subjects:
+        identity_model: single_identity
+        federation: false
+      cryptography:
+        model: symbolic
+        perfect_cryptography: true
+      out_of_scope:
+        - endpoint_compromise
+        - social_identity_claims
+        - biometric_identity
+        - traffic_analysis
+
+    assumptions:
+      - id: AsyncNetwork
+        statement: Network delivery is asynchronous.
+        status: valid
+      - id: NoEndpointCompromise
+        statement: The endpoint trusted state is not compromised.
+        status: valid
+      - id: AuthenticatedTransition
+        statement: Identity transitions require the protocol-defined authentication evidence.
+        status: valid
+
+    falsification_criteria:
+      - id: identity-fork
+        description: Two incompatible identity states become authoritative simultaneously.
+      - id: identity-resurrection
+        description: A revoked or terminated identity state becomes authoritative again.
+      - id: unauthenticated-transition
+        description: An identity transition is accepted without required authentication evidence.
+
+    formal_model:
+      type: tla+
+      path: theories/AssuranceState.tla
+      protocol_model: pending
+      config: pending
+
+    implementation:
+      conformance_tests: pending
+      runtime_component: pending
+
+    evidence:
+      required:
+        - claim_hash
+        - source_revision
+        - model_revision
+        - toolchain_hash
+        - configuration_hash
+        - manifest_hash
+        - provenance
+        - signature
+      current: null
+
+    dependencies:
+      claims: []
+      assumptions:
+        - AsyncNetwork
+        - NoEndpointCompromise
+        - AuthenticatedTransition
+
+    invalidation:
+      triggers:
+        - assumption_invalidated
+        - scope_changed
+        - statement_changed
+        - falsification_criteria_changed
+        - formal_model_changed
+        - toolchain_changed
+        - evidence_integrity_failure
+      demotion_target: specified
+
+    composition:
+      composable: true
+      operators:
+        - conjunction
+        - refinement
+
+  - id: EpochTransition
+    status: specified
+    level: 2
+
+    statement: >
+      Within the declared protocol scope, identity epoch transitions are
+      monotonic and cannot authorize rollback to a previously superseded epoch.
+
+    scope:
+      environment:
+        network: asynchronous
+        adversary:
+          network_control: true
+          endpoint_compromise: false
+      timing:
+        model: unbounded
+      subjects:
+        identity_model: single_identity
+        federation: false
+      cryptography:
+        model: symbolic
+        perfect_cryptography: true
+      out_of_scope:
+        - endpoint_compromise
+        - traffic_analysis
+        - implementation_memory_corruption
+
+    assumptions:
+      - id: AsyncNetwork
+        statement: Network delivery is asynchronous.
+        status: valid
+      - id: NoEndpointCompromise
+        statement: The endpoint trusted state is not compromised.
+        status: valid
+      - id: EpochMonotonicity
+        statement: Accepted epoch values are monotonically non-decreasing.
+        status: valid
+
+    falsification_criteria:
+      - id: epoch-rollback
+        description: A lower epoch becomes authoritative after a higher epoch was accepted.
+      - id: stale-epoch-acceptance
+        description: A message authenticated only for an obsolete epoch is accepted as current.
+
+    formal_model:
+      type: tla+
+      path: theories/AssuranceState.tla
+      protocol_model: pending
+      config: pending
+
+    implementation:
+      conformance_tests: pending
+      runtime_component: pending
+
+    evidence:
+      required:
+        - claim_hash
+        - source_revision
+        - model_revision
+        - toolchain_hash
+        - configuration_hash
+        - manifest_hash
+        - provenance
+        - signature
+      current: null
+
+    dependencies:
+      claims: []
+      assumptions:
+        - AsyncNetwork
+        - NoEndpointCompromise
+        - EpochMonotonicity
+
+    invalidation:
+      triggers:
+        - assumption_invalidated
+        - scope_changed
+        - statement_changed
+        - falsification_criteria_changed
+        - formal_model_changed
+        - toolchain_changed
+        - evidence_integrity_failure
+      demotion_target: specified
+
+    composition:
+      composable: true
+      operators:
+        - conjunction
+        - refinement
+
+compositions:
+  - id: AntiReplay_AND_IdentityContinuity
+    operator: conjunction
+    operands:
+      - AntiReplay
+      - IdentityContinuity
+    requirements:
+      - scope_compatible
+      - assumptions_compatible
+      - no_conflicting_invariants
+    result_scope: intersection
+    derived_status: pending
+
+  - id: AntiReplay_AND_EpochTransition
+    operator: conjunction
+    operands:
+      - AntiReplay
+      - EpochTransition
+    requirements:
+      - scope_compatible
+      - assumptions_compatible
+      - no_conflicting_invariants
+    result_scope: intersection
+    derived_status: pending
+
+assumptions:
+  - id: AsyncNetwork
+    status: valid
+    evidence: pending
+    invalidation_triggers:
+      - protocol_model_becomes_synchronous
+      - bounded_delivery_is_required_for_claim
+
+  - id: NoEndpointCompromise
+    status: valid
+    evidence: pending
+    invalidation_triggers:
+      - endpoint_compromise
+      - trusted_boundary_compromise
+      - side_channel_invalidates_model
+
+  - id: EpochMonotonicity
+    status: valid
+    evidence: pending
+    invalidation_triggers:
+      - epoch_rollback_found
+      - protocol_spec_changes_epoch_semantics
+
+  - id: AuthenticatedTransition
+    status: valid
+    evidence: pending
+    invalidation_triggers:
+      - transition_without_required_authentication
+      - protocol_spec_changes_transition_authentication
+
+global_invariants:
+  - id: NoCheckedWithoutEvidence
+    statement: A claim cannot have status model_checked without valid evidence.
+
+  - id: NoCheckedWithInvalidAssumption
+    statement: A claim cannot have status model_checked while a required assumption is invalid.
+
+  - id: EvidenceMatchesClaim
+    statement: Current evidence must contain the current claim_hash.
+
+  - id: EvidenceMatchesRevision
+    statement: Current evidence must reference the current source revision.
+
+  - id: NoStaleEvidenceAsCurrent
+    statement: Evidence marked stale cannot support a current model_checked status.
+
+  - id: CompositionRequiresCompatibility
+    statement: Derived claims require explicit scope and assumption compatibility.
+
+status_policy:
+  level_order:
+    - assumed
+    - specified
+    - falsifiable
+    - modeled
+    - executed
+    - model_checked
+    - conformance
+    - adversarial
+    - reproducible
+    - meta_assured
+    - composition_closed
+
+  invalid_states:
+    - invalidated
+    - stale
+
+  promotion_requires:
+    - prerequisites_valid
+    - required_evidence_present
+    - evidence_integrity_verified
+
+  demotion_requires:
+    - invalidation_event
+
+metadata:
+  owner: Eugene Messenger
+  methodology: PROJECTS/EUGENE_MESSENGER_ASSURANCE_ROADMAP_V3.md
+  schema: schemas/claim.schema.yaml
+  evidence_schema: schemas/evidence.schema.yaml
+  state_model: theories/AssuranceState.tla
