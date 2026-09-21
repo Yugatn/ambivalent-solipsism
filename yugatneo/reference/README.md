@@ -1,10 +1,27 @@
 # Yugatneo Level 1 Reference
 
-This is the first executable vertical slice of Yugatneo.
+This is the executable reference slice for Yugatneo I-1 Dissent Independence.
+
+## Current engine
+
+The CLI now computes the result from trace content:
+
+`Trace → ProvenanceGraph → Validity evaluation → counterfactual dependency → witness gate → I-1 evaluation`
+
+The trace name F/G/H/I/L/M is metadata and is not used to select the result.
 
 ## Scope
 
-The package establishes a closed-world Level 1 boundary around I-1 and attestation evidence.
+Level 1 currently covers:
+
+- attestation evidence;
+- I-1a;
+- I-1b;
+- T★ closed-world evaluation;
+- provenance and certificate closure;
+- VALID, INVALID and UNKNOWN validity states;
+- Level 2 witness-independence gate;
+- deterministic regression fixtures.
 
 It deliberately does not claim:
 
@@ -15,18 +32,21 @@ It deliberately does not claim:
 - production security;
 - Mainnet readiness.
 
-## Implementation order
+## Run
 
-1. stabilize TRACES.md;
-2. canonical CBOR;
-3. typed Trace/Event model;
-4. ProvenanceGraph;
-5. ValidityRule_ATT;
-6. DependencyCertificate;
-7. Witness Independence Level 2;
-8. T★ evaluator;
-9. I-1a and I-1b evaluator;
-10. regression, property and fuzz tests;
-11. CI.
+`cargo test`
 
-The current CLI is a bootstrap executable contract checker. It must not be mistaken for the completed Level 1 implementation until the typed provenance and validity layers are implemented.
+`cargo run -- --input fixtures/trace_H.json`
+
+## Implementation gates
+
+1. ProvenanceGraph
+2. ValidityRule_ATT
+3. counterfactual dependency
+4. witness independence
+5. I-1 evaluator
+6. binary CBOR
+7. mutation and property tests
+8. security review
+
+The current result is a stronger bootstrap reference, but it is not yet Level 1 Complete.
