@@ -1,18 +1,27 @@
-version: 1
+version: 2
+allowed_statuses:
+  - planned
+  - specified
+  - model_checked
+  - conformant
+  - audited
+
 claims:
   - id: AntiReplay
-    statement: "A previously accepted message MUST NOT cause a second state transition."
-    status: planned
+    statement: "A previously accepted authenticated message MUST NOT cause a second state transition."
+    status: specified
     artifacts:
       specification: "eugene-messenger/tla-models.html"
-      formal_model: "spec/AntiReplay.tla"
+      formal_model: "eugene-messenger/spec/AntiReplay.tla"
+      config: "eugene-messenger/spec/AntiReplay.cfg"
       implementation: null
       conformance: null
-      adversarial_test: "tests/anti_replay"
+      adversarial_test: "eugene-messenger/tests/test_replay_attack.py"
       benchmark: null
+      evidence: "eugene-messenger/evidence/anti-replay/"
     assumptions:
       - "Message authentication succeeds before acceptance."
-    residual_risk: "The model does not prove cryptographic primitive security."
+    residual_risk: "The model does not prove cryptographic primitive security or endpoint integrity."
 
   - id: RelayNeverReceivesPlaintext
     statement: "A federation relay MUST NOT receive E2EE plaintext."
@@ -24,20 +33,64 @@ claims:
       conformance: null
       adversarial_test: null
       benchmark: null
+      evidence: null
     assumptions:
       - "Endpoint cryptographic state is uncompromised."
-    residual_risk: "Traffic metadata and endpoint compromise remain outside this claim."
+    residual_risk: "Traffic metadata, endpoint compromise, and global traffic correlation remain outside this claim."
 
   - id: RevokedCapabilityCannotExecute
     statement: "A revoked capability MUST NOT authorize a subsequent operation."
     status: specified
     artifacts:
       specification: "eugene-messenger/capability-security.html"
-      formal_model: "spec/CapabilityLifecycle.tla"
+      formal_model: "eugene-messenger/spec/CapabilityLifecycle.tla"
       implementation: null
       conformance: null
-      adversarial_test: "tests/capability_revocation"
+      adversarial_test: null
       benchmark: null
+      evidence: null
     assumptions:
       - "Revocation state is authoritative within the defined trust boundary."
-    residual_risk: "A compromised host may bypass application-level controls."
+    residual_risk: "A compromised host or runtime may bypass application-level controls."
+
+  - id: IdentityContinuity
+    statement: "A valid identity transition MUST preserve continuity constraints defined by the identity specification."
+    status: planned
+    artifacts:
+      specification: "eugene-messenger/identity-continuity.html"
+      formal_model: null
+      implementation: null
+      conformance: null
+      adversarial_test: null
+      benchmark: null
+      evidence: null
+    assumptions:
+      - "The root identity key remains protected within PICCS-Core."
+    residual_risk: "Recovery and compromise semantics are not yet formally modeled."
+
+  - id: EpochTransition
+    statement: "An epoch transition MUST prevent acceptance of messages from an invalid prior epoch."
+    status: planned
+    artifacts:
+      specification: "eugene-messenger/tla-models.html"
+      formal_model: null
+      implementation: null
+      conformance: null
+      adversarial_test: null
+      benchmark: null
+      evidence: null
+    assumptions:
+      - "Epoch authority is unambiguous within the session state machine."
+    residual_risk: "Forward-secrecy properties are not established by this state claim."
+
+traceability_rules:
+  formally_verified_requires:
+    - formal_model
+    - config
+    - evidence
+  conformant_requires:
+    - implementation
+    - conformance
+    - adversarial_test
+  audited_requires:
+    - evidence
