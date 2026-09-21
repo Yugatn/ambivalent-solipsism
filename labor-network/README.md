@@ -321,3 +321,28 @@ Policy отделён от Domain: сущности описывают пред�
 - [Failure Handling](action/failure.md)
 
 State показывает текущую конфигурацию, Event сохраняет произошедшее, Decision определяет допустимое последствие, Action фиксирует его фактическое применение.
+
+
+## 37 · Audit Layer
+
+- [Audit](audit/README.md)
+- [Decision Log](audit/decision-log.md)
+- [Integrity](audit/integrity.md)
+- [Observability](audit/observability.md)
+
+## 38 · Privacy and Data Governance
+
+- [Privacy](privacy/README.md)
+- [Purpose](privacy/purpose.md)
+- [Retention](privacy/retention.md)
+- [Subject Rights](privacy/subject-rights.md)
+
+## 39 · Support Layer
+
+- [Support](support/README.md)
+- [Work Support](support/work-support.md)
+
+## 40 · Regional Layer
+
+- [Regional](regional/README.md)
+- [Regional Analytics](regional/analytics.md)
