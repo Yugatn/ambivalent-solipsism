@@ -11,8 +11,49 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install test runner
+        run: python -m pip install pytest pyyaml
+
       - name: Run reference and adversarial tests
         run: python -m pytest eugene-messenger/tests -q
+
+      - name: Validate specification registry
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+
+          registry = yaml.safe_load(Path("eugene-messenger/spec-registry.yaml").read_text())
+          statuses = set(registry["allowed_statuses"])
+          claims = registry["claims"]
+          ids = [c["id"] for c in claims]
+
+          if len(ids) != len(set(ids)):
+              raise SystemExit("Duplicate claim id")
+
+          rules = registry["traceability_rules"]
+          for claim in claims:
+              if claim["status"] not in statuses:
+                  raise SystemExit(f"Invalid status: {claim['id']}")
+              artifacts = claim["artifacts"]
+
+              for field in rules.get("formally_verified_requires", []):
+                  if claim["status"] == "model_checked" and not artifacts.get(field):
+                      raise SystemExit(f"{claim['id']}: model_checked requires {field}")
+
+              for field in rules.get("conformant_requires", []):
+                  if claim["status"] == "conformant" and not artifacts.get(field):
+                      raise SystemExit(f"{claim['id']}: conformant requires {field}")
+
+              for field in rules.get("audited_requires", []):
+                  if claim["status"] == "audited" and not artifacts.get(field):
+                      raise SystemExit(f"{claim['id']}: audited requires {field}")
+
+          print(f"Registry validation: PASS ({len(claims)} claims)")
+
+          PY
+
       - name: Traceability check
         run: |
           python - <<'PY'
@@ -27,14 +68,18 @@ jobs:
               "eugene-messenger/assurance-case.html",
           ]
           missing = [p for p in required if not Path(p).exists()]
-          if missing: raise SystemExit("Missing assurance artifacts: " + ", ".join(missing))
+          if missing:
+              raise SystemExit("Missing assurance artifacts: " + ", ".join(missing))
           print("Traceability: PASS")
+
           PY
+
       - name: Assurance summary
         run: |
           echo "AntiReplay"
           echo "Specification       PRESENT"
           echo "Reference tests     PASS"
           echo "Replay attack test  PASS"
+          echo "Registry validation PASS"
           echo "Traceability        PASS"
-          echo "TLC model check     PENDING: install TLC before enabling model execution"
+          echo "TLC model check     PENDING: TLC execution is the next evidence milestone"
