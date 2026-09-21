@@ -25,6 +25,26 @@ impl ConversationState {
         self.applied_operations.len()
     }
 
+    pub fn undo_favorite(
+        &mut self,
+        message_id: MessageId,
+        operation_id: OperationId,
+        device_id: crate::ids::DeviceId,
+        logical_time: crate::clock::HlcTimestamp,
+    ) -> Result<FavoriteOperation, DomainError> {
+        let current = self.messages.get(&message_id).ok_or(DomainError::MessageNotFound)?.favorite;
+        let op = FavoriteOperation {
+            operation_id,
+            message_id,
+            target: crate::favorite::FavoriteState::None,
+            previous_state: current,
+            device_id,
+            logical_time,
+        };
+        self.apply_favorite(op)?;
+        Ok(op)
+    }
+
     pub fn apply_favorite(&mut self, op: FavoriteOperation) -> Result<bool, DomainError> {
         if self.applied_operations.contains(&op.operation_id) {
             return Ok(false);
