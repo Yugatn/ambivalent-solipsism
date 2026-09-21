@@ -75,3 +75,38 @@
 ## Следующая проверка
 
 Следующий этап — content-level audit: проверить, что каждый исходный смысловой блок представлен в новой структуре, а не только каждый исходный filename.
+
+
+## Final migration architecture
+
+The new structure now separates:
+
+1. Domain
+2. Policy
+3. Event
+4. Evidence
+5. State
+6. Decision
+7. Action
+8. Audit
+9. Privacy
+10. Support
+11. Regional
+12. Security
+13. Verification
+14. Integration
+
+The legacy files remain unchanged as a backup layer until content-level migration is verified.
+
+## Completion criterion
+
+Migration reaches 100% only when:
+
+- every legacy file has been reviewed;
+- every substantive section has a destination;
+- every destination has traceability;
+- no canonical principle is lost;
+- regression tests cover the migrated requirements;
+- legacy bridge can be made read-only.
+
+Until these conditions are met, legacy files must remain preserved.
