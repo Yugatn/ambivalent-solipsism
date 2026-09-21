@@ -1,0 +1,3 @@
+[workspace]
+members = ["sim-sender", "sim-receiver"]
+resolver = "2"
