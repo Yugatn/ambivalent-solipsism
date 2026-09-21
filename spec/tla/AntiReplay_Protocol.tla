@@ -2,50 +2,43 @@
 EXTENDS Naturals, Sequences, FiniteSets
 
 CONSTANT Messages
-VARIABLES sender, receiver, channel, adversary
+VARIABLES acceptedCount, seen, pending
 
-Vars == <<sender, receiver, channel, adversary>>
+Vars == <<acceptedCount, seen, pending>>
 
 Init ==
-    /\ sender = [sent |-> {}, nextSeq |-> 0]
-    /\ receiver = [accepted |-> <<>>, seen |-> {}]
-    /\ channel = <<>>
-    /\ adversary = [seen |-> {}]
+    /\ acceptedCount = [m \in Messages |-> 0]
+    /\ seen = {}
+    /\ pending = -1
 
 Send(m) ==
     /\ m \in Messages
-    /\ m = sender.nextSeq
-    /\ sender' = [sent |-> sender.sent \cup {m}, nextSeq |-> sender.nextSeq + 1]
-    /\ channel' = Append(channel, m)
-    /\ UNCHANGED <<receiver, adversary>>
+    /\ pending = -1
+    /\ pending' = m
+    /\ seen' = seen \cup {m}
+    /\ UNCHANGED acceptedCount
+
+Replay(m) ==
+    /\ m \in seen
+    /\ pending = -1
+    /\ pending' = m
+    /\ UNCHANGED <<acceptedCount, seen>>
 
 Receive(m) ==
-    /\ Len(channel) > 0
-    /\ Head(channel) = m
-    /\ channel' = Tail(channel)
-    /\ IF m \notin receiver.seen
-        THEN receiver' = [
-            accepted |-> Append(receiver.accepted, m),
-            seen |-> receiver.seen \cup {m}
-        ]
-        ELSE receiver' = receiver
-    /\ adversary' = [seen |-> adversary.seen \cup {m}]
-    /\ UNCHANGED sender
-
-AdversaryReplay(m) ==
-    /\ m \in adversary.seen
-    /\ channel' = Append(channel, m)
-    /\ UNCHANGED <<sender, receiver, adversary>>
+    /\ pending = m
+    /\ pending' = -1
+    /\ IF acceptedCount[m] = 0
+        THEN acceptedCount' = [acceptedCount EXCEPT ![m] = @ + 1]
+        ELSE acceptedCount' = acceptedCount
+    /\ UNCHANGED seen
 
 Next ==
     \/ \E m \in Messages : Send(m)
+    \/ \E m \in Messages : Replay(m)
     \/ \E m \in Messages : Receive(m)
-    \/ \E m \in Messages : AdversaryReplay(m)
 
 NoReplayAccepted ==
-    \A seq \in Messages :
-        Cardinality({ i \in 1..Len(receiver.accepted) :
-            receiver.accepted[i] = seq }) <= 1
+    \A m \in Messages : acceptedCount[m] <= 1
 
 Spec == Init /\ [][Next]_Vars
 ====
