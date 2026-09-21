@@ -1198,6 +1198,17 @@ Roadmap v3 не утверждает:
 **Standards mapping:** planned  
 **Dashboard:** planned
 
+### ASSURANCE-002 — Canonical Evidence Bundle
+
+Implementation started without promoting any claim. The repository now contains:
+- RFC 8785 manifest canonicalization with fail-closed dependency handling;
+- self-hash construction excluding the self-hash field from its digest;
+- strict TLC counterexample extraction that fails closed on unknown output;
+- an independent evidence verification script checking required bundle files, manifest hash, and retained-file checksums;
+- a promotion validator that rejects `model_checked` claims without an evidence run identifier.
+
+The next gate is to generate a real bundle from a CI run, add provenance and retained model inputs, then add keyless signing, deterministic double-run verification, and reviewed promotion validation.
+
 ### ASSURANCE-001 — first successful CI execution checkpoint
 
 On 2026-09-21, GitHub Actions run **#142** completed successfully for commit
