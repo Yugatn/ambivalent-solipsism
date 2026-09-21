@@ -263,3 +263,18 @@
 - [Self-Employment](domain/self-employment.md)
 
 Доменный слой не зависит от конкретной БД, UI или транспортного протокола.
+
+
+## 31 · Policy Layer
+
+- [Policy](policy/README.md)
+- [Authority](policy/authority.md)
+- [Data Access](policy/data-access.md)
+- [Recruitment](policy/recruitment.md)
+- [Development](policy/development.md)
+- [Support](policy/support.md)
+- [Regional Development](policy/regional-development.md)
+- [Federation](policy/federation.md)
+- [Human Review](policy/review.md)
+
+Policy отделён от Domain: сущности описывают предметную область, а Policy определяет допустимые действия в конкретном контексте.
