@@ -1,5 +1,6 @@
 use std::fs;
 
+use serde_json::json;
 use yugatneo_checker::{evaluate, Trace};
 
 #[test]
@@ -48,4 +49,24 @@ fn outside_t_star_is_unresolved() {
     let result = evaluate(&trace);
     assert_eq!(result.i1b, "Unresolved");
     assert_eq!(result.dependency_status, "Unresolved");
+}
+
+#[test]
+fn witness_that_depends_on_dissent_cannot_confirm_dependency() {
+    let mut trace: Trace =
+        serde_json::from_str(&fs::read_to_string("fixtures/trace_H.json").unwrap()).unwrap();
+
+    let attestation = trace
+        .events
+        .iter_mut()
+        .find(|event| event.id == "attestation-H")
+        .expect("H attestation");
+
+    attestation.payload["dependency_witness"] = json!({
+        "dependencies": ["dissent-H"]
+    });
+
+    let result = evaluate(&trace);
+    assert_eq!(result.i1b, "Unresolved");
+    assert_eq!(result.witness_independence, "NotIndependent");
 }
