@@ -1,0 +1,16 @@
+version: 1
+benchmarks:
+  - id: handshake_latency_v1
+    purpose: "Measure session establishment latency."
+    repetitions: 100
+    warmup: 10
+    required_context: [code_revision, hardware_profile, protocol_version, network_conditions]
+    outputs: [p50_ms, p95_ms, p99_ms, cpu_time_ms]
+  - id: message_overhead_v1
+    purpose: "Measure ciphertext and protocol overhead."
+    payload_sizes_bytes: [64, 256, 1024, 4096, 16384]
+    outputs: [ciphertext_size, overhead_ratio, cpu_time_ms]
+  - id: relay_throughput_v1
+    purpose: "Measure relay throughput without granting plaintext authority."
+    required_context: [concurrent_sessions, payload_size, hardware_profile, network_conditions]
+    outputs: [messages_per_second, bytes_per_second, p95_latency_ms]
