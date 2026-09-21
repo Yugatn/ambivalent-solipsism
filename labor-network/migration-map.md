@@ -77,3 +77,18 @@ This prevents domain entities from carrying their own authorization logic and ma
 | regional rules | policy/regional-development.md |
 | inter-node exchange | policy/federation.md |
 | human review | policy/review.md |
+
+
+## Event / Evidence / Decision migration
+
+Legacy workflow concepts are decomposed into separate layers:
+
+| Concern | Destination |
+|---|---|
+| facts and changes | event/ |
+| proof and sources | evidence/ |
+| authorization result | decision/ |
+| consequence | action layer |
+| correction after changed evidence | decision/reconciliation.md |
+
+This separation prevents a stored fact, a policy result and its consequence from becoming one inseparable record.
