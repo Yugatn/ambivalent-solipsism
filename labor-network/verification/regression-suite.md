@@ -360,3 +360,32 @@ FV01–FV12 are checked against G1–G8. The gate distinguishes formal-model pro
 7. FV01–FV12 have defined outcomes and G1–G8 traceability.
 
 **Architectural Phase 10 gate: PASS.** This closes the documentation/formalization contract layer; actual model checking and executable conformance remain implementation work.
+
+
+## Phase 11 Release Gate: Pilot
+
+P11-01–P11-10 define the minimum runtime pilot safety gate. Passing the gate means the bounded pilot conditions are satisfied; it does not certify production readiness or unrelated components.
+
+| Pilot case | G1 | G2 | G3 | G4 | G5 | G6 | G7 | G8 |
+|---|---|---|---|---|---|---|---|---|
+| P11-01 Bounded scope | ✓ | ✓ | ✓ |  | ✓ | ✓ |  | ✓ |
+| P11-02 Runtime idempotency | ✓ | ✓ |  | ✓ |  |  |  | ✓ |
+| P11-03 Runtime review barrier | ✓ |  |  |  | ✓ | ✓ |  | ✓ |
+| P11-04 Correction propagation | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ |
+| P11-05 Recovery | ✓ | ✓ |  | ✓ |  |  | ✓ | ✓ |
+| P11-06 Privacy expansion |  | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ |
+| P11-07 Audit loss | ✓ | ✓ |  | ✓ |  |  | ✓ | ✓ |
+| P11-08 Stop condition | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| P11-09 Exit/rollback | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ |
+| P11-10 Expansion request | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+### Phase 11 gate criteria
+
+1. Pilot scope, participants, data and retention are explicit.
+2. Runtime tests exercise the critical architectural boundaries.
+3. Protected failures produce explicit pause/stop behavior.
+4. Pilot evidence is separated from production certification.
+5. Expansion requires a separate review and regression gate.
+6. P11-01–P11-10 are executable acceptance targets before pilot deployment.
+
+**Phase 11 architectural preparation gate: PASS.** Pilot deployment itself is not claimed.
