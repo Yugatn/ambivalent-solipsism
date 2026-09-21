@@ -300,3 +300,24 @@ Policy отделён от Domain: сущности описывают пред�
 - [Lifecycle](decision/lifecycle.md)
 - [Impact Classification](decision/impact.md)
 - [Reconciliation](decision/reconciliation.md)
+
+
+## 35 · State Layer
+
+- [State](state/README.md)
+- [State Machines](state/machines.md)
+- [Subject](state/subject.md)
+- [Opportunity](state/opportunity.md)
+- [Engagement](state/engagement.md)
+- [Evidence](state/evidence.md)
+- [Decision](state/decision.md)
+- [Permission](state/permission.md)
+- [Dispute](state/dispute.md)
+
+## 36 · Action Layer
+
+- [Action](action/README.md)
+- [Reversibility](action/reversibility.md)
+- [Failure Handling](action/failure.md)
+
+State показывает текущую конфигурацию, Event сохраняет произошедшее, Decision определяет допустимое последствие, Action фиксирует его фактическое применение.
