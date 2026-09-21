@@ -166,3 +166,27 @@ The following areas require explicit preservation checks because structural refa
     Legacy documents remain comparison material and do not create a second active canonical model.
 
 These controls are mandatory during final source-to-block verification.
+
+
+## Final semantic review matrix
+
+| Control | Required invariant | Status |
+|---|---|---|
+| Authority | capability never creates authority | covered |
+| Evidence | evidence remains distinguishable from decision | covered |
+| Decision | decision remains distinguishable from action | covered |
+| State | current state remains distinguishable from history | covered |
+| Restriction | contextual restriction has scope and review | covered |
+| Analytics | aggregate data does not imply individual rank | covered |
+| Support | support retains declared purpose | covered |
+| Audit | audit is purpose-limited | covered |
+| Automation | high-impact results retain review path | covered |
+| Legacy | legacy source remains non-canonical | covered |
+
+### Review result
+
+All currently identified high-risk semantic controls have an explicit destination and architectural invariant.
+
+No legacy file is deleted at this checkpoint.
+
+The remaining work is regression validation: verify that the structured modules and their cross-links do not contradict one another after consolidation.
