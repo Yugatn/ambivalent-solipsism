@@ -109,3 +109,39 @@ Insufficient evidence remains `unknown` unless a separately defined rule establi
 ### G8. Release decision
 
 The current documented architecture passes the structural release gate for these eight conflict classes. This is an architectural/documentation validation, not a claim of runtime execution or production certification.
+
+
+## Phase 3 Event Engine regression cross-check
+
+Phase 3 E01–E15 are checked against the existing release gates G1–G8. The purpose is to ensure that Event Engine mechanics cannot bypass already established architectural controls.
+
+| Event Engine case | Release gates | Control relationship |
+|---|---|---|
+| E01 duplicate delivery | G4, G8 | duplicate processing cannot replace event history or create a second logical transition |
+| E02 event identity conflict | G4, G8 | conflicting reuse of identity cannot overwrite canonical history |
+| E03 retry after failure | G1, G4, G8 | retry cannot repeat protected effects; durable event remains reconstructable |
+| E04 causation chain | G4, G8 | causal lineage remains distinguishable from workflow correlation |
+| E05 unknown predecessor | G4, G7, G8 | missing causal context remains explicit rather than becoming an inferred fact |
+| E06 causal cycle | G4, G8 | invalid causal structure is rejected/quarantined |
+| E07 out-of-order event | G1, G4, G8 | ordering guard cannot be bypassed by delivery order |
+| E08 timestamp/order mismatch | G4, G7, G8 | temporal metadata cannot silently create causal truth |
+| E09 replay | G1, G4, G8 | replay reconstructs state without re-executing external effects |
+| E10 replay versioning | G4, G8 | projection interpretation changes without rewriting event history |
+| E11 reconciliation | G2, G4, G7, G8 | conflict resolution remains auditable and does not erase source events |
+| E12 dependent decision reconciliation | G1, G4, G7, G8 | corrected evidence propagates to dependent decisions/review |
+| E13 quarantined event | G1, G2, G4, G8 | invalid input cannot produce protected state or untraceable effects |
+| E14 non-idempotent external effect | G1, G4, G8 | external execution requires durable status and safe retry/compensation |
+| E15 event data minimization | G2, G3, G5, G6, G8 | event processing cannot become unrestricted profile construction or surveillance |
+
+### Phase 3 release-gate rules
+
+1. Event Engine correctness MUST NOT be treated as sufficient evidence of policy or authority correctness.
+2. Replay MUST remain subject to G4 and MUST NOT execute external Action semantics a second time.
+3. Reconciliation MUST preserve the distinction between Evidence, Decision and Action required by G1 and G7.
+4. Event visibility MUST remain bounded by the privacy/federation controls represented by G2, G3, G5 and G6.
+5. Unknown, unresolved or quarantined event conditions MUST remain distinguishable from negative business outcomes.
+6. A Phase 3 change that alters any release-gate invariant requires explicit architectural review before implementation.
+
+### Phase 3 closure status
+
+The documented E01–E15 cases now have explicit traceability to the existing regression groups and release gates. This is a documentation-level cross-check; runtime Event Engine execution and production certification remain unclaimed.
