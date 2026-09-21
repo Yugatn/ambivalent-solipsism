@@ -190,3 +190,36 @@ All currently identified high-risk semantic controls have an explicit destinatio
 No legacy file is deleted at this checkpoint.
 
 The remaining work is regression validation: verify that the structured modules and their cross-links do not contradict one another after consolidation.
+
+
+## Pairwise verification log
+
+The following legacy-to-canonical pairs were rechecked against the current branch during the continuation audit:
+
+- regional-development.md → regional/development.md — exact preservation
+- regional-economy.md → regional/economy.md — exact preservation
+- regional-nodes.md → regional/nodes.md — exact preservation
+- regression-suite.md → verification/regression-suite.md — exact preservation
+- safety-kernel.md → security/safety-kernel.md — exact preservation
+- schema-contract.md → integration/schema-contract.md — exact preservation
+- self-employed.md → domain/self-employed.md — exact preservation
+- social-protection.md → support/social-protection.md — exact preservation
+- solidarity-fund.md → support/solidarity-fund.md — exact preservation
+- state-interface.md → integration/state-interface.md — exact preservation
+- state-transition-spec.md → state/transition-spec.md — exact preservation
+- subject-control.md → privacy/subject-control.md — exact preservation
+- tax-and-contribution.md → economy/tax-and-contribution.md — exact preservation
+- technical-core.md → architecture/technical-core.md — exact preservation
+- test-scenarios.md → verification/test-scenarios.md — exact preservation
+- traceability-matrix.md → migration/traceability-matrix.md — exact preservation
+- transition-and-unemployment.md → support/transition-and-unemployment.md — exact preservation
+- transport-work-integration.md → regional/transport-work-integration.md — exact preservation
+- trust-and-provenance.md → evidence/trust-and-provenance.md — exact preservation
+- work-lifecycle.md → state/work-lifecycle.md — exact preservation
+- api-and-interoperability.md → integration/api-and-interoperability.md — exact preservation
+
+### Intentional refinements
+
+- reputation.md → domain/reputation.md — non-identical canonical text is an intentional refinement already audited; legacy remains unchanged as baseline.
+
+These results are verification evidence, not a claim that the entire semantic audit is closed.
