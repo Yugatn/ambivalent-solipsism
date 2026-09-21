@@ -262,3 +262,88 @@ Expected: reconstructed state matches the valid projection; unexplained divergen
 | T25 | I9, I22 | R08, R09, R10 |
 
 Phase 2 is documentation-complete when T16–T25 have explicit expected outcomes and invariant/regression mappings. Runtime execution remains an implementation task.
+
+
+## Phase 3 Event Engine cases
+
+**E01 Duplicate delivery**
+Deliver the same canonical event twice.
+Expected: one event record and one logical effect; the second delivery returns the existing processing result.
+
+**E02 Event identity conflict**
+Reuse an existing `event_id` with different payload or schema version.
+Expected: reject/quarantine; original event remains unchanged; reconciliation is recorded.
+
+**E03 Retry after processing failure**
+Persist an event, fail projection processing, then retry.
+Expected: durable event remains available and retry does not duplicate effects.
+
+**E04 Causation chain**
+Create a system-generated event from a prior event.
+Expected: valid `causation_id`; `correlation_id` may group the workflow but is not treated as causal proof.
+
+**E05 Unknown predecessor**
+Receive an event whose `causation_id` is missing from the accessible history.
+Expected: explicit unresolved/quarantined condition; no temporal substitution.
+
+**E06 Causal cycle**
+Attempt to create an ordinary event chain whose causation references form a cycle.
+Expected: reject or quarantine.
+
+**E07 Out-of-order aggregate event**
+Deliver a protected state transition with an earlier sequence after a later sequence.
+Expected: buffer, defer, reject or reconcile according to policy; no incompatible state mutation.
+
+**E08 Timestamp/order mismatch**
+An event has an earlier `occurred_at` but later `recorded_at` than another event.
+Expected: timestamps do not silently reorder protected transitions.
+
+**E09 Replay**
+Rebuild a projection from immutable event history.
+Expected: deterministic valid state; no external side effect is repeated.
+
+**E10 Replay versioning**
+Rebuild the same history under a declared newer projection version.
+Expected: historical events remain intact and the projection version is identifiable.
+
+**E11 Reconciliation**
+Two valid events produce an unresolved aggregate conflict.
+Expected: both records remain, reconciliation basis is recorded, and a reconciliation result is auditable.
+
+**E12 Dependent decision reconciliation**
+Correct an evidence source used by dependent Decisions.
+Expected: affected projections/decisions enter reconciliation or review according to impact and policy.
+
+**E13 Quarantined event**
+Submit an invalid or integrity-failing event.
+Expected: no protected state mutation; diagnostic/audit record exists; recovery path is explicit.
+
+**E14 Non-idempotent external effect**
+A retry could repeat an external payment/notification/permission effect.
+Expected: durable effect status plus an explicit idempotency or compensation protocol prevents silent duplication.
+
+**E15 Event data minimization**
+An event producer attempts to include unrelated sensitive subject history.
+Expected: payload is minimized or rejected according to purpose and access policy.
+
+### Phase 3 traceability
+
+| Case | Event invariant | Existing invariant/regression |
+|---|---|---|
+| E01 | E1, E2, E11 | I16, I19; R02, R08, R10 |
+| E02 | E1, E3, E10 | I9, I15; R04, R08, R09 |
+| E03 | E2, E11 | I19, I22; R08, R10 |
+| E04 | E4, E5 | I9, I22; R08, R09 |
+| E05 | E5, E11 | I9, I22; R08, R10 |
+| E06 | E5 | I9, I22; R08, R10 |
+| E07 | E6, E7, E11 | I5, I16, I19; R02, R08, R10 |
+| E08 | E6, E7 | I5, I16; R02, R08 |
+| E09 | E8, E9 | I9, I22; R08, R10 |
+| E10 | E8, E9 | I9, I22; R08, R09, R10 |
+| E11 | E10, E11 | I9, I15, I22; R04, R08, R09, R10 |
+| E12 | E10 | I9, I19; R04, R08, R09 |
+| E13 | E11, E12 | I19, I22; R08, R10 |
+| E14 | E2, E11 | I19, I23; R05, R08, R10 |
+| E15 | E12 | I6, I7, I20; R06, R07 |
+
+Phase 3 is documentation-complete when E01–E15 have explicit expected outcomes, event-engine invariants and traceability to existing architectural invariants/regression groups. Runtime execution remains an implementation task.
