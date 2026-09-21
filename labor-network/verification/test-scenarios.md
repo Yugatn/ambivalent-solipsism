@@ -475,3 +475,61 @@ Expected: lineage supports aggregate verification without silently exposing indi
 | V12 | V7, V8 | R03, R06, R07 |
 
 Phase 5 is documentation-complete when V01–V12 have explicit dependency semantics, propagation behavior, privacy boundaries and regression traceability. Runtime graph materialization remains an implementation task.
+
+
+## Phase 6 Policy Engine / Impact cases
+
+**Q01 Policy versioning** — evaluate the same request under two policy versions.
+Expected: each outcome identifies its policy version; history is not rewritten.
+
+**Q02 Evidence insufficiency** — required evidence is missing or unresolved.
+Expected: UNKNOWN/REVIEW_REQUIRED; no silent approval or negative subject outcome.
+
+**Q03 Impact escalation** — an ordinary operation becomes high-impact because context, scope or reversibility changes.
+Expected: stronger controls and human review are required.
+
+**Q04 Impact non-person scoring** — engine receives subject attributes and attempts to use them as a value score.
+Expected: prohibited; impact is derived from operation/context, not subject worth.
+
+**Q05 Permission versus authority** — valid technical access exists without normative Permission.
+Expected: policy evaluation cannot infer authority from technical access.
+
+**Q06 Evidence versus execution** — verified Evidence is supplied where Action authorization is required.
+Expected: insufficient; Decision/Action boundary remains intact.
+
+**Q07 Projection staleness** — current decision context comes from a stale projection.
+Expected: refresh/review according to freshness policy; stale data is not silently current.
+
+**Q08 Policy conflict** — two applicable policies produce incompatible requirements.
+Expected: explicit conflict/review outcome; no arbitrary last-write-wins policy choice.
+
+**Q09 High-impact automation** — automated evaluation reaches a high-impact outcome.
+Expected: prescribed human review cannot be bypassed.
+
+**Q10 Explanation minimization** — explanation requires sensitive provenance.
+Expected: sufficient authorized explanation without unrelated sensitive disclosure.
+
+**Q11 Policy change propagation** — current policy changes after prior Decisions.
+Expected: affected current decisions are identifiable; historical decisions retain their original policy basis.
+
+**Q12 Recovery/appeal** — a high-impact decision is challenged.
+Expected: review/reversal/recovery path exists and the original decision history remains auditable.
+
+### Phase 6 traceability
+
+| Case | Policy invariant | Regression groups |
+|---|---|---|
+| Q01 | Q2, Q6 | R04, R08 |
+| Q02 | Q5 | R04, R07, R09 |
+| Q03 | Q3, Q4 | R01, R05, R09 |
+| Q04 | Q3 | R01, R06, R07 |
+| Q05 | Q7 | R03, R05, R06 |
+| Q06 | Q1, Q7 | R01, R04, R08 |
+| Q07 | Q5, Q8 | R05, R08, R10 |
+| Q08 | Q2, Q5 | R04, R08, R09 |
+| Q09 | Q4 | R01, R05, R09 |
+| Q10 | Q8 | R03, R06, R07 |
+| Q11 | Q2, Q6 | R04, R08, R09 |
+| Q12 | Q4, Q6 | R01, R04, R08, R10 |
+
+Phase 6 is documentation-complete when Q01–Q12 have explicit outcomes, impact semantics and regression traceability. Runtime policy evaluation remains an implementation task.
