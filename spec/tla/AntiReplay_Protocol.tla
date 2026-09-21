@@ -14,7 +14,7 @@ Init ==
 
 Send(m) ==
     /\ m \in Messages
-    /\ m.seq = sender.nextSeq
+    /\ m = sender.nextSeq
     /\ sender' = [sent |-> sender.sent \cup {m}, nextSeq |-> sender.nextSeq + 1]
     /\ channel' = Append(channel, m)
     /\ UNCHANGED <<receiver, adversary>>
@@ -23,10 +23,10 @@ Receive(m) ==
     /\ Len(channel) > 0
     /\ Head(channel) = m
     /\ channel' = Tail(channel)
-    /\ IF m.seq \notin receiver.seen
+    /\ IF m \notin receiver.seen
         THEN receiver' = [
-            accepted |-> Append(receiver.accepted, m.seq),
-            seen |-> receiver.seen \cup {m.seq}
+            accepted |-> Append(receiver.accepted, m),
+            seen |-> receiver.seen \cup {m}
         ]
         ELSE receiver' = receiver
     /\ adversary' = [seen |-> adversary.seen \cup {m}]
@@ -43,7 +43,7 @@ Next ==
     \/ \E m \in Messages : AdversaryReplay(m)
 
 NoReplayAccepted ==
-    \A seq \in { m.seq : m \in Messages } :
+    \A seq \in Messages :
         Cardinality({ i \in 1..Len(receiver.accepted) :
             receiver.accepted[i] = seq }) <= 1
 
