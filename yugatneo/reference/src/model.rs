@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 #[derive(Debug, Clone, Deserialize)]
@@ -51,4 +51,42 @@ pub struct TStar {
 pub struct Counterfactual {
     pub removed: String,
     pub modified_validity: String,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+pub enum TriState {
+    True,
+    False,
+    Unresolved,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Validity {
+    Valid,
+    Invalid,
+    Unknown,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum DependencyStatus {
+    Independent,
+    Dependent,
+    Unresolved,
+}
+
+impl Trace {
+    pub fn event(&self, id: &str) -> Option<&Event> {
+        self.events.iter().find(|event| event.id == id)
+    }
+
+    pub fn events_of<'a>(&'a self, kind: &'a str) -> impl Iterator<Item = &'a Event> + 'a {
+        self.events.iter().filter(move |event| event.kind == kind)
+    }
+
+    pub fn in_t_star(&self) -> bool {
+        self.t_star.complete_provenance
+            && self.t_star.closed_dependency_universe == Some(true)
+            && self.t_star.monotone_sanction
+            && self.t_star.finite_scope
+    }
 }
