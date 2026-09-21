@@ -74,3 +74,38 @@ The suite is structurally complete when each declared scenario has:
 4. an auditable failure condition.
 
 A test failure blocks release unless the corresponding invariant or canonical rule is explicitly changed and the change is itself reviewed.
+
+
+## Final release-gate checks
+
+### G1. Decision versus Action
+
+A policy result is not itself execution authority. The decision lifecycle must reach its required review state before a high-impact effect is applied, and the actual effect must remain auditable as a separate action.
+
+### G2. Audit versus surveillance
+
+Audit records prove significant system actions with purpose and minimization. Observability must not become unrestricted subject monitoring.
+
+### G3. Federation versus profile construction
+
+Federation contracts transmit bounded, purpose-specific assertions. Node trust, connectivity, or accumulated requests do not authorize construction of an unrestricted centralized subject profile.
+
+### G4. State versus event history
+
+Current state remains a projection/configuration. Event history remains the source for reconstructing significant past changes. Recovery and reconciliation cannot rely on state alone.
+
+### G5. Privacy versus government integration
+
+Government integration remains purpose-bound and does not acquire broader authority from technical database interoperability. Alternative access paths remain available where required.
+
+### G6. Human review versus data expansion
+
+Human Review receives the minimum relevant evidence and does not gain automatic access to the subject's complete history merely because review was triggered.
+
+### G7. Unknown versus negative outcome
+
+Insufficient evidence remains `unknown` unless a separately defined rule establishes another outcome. Absence of confirmation is not silently converted into a negative fact.
+
+### G8. Release decision
+
+The current documented architecture passes the structural release gate for these eight conflict classes. This is an architectural/documentation validation, not a claim of runtime execution or production certification.
