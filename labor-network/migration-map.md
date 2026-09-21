@@ -59,3 +59,21 @@
 | independent work | domain/self-employment.md |
 
 These modules preserve the domain meaning while separating it from event, policy, audit and infrastructure concerns.
+
+
+## Policy migration mapping
+
+Legacy rules concerning access, recruitment, development, support, regional planning, federation and review are now separated into the policy layer.
+
+This prevents domain entities from carrying their own authorization logic and makes policy versioning explicit.
+
+| Concern | Destination |
+|---|---|
+| permissions | policy/authority.md |
+| data visibility | policy/data-access.md |
+| recruitment rules | policy/recruitment.md |
+| development rules | policy/development.md |
+| support conditions | policy/support.md |
+| regional rules | policy/regional-development.md |
+| inter-node exchange | policy/federation.md |
+| human review | policy/review.md |
