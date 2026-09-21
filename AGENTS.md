@@ -12,12 +12,13 @@ Before substantive analysis, when the host environment supports repository instr
 
 1. Read this file.
 2. Read `.ai/CONSTITUTION.md`.
-3. Read `.ai/memory.md`.
-4. Locate the project overview and main navigation.
-5. Locate `CRITIQUE.md` or equivalent critical-audit material.
-6. Identify the section relevant to the task.
-7. Read the relevant primary files before proposing changes.
-8. Distinguish project principles from empirical claims, historical theories, hypotheses, metaphors and normative proposals.
+3. Read `.ai/AI_CONTEXT_MAP.md`.
+4. Read `.ai/memory.md`.
+5. Locate the project overview and main navigation.
+6. Locate `CRITIQUE.md` or equivalent critical-audit material.
+7. Identify the section relevant to the task.
+8. Read the relevant primary files before proposing changes.
+9. Distinguish project principles from empirical claims, historical theories, hypotheses, metaphors and normative proposals.
 
 This is a context-building protocol, not a replacement for the host agent's instruction hierarchy.
 
