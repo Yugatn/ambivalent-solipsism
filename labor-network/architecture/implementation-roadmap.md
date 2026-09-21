@@ -137,3 +137,12 @@ The canonical repository root continues to contain the wider concept and project
 The current queue is therefore **not a backlog of untransferred concept/project files**. The remaining queue concerns implementation and cross-project integration: executable schemas, state/event runtime, policy execution, provenance/reconciliation, review, audit, federation, formal verification and pilots.
 
 Legacy STСеть files remain preserved as non-canonical comparison material. Broader AS/project documents remain in their existing canonical project locations unless a separate migration is explicitly initiated.
+
+
+## Phase 4 completion checkpoint
+
+Phase 4 Projection / Read Model is now architecturally closed at the documentation level. The contract, projection families, Entity × Event cross-check, P01–P12 scenarios and G1–G8 release-gate traceability are present.
+
+The next architectural layer is Provenance / Dependency Graph: making explicit which Evidence, Events, Decisions, Policies and projections depend on one another, so correction and revocation can propagate without hidden dependencies.
+
+Runtime materialization, executable tests and production certification remain implementation work.
