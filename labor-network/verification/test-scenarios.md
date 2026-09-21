@@ -677,3 +677,59 @@ Expected: explicit compatibility/failure path; no silent reinterpretation.
 | F08 | F8 | R02, R03, R06, R07 |
 | F09 | F7, F9 | R03, R05, R07 |
 | F10 | F10 | R07, R08, R10 |
+
+
+## Phase 10 Formal Verification cases
+
+**FV01 Unauthorized transition** — a transition is attempted without required authority.
+Expected: the model proves the protected state cannot enter the unauthorized successor state.
+
+**FV02 Decision-to-Action bypass** — a permitted Decision attempts to create a protected Action without required review/execution authority.
+Expected: invariant violation is detected; no valid trace permits the bypass.
+
+**FV03 Duplicate event effect** — the same event is delivered repeatedly.
+Expected: idempotency invariant holds; repeated delivery does not create additional protected effects.
+
+**FV04 Unknown preservation** — required evidence is unresolved.
+Expected: model preserves UNKNOWN/REVIEW_REQUIRED rather than deriving a negative business state.
+
+**FV05 High-impact review bypass** — an automated path attempts to skip mandatory Human Review.
+Expected: safety property is violated by the attempted trace and the protected transition remains unreachable.
+
+**FV06 Authority from data/federation** — additional data or remote connectivity is introduced without Permission.
+Expected: authority scope remains unchanged.
+
+**FV07 Historical overwrite** — correction attempts to mutate the original historical event/decision in place.
+Expected: original history remains immutable; correction is represented separately.
+
+**FV08 Exit integrity** — optional process exit triggers an unrelated protected penalty.
+Expected: forbidden penalty state is unreachable solely because of exit.
+
+**FV09 Bounded recovery** — protected processing fails after durable event creation.
+Expected: recovery path reaches a consistent state without deleting the source event or duplicating protected effects.
+
+**FV10 Counterexample traceability** — intentionally weaken one invariant in the model.
+Expected: checker produces a reproducible counterexample demonstrating the affected boundary.
+
+**FV11 Model-version change** — an invariant or state definition changes.
+Expected: affected proof obligations are marked stale until rechecked.
+
+**FV12 Abstraction boundary** — a model omits a transport/storage detail.
+Expected: the omission is explicitly recorded as outside proof scope and is not represented as proven behavior.
+
+### Phase 10 traceability
+
+| Case | Formal invariant | Existing invariants | Regression groups |
+|---|---|---|---|
+| FV01 | FV2, FV6 | I17, I18 | R02, R03 |
+| FV02 | FV2, FV5 | I11, I23 | R05, R08 |
+| FV03 | FV2 | I16 | R02, R08, R10 |
+| FV04 | FV2, FV6 | I15 | R04, R05, R07 |
+| FV05 | FV2, FV5 | I11, I23 | R05, R06 |
+| FV06 | FV2, FV3 | I17, I18, I20 | R03, R07 |
+| FV07 | FV2, FV4 | I9, I19 | R04, R08, R09 |
+| FV08 | FV2 | I12, I24 | R06, R08 |
+| FV09 | FV5, FV6 | I16, I22 | R08, R10 |
+| FV10 | FV4 | all affected invariants | R01–R10 as applicable |
+| FV11 | FV7 | affected invariant set | affected regression groups |
+| FV12 | FV1, FV3, FV8 | selected kernel invariants | R01, R08, R10 |
