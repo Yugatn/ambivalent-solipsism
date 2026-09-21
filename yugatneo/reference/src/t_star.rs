@@ -26,6 +26,10 @@ impl TStarChecker {
         for edge in &prov.edges {
             if !trace.events.iter().any(|e|e.id==edge.from)&&!declared.contains(edge.from.as_str()){return TriState::False;}
         }
+        for ev in trace.events_of("Attestation") {
+            let Some(p)=ev.payload.as_object() else{return TriState::False;};
+            if p.get("credential").map(|v|v.is_null()).unwrap_or(true) || p.get("key_id").map(|v|v.is_null()).unwrap_or(true) {return TriState::False;}
+        }
         if let Some(map)=&trace.certificate_closure {
             for ev in trace.events_of("Attestation") {
                 if !map.contains_key(&ev.id){return TriState::Unresolved;}
