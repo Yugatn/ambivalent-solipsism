@@ -224,3 +224,13 @@
 - [Дорожная карта реализации](implementation-roadmap.md)
 
 Новый слой связывает state machines, policy decisions, human review, субъектный контроль и последовательную реализацию прототипа.
+
+
+## 28 · Machine Contracts и Invariants
+
+- [Машинные контракты](schema-contract.md)
+- [Матрица Entity × Event × Guard × Invariant](entity-event-matrix.md)
+- [Federation Contract](federation-contract.md)
+- [Формальные инварианты](invariants.md)
+
+Этот слой фиксирует минимальные контракты данных, границы федерации и свойства, которые реализация не должна нарушать.
