@@ -1,6 +1,8 @@
 pub mod canonical;
+pub mod invariant;
 pub mod model;
-pub mod contract;
+pub mod provenance;
+pub mod validity;
 
-pub use contract::{classify, ResultEnvelope};
-pub use model::{Trace, TStar};
+pub use invariant::{evaluate, ResultEnvelope};
+pub use model::{TStar, Trace};
