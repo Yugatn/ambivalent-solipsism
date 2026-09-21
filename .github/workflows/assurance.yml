@@ -124,11 +124,11 @@ jobs:
           printf 'fake' > "$fake/model.cfg"
           printf 'fake' > "$fake/tla2tools.jar"
 
-          PATH="$fake:$PATH" TLC_FAKE_RESULT=pass             bash scripts/assurance/run_tlc.sh "$fake/model.tla" "$fake/model.cfg" pass
-          PATH="$fake:$PATH" TLC_FAKE_RESULT=counterexample             bash scripts/assurance/run_tlc.sh "$fake/model.tla" "$fake/model.cfg" counterexample
-          PATH="$fake:$PATH" TLC_FAKE_RESULT=counterexample             bash -c '! bash scripts/assurance/run_tlc.sh "$1" "$2" pass' _ "$fake/model.tla" "$fake/model.cfg"
-          PATH="$fake:$PATH" TLC_FAKE_RESULT=parse_error             bash -c '! bash scripts/assurance/run_tlc.sh "$1" "$2" pass' _ "$fake/model.tla" "$fake/model.cfg"
-          PATH="$fake:$PATH" TLC_FAKE_RESULT=unknown             bash -c '! bash scripts/assurance/run_tlc.sh "$1" "$2" pass' _ "$fake/model.tla" "$fake/model.cfg"
+          PATH="$fake:$PATH" TLC_JAR="$fake/tla2tools.jar" TLC_FAKE_RESULT=pass             bash scripts/assurance/run_tlc.sh "$fake/model.tla" "$fake/model.cfg" pass
+          PATH="$fake:$PATH" TLC_JAR="$fake/tla2tools.jar" TLC_FAKE_RESULT=counterexample             bash scripts/assurance/run_tlc.sh "$fake/model.tla" "$fake/model.cfg" counterexample
+          PATH="$fake:$PATH" TLC_JAR="$fake/tla2tools.jar" TLC_FAKE_RESULT=counterexample             bash -c '! bash scripts/assurance/run_tlc.sh "$1" "$2" pass' _ "$fake/model.tla" "$fake/model.cfg"
+          PATH="$fake:$PATH" TLC_JAR="$fake/tla2tools.jar" TLC_FAKE_RESULT=parse_error             bash -c '! bash scripts/assurance/run_tlc.sh "$1" "$2" pass' _ "$fake/model.tla" "$fake/model.cfg"
+          PATH="$fake:$PATH" TLC_JAR="$fake/tla2tools.jar" TLC_FAKE_RESULT=unknown             bash -c '! bash scripts/assurance/run_tlc.sh "$1" "$2" pass' _ "$fake/model.tla" "$fake/model.cfg"
 
       - name: Evidence schema validation
         run: |
