@@ -9,18 +9,18 @@ Vars == <<acceptedCount, seen, pending>>
 Init ==
     /\ acceptedCount = [m \in Messages |-> 0]
     /\ seen = {}
-    /\ pending = -1
+    /\ pending = 2
 
 Send(m) ==
     /\ m \in Messages
-    /\ pending = -1
+    /\ pending = 2
     /\ pending' = m
     /\ seen' = seen \cup {m}
     /\ UNCHANGED acceptedCount
 
 Replay(m) ==
     /\ m \in seen
-    /\ pending = -1
+    /\ pending = 2
     /\ pending' = m
     /\ UNCHANGED <<acceptedCount, seen>>
 
