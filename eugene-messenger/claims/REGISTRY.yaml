@@ -1,0 +1,68 @@
+version: 1
+
+claims:
+  - id: FavoriteStateAtomicity
+    status: specified
+    level: 2
+  - id: FavoriteStateHLCDeterministic
+    status: specified
+    level: 2
+  - id: FavoriteAccessibleEquivalent
+    status: specified
+    level: 2
+  - id: FavoriteArchiveOrthogonality
+    status: specified
+    level: 2
+  - id: FavoriteOperationIdempotence
+    status: specified
+    level: 2
+  - id: FavoriteOperationAppendOnly
+    status: specified
+    level: 2
+  - id: SwipeThresholdDeterminism
+    status: specified
+    level: 2
+  - id: SwipeNormalizedDistance
+    status: specified
+    level: 2
+  - id: UndoAppendOnly
+    status: specified
+    level: 2
+  - id: FeedDirectionInvariant
+    status: specified
+    level: 2
+  - id: ProtocolOrderingIndependentOfUI
+    status: specified
+    level: 2
+  - id: HiddenArchiveSecretNonDisclosure
+    status: specified
+    level: 2
+  - id: HiddenArchiveRateLimit
+    status: specified
+    level: 2
+  - id: HiddenArchiveSearchHistoryIsolation
+    status: specified
+    level: 2
+  - id: HiddenArchiveTimingConstant
+    status: specified
+    level: 2
+  - id: HiddenArchiveSessionNotPersisted
+    status: specified
+    level: 2
+  - id: FavoriteAfterDeleteSemantics
+    status: specified
+    level: 2
+  - id: FavoriteStateNotInheritedByDerivedMessages
+    status: specified
+    level: 2
+  - id: LogicalClockMonotonic
+    status: specified
+    level: 2
+  - id: MultiDeviceConvergence
+    status: specified
+    level: 2
+
+policy:
+  rule: >
+    A claim may become model_checked only after the corresponding executable
+    model and evidence bundle are actually produced and reproducibly verified.
