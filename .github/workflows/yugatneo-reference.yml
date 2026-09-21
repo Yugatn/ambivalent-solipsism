@@ -1,0 +1,28 @@
+name: Yugatneo Level 1 Reference
+
+on:
+  push:
+    paths:
+      - 'yugatneo/reference/**'
+      - '.github/workflows/yugatneo-reference.yml'
+  pull_request:
+    paths:
+      - 'yugatneo/reference/**'
+      - '.github/workflows/yugatneo-reference.yml'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: yugatneo/reference
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo fmt --check
+      - run: cargo test
+      - run: cargo clippy -- -D warnings
+      - run: |
+          for f in fixtures/trace_*.json; do
+            cargo run --quiet -- --input "$f" >/dev/null
+          done
