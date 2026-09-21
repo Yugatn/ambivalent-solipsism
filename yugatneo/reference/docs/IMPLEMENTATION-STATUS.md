@@ -2,36 +2,47 @@
 
 ## Current state
 
-This branch establishes the executable contract boundary and canonical serialization foundation.
+The branch has crossed the boundary from fixture-selected output to an executable Level 1 analysis path.
 
 ### Implemented
 
-- normative F/G/H/I/L/M fixture classes;
+- typed Trace/Event/LogicalTime model;
 - explicit T★ closed-world gate;
 - Truth, Applicability and Decidability result axes;
 - DependencyStatus and I-1a/I-1b result axes;
-- deterministic CBOR encoder for the supported JSON data model;
-- SHA-256 domain separation primitives;
-- Rust project structure;
+- executable ProvenanceGraph;
+- input, context and certificate edge classes;
+- certificate closure traversal;
+- executable attestation validity evaluation;
+- VALID to INVALID counterfactual dependency;
+- VALID to UNKNOWN counterfactual handling;
+- explicit mandatory and uncertain validity references;
+- Level 2 witness-independence gate;
+- executable I-1a and I-1b evaluation;
+- M regression demonstrating certificate-closure sensitivity;
+- L regression demonstrating UNKNOWN is not INVALID;
+- deterministic serialization foundation;
+- SHA-256 domain separation;
 - regression test harness;
 - GitHub Actions for formatting, tests and Clippy.
 
-### Still required before calling Level 1 complete
+### Still required before Level 1 can be called complete
 
-- typed event parser with schema validation;
-- real ProvenanceGraph construction;
-- ValidityRule_ATT with complete truth table;
-- DependencyCertificate computation rather than fixture classification;
-- counterfactual witness verification;
-- certificate-closure traversal;
-- generic I-1a/I-1b evaluation;
-- canonical CBOR round-trip tests against binary fixtures;
-- property and fuzz tests;
-- negative tests that mutate H, I, L and M;
+- binary CBOR input/output path;
+- typed schema validation with stable error codes;
+- generated DependencyCertificate artifact;
+- signed ValidityCertificate artifact;
+- complete T★ operational checks rather than trace-declared flags;
+- full witness closure model;
+- mutation testing and fuzzing;
+- property tests for graph closure and determinism;
+- independent implementation or differential checker;
 - security review.
 
-The present executable is therefore a **bootstrap reference**, not a finished protocol implementation.
+## Important implementation boundary
+
+The engine is now content-driven for the current attestation contract. It still uses an explicit closed-world dependency schema. This is a deliberate Level 1 boundary, not a claim that arbitrary hidden dependencies can be detected.
 
 ## Non-claims
 
-Passing the regression matrix does not establish distributed safety, production security, consensus correctness, AAS correctness or Mainnet readiness.
+Passing F/G/H/I/L/M does not establish distributed safety, production security, consensus correctness, AAS correctness, economic safety, or Mainnet readiness.
