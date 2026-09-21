@@ -100,3 +100,52 @@ Eugene Messenger связывает принцип субъектности и �
 - явное различение specification, proof, extraction, runtime и testing.
 
 Этот слой является аддитивным: он не заменяет существующую архитектуру проекта и не является заявлением о завершённой механической верификации.
+
+
+## Yugatneo: текущий конституционный research boundary
+
+Текущий этап Yugatneo не объявляет конституционные инварианты доказанными только потому, что для них существуют формальные записи или симуляционные результаты.
+
+### I-1b: Counterfactual Independence
+
+Для санкции, основанной на evidence e, I-1b требует проверки независимости evidence от dissent d:
+
+Sanction(s,e) ∧ ¬Independent(e,d) → Violation
+
+На ограниченном классе трасс T★ независимость исследуется через provenance graph.
+
+StructuralDep(e,d) означает достижимость d в ancestry evidence.
+
+CausalDep(e,d) означает, что удаление d из наблюдаемого provenance graph изменяет релевантное значение e.
+
+ValidityDep(e,d) означает, что после удаления d evidence теряет требуемую валидность.
+
+Только ValidityDep является основанием для I-1b violation. Простая ссылка на dissent не считается зависимостью.
+
+### T★
+
+T★ требует полного provenance, наблюдаемых или доказуемо отсутствующих зависимостей, конечного scope и явно ограниченной модели санкции. За пределами T★ результат обязан быть UNRESOLVED.
+
+### Provable fragment
+
+I-1 остаётся Opposable в общем случае. Однако корректность алгоритма Independent может быть доказана для явно определённого фрагмента T★. Это не превращает весь I-1 в Provable invariant.
+
+Необходимо отдельно доказать:
+
+1. soundness: DEPENDENT не возвращается без ValidityDep;
+2. completeness on T★: всякая наблюдаемая ValidityDep обнаруживается;
+3. boundary correctness: вне T★ результатом является UNRESOLVED;
+4. structural and causal dependence не являются достаточными условиями violation.
+
+### Evidence boundary
+
+AAS counterfactual simulation может давать evidence для случаев вне T★, но её результат не становится автоматически конституционным вердиктом. SUPPORTED, REFUTED и UNRESOLVED остаются результатами эксперимента.
+
+### Что пока нельзя утверждать
+
+- что I-1b доказан для всех трасс;
+- что T★ охватывает реальные системы;
+- что provenance graph всегда полон;
+- что validity всех типов evidence имеет единственную процедуру;
+- что AAS counterfactual simulation корректно решает случаи вне T★;
+- что отсутствие найденного counterexample означает соблюдение I-1b.
