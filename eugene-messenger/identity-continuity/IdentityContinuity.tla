@@ -4,27 +4,26 @@ EXTENDS Naturals, TLC
 CONSTANTS Identities, Keys
 ASSUME Identities # {} /\ Keys # {}
 
-VARIABLES activeIdentity, currentKey, revokedIdentities, transitionCount
-vars == <<activeIdentity, currentKey, revokedIdentities, transitionCount>>
+VARIABLES activeIdentity, currentKey, revokedIdentities, everRevoked
+vars == <<activeIdentity, currentKey, revokedIdentities, everRevoked>>
 
 Init ==
   /\ activeIdentity \in Identities
   /\ currentKey \in Keys
   /\ revokedIdentities = {}
-  /\ transitionCount = 0
+  /\ everRevoked = {}
 
 Rotate(newKey) ==
   /\ newKey \in Keys
   /\ newKey # currentKey
-  /\ newKey' = newKey
-  /\ activeIdentity' = activeIdentity
-  /\ revokedIdentities' = revokedIdentities
-  /\ transitionCount' = transitionCount + 1
+  /\ currentKey' = newKey
+  /\ UNCHANGED <<activeIdentity, revokedIdentities, everRevoked>>
 
 Revoke ==
   /\ activeIdentity \notin revokedIdentities
   /\ revokedIdentities' = revokedIdentities \cup {activeIdentity}
-  /\ UNCHANGED <<activeIdentity, currentKey, transitionCount>>
+  /\ everRevoked' = everRevoked \cup {activeIdentity}
+  /\ UNCHANGED <<activeIdentity, currentKey>>
 
 RejectRevoked ==
   /\ activeIdentity \in revokedIdentities
@@ -36,13 +35,13 @@ Next ==
   \/ RejectRevoked
 
 NoResurrection ==
-  activeIdentity \notin revokedIdentities => transitionCount >= 0
+  revokedIdentities \subseteq everRevoked
 
 TypeOK ==
   /\ activeIdentity \in Identities
   /\ currentKey \in Keys
   /\ revokedIdentities \subseteq Identities
-  /\ transitionCount \in Nat
+  /\ everRevoked \subseteq Identities
 
 Spec == Init /\ [][Next]_vars
 
