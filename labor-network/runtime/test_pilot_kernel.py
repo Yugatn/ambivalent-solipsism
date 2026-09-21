@@ -86,3 +86,67 @@ class PilotKernelTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ConformanceTraceTests(unittest.TestCase):
+    """Map executable outcomes to Critical Kernel obligations K01-K10."""
+
+    def test_k01_authorization_guard(self):
+        k = PilotKernel()
+        with self.assertRaises(ValueError):
+            k.execute()
+
+    def test_k02_decision_action_separation(self):
+        k = PilotKernel()
+        k.resolve_evidence()
+        k.decide(permitted=True)
+        self.assertEqual(k.action, ActionState.NOT_STARTED)
+
+    def test_k03_event_idempotency(self):
+        k = PilotKernel()
+        e = Event("k03", "test")
+        self.assertTrue(k.record_event(e))
+        self.assertFalse(k.record_event(e))
+
+    def test_k04_unknown_preservation(self):
+        k = PilotKernel()
+        self.assertEqual(k.unknown, UnknownState.UNKNOWN)
+        with self.assertRaises(ValueError):
+            k.decide(permitted=True)
+
+    def test_k05_review_barrier(self):
+        k = PilotKernel()
+        k.resolve_evidence()
+        k.require_review()
+        with self.assertRaises(ValueError):
+            k.decide(permitted=True)
+
+    def test_k06_authority_non_escalation(self):
+        k = PilotKernel()
+        self.assertFalse(k.has_authority("execute_protected_action"))
+
+    def test_k07_history_preservation(self):
+        k = PilotKernel()
+        e = Event("k07", "historical")
+        k.record_event(e)
+        k.correct("k07")
+        self.assertEqual(k.history[0], e)
+
+    def test_k08_recovery_guard(self):
+        k = PilotKernel()
+        k.resolve_evidence()
+        k.decide(permitted=True)
+        k.begin_recovery()
+        with self.assertRaises(ValueError):
+            k.execute()
+
+    def test_k09_unknown_is_representable(self):
+        k = PilotKernel()
+        self.assertIn(k.unknown, (UnknownState.UNKNOWN, UnknownState.RESOLVED))
+
+    def test_k10_reconstruction(self):
+        k = PilotKernel()
+        k.resolve_evidence()
+        k.decide(permitted=True)
+        k.execute()
+        self.assertEqual(k.reconstruct()["action"], "executed")
