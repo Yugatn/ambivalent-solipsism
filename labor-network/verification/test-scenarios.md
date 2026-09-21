@@ -629,3 +629,51 @@ Expected: dependent audit indexes/views identify the correction without rewritin
 | A08 | A9 | R08, R10 |
 | A09 | A10 | R02, R08, R10 |
 | A10 | A5, A10 | R04, R08, R09 |
+
+
+## Phase 9 Federation cases
+
+**F01 Node identity** — a connected node has no declared governance scope.
+Expected: federation trust/authority is not established.
+
+**F02 Assertion minimization** — a node requests an entire subject record for a narrow verification purpose.
+Expected: request is minimized or rejected according to purpose and access policy.
+
+**F03 Remote assertion authority** — a valid remote assertion is treated as local Action authority.
+Expected: local Permission/Policy/Review controls remain mandatory.
+
+**F04 Remote versus local verification** — remote issuer asserts a fact that local policy requires independent verification for.
+Expected: remote assertion remains distinct from locally verified fact.
+
+**F05 Revocation propagation** — source node revokes an assertion already used downstream.
+Expected: affected dependents are identified and re-evaluated without rewriting historical issuance.
+
+**F06 Remote outage** — source node is unavailable during a protected decision.
+Expected: stale/unavailable status is explicit; outage does not become a negative subject fact.
+
+**F07 Contradictory assertions** — two trusted nodes provide conflicting assertions.
+Expected: conflict follows declared reconciliation policy and remains auditable.
+
+**F08 Cross-node profile construction** — repeated federation exchanges are aggregated into an unrestricted individual profile.
+Expected: aggregation is blocked or bounded by explicit purpose and authorization.
+
+**F09 Local sovereignty** — remote node requests direct execution of a protected local Action.
+Expected: remote request cannot bypass local Decision, Policy and Human Review controls.
+
+**F10 Protocol evolution** — receiving node encounters an unsupported federation schema version.
+Expected: explicit compatibility/failure path; no silent reinterpretation.
+
+### Phase 9 traceability
+
+| Case | Federation invariant | Regression groups |
+|---|---|---|
+| F01 | F1, F2 | R03, R07 |
+| F02 | F3 | R03, R06, R07 |
+| F03 | F2, F7 | R03, R05, R07 |
+| F04 | F4, F6 | R04, R07 |
+| F05 | F5 | R04, R07, R09 |
+| F06 | F6 | R05, R07, R10 |
+| F07 | F5, F6 | R04, R07, R09 |
+| F08 | F8 | R02, R03, R06, R07 |
+| F09 | F7, F9 | R03, R05, R07 |
+| F10 | F10 | R07, R08, R10 |
