@@ -189,3 +189,41 @@ def decision_records(store: DurableKernelStore) -> list[Dict[str, str]]:
 def append_audit_record(store: DurableKernelStore, *, audit_id: str, event: str, purpose: str) -> None:
     """Persist a purpose-bound audit record separately from decision state."""
     store.append({"audit_id": audit_id, "event": event, "purpose": purpose})
+
+
+@dataclass(frozen=True)
+class ExecutionAuthorization:
+    decision_id: str
+    permitted: bool
+    policy_version: str
+    review_state: str
+    action_type: str
+
+
+def authorize_execution(store: DurableKernelStore, authorization: ExecutionAuthorization) -> bool:
+    """Require an explicit persisted Decision before protected execution."""
+    matches = [
+        r for r in decision_records(store)
+        if r.get("decision_id") == authorization.decision_id
+    ]
+    if not matches:
+        return False
+    record = matches[-1]
+    if record.get("permitted") != "true":
+        return False
+    if record.get("policy_version") != authorization.policy_version:
+        return False
+    if record.get("review_state") not in {"completed", "not_required"}:
+        return False
+    return authorization.permitted
+
+
+def execute_authorized_action(
+    kernel: PilotKernel,
+    store: DurableKernelStore,
+    authorization: ExecutionAuthorization,
+) -> bool:
+    """Execute only after the durable authorization boundary succeeds."""
+    if not authorize_execution(store, authorization):
+        raise ValueError("durable authorization denied")
+    return kernel.execute()
