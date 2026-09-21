@@ -63,9 +63,9 @@ claims:
 
     formal_model:
       type: tla+
-      path: theories/AssuranceState.tla
-      protocol_model: pending
-      config: pending
+      path: spec/tla/AntiReplay_Protocol.tla
+      protocol_model: executable
+      config: spec/tla/AntiReplay_Protocol.cfg
 
     implementation:
       conformance_tests: pending
