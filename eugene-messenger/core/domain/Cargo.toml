@@ -1,0 +1,9 @@
+[package]
+name = "eugene-messenger-domain"
+version = "0.1.0"
+edition = "2021"
+description = "Platform-independent domain model for Eugene Messenger"
+license = "MIT"
+
+[lib]
+path = "src/lib.rs"
