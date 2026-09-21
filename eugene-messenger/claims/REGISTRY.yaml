@@ -3,75 +3,114 @@ version: 1
 claims:
   - id: FavoriteStateAtomicity
     status: specified
-    level: 2\n    claim_hash: sha256:8e97aab47b41772b051d9c1defe5d0a1c68069ce7150f7b3c18dbca5ed6e7bfa
+    level: 2
+    claim_hash: sha256:ef9337a2d36c2a674b841c0590ef51d7eea32f5f3ed205f28ca89f4119fb5782
+    hash_basis: canonical-json(id,status,level)
   - id: FavoriteStateHLCDeterministic
     status: specified
-    level: 2\n    claim_hash: sha256:8af3c8457c10dee02ce4311e9b312f9a43d664d566045e0ca9000dec4b459564
+    level: 2
+    claim_hash: sha256:ce1d1c919b1e0b1f3489dfd70e33e5e9f4b46ec8b91eedb7b3a66ba93c9b8990
+    hash_basis: canonical-json(id,status,level)
   - id: FavoriteAccessibleEquivalent
     status: specified
-    level: 2\n    claim_hash: sha256:2ef8fcc50a8bd8b65f26192864c6ed312d4972eb42f8c17675638d18b3116607
+    level: 2
+    claim_hash: sha256:a0e76d00b58406511d5501d95689053808aa8b5ecdd81ad25324227a24b0e7eb
+    hash_basis: canonical-json(id,status,level)
   - id: FavoriteArchiveOrthogonality
     status: specified
-    level: 2\n    claim_hash: sha256:95dc892072f3f4fa90b78abfa24ef413874a0cc5652874f49704064f4aa3f4d5
+    level: 2
+    claim_hash: sha256:c241ee846301b5c6bb0489e7975b2fbb162757b29c08a05faf1c729e5dc6cccf
+    hash_basis: canonical-json(id,status,level)
   - id: FavoriteOperationIdempotence
     status: specified
-    level: 2\n    claim_hash: sha256:b84dfbdc3d6328db0f6140256501350bd9b4fc9ecf27dd78ba9eeb8cb36efd59
+    level: 2
+    claim_hash: sha256:8ff455ada0dbcb165f9861725dbdd25e2753ce87bda81e1b59d2a7f431e1e54c
+    hash_basis: canonical-json(id,status,level)
   - id: FavoriteOperationAppendOnly
     status: specified
-    level: 2\n    claim_hash: sha256:4dafe3809e29a29da33e387cb13c479d23cee2b8c5e7fdfc9c1d315b8f5b4edc
+    level: 2
+    claim_hash: sha256:0b05ea90a00f8e84e3b94dfb8d1dc10cf89554a52e104676226b1bece8a27583
+    hash_basis: canonical-json(id,status,level)
   - id: SwipeThresholdDeterminism
     status: specified
-    level: 2\n    claim_hash: sha256:3cb3f7e2df4bc5f357f784f0097b654c0e3ab069594c4d1cfd4a3066b4fd620c
+    level: 2
+    claim_hash: sha256:d60099a45a29210a4897df29ec899d133dbfd190d3e75d589cfa3856edb2b402
+    hash_basis: canonical-json(id,status,level)
   - id: SwipeNormalizedDistance
     status: specified
-    level: 2\n    claim_hash: sha256:8089a9a456c822ccc0585d661962fa92751ccd0d0184d4e5d160a6cb235de7fc
+    level: 2
+    claim_hash: sha256:d4045d93d3442c03f1655f9bf8eeab5a5706083f5d791c67ea66f0b0f3ab20ce
+    hash_basis: canonical-json(id,status,level)
   - id: UndoAppendOnly
     status: specified
-    level: 2\n    claim_hash: sha256:eb8501d7aad457f7fc5fe95ef8c6fa563410464cb5ab33910b7e66bd1d9a361c
+    level: 2
+    claim_hash: sha256:86834c64d1f5f402925be7236120bec573d451f8386c85cd7cf406ca2dd76055
+    hash_basis: canonical-json(id,status,level)
   - id: FeedDirectionInvariant
     status: specified
-    level: 2\n    claim_hash: sha256:d65da4039102c5715cbb606f7a274623c36aabd44e6d68077d13271386b8b0cd
+    level: 2
+    claim_hash: sha256:e4c81bba6e41c5d0274a718ee06c479c35331c638bb265e216c36f39f2dda598
+    hash_basis: canonical-json(id,status,level)
   - id: ProtocolOrderingIndependentOfUI
     status: specified
-    level: 2\n    claim_hash: sha256:db2cb1be0a42d83b0cbfe61c8ec5638a3ae3ce1045a36e7d75000e41f2c8e52a
+    level: 2
+    claim_hash: sha256:3a0f88f76d5eb6dc487e238789cc1c0bea00ba956ac0f9e3593f117425e1c65d
+    hash_basis: canonical-json(id,status,level)
   - id: HiddenArchiveSecretNonDisclosure
     status: specified
-    level: 2\n    claim_hash: sha256:f686f095b9421a3df31da506437c6c6678b1a7c387d16fb7fc6cf869eb040246
+    level: 2
+    claim_hash: sha256:52f34753402e78998b8a99cbb0bcc484b8bbfadffbb1b7af10fa275fc405abae
+    hash_basis: canonical-json(id,status,level)
   - id: HiddenArchiveRateLimit
     status: specified
-    level: 2\n    claim_hash: sha256:bdc6559459a09dc08362b67750b557d643db14a380aa80619979805df7ac2eb5
+    level: 2
+    claim_hash: sha256:ff26c0e8299e15ff496721aa967e292333e7a30f1f1bca9702de4786c159baed
+    hash_basis: canonical-json(id,status,level)
   - id: HiddenArchiveSearchHistoryIsolation
     status: specified
-    level: 2\n    claim_hash: sha256:f8bdddbe88fac8a0e71dc17847d8c6ac8f3da4c8676b1b6484b936605d8fcd58
+    level: 2
+    claim_hash: sha256:3673269f2c1dfc213a7a97fe4212087e18a64dec7cccedd674befc9c6ef5fac1
+    hash_basis: canonical-json(id,status,level)
   - id: HiddenArchiveTimingConstant
     status: specified
-    level: 2\n    claim_hash: sha256:288ade86e51556b3a82de038a602a3e94adcf7868376f5d404ebcb0d9e29c75e
+    level: 2
+    claim_hash: sha256:b911e8e017e068c45e7d670bca4e81d140549a7d83d474be16c618418bcac6fa
+    hash_basis: canonical-json(id,status,level)
   - id: HiddenArchiveSessionNotPersisted
     status: specified
-    level: 2\n    claim_hash: sha256:c7bf1a0082167d849acf545120ad3a381929db62c3f48dc8efbf23e3b0f9e1cd
+    level: 2
+    claim_hash: sha256:eb410c48f6246b797d0ed173978a1a63cd6e662be1c843d73b014bf8811bb34c
+    hash_basis: canonical-json(id,status,level)
   - id: FavoriteAfterDeleteSemantics
     status: specified
-    level: 2\n    claim_hash: sha256:1a314facb19339422f402c2dcec071871004c7dd0f4fdfde479ca1e3e8c9bb3f
+    level: 2
+    claim_hash: sha256:539f378393b4eeecc211987307440eb912f6a9e893c40f43dc9b9fde7589bf7b
+    hash_basis: canonical-json(id,status,level)
   - id: FavoriteStateNotInheritedByDerivedMessages
     status: specified
-    level: 2\n    claim_hash: sha256:4160eac0f58870842589ceff28d16b28b65e4caaff669cb6c8762f2159e22711
+    level: 2
+    claim_hash: sha256:891263fd463f72e81a51a60f13a793cb229aeeff1915878fcd6aa76d7350064f
+    hash_basis: canonical-json(id,status,level)
   - id: LogicalClockMonotonic
     status: specified
-    level: 2\n    claim_hash: sha256:d41ef9fbe891357afde99ba42367da08a106ac3338a04a1fa67d5b784bce756b
+    level: 2
+    claim_hash: sha256:83165371275399489b4d66a72355a7b18debf9ef2bb978983dae1a8274f02782
+    hash_basis: canonical-json(id,status,level)
   - id: MultiDeviceConvergence
     status: specified
-    level: 2\n    claim_hash: sha256:ac9de987bccd9daa23e9d063b965759450add28d3c3116bbcc90137a97a58703
+    level: 2
+    claim_hash: sha256:be44783b11a52cf1bd63acd22578c20a851fa1fae54a00b5b0f2dc78c3a4884f
+    hash_basis: canonical-json(id,status,level)
 
-policy:
-  rule: >
-    A claim may become model_checked only after the corresponding executable
-    model and evidence bundle are actually produced and reproducibly verified.
+controls:
+  - id: Control_AlwaysTrue
+    expected: PASS
+  - id: Control_AlwaysFalse
+    expected: EXPECTED_COUNTEREXAMPLE
 
 assurance:
   assumption_lifecycle:
     rule: "Invalidated assumptions cascade to dependent claims and evidence."
   composition:
     rule: "A composed claim is no stronger than its weakest verified dependency."
-  controls:
-    Control_AlwaysTrue: "must PASS"
-    Control_AlwaysFalse: "must produce EXPECTED_COUNTEREXAMPLE"
+  promotion_policy: "No claim becomes model_checked without reproducible executable evidence."
