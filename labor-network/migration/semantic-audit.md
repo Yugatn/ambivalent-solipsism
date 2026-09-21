@@ -129,3 +129,40 @@ The following legacy concerns are explicitly represented in the structured archi
 | migration controls | migration/ | refined |
 
 This register records the semantic destination at the domain level. Detailed source-to-block verification remains the final audit step.
+
+
+## High-risk semantic controls
+
+The following areas require explicit preservation checks because structural refactoring can otherwise change meaning:
+
+1. **Authority vs capability**  
+   Technical access must remain distinct from normative authority.
+
+2. **Evidence vs decision**  
+   Evidence must not become an implicit decision.
+
+3. **Decision vs action**  
+   A decision must not be treated as proof that an action was executed.
+
+4. **State vs history**  
+   Current state must not replace the event history.
+
+5. **Restriction vs subject value**  
+   Restrictions are contextual controls, not judgments of a subject's worth.
+
+6. **Aggregate analytics vs individual profiling**  
+   Regional and system analytics must not silently become individual ranking.
+
+7. **Support vs control**  
+   Support mechanisms must retain their stated purpose and not become hidden control channels.
+
+8. **Audit vs surveillance**  
+   Audit data must remain purpose-limited and proportional.
+
+9. **Automation vs review**  
+   High-impact automated outcomes retain their prescribed review path.
+
+10. **Legacy vs canonical source**  
+    Legacy documents remain comparison material and do not create a second active canonical model.
+
+These controls are mandatory during final source-to-block verification.
