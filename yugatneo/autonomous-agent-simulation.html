@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Yugatneo Autonomous Agent Simulation: изолированный эпистемический слой для adversarial evidence, counterexamples и проверки конституционных инвариантов.">
+<title>Yugatneo · Autonomous Agent Simulation</title>
+<style>
+:root{--bg:#02050a;--t:#eef7f5;--m:#9aacab;--a:#45f0c3;--l:rgba(69,240,195,.17);--p:rgba(7,16,21,.82);--w:#d8c36a;--r:#ff8f8f}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(69,240,195,.08),transparent 36%),var(--bg);color:var(--t);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.72}
+main{width:min(1120px,calc(100% - 30px));margin:auto;padding:45px 0 100px}a{color:var(--a);text-decoration:none}.ey{font:11px monospace;color:#45f0c3aa;letter-spacing:.18em}.nav{display:flex;gap:18px;flex-wrap:wrap;border-bottom:1px solid var(--l);padding-bottom:18px}.nav a{font:11px monospace;color:var(--m)}
+h1{font-size:clamp(38px,7vw,72px);line-height:1.02;margin:15px 0}h2{font-size:30px;margin-top:58px}h3{font-size:21px;margin-top:30px}
+.lead{font-size:20px;color:#c6d5d2;max-width:950px}.note,.card,.formula{margin:22px 0;padding:21px;border:1px solid var(--l);border-radius:16px;background:var(--p)}.warn{border-color:rgba(216,195,106,.3)}.formula{font:14px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;color:#d8fff5;white-space:pre-wrap;overflow:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}.card h3{margin-top:4px}.tag{font:10px monospace;color:var(--a);letter-spacing:.12em}
+table{width:100%;border-collapse:collapse;margin:22px 0;background:rgba(7,16,21,.55)}th,td{padding:12px;border:1px solid var(--l);text-align:left;vertical-align:top}th{color:#dffaf3}
+li{margin:8px 0}code{color:#baffc9}.metric{font:24px monospace;color:var(--a)}footer{margin-top:70px;color:#637e70;font:11px monospace}
+</style>
+</head>
+<body><main>
+<div class="nav"><a href="./">YUGATNEO</a><a href="../simulations/">SIMULATIONS</a><a href="../">ГЛАВНОЕ МЕНЮ</a></div>
+<div class="ey">YUGATNEO / EPISTEMIC RESEARCH / AAS v0.1</div>
+<h1>Autonomous Agent Simulation</h1>
+<p class="lead">Изолированный исследовательский слой Yugatneo, предназначенный для генерации adversarial traces, поиска контрпримеров и исследования постепенной эрозии конституционных инвариантов.</p>
+<div class="note warn"><strong>Статус:</strong> исследовательская спецификация. AAS не является authority, consensus-механизмом, источником истины или автоматическим механизмом блокировки. Он производит evidence, которое может быть использовано Constitutional Check.</div>
+
+<h2>1. Онтологический статус</h2>
+<p>AAS существует в sandbox-среде. Его состояние не является состоянием основной сети, а действия агентов не имеют экономических или governance-последствий для mainnet.</p>
+<div class="formula">Agent ≠ Validator
+Agent ≠ CheckerAuthority
+Agent ≠ Governance Participant
+Simulation State ≠ Mainnet State
+Simulation Trace ≠ Mainnet Evidence of Fact</div>
+<p>Результат симуляции имеет epistemic status конкретного эксперимента: он зависит от версии протокола, модели среды, популяции, knowledge boundary, seed и бюджета эксперимента.</p>
+
+<h2>2. Experimental Contract</h2>
+<p>Каждый запуск должен иметь воспроизводимый контракт.</p>
+<div class="formula">SimulationContract = {
+  SimulationID,
+  ProtocolVersion,
+  SimulatorVersion,
+  TargetInvariants,
+  Scope,
+  Horizon,
+  EnvironmentModel,
+  AgentPopulationModel,
+  ObjectiveSet,
+  RandomnessPolicy,
+  SeedPolicy,
+  ObservationPolicy,
+  StopConditions,
+  SimulationBudget,
+  KnownBlindSpots
+}</div>
+<p>Seed сам по себе не является достаточным provenance. Полная воспроизводимость требует как минимум версии протокола и симулятора, контракта эксперимента, seed, параметров среды и модели популяции.</p>
+
+<h2>3. Agent Model</h2>
+<div class="grid">
+<div class="card"><div class="tag">ADVERSARIAL</div><h3>Adversarial</h3><p>Ищет пути к нарушению заданного инварианта в пределах доступного знания.</p></div>
+<div class="card"><div class="tag">COOPERATIVE</div><h3>Cooperative</h3><p>Использует протокол по назначению и создаёт контрольную траекторию.</p></div>
+<div class="card"><div class="tag">EXPLORATORY</div><h3>Exploratory</h3><p>Исследует пространство состояний без единственной цели атаки.</p></div>
+<div class="card"><div class="tag">BOUNDARY</div><h3>Boundary</h3><p>Работает около границ scope, policy и допустимых переходов.</p></div>
+<div class="card"><div class="tag">NULL</div><h3>Null</h3><p>Контрольная популяция без активного adversarial objective.</p></div>
+</div>
+<p>Популяция должна сохранять разнообразие стратегий. AAS не должен сводиться к поиску одного «идеального атакующего».</p>
+<div class="formula">Agent = {
+  IdentityRoot,
+  Model,
+  Policy,
+  Objective,
+  KnowledgeBoundary,
+  ActionSpace,
+  MemoryModel,
+  AdaptationModel,
+  History
+}</div>
+<p><strong>No Omniscient Agent:</strong> агент не получает автоматически доступ к скрытым состояниям, будущему, приватным evidence или внутренним данным checker.</p>
+
+<h2>4. Coalition и Emergent Behaviour</h2>
+<p>Атака может возникнуть не от одного агента, а из композиции допустимых локальных действий.</p>
+<div class="formula">∀ actionᵢ: Allowed(actionᵢ)
+Composition(actions₁ ... actionsₙ) → Violation</div>
+<p>Поэтому AAS поддерживает коалиции с ограниченной моделью коммуникации, формирования и распада. Коалиция не получает protocol authority.</p>
+
+<h2>5. Observation Layer</h2>
+<p>Observation Layer фиксирует, но не интерпретирует происходящее.</p>
+<div class="formula">Trace = {
+  SimulationID,
+  ProtocolVersion,
+  AgentPopulation,
+  TimeRange,
+  Actions,
+  StateTransitions,
+  InvariantSnapshots,
+  ResidualMap,
+  DissentMap,
+  Coverage
+}</div>
+<p>Интерпретация трассы относится к Evidence Extractor и Constitutional Check.</p>
+
+<h2>6. Evidence Coverage</h2>
+<p>Наличие evidence и его покрытие являются разными свойствами.</p>
+<div class="formula">Coverage = {
+  Scope,
+  TemporalRange,
+  StateCoverage,
+  EventCoverage,
+  EvidenceTypes,
+  BlindSpots
+}
+
+Coverage ≠ Confidence</div>
+<p>Большое количество запусков не означает большое покрытие. Поэтому отсутствие найденного counterexample не превращается автоматически в PASS.</p>
+<div class="note"><strong>Правило:</strong> отсутствие контрпримера в конечном пространстве симуляций является evidence о проведённом эксперименте, а не доказательством отсутствия нарушения.</div>
+
+<h2>7. Counterexample</h2>
+<div class="formula">Counterexample = {
+  SimulationID,
+  Trace,
+  Trigger,
+  ViolatedInvariant,
+  MinimalPrefix,
+  ReproductionData,
+  EvidenceRoot,
+  Scope,
+  Limitations
+}</div>
+<p><code>MinimalPrefix</code> является минимальной известной последовательностью событий, достаточной для воспроизведения найденного поведения. Воспроизводимый counterexample должен становиться regression test.</p>
+
+<h2>8. I-5: No Total Metric</h2>
+<p>Основная новая атака на I-5 — неявное глобальное ранжирование без единого числового score.</p>
+<div class="formula">Level 1: Explicit Global Metric
+Level 2: Distributed Metric
+Level 3: Emergent Functional Ordering</div>
+<p>Функциональное субъектное упорядочивание существует, если совокупность локальных policy-решений фактически создаёт устойчивое отношение между субъектами, влияющее на доступ, authority, права, возможности или распределение ресурсов.</p>
+<div class="formula">FunctionalSubjectOrdering(P)
+  requires explicit observation of system behaviour
+
+Local Comparisons may exist.
+Universal, context-independent and persistent
+Subject Ordering is constitutionally constrained.</div>
+<p>AAS исследует третий уровень через коалиции, интерфейсные взаимодействия, повторяющиеся решения и feedback loops.</p>
+
+<h2>9. AAS и Constitutional Check</h2>
+<div class="formula">Proposal
+  |
+Evidence Collection
+  |
+  +-- Formal Proof
+  +-- Model Checking
+  +-- AAS Simulation
+  +-- Researchnet Observation
+  +-- Counterexample
+  |
+Evidence Coverage
+  |
+Invariant Evaluation
+  |
+Constitutional Outcome</div>
+<p>AAS не инициирует constitutional check автоматически. Он предоставляет evidence. Инициатором проверки остаётся субъект, коллектив, checker или adversarial participant согласно standing rules.</p>
+<table>
+<tr><th>Ситуация</th><th>Epistemic result</th></tr>
+<tr><td>Counterexample найден</td><td>Evidence для возможного VIOLATION, подлежащего constitutional evaluation.</td></tr>
+<tr><td>Нарушение не найдено</td><td>Не PASS само по себе.</td></tr>
+<tr><td>Scope покрыт частично</td><td>Coverage gap фиксируется.</td></tr>
+<tr><td>Модель не разрешает вопрос</td><td>UNRESOLVED или UNDECIDABLE в зависимости от причины.</td></tr>
+</table>
+
+<h2>10. AAS и InvariantDistance</h2>
+<p>AAS и InvariantDistance не конкурируют.</p>
+<div class="formula">AAS = generates traces
+InvariantDistance = analyses bounded change
+Constitutional Check = evaluates invariant preservation</div>
+<p>AAS может обнаружить последовательность действий, которую InvariantDistance затем исследует как возможную эрозию. При этом ни одна из систем не получает права создавать глобальный score субъекта.</p>
+
+<h2>11. Minimum Knowledge</h2>
+<p>Для AAS вводится отдельный Knowledge Profile.</p>
+<table><tr><th>Profile</th><th>Назначение</th></tr>
+<tr><td>Public</td><td>Информация, доступная обычному участнику.</td></tr>
+<tr><td>Scoped</td><td>Информация, необходимая конкретному эксперименту.</td></tr>
+<tr><td>Simulation-only</td><td>Специальная информация sandbox, которая не должна автоматически становиться production knowledge.</td></tr>
+</table>
+<p>Расширение знания агента ради удобства симуляции не должно автоматически считаться доказательством поведения реального участника.</p>
+
+<h2>12. Simulation Budget</h2>
+<div class="formula">SimulationBudget = {
+  MaxAgents,
+  MaxSteps,
+  MaxBranches,
+  MaxWallTime,
+  MaxEvidenceSize
+}</div>
+<p>Бюджет является частью evidence. Результат без информации о вычислительном и исследовательском бюджете может создавать иллюзию покрытия.</p>
+
+<h2>13. Control Population</h2>
+<p>Adversarial population должна по возможности сравниваться с контрольной population. Это помогает отделить поведение, вызванное стратегией атаки, от ошибки simulator или environment model.</p>
+
+<h2>14. Regression Loop</h2>
+<div class="formula">AAS Run
+  |
+Counterexample
+  |
+Minimal Prefix
+  |
+Regression Test
+  |
+Reference Checker
+  |
+Future AAS Runs</div>
+<p>Таким образом, AAS превращает найденные ошибки в долговременный исследовательский corpus, а не только в одноразовый отчёт.</p>
+
+<h2>15. Researchnet не заменяется AAS</h2>
+<table><tr><th>Режим</th><th>Участники</th><th>Роль</th></tr>
+<tr><td>AAS</td><td>Искусственные агенты</td><td>Изолированное исследование.</td></tr>
+<tr><td>Researchnet</td><td>Реальные участники</td><td>Экспериментальное наблюдение.</td></tr>
+<tr><td>Testnet</td><td>Технические участники</td><td>Инженерная проверка.</td></tr>
+<tr><td>Mainnet</td><td>Реальные участники</td><td>Фактическая среда.</td></tr>
+</table>
+<div class="formula">Evidence(AAS) ≠ Evidence(Researchnet)
+Evidence(Researchnet) ≠ Evidence(Mainnet)</div>
+
+<h2>16. Failure Modes</h2>
+<div class="grid">
+<div class="card"><h3>Simulation Bias</h3><p>Модель среды не соответствует релевантному аспекту протокола.</p></div>
+<div class="card"><h3>Population Collapse</h3><p>Разнообразие стратегий исчезло под давлением оптимизации.</p></div>
+<div class="card"><h3>Coverage Illusion</h3><p>Много запусков исследуют один и тот же небольшой участок пространства.</p></div>
+<div class="card"><h3>Coalition Blindness</h3><p>Индивидуальные агенты безопасны, но коалиция создаёт нарушение.</p></div>
+<div class="card"><h3>Emergent Blindness</h3><p>Нарушение возникает без заранее заданного objective.</p></div>
+<div class="card"><h3>Objective Drift</h3><p>Каталог целей постепенно смещается к удобным сценариям.</p></div>
+<div class="card"><h3>Simulator Leakage</h3><p>Поведение агента использует детали simulator вместо свойств протокола.</p></div>
+<div class="card"><h3>Evidence Weaponization</h3><p>Simulation evidence начинает использоваться как authority или санкция.</p></div>
+</div>
+
+<h2>17. Границы AAS</h2>
+<ul>
+<li>AAS не доказывает безопасность production.</li>
+<li>AAS не имеет standing в governance.</li>
+<li>AAS не изменяет invariants.</li>
+<li>AAS не блокирует upgrade.</li>
+<li>AAS не наказывает агентов.</li>
+<li>AAS не определяет моральную ценность субъекта.</li>
+<li>AAS не устраняет Residual.</li>
+<li>AAS не может исследовать то, что не представлено его моделью.</li>
+</ul>
+
+<h2>18. Open Problems</h2>
+<ol>
+<li>Формальное определение FunctionalSubjectOrdering.</li>
+<li>Доказуемая модель разнообразия population без глобального score.</li>
+<li>Связь AAS coverage с constitutional outcome.</li>
+<li>Совместимость Simulation-only knowledge с I-9.</li>
+<li>Защита Objective Library от capture.</li>
+<li>Формальная модель emergent violation.</li>
+<li>Различение STALE, UNRESOLVED и model failure.</li>
+<li>Интеграция AAS evidence с Quiet Room без de facto authority.</li>
+<li>Формальная семантика coalition formation.</li>
+<li>Автоматическое создание regression traces из reproducible counterexamples.</li>
+</ol>
+
+<h2>19. Что пока нельзя утверждать</h2>
+<div class="note">
+<ul>
+<li>Нельзя утверждать, что AAS обнаруживает все классы эрозии.</li>
+<li>Нельзя утверждать, что отсутствие counterexample означает PASS.</li>
+<li>Нельзя утверждать, что distributed global ranking обнаруживается в общем случае.</li>
+<li>Нельзя утверждать, что agent diversity сохраняется при любой оптимизации.</li>
+<li>Нельзя утверждать, что AAS не может стать vector of attack.</li>
+<li>Нельзя утверждать, что AAS совместим с I-9 без дополнительных ограничений.</li>
+<li>Нельзя утверждать, что AAS заменяет Researchnet или adversarial science.</li>
+</ul>
+</div>
+
+<h2>20. Статус слоя</h2>
+<div class="card"><div class="metric">25%</div><p>Архитектура и epistemic boundary специфицированы. Experimental Contract, agent model, coverage, counterexample model и executable simulator ещё не реализованы.</p></div>
+<div class="formula">AAS = Adversarial Evidence Generator
+AAS ≠ Authority
+AAS ≠ Verdict
+AAS ≠ Proof</div>
+<footer>YUGATNEO · AUTONOMOUS AGENT SIMULATION · RESEARCH SPECIFICATION v0.1 · AMBIVALENT SOLIPSISM</footer>
+</main></body></html>
