@@ -3,14 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Социальная Трудовая Сеть в Амбивалентном Солипсизме: труд, профессиональное развитие, работодатели, образование, региональный вклад и Proof-of-Development.">
+<meta name="description" content="Социальная Трудовая Сеть в Амбивалентном Солипсизме: труд, профессиональное развитие, работодатели, образование, региональный вклад и Proof of Development.">
 <title>Социальная Трудовая Сеть · Амбивалентный солипсизм</title>
 <style>
-:root{--bg:#02050a;--panel:#071015;--text:#edf7f4;--muted:#9aacab;--accent:#45f0c3;--line:rgba(69,240,195,.18)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(69,240,195,.09),transparent 35%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75}
-main{width:min(1060px,calc(100% - 30px));margin:auto;padding:28px 0 100px}
+:root{--bg:#02050a;--panel:#071015;--text:#edf7f4;--muted:#9aacab;--accent:#45f0c3;--line:rgba(69,240,195,.18);--max:1060px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 50% 0,rgba(69,240,195,.09),transparent 35%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.75}
+main{width:min(var(--max),calc(100% - 30px));margin:auto;padding:28px 0 100px}
 nav{display:flex;gap:20px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:18px}
-a{color:var(--muted);text-decoration:none;font:11px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.09em}a:hover{color:var(--accent)}
+a{color:var(--muted);text-decoration:none;font:11px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.09em}
+a:hover,a:focus-visible{color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
 .eyebrow{margin-top:65px;color:#45f0c3aa;font:11px monospace;letter-spacing:.18em}
 h1{font-size:clamp(44px,8vw,82px);line-height:.98;font-weight:500;margin:14px 0 25px}
 .lead{font-size:clamp(18px,2.5vw,24px);color:#c6d5d2;max-width:900px}
@@ -25,12 +29,13 @@ ul{padding-left:25px}li{margin:10px 0;color:#b9c9c6}
 .links{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:25px}
 .links a{display:block;padding:18px 20px;border:1px solid var(--line);border-radius:16px;background:var(--panel);font-size:12px;letter-spacing:.06em}
 footer{margin-top:90px;color:#526360;font:9px monospace;letter-spacing:.12em}
-@media(max-width:620px){main{width:min(100% - 22px,1060px)}.eyebrow{margin-top:45px}}
+@media(max-width:620px){main{width:min(100% - 22px,var(--max))}.eyebrow{margin-top:45px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <main>
-<nav>
+<nav aria-label="Основная навигация">
 <a href="../">АМБИВАЛЕНТНЫЙ СОЛИПСИЗМ</a>
 <a href="../economy/proof-of-development.md">PROOF-OF-DEVELOPMENT</a>
 <a href="../PROF-MAP/">PROF-MAP</a>
@@ -50,14 +55,18 @@ footer{margin-top:90px;color:#526360;font:9px monospace;letter-spacing:.12em}
 <div class="grid">
 <article class="card"><div class="num">SUBJECT</div><h3>Субъект</h3><p>Человек обладает собственной перспективой, историей, выбором и правом на развитие. Цифровой профиль является только моделью.</p></article>
 <article class="card"><div class="num">DEVELOPMENT</div><h3>Развитие</h3><p>Образование, работа, навыки, опыт и результаты рассматриваются как взаимосвязанные процессы, а не как один итоговый score.</p></article>
-<article class="card"><div class="num">NETWORK</div><h3>Сеть</h3><p>Работник, работодатель, образовательная организация, регион и государственная инфраструктура связаны потоками информации и ресурсов.</p></article>
+<article class="card"><div class="num">RECIPROCITY</div><h3>Взаимность</h3><p>Прозрачность трудового взаимодействия должна быть достаточно симметричной для работника и работодателя.</p></article>
 <article class="card"><div class="num">PROOF</div><h3>Подтверждение</h3><p>Важен конкретный результат и его происхождение, а не абстрактная оценка ценности человека.</p></article>
 </div>
 
-<h2>02 · Главный принцип</h2>
+<h2>02 · Ядро системы</h2>
+<div class="note"><strong>Пять опор:</strong> субъектность, развитие, взаимность, проверяемость и ограниченное вмешательство при неопределённости.</div>
+<p class="section">СТСеть не обещает, что цифровая система сама по себе создаст справедливость. Она задаёт архитектуру, в которой существенные данные и решения имеют контекст, происхождение, процедуру проверки и возможность пересмотра.</p>
+
+<h2>03 · Главный принцип</h2>
 <div class="note"><strong>Доказывать нужно результат конкретного действия, а не ценность человека.</strong><br><br>СТСеть поэтому не должна сводить гражданина к единому рейтингу. Опыт, компетенции, рекомендации, вклад, региональная история и социальные преимущества остаются различными слоями информации.</div>
 
-<h2>03 · Что объединяет СТСеть</h2>
+<h2>04 · Что объединяет СТСеть</h2>
 <div class="grid">
 <article class="card"><div class="num">01</div><h3>Профессиональный профиль</h3><p>Образование, навыки, компетенции, портфолио, достижения и подтверждённый опыт.</p></article>
 <article class="card"><div class="num">02</div><h3>Профессиональная история</h3><p>Трудовые отношения, должности, периоды работы, обучение, переводы и развитие компетенций.</p></article>
@@ -67,27 +76,27 @@ footer{margin-top:90px;color:#526360;font:9px monospace;letter-spacing:.12em}
 <article class="card"><div class="num">06</div><h3>Региональный вклад</h3><p>Отдельная история вклада в регион без уничтожения общей профессиональной истории при переезде.</p></article>
 </div>
 
-<h2>04 · Симметрия трудовых отношений</h2>
+<h2>05 · Симметрия трудовых отношений</h2>
 <p class="section">СТСеть повышает достоверность информации для обеих сторон. Соискатель получает больше информации о работодателе и фактических условиях. Работодатель получает подтверждаемую профессиональную информацию о кандидате.</p>
 <div class="grid">
 <article class="card"><h3>Для кандидата</h3><p>Условия труда, профиль организации, вакансии, история взаимодействия, обратная связь и профессиональные возможности.</p></article>
 <article class="card"><h3>Для работодателя</h3><p>Опыт, компетенции, подтверждения, портфолио, рекомендации и история профессионального развития.</p></article>
 </div>
 
-<h2>05 · Обратная связь о труде</h2>
-<p class="section">Сообщение о проблеме не становится автоматически доказанным фактом. СТСеть использует проверяемый контур: регистрация сообщения, проверка, уведомление сторон, решение и возможность апелляции.</p>
+<h2>06 · Обратная связь о труде</h2>
+<p class="section">Сообщение о проблеме не становится автоматически доказанным фактом. СТСеть использует проверяемый контур: регистрация сообщения, проверка, уведомление сторон, решение, апелляция и аудит.</p>
 <p class="section">Такой подход связывает трудовую платформу с EthicalAudit и PICCS: обнаружение сигнала не создаёт автоматически полномочие на санкцию.</p>
 
-<h2>06 · Связь с Proof-of-Development</h2>
+<h2>07 · Связь с Proof-of-Development</h2>
 <p class="section">Работа создаёт результаты, а результаты могут становиться подтверждаемой частью профессионального развития. Важна не только продолжительность занятости, но и то, что было сделано, чем это подтверждается и что изменилось вследствие работы.</p>
 <div class="formula">участие · действие · результат · подтверждение · обратная связь · развитие</div>
 <p class="section">Даже подтверждённый результат не исчерпывает реальность деятельности. Сохраняется Residual: контекст, скрытые затраты, альтернативные эффекты и данные, которые система не наблюдает.</p>
 
-<h2>07 · Государственная инфраструктура</h2>
-<p class="section">СТСеть предполагает совместимость с необходимыми государственными информационными системами. Первоначальная идея «поглощения» сервисов переработана в единый контур обмена данными рынка труда.</p>
+<h2>08 · Государственная инфраструктура</h2>
+<p class="section">СТСеть предполагает совместимость с необходимыми государственными информационными системами. Вместо поглощения сервисов используется единый контур стандартов и API.</p>
 <div class="note"><strong>Принцип:</strong> однократное предоставление данных не должно превращаться в неограниченное право всех систем видеть всю информацию человека.</div>
 
-<h2>08 · Защита субъекта</h2>
+<h2>09 · Защита субъекта</h2>
 <ul>
 <li>минимизация данных;</li>
 <li>разделение уровней доступа;</li>
@@ -97,14 +106,15 @@ footer{margin-top:90px;color:#526360;font:9px monospace;letter-spacing:.12em}
 <li>право на исправление;</li>
 <li>право на апелляцию;</li>
 <li>ограничение бессрочного цифрового клейма;</li>
-<li>отделение медицинских и психологических данных от обычного кадрового профиля.</li>
+<li>отделение медицинских и психологических данных от обычного кадрового профиля;</li>
+<li>отделение автоматического сигнала от решения и исполнения.</li>
 </ul>
 
-<h2>09 · Психология и PROF-MAP</h2>
+<h2>10 · Психология и PROF-MAP</h2>
 <p class="section">Психодиагностика в СТСети предназначена прежде всего для карьерной навигации и профессионального развития. Результаты PROF-MAP и других инструментов PSY-TOOLS не должны превращаться в скрытый фильтр права на труд.</p>
 <div class="quote">Психологическая модель помогает субъекту исследовать направление развития, но не определяет его ценность и не исчерпывает его возможности.</div>
 
-<h2>10 · Модульная архитектура</h2>
+<h2>11 · Модульная архитектура</h2>
 <p class="section">СТСеть разделена на независимые страницы. Это позволяет добавлять новые механизмы без разрушения ядра.</p>
 <div class="links">
 <a href="principles.md">01 · ПРИНЦИПЫ</a>
@@ -122,15 +132,15 @@ footer{margin-top:90px;color:#526360;font:9px monospace;letter-spacing:.12em}
 <a href="architecture.md">13 · ТЕХНИЧЕСКАЯ АРХИТЕКТУРА</a>
 </div>
 
-<h2>11 · Технический контур</h2>
+<h2>12 · Технический контур</h2>
 <div class="grid">
 <article class="card"><div class="num">DATA</div><h3>Профессиональные данные</h3><p>Профиль, история, навыки, образование, портфолио и подтверждения.</p></article>
 <article class="card"><div class="num">CONTEXT</div><h3>Контекст</h3><p>Цель использования, роль пользователя, основание доступа и срок актуальности.</p></article>
 <article class="card"><div class="num">AUDIT</div><h3>Аудит</h3><p>Происхождение значимых записей, история изменений и проверка критических действий.</p></article>
-<article class="card"><div class="num">APPEAL</div><h3>Коррекция</h3><p>Исправление фактических ошибок и возможность представить дополнительный контекст.</p></article>
+<article class="card"><div class="num">APPEAL</div><h3>Коррекция</h3><p>Исправление фактических ошибок, дополнительный контекст и возможность пересмотра.</p></article>
 </div>
 
-<h2>12 · Открытая система</h2>
+<h2>13 · Открытая система</h2>
 <p class="section">СТСеть является развиваемым проектом. Новые механизмы могут добавляться отдельными модулями после проверки их совместимости с Законом развития, Subject Non-Reduction, Proof-of-Development, PICCS и принципами информационной экологии.</p>
 <p class="section">Техническая реализация, правовые основания, экономические стимулы и конкретные государственные интеграции требуют отдельных спецификаций и проверки на практике.</p>
 
