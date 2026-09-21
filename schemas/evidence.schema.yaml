@@ -1,0 +1,31 @@
+schema_version: evidence/v1
+
+evidence:
+  required:
+    - id
+    - claim_id
+    - claim_hash
+    - source_revision
+    - toolchain_hash
+    - configuration_hash
+    - schema_version
+    - result
+    - manifest_hash
+    - provenance
+
+  result:
+    enum:
+      - pass
+      - fail
+      - expected_counterexample
+      - unknown
+
+  integrity:
+    requires:
+      - claim_hash_match
+      - source_revision_match
+      - toolchain_hash_match
+      - manifest_hash_match
+      - schema_valid
+      - provenance_valid
+      - signature_valid
