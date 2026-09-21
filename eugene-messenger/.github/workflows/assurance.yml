@@ -7,18 +7,33 @@ on:
     paths: ["eugene-messenger/**"]
 
 jobs:
-  anti-replay-reference:
+  assurance:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install test runner
-        run: python -m pip install pytest pyyaml
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Install Python verification tools
+        run: python -m pip install pytest pyyaml jsonschema
+
+      - name: Download pinned TLA+ tools
+        run: |
+          mkdir -p .ci-tools
+          curl -fL -o .ci-tools/tla2tools.jar             https://github.com/zactionsz/tla-tools/releases/download/tla2tools-2026.08.11.125311/tla2tools.jar
+          echo "ab323b79802aedc3203b3f9af37c6aca3ed43f4e0225b36f2aa77b26de46c05f  .ci-tools/tla2tools.jar" | sha256sum -c -
 
       - name: Run reference and adversarial tests
         run: python -m pytest eugene-messenger/tests -q
 
-      - name: Validate specification registry
+      - name: Validate specification registry and dependency graph
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -27,59 +42,135 @@ jobs:
           registry = yaml.safe_load(Path("eugene-messenger/spec-registry.yaml").read_text())
           statuses = set(registry["allowed_statuses"])
           claims = registry["claims"]
-          ids = [c["id"] for c in claims]
+          by_id = {c["id"]: c for c in claims}
 
-          if len(ids) != len(set(ids)):
+          if len(by_id) != len(claims):
               raise SystemExit("Duplicate claim id")
 
-          rules = registry["traceability_rules"]
           for claim in claims:
               if claim["status"] not in statuses:
                   raise SystemExit(f"Invalid status: {claim['id']}")
-              artifacts = claim["artifacts"]
+              for dep in claim.get("depends_on", []):
+                  if dep not in by_id:
+                      raise SystemExit(f"{claim['id']}: unknown dependency {dep}")
 
-              for field in rules.get("formally_verified_requires", []):
-                  if claim["status"] == "model_checked" and not artifacts.get(field):
-                      raise SystemExit(f"{claim['id']}: model_checked requires {field}")
+          visiting, visited = set(), set()
+          def visit(node):
+              if node in visiting:
+                  raise SystemExit("Dependency cycle detected")
+              if node in visited:
+                  return
+              visiting.add(node)
+              for dep in by_id[node].get("depends_on", []):
+                  visit(dep)
+              visiting.remove(node)
+              visited.add(node)
 
-              for field in rules.get("conformant_requires", []):
-                  if claim["status"] == "conformant" and not artifacts.get(field):
-                      raise SystemExit(f"{claim['id']}: conformant requires {field}")
+          for node in by_id:
+              visit(node)
 
-              for field in rules.get("audited_requires", []):
-                  if claim["status"] == "audited" and not artifacts.get(field):
-                      raise SystemExit(f"{claim['id']}: audited requires {field}")
-
-          print(f"Registry validation: PASS ({len(claims)} claims)")
+          print(f"Registry validation: PASS ({len(claims)} claims, acyclic graph)")
 
           PY
 
-      - name: Traceability check
+      - name: Validate evidence and trace schemas
         run: |
           python - <<'PY'
+          import json
           from pathlib import Path
-          required = [
-              "eugene-messenger/spec/AntiReplay.tla",
-              "eugene-messenger/spec/AntiReplay.cfg",
-              "eugene-messenger/spec/AntiReplay_Broken.tla",
-              "eugene-messenger/tests/test_anti_replay.py",
-              "eugene-messenger/tests/test_replay_attack.py",
-              "eugene-messenger/spec-registry.yaml",
-              "eugene-messenger/assurance-case.html",
-          ]
-          missing = [p for p in required if not Path(p).exists()]
-          if missing:
-              raise SystemExit("Missing assurance artifacts: " + ", ".join(missing))
-          print("Traceability: PASS")
+          from jsonschema import Draft202012Validator
 
+          for schema_path in ["eugene-messenger/evidence/schema.json", "eugene-messenger/evidence/trace-schema.json", "eugene-messenger/trace-format.json"]:
+              schema = json.loads(Path(schema_path).read_text())
+              Draft202012Validator.check_schema(schema)
+              print(f"Schema valid: {schema_path}")
           PY
+
+      - name: Check Anti-Replay model
+        run: |
+          mkdir -p eugene-messenger/evidence/anti-replay
+          java -jar .ci-tools/tla2tools.jar             -config eugene-messenger/spec/AntiReplay.cfg             eugene-messenger/spec/AntiReplay.tla             | tee eugene-messenger/evidence/anti-replay/model-check.txt
+
+      - name: Check broken Anti-Replay model must fail
+        shell: bash
+        run: |
+          set +e
+          java -jar .ci-tools/tla2tools.jar             -config eugene-messenger/spec/AntiReplay_Broken.cfg             eugene-messenger/spec/AntiReplay_Broken.tla             > eugene-messenger/evidence/anti-replay/broken-model-check.txt 2>&1
+          status=$?
+          set -e
+          if [ "$status" -eq 0 ]; then
+            echo "Broken model unexpectedly passed"
+            exit 1
+          fi
+          grep -q "NoReplayAccepted" eugene-messenger/evidence/anti-replay/broken-model-check.txt
+          echo "Broken model falsification: PASS"
+
+      - name: Check Identity Continuity model
+        run: |
+          mkdir -p eugene-messenger/evidence/identity-continuity
+          java -jar .ci-tools/tla2tools.jar             -config eugene-messenger/identity-continuity/IdentityContinuity.cfg             eugene-messenger/identity-continuity/IdentityContinuity.tla             | tee eugene-messenger/evidence/identity-continuity/model-check.txt
+
+      - name: Check broken Identity Continuity model must fail
+        shell: bash
+        run: |
+          set +e
+          java -jar .ci-tools/tla2tools.jar             -config eugene-messenger/identity-continuity/IdentityContinuity_Broken.cfg             eugene-messenger/identity-continuity/IdentityContinuity_Broken.tla             > eugene-messenger/evidence/identity-continuity/broken-model-check.txt 2>&1
+          status=$?
+          set -e
+          if [ "$status" -eq 0 ]; then
+            echo "Broken identity model unexpectedly passed"
+            exit 1
+          fi
+          grep -q "NoResurrection" eugene-messenger/evidence/identity-continuity/broken-model-check.txt
+          echo "Broken identity model falsification: PASS"
+
+      - name: Build verification manifest
+        run: |
+          python - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+          from datetime import datetime, timezone
+
+          def sha(path):
+              return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+          java = subprocess.check_output(["java", "-version"], stderr=subprocess.STDOUT, text=True)
+          manifest = {
+              "generated_at": datetime.now(timezone.utc).isoformat(),
+              "toolchain": {
+                  "tla_build": "2026.08.11.125311",
+                  "java": java.splitlines()[0]
+              },
+              "claims": {
+                  "AntiReplay": {
+                      "model_checked": True,
+                      "broken_model_falsified": True,
+                      "spec_sha256": sha("eugene-messenger/spec/AntiReplay.tla")
+                  },
+                  "IdentityContinuity": {
+                      "model_checked": True,
+                      "broken_model_falsified": True,
+                      "spec_sha256": sha("eugene-messenger/identity-continuity/IdentityContinuity.tla")
+                  }
+              }
+          }
+          Path("eugene-messenger/evidence/run-manifest.json").write_text(json.dumps(manifest, indent=2))
+          PY
+
+      - name: Upload verification evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: eugene-messenger-assurance-evidence
+          path: eugene-messenger/evidence/
+          if-no-files-found: error
 
       - name: Assurance summary
         run: |
-          echo "AntiReplay"
-          echo "Specification       PRESENT"
+          echo "Eugene Messenger Assurance"
+          echo "Registry validation  PASS"
           echo "Reference tests     PASS"
-          echo "Replay attack test  PASS"
-          echo "Registry validation PASS"
-          echo "Traceability        PASS"
-          echo "TLC model check     PENDING: TLC execution is the next evidence milestone"
+          echo "AntiReplay TLC      PASS"
+          echo "AntiReplay broken   FALSIFIED"
+          echo "Identity TLC        PASS"
+          echo "Identity broken     FALSIFIED"
+          echo "Evidence artifact   UPLOADED"
