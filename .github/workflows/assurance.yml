@@ -74,6 +74,14 @@ jobs:
           java -version
           java -jar .ci/tla2tools.jar -help >/dev/null
 
+      - name: Always-true control model
+        run: |
+          TLC_JAR=.ci/tla2tools.jar scripts/assurance/run_tlc.sh             controls/Control_AlwaysTrue.tla             controls/Control_AlwaysTrue.cfg             pass
+
+      - name: Always-false control model
+        run: |
+          TLC_JAR=.ci/tla2tools.jar scripts/assurance/run_tlc.sh             controls/Control_AlwaysFalse.tla             controls/Control_AlwaysFalse.cfg             counterexample
+
       - name: Positive AntiReplay model
         run: |
           TLC_JAR=.ci/tla2tools.jar scripts/assurance/run_tlc.sh             spec/tla/AntiReplay_Protocol.tla             spec/tla/AntiReplay_Protocol.cfg             pass
