@@ -223,3 +223,43 @@ The following legacy-to-canonical pairs were rechecked against the current branc
 - reputation.md → domain/reputation.md — non-identical canonical text is an intentional refinement already audited; legacy remains unchanged as baseline.
 
 These results are verification evidence, not a claim that the entire semantic audit is closed.
+
+## Final pairwise closure checkpoint
+
+Additional final checks completed:
+
+- api-and-interoperability.md → integration/api-and-interoperability.md — exact preservation
+- architecture.md → architecture/overview.md — exact preservation
+- education-and-prof-map.md → domain/education-and-prof-map.md — exact preservation
+- index.html → ui/index.html — exact preservation
+- principles.md → governance/principles.md — exact preservation
+- entity-event-matrix.md → architecture/entity-event-matrix.md — exact preservation
+- entity-model.md → architecture/entity-model.md — exact preservation
+- event-protocol.md → event/protocol.md — exact preservation
+- federation-contract.md → integration/federation-contract.md — exact preservation
+- formal-verification.md → verification/formal-verification.md — exact preservation
+- human-review.md → decision/human-review.md — exact preservation
+- subject-and-motivation.md → domain/subject-and-motivation.md — exact preservation
+- work-conditions.md → domain/work-conditions.md — exact preservation
+- transition-and-unemployment.md → support/transition-and-unemployment.md — exact preservation
+- transport-work-integration.md → regional/transport-work-integration.md — exact preservation
+- trust-and-provenance.md → evidence/trust-and-provenance.md — exact preservation
+- work-lifecycle.md → state/work-lifecycle.md — exact preservation
+
+### Intentional canonical refinements confirmed
+
+The following non-identical pairs were inspected at line level and classified as intentional canonical refinements rather than silent loss:
+
+- employer-and-recruitment.md → domain/employer-and-recruitment.md
+- reputation.md → domain/reputation.md
+- professional-history.md → domain/professional-history.md
+- professional-profile.md → domain/professional-profile.md
+- proof-of-development.md → domain/proof-of-development.md
+
+The canonical versions retain the substantive legacy constraints while adding or consolidating architectural rules. Legacy baselines remain untouched.
+
+### Manifest closure
+
+MIGRATION_MANIFEST.md → migration/manifest.md was found to be incomplete and was repaired in commit aa3042a01a7134aa30fa8176bc746f7850c2059f3. The canonical manifest now retains the historical migration baseline, current 66-file coverage, semantic classifications, and completion criteria.
+
+At this checkpoint, the identified legacy-to-canonical pairwise audit has no unresolved content-loss finding. The remaining work is cross-module consistency and regression validation, not filename migration.
