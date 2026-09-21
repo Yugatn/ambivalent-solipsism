@@ -1,9 +1,10 @@
 use crate::{
+    dependency,
     model::{DependencyStatus, Trace, TriState},
     provenance::ProvenanceGraph,
-    validity,
 };
 use serde::Serialize;
+use serde_json::Value;
 
 #[derive(Debug, Clone, Serialize, PartialEq)]
 pub struct ResultEnvelope {
@@ -47,36 +48,36 @@ pub fn evaluate(trace: &Trace) -> ResultEnvelope {
 
     for evidence in trace.events_of("Attestation") {
         for dissent in trace.events_of("Dissent") {
-            match validity::dependency_for(evidence, &dissent.id, trace, &provenance) {
-                TriState::False => {}
-                TriState::Unresolved => {
+            let certificate = dependency::analyze(evidence, &dissent.id, trace, &provenance);
+
+            match (certificate.validity, certificate.witness_independence) {
+                (TriState::True, TriState::True) => {
+                    witness_independence = "VerifiedIndependent";
+                    if sanction_uses_as_basis(trace, &evidence.id) {
+                        dependency_status = DependencyStatus::Dependent;
+                        i1b = "Violation";
+                        validity_dependency = "True";
+                    }
+                }
+                (TriState::True, TriState::False) => {
+                    dependency_status = DependencyStatus::Unresolved;
+                    i1b = "Unresolved";
+                    validity_dependency = "Unresolved";
+                    witness_independence = "NotIndependent";
+                }
+                (TriState::True, TriState::Unresolved) => {
                     dependency_status = DependencyStatus::Unresolved;
                     i1b = "Unresolved";
                     validity_dependency = "Unresolved";
                     witness_independence = "Unresolved";
                 }
-                TriState::True => match witness_independent(evidence, &dissent.id) {
-                    Some(true) => {
-                        witness_independence = "VerifiedIndependent";
-                        if sanction_uses_as_basis(trace, &evidence.id) {
-                            dependency_status = DependencyStatus::Dependent;
-                            i1b = "Violation";
-                            validity_dependency = "True";
-                        }
-                    }
-                    Some(false) => {
-                        dependency_status = DependencyStatus::Unresolved;
-                        i1b = "Unresolved";
-                        validity_dependency = "Unresolved";
-                        witness_independence = "NotIndependent";
-                    }
-                    None => {
-                        dependency_status = DependencyStatus::Unresolved;
-                        i1b = "Unresolved";
-                        validity_dependency = "Unresolved";
-                        witness_independence = "Unresolved";
-                    }
-                },
+                (TriState::Unresolved, _) => {
+                    dependency_status = DependencyStatus::Unresolved;
+                    i1b = "Unresolved";
+                    validity_dependency = "Unresolved";
+                    witness_independence = "Unresolved";
+                }
+                (TriState::False, _) => {}
             }
         }
     }
@@ -112,7 +113,7 @@ fn direct_dissent_sanction(trace: &Trace) -> bool {
     trace.events_of("Sanction").any(|sanction| {
         sanction.payload.as_object()
             .and_then(|payload| payload.get("target_evidence"))
-            .and_then(|value| value.as_array())
+            .and_then(Value::as_array)
             .map(|targets| targets.iter().filter_map(Value::as_str).any(|id| {
                 trace.event(id).map(|event| event.kind == "Dissent").unwrap_or(false)
             }))
@@ -124,20 +125,8 @@ fn sanction_uses_as_basis(trace: &Trace, evidence_id: &str) -> bool {
     trace.events_of("Sanction").any(|sanction| {
         sanction.payload.as_object()
             .and_then(|payload| payload.get("basis_evidence"))
-            .and_then(|value| value.as_array())
+            .and_then(Value::as_array)
             .map(|basis| basis.iter().filter_map(Value::as_str).any(|id| id == evidence_id))
             .unwrap_or(false)
     })
 }
-
-fn witness_independent(evidence: &crate::model::Event, target: &str) -> Option<bool> {
-    let dependencies = evidence.payload.as_object()?
-        .get("dependency_witness")?
-        .as_object()?
-        .get("dependencies")?
-        .as_array()?;
-
-    Some(!dependencies.iter().filter_map(Value::as_str).any(|id| id == target))
-}
-
-use serde_json::Value;
