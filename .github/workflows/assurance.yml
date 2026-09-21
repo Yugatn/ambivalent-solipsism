@@ -7,6 +7,10 @@ on:
 permissions:
   contents: read
 
+env:
+  TLA_BUILD: "2026.08.11.125311"
+  TLA_SHA256: "ab323b79802aedc3203b3f9af37c6aca3ed43f4e0225b36f2aa77b26de46c05f"
+
 jobs:
   assurance:
     runs-on: ubuntu-latest
@@ -14,43 +18,115 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Python
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Run assurance unit tests
+      - name: Install assurance dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest
-          pytest -q tests/assurance
+          python -m pip install pytest pyyaml jsonschema
 
-      - name: Validate TLA+ source presence
-        run: |
-          test -s theories/AssuranceState.tla
-
-      - name: Assurance negative control
+      - name: Validate YAML registry
         run: |
           python - <<'PY'
-          import hashlib, json, subprocess, sys, tempfile
           from pathlib import Path
-
-          manifest = {"claim_id":"AntiReplay","result":"pass","source_revision":"git:ci"}
-          manifest["manifest_hash"] = "sha256:" + hashlib.sha256(
-              json.dumps(manifest, sort_keys=True, separators=(",", ":")).encode()
-          ).hexdigest()
-
-          with tempfile.TemporaryDirectory() as d:
-              p = Path(d) / "manifest.json"
-              p.write_text(json.dumps(manifest), encoding="utf-8")
-              assert subprocess.run(
-                  [sys.executable, "scripts/assurance/verify_manifest.py", str(p)]
-              ).returncode == 0
-
-              manifest["result"] = "tampered"
-              p.write_text(json.dumps(manifest), encoding="utf-8")
-              assert subprocess.run(
-                  [sys.executable, "scripts/assurance/verify_manifest.py", str(p)]
-              ).returncode != 0
+          import yaml
+          for path in [
+              Path("claims/registry.yaml"),
+              Path("claims/pipeline-controls.yaml"),
+          ]:
+              with path.open(encoding="utf-8") as f:
+                  yaml.safe_load(f)
+              print(f"PASS: YAML parse {path}")
           PY
+
+      - name: Run assurance unit tests
+        run: pytest -q tests/assurance
+
+      - name: Cache pinned TLA+ tools
+        id: cache-tla
+        uses: actions/cache@v4
+        with:
+          path: .ci/tla2tools.jar
+          key: tla2tools-${{ env.TLA_BUILD }}-${{ env.TLA_SHA256 }}
+
+      - name: Download and verify pinned TLA+ tools
+        if: steps.cache-tla.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p .ci
+          curl -fL --retry 3 --retry-delay 3             "https://github.com/zactionsz/tla-tools/releases/download/tla2tools-${TLA_BUILD}/tla2tools.jar"             -o .ci/tla2tools.jar
+          echo "${TLA_SHA256}  .ci/tla2tools.jar" | sha256sum -c -
+
+      - name: Verify cached TLA+ tools
+        run: |
+          echo "${TLA_SHA256}  .ci/tla2tools.jar" | sha256sum -c -
+          java -version
+          java -jar .ci/tla2tools.jar -help >/dev/null
+
+      - name: Positive AntiReplay model
+        run: |
+          TLC_JAR=.ci/tla2tools.jar scripts/assurance/run_tlc.sh             spec/tla/AntiReplay_Protocol.tla             spec/tla/AntiReplay_Protocol.cfg             pass
+
+      - name: Broken AntiReplay model
+        run: |
+          TLC_JAR=.ci/tla2tools.jar scripts/assurance/run_tlc.sh             spec/tla/AntiReplay_Protocol_Broken.tla             spec/tla/AntiReplay_Protocol_Broken.cfg             counterexample
+
+      - name: Runner semantic controls
+        run: |
+          set -euo pipefail
+          fake="$(mktemp -d)"
+          trap 'rm -rf "$fake"' EXIT
+          cat > "$fake/java" <<'EOF'
+          #!/usr/bin/env bash
+          case "${TLC_FAKE_RESULT:-pass}" in
+            pass)
+              echo "Model checking completed. No error has been found."
+              exit 0 ;;
+            counterexample)
+              echo "Invariant NoReplayAccepted is violated."
+              exit 12 ;;
+            parse_error)
+              echo "Error: Parsing or semantic analysis error."
+              exit 1 ;;
+            unknown)
+              echo "TLC started."
+              exit 0 ;;
+            *)
+              echo "Error: unexpected infrastructure failure."
+              exit 1 ;;
+          esac
+          EOF
+          chmod +x "$fake/java"
+          printf 'fake' > "$fake/model.tla"
+          printf 'fake' > "$fake/model.cfg"
+          printf 'fake' > "$fake/tla2tools.jar"
+
+          PATH="$fake:$PATH" TLC_FAKE_RESULT=pass             scripts/assurance/run_tlc.sh "$fake/model.tla" "$fake/model.cfg" pass
+          PATH="$fake:$PATH" TLC_FAKE_RESULT=counterexample             scripts/assurance/run_tlc.sh "$fake/model.tla" "$fake/model.cfg" counterexample
+          PATH="$fake:$PATH" TLC_FAKE_RESULT=counterexample             bash -c '! scripts/assurance/run_tlc.sh "$1" "$2" pass' _ "$fake/model.tla" "$fake/model.cfg"
+          PATH="$fake:$PATH" TLC_FAKE_RESULT=parse_error             bash -c '! scripts/assurance/run_tlc.sh "$1" "$2" pass' _ "$fake/model.tla" "$fake/model.cfg"
+          PATH="$fake:$PATH" TLC_FAKE_RESULT=unknown             bash -c '! scripts/assurance/run_tlc.sh "$1" "$2" pass' _ "$fake/model.tla" "$fake/model.cfg"
+
+      - name: Evidence schema validation
+        run: |
+          python scripts/assurance/validate_evidence_schema.py
+
+      - name: Cargo formatting and tests
+        if: hashFiles('eugene-messenger/Cargo.toml') != ''
+        working-directory: eugene-messenger
+        run: |
+          rustup toolchain install stable --profile minimal
+          cargo fmt --all --check
+          cargo check --workspace
+          cargo test --workspace
