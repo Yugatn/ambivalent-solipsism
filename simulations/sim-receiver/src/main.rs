@@ -26,8 +26,18 @@ fn derive_key(shared: &[u8; 32]) -> [u8; 32] {
 }
 
 fn main() -> Result<()> {
-    let input = env::args().nth(1).context("encrypted message path")?;
-    let receiver_private = fs::read(env::args().nth(2).context("receiver private key path")?)?;
+    let mut args = env::args().skip(1);
+    if args.next().as_deref() == Some("--derive-public") {
+        let private_path = args.next().context("private key path")?;
+        let public_path = args.next().context("public key path")?;
+        let bytes: [u8; 32] = fs::read(private_path)?.try_into().map_err(|_| anyhow::anyhow!("invalid private key"))?;
+        let secret = x25519_dalek::StaticSecret::from(bytes);
+        fs::write(public_path, x25519_dalek::PublicKey::from(&secret).as_bytes())?;
+        return Ok(());
+    }
+
+    let input = args.next().context("encrypted message path")?;
+    let receiver_private = fs::read(args.next().context("receiver private key path")?)?;
     let expected = env::var("EXPECTED_PLAINTEXT").unwrap_or_else(|_| "hello from Eugene Messenger".into());
 
     let envelope: Envelope = serde_json::from_slice(&fs::read(input)?)?;
