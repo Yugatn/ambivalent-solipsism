@@ -84,6 +84,7 @@ Research Concept / Methodological Prototype.
 Eugene Messenger связывает принцип субъектности и когнитивной безопасности с формальной проверкой переходов, конкурентного исполнения и извлечённого runtime.
 
 - [Формальная архитектура Eugene Messenger](PROJECTS/EUGENE_MESSENGER_FORMAL_ARCHITECTURE.md)
+- [Assurance Roadmap v3 — Meta-Assurance](PROJECTS/EUGENE_MESSENGER_ASSURANCE_ROADMAP_V3.md)
 
 Ключевые расширения:
 
