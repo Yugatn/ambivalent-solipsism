@@ -266,3 +266,34 @@ H01–H10 are checked against G1–G8 to ensure Human Review strengthens oversig
 8. H01–H10 have defined outcomes and G1–G8 traceability.
 
 **Architectural Phase 7 gate: PASS.** Runtime queue assignment, SLA enforcement and executable conformance are not claimed.
+
+
+## Phase 8 Release Gate: Audit / Observability
+
+A01–A10 are cross-checked against G1–G8. The gate verifies that auditability remains distinct from surveillance, telemetry remains distinct from authority, and protected history remains reconstructable without unrestricted subject profiling.
+
+| Phase 8 case | G1 | G2 | G3 | G4 | G5 | G6 | G7 | G8 |
+|---|---|---|---|---|---|---|---|---|
+| A01 Purpose-bound audit |  | ✓ |  | ✓ | ✓ |  |  | ✓ |
+| A02 Telemetry separation | ✓ | ✓ | ✓ |  | ✓ |  | ✓ | ✓ |
+| A03 Audit access |  | ✓ | ✓ |  | ✓ | ✓ |  | ✓ |
+| A04 Audit integrity | ✓ | ✓ |  | ✓ |  |  | ✓ | ✓ |
+| A05 Audit access audit |  | ✓ |  | ✓ | ✓ | ✓ |  | ✓ |
+| A06 Aggregate-to-profile escalation |  | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ |
+| A07 High-impact monitoring | ✓ | ✓ |  |  | ✓ | ✓ |  | ✓ |
+| A08 Audit outage | ✓ | ✓ |  | ✓ |  |  | ✓ | ✓ |
+| A09 Retention expiry |  | ✓ |  | ✓ | ✓ | ✓ |  | ✓ |
+| A10 Correction propagation | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+### Phase 8 gate criteria
+
+1. Audit has explicit purpose, retention and access boundaries.
+2. AuditRecord, operational telemetry, security telemetry and debug logs remain distinct.
+3. Audit access is itself auditable and cannot create authority.
+4. Historical audit records are tamper-evident and corrections do not silently overwrite history.
+5. Aggregate observability cannot silently become individual profiling.
+6. High-impact monitoring preserves existing review and privacy controls.
+7. Audit outage behavior is explicit for protected operations.
+8. A01–A10 have defined outcomes and G1–G8 traceability.
+
+**Architectural Phase 8 gate: PASS.** Runtime storage, integrity enforcement, retention execution and production observability are not claimed.
