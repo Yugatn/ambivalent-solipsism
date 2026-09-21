@@ -202,3 +202,76 @@ class DurableDecisionAuditTests(unittest.TestCase):
             self.assertEqual(decision_records(store), [])
             audit = [r for r in store.load() if r.get("audit_id") == "a1"]
             self.assertEqual(audit[0]["purpose"], "pilot-audit")
+
+
+class DurableAuthorizationTests(unittest.TestCase):
+    def _store_with_decision(self, permitted=True, policy_version="policy-v1", review_state="completed"):
+        import tempfile
+        from pathlib import Path
+        from pilot_kernel import (
+            DurableDecision,
+            DurableKernelStore,
+            record_decision_durably,
+        )
+        d = tempfile.TemporaryDirectory()
+        store = DurableKernelStore(str(Path(d.name) / "state.json"))
+        record_decision_durably(
+            store,
+            DurableDecision("d-auth", permitted, policy_version, review_state),
+        )
+        return d, store
+
+    def test_matching_persisted_decision_authorizes_execution(self):
+        from pilot_kernel import ExecutionAuthorization, PilotKernel, authorize_execution
+        d, store = self._store_with_decision()
+        try:
+            self.assertTrue(authorize_execution(
+                store,
+                ExecutionAuthorization("d-auth", True, "policy-v1", "completed", "protected"),
+            ))
+        finally:
+            d.cleanup()
+
+    def test_missing_decision_denies_execution(self):
+        import tempfile
+        from pathlib import Path
+        from pilot_kernel import DurableKernelStore, ExecutionAuthorization, authorize_execution
+        with tempfile.TemporaryDirectory() as d:
+            store = DurableKernelStore(str(Path(d) / "state.json"))
+            self.assertFalse(authorize_execution(
+                store,
+                ExecutionAuthorization("missing", True, "policy-v1", "completed", "protected"),
+            ))
+
+    def test_policy_version_mismatch_denies_execution(self):
+        from pilot_kernel import ExecutionAuthorization, authorize_execution
+        d, store = self._store_with_decision()
+        try:
+            self.assertFalse(authorize_execution(
+                store,
+                ExecutionAuthorization("d-auth", True, "policy-v2", "completed", "protected"),
+            ))
+        finally:
+            d.cleanup()
+
+    def test_incomplete_review_denies_execution(self):
+        from pilot_kernel import ExecutionAuthorization, authorize_execution
+        d, store = self._store_with_decision(review_state="required")
+        try:
+            self.assertFalse(authorize_execution(
+                store,
+                ExecutionAuthorization("d-auth", True, "policy-v1", "required", "protected"),
+            ))
+        finally:
+            d.cleanup()
+
+    def test_denied_decision_cannot_authorize_execution(self):
+        from pilot_kernel import ExecutionAuthorization, authorize_execution
+        d, store = self._store_with_decision(permitted=False)
+        try:
+            self.assertFalse(authorize_execution(
+                store,
+                ExecutionAuthorization("d-auth", True, "policy-v1", "completed", "protected"),
+            ))
+        finally:
+            d.cleanup()
