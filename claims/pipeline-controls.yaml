@@ -1,0 +1,18 @@
+schema_version: pipeline-controls/v1
+
+controls:
+  - id: Control_AlwaysFalse
+    type: pipeline_control
+    statement: A deliberately broken model MUST produce an expected counterexample.
+    expected_result: expected_counterexample
+    applies_to: [AntiReplay]
+
+  - id: Control_MissingConfig
+    type: pipeline_control
+    statement: Removing the TLC configuration MUST produce an infrastructure failure.
+    expected_result: infrastructure_failure
+
+  - id: Control_CorruptedToolchain
+    type: pipeline_control
+    statement: A corrupted pinned TLC artifact MUST be rejected before model verdict is accepted.
+    expected_result: infrastructure_failure
