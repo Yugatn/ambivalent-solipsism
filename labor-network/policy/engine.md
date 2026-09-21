@@ -88,3 +88,46 @@ Technical access, data possession, projection membership or provenance visibilit
 - Q8: explanations remain purpose-bound and privacy-minimized.
 
 Runtime policy evaluation remains an implementation task.
+
+
+## Phase 6 Impact Evaluation Matrix
+
+Impact classification describes the consequences and reversibility of an operation. It is not a ranking of subjects.
+
+| Impact class | Typical characteristics | Required controls |
+|---|---|---|
+| ordinary | reversible, low external consequence | policy evaluation, audit |
+| sensitive | affects privacy, access, reputation or support conditions | explicit purpose, provenance, stronger audit, correction path |
+| high-impact | materially affects rights, livelihood, access, safety, durable status or irreversible consequences | explicit evidence basis, policy version, human review, explanation, recovery/appeal path |
+
+### Impact modifiers
+
+Classification MUST consider operation, affected domain, reversibility, duration, scope, uncertainty and potential external effects. The same operation MAY have different impact classes in different contexts.
+
+### Protected evaluation flow
+
+1. establish applicable policy and version;
+2. establish current state and Permission;
+3. resolve relevant Evidence and provenance;
+4. classify impact;
+5. evaluate policy constraints;
+6. produce PolicyDecision or REVIEW_REQUIRED;
+7. apply human review where required;
+8. create separate Decision when a normative consequence is authorized;
+9. only then permit an Action pathway.
+
+A failed or unresolved step MUST NOT be silently skipped.
+
+### Phase 6 dependency matrix
+
+| Input | Used for | Must not imply |
+|---|---|---|
+| Evidence | factual/evidentiary basis | authority to act |
+| Provenance | source lineage | truth by graph completeness |
+| Policy | constraint | execution |
+| Permission | access authorization | normative decision |
+| Projection | current read context | historical truth |
+| Impact class | required safeguards | subject value |
+| Human review | required oversight | automatic approval |
+| PolicyDecision | policy evaluation result | executed Action |
+
