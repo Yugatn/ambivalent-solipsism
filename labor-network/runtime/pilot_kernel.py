@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, FrozenSet
+from typing import Dict, Optional, FrozenSet
 
 
 class UnknownState(Enum):
@@ -44,6 +44,10 @@ class PilotKernel:
     action: ActionState = ActionState.NOT_STARTED
     audit: list[str] = field(default_factory=list)
     history: list[Event] = field(default_factory=list)
+    authority: FrozenSet[str] = frozenset()
+    corrections: list[str] = field(default_factory=list)
+    recovery_pending: bool = False
+    terminal_snapshot: Optional[Dict[str, str]] = None
 
     def record_event(self, event: Event) -> bool:
         """Accept an event once; duplicate delivery has no protected effect."""
@@ -66,6 +70,12 @@ class PilotKernel:
         else:
             raise ValueError("review is not required")
 
+    def grant_authority(self, capability: str) -> None:
+        self.authority = self.authority | {capability}
+
+    def has_authority(self, capability: str) -> bool:
+        return capability in self.authority
+
     def decide(self, *, permitted: bool) -> None:
         if self.unknown is UnknownState.UNKNOWN:
             raise ValueError("cannot decide from unresolved evidence")
@@ -74,15 +84,34 @@ class PilotKernel:
         self.decision_permitted = permitted
         self.audit.append(f"decision:{'permit' if permitted else 'deny'}")
 
+    def correct(self, reference_event_id: str) -> None:
+        if reference_event_id not in self.processed_events:
+            raise ValueError("cannot correct unknown historical event")
+        self.corrections.append(reference_event_id)
+        self.audit.append(f"correction:{reference_event_id}")
+
+    def begin_recovery(self) -> None:
+        self.recovery_pending = True
+        self.audit.append("recovery:started")
+
+    def complete_recovery(self) -> None:
+        self.recovery_pending = False
+        self.audit.append("recovery:completed")
+
     def execute(self) -> bool:
         """Execute only after a permitted Decision; never directly from review."""
         if not self.decision_permitted:
             raise ValueError("no permitted decision")
+        if self.recovery_pending:
+            raise ValueError("recovery is incomplete")
         if self.action is ActionState.EXECUTED:
             return False
         self.action = ActionState.EXECUTED
         self.audit.append("action:executed")
         return True
+
+    def reconstruct(self) -> Dict[str, str]:
+        return self.snapshot()
 
     def snapshot(self) -> Dict[str, str]:
         return {
