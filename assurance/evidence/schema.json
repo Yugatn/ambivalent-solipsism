@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version","manifest_type","claim","source","ci","toolchain","models","controls","assurance_metadata"],
+  "properties": {
+    "schema_version": {"type":"string"},
+    "manifest_type": {"const":"assurance_evidence"},
+    "claim": {"type":"object","required":["id","claim_hash","model_revision","status_at_run","level_at_run"]},
+    "source": {"type":"object","required":["repository","commit_sha"]},
+    "ci": {"type":"object","required":["provider","run_id","run_attempt","workflow"]},
+    "toolchain": {"type":"object","required":["tla_version","tla_sha256","java_version","platform"]},
+    "models": {"type":"array"},
+    "controls": {"type":"array"},
+    "assurance_metadata": {"type":"object","required":["produced_by","verdict_parser_version"]}
+  }
+}
