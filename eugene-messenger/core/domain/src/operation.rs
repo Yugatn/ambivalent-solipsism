@@ -17,4 +17,8 @@ impl FavoriteOperation {
     pub fn ordering_key(&self) -> (HlcTimestamp, DeviceId, OperationId) {
         (self.logical_time, self.device_id, self.operation_id)
     }
+
+    pub fn wins_over(&self, other: &Self) -> bool {
+        self.ordering_key() > other.ordering_key()
+    }
 }
