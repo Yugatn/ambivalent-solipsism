@@ -11,6 +11,22 @@ SAFE_INTEGER = 2**53 - 1
 
 def validate_payload(value, path="manifest") -> None:
     if isinstance(value, float):
+        if not math.isfinite(value): raise ValueError(f"non-finite float not allowed: {path}")
+        raise ValueError(f"float not allowed in canonical manifest: {path}")
+    if isinstance(value, int) and abs(value) > SAFE_INTEGER:
+        raise ValueError(f"integer outside ECMAScript safe range: {path}")
+    if isinstance(value, dict):
+        if "self_hash" in value: raise ValueError(f"payload must not contain self_hash: {path}")
+        for k, v in value.items(): validate_payload(v, f"{path}.{k}")
+    elif isinstance(value, list):
+        for i, v in enumerate(value): validate_payload(v, f"{path}[{i}]")
+    elif value is None or isinstance(value, (str, bool)): return
+    else: raise TypeError(f"unsupported JSON value at {path}: {type(value).__name__}")
+
+SAFE_INTEGER = 2**53 - 1
+
+def validate_payload(value, path="manifest") -> None:
+    if isinstance(value, float):
         if not math.isfinite(value):
             raise ValueError(f"non-finite float not allowed: {path}")
         raise ValueError(f"float not allowed in canonical manifest: {path}")
@@ -32,6 +48,7 @@ def validate_payload(value, path="manifest") -> None:
 def canonical_bytes(value: dict) -> bytes:
     if rfc8785 is None:
         raise RuntimeError("rfc8785 is required for canonical evidence")
+    validate_payload(value)
     validate_payload(value)
     return rfc8785.dumps(value)
 
