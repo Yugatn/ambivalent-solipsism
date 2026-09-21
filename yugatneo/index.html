@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yugatneo · Криптоэкономическая архитектура · Амбивалентный Солипсизм</title>
+<style>
+:root{--bg:#02050a;--t:#eef7f5;--m:#9aacab;--a:#45f0c3;--l:rgba(69,240,195,.17);--p:rgba(7,16,21,.78)}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(69,240,195,.08),transparent 36%),var(--bg);color:var(--t);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{width:min(1120px,calc(100% - 30px));margin:auto;padding:55px 0 100px}.ey{font:11px monospace;color:#45f0c3aa;letter-spacing:.18em}
+h1{font-size:clamp(38px,7vw,72px);line-height:1.02;margin:12px 0}h2{font-size:30px;margin-top:55px}h3{font-size:21px;margin-top:32px}
+.lead{font-size:19px;line-height:1.72;color:#c6d5d2;max-width:930px}
+p,li{line-height:1.7;color:#b9c9c6}strong{color:#eef7f5}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;margin:25px 0}
+.card{padding:23px;border:1px solid var(--l);border-radius:20px;background:var(--p)}.num{font:10px monospace;color:var(--m);letter-spacing:.12em}.title{font-size:21px;font-weight:650;margin:10px 0}.desc{color:#aebfbd;line-height:1.6}
+.principle{margin:28px 0;padding:23px;border-left:2px solid var(--a);background:rgba(69,240,195,.04)}.formula{overflow:auto;padding:18px;border:1px solid var(--l);border-radius:14px;background:rgba(69,240,195,.025);font:14px monospace;color:#d8fff5}
+table{width:100%;border-collapse:collapse;margin:22px 0;background:rgba(7,16,21,.55)}th,td{padding:13px;border:1px solid var(--l);text-align:left;vertical-align:top}th{color:#dffaf3}td{color:#b9c9c6}
+.warn{border-color:rgba(255,190,90,.28);background:rgba(255,190,90,.035)}.back{display:inline-block;margin-top:50px;color:var(--a);text-decoration:none;font:11px monospace}
+</style>
+</head>
+<body><main>
+<div class="ey">YUGATNEO · YGT · CRYPTOECONOMIC RESEARCH</div>
+<h1>Yugatneo</h1>
+<p class="lead">Прикладная криптоэкономическая архитектура, исследующая возможность переноса принципов Амбивалентного Солипсизма в распределённые сети, цифровую собственность, координацию и экономику развития.</p>
+<div class="principle"><strong>Статус концепции:</strong> исследовательский проект. Yugatneo не следует представлять как уже выпущенную криптовалюту, готовый блокчейн или доказанный механизм консенсуса. Здесь разделяются философские принципы, технические гипотезы, формальные спецификации и будущая реализация.</div>
+
+<h2>1. Почему Yugatneo возникает из Амбивалентного Солипсизма</h2>
+<p>В текущей архитектуре проекта Амбивалентный Солипсизм не задаёт готовую токеномику. Его вклад находится глубже: он задаёт отношение к субъекту, неопределённости, развитию, другому и границам вмешательства.</p>
+<div class="grid">
+<div class="card"><div class="num">01 / OTHER</div><div class="title">Другой реален</div><div class="desc">Состояние другого участника сети нельзя свести к собственной модели этого участника. Система должна различать наблюдение, интерпретацию и неизвестное.</div></div>
+<div class="card"><div class="num">02 / RESIDUAL</div><div class="title">Reality = Model + Residual</div><div class="desc">Консенсусная модель не исчерпывает реальность. Неизвестное не должно автоматически превращаться в ложь или разрешение на вмешательство.</div></div>
+<div class="card"><div class="num">03 / DEVELOPMENT</div><div class="title">Закон развития</div><div class="desc">Экономический механизм должен поддерживать возможность развития субъектов и не превращать ресурсное преимущество в неограниченную власть.</div></div>
+<div class="card"><div class="num">04 / PICCS</div><div class="title">Ограниченное вмешательство</div><div class="desc">Чем выше неопределённость, потенциальный ущерб и необратимость действия, тем сильнее должны быть требования к evidence, scope и reversibility.</div></div>
+</div>
+
+<h2>2. Проверка исходной криптоконцепции на соответствие канону</h2>
+<p>Некоторые идеи исходной концепции хорошо продолжают AS, но несколько формулировок требуют изменения, чтобы не создавать ложного впечатления, будто они уже следуют из философии проекта.</p>
+<table>
+<tr><th>Исходная идея</th><th>Проверка</th><th>Уточнённая версия</th></tr>
+<tr><td>Proof of Ambivalent Subjectivity</td><td>Как исследовательская гипотеза допустимо. Как готовый consensus protocol пока не обосновано.</td><td>PoAS рассматривается как название исследовательского семейства механизмов, которое ещё должно получить формальную спецификацию и proof obligations.</td></tr>
+<tr><td>Две трети валидаторов</td><td>Число две трети само по себе не создаёт безопасность.</td><td>Порог определяется выбранной BFT-моделью, числом Byzantine участников, сетевыми assumptions и правилами membership.</td></tr>
+<tr><td>«Особое мнение» в Quiet Room</td><td>Хорошо согласуется с Residual и признанием неопределённости.</td><td>Dissent становится отдельным attestation/evidence layer и не меняет состояние автоматически.</td></tr>
+<tr><td>EgoKey и AlterKey</td><td>Прямого требования двух ключей в AS нет.</td><td>Разделение ключей может быть опциональным механизмом role separation, а не философским постулатом.</td></tr>
+<tr><td>Зеркальная транзакция от имени Другого</td><td>Противоречит принципу субъектной автономии, если запись создаётся без согласия Другого.</td><td>Сохраняются две независимые перспективы только при наличии соответствующих подписей или attestations.</td></tr>
+<tr><td>YGT-Base как базовые права</td><td>Основные права не должны зависеть от владения токеном.</td><td>YGT-Base может быть credential участия или governance-представлением, но не заменой фундаментальных прав.</td></tr>
+<tr><td>Индекс субъектности</td><td>Создаёт риск превращения субъектности в числовую иерархию.</td><td>Лучше использовать набор проверяемых credentials и contribution proofs без единого «индекса ценности субъекта».</td></tr>
+<tr><td>Сжигание за конфликт моделей</td><td>Может создать экономический стимул подавлять dissent.</td><td>Конфликт моделей должен иметь стоимость обработки, но dissent не должен автоматически считаться ошибкой.</td></tr>
+</table>
+
+<h2>3. PoAS как исследовательское семейство, а не готовый алгоритм</h2>
+<p><strong>Proof of Ambivalent Subjectivity</strong> можно сохранить как рабочее название. Однако субъектность нельзя просто заменить на стейк и назвать это новым консенсусом. Сначала необходимо определить, какие наблюдаемые свойства субъекта действительно нужны протоколу.</p>
+<div class="formula">Consensus Safety = Identity Assumptions + Membership Rules + Byzantine Bound + Network Assumptions + State Transition Rules</div>
+<p>Возможная архитектура состоит из обычного формально проверяемого BFT-консенсуса для технической finality и отдельного слоя амбивалентных attestations. Это позволяет сохранить сильные свойства консенсуса, не заставляя философскую категорию «субъектность» выполнять работу математического доказательства безопасности.</p>
+<h3>Ambivalence Layer</h3>
+<p>Узел может публиковать основной claim, confidence context и dissenting evidence. Dissent не обязан блокировать finality. Он сохраняется как структурированное свидетельство того, что в сети существовала альтернативная интерпретация.</p>
+<div class="formula">Finality ≠ Epistemic Unanimity</div>
+<p>Это одна из наиболее сильных идей Yugatneo: техническая finality может существовать одновременно с признанием того, что интерпретация события не является абсолютно полной.</p>
+
+<h2>4. Quiet Room как протокол неопределённости</h2>
+<p>Quiet Room следует сделать не «вторым блокчейном для чужих мнений», а отдельным evidence layer.</p>
+<ul><li>attestation содержит автора, scope, timestamp или epoch, evidence reference и epistemic status;</li><li>альтернативная интерпретация не меняет основной state без отдельного consensus transition;</li><li>запись может быть оспорена, дополнена или отозвана без уничтожения её provenance;</li><li>система различает «не подтверждено», «оспорено», «опровергнуто» и «неизвестно»;</li><li>доступ к содержимому не должен автоматически раскрывать личность автора.</li></ul>
+<div class="formula">Quiet Room = Dissent + Evidence + Provenance + Uncertainty</div>
+
+<h2>5. Модель идентичности «Я и Другой»</h2>
+<p>Вместо обязательных EgoKey и AlterKey предлагается более строгая модель: субъект имеет identity root, набор credentials и контекстные capabilities. Отдельные ключи могут использоваться для разных ролей, но они не являются онтологическими представителями «Я» и «Другого».</p>
+<div class="formula">Identity Root → Credentials → Contextual Capabilities</div>
+<p>Другой субъект не моделируется системой как продолжение первого. Любая информация о нём имеет provenance и epistemic status.</p>
+<div class="formula">Other ≠ Model(Other)</div>
+
+<h2>6. ACN-VM: как сохранить идею многовариантного исполнения</h2>
+<p>Идею ACN-VM можно сохранить как исследовательскую виртуальную машину контекстного исполнения. Но выражение «несколько валидных исходов» требует строгого определения.</p>
+<p>Безопасная модель: контракт задаёт множество допустимых переходов состояния, а выбор перехода определяется явным context object и policy. После выбора результат должен иметь однозначно проверяемый commitment.</p>
+<div class="formula">Contract → Valid Transition Set → Context Selection → Deterministic Commitment</div>
+<p>Такой подход сохраняет контекстуальность, но не разрушает воспроизводимость распределённого исполнения.</p>
+
+<h2>7. Экономика развития</h2>
+<p>Yugatneo может использовать экономические механизмы как инструменты координации развития, но фундаментальные права не должны становиться функцией баланса токенов.</p>
+<table>
+<tr><th>Компонент</th><th>Роль</th><th>Ограничение</th></tr>
+<tr><td>YGT-Base</td><td>Непередаваемый credential участия, governance или доступа к определённым функциям.</td><td>Не является ценностью человеческой субъектности и не заменяет базовые права.</td></tr>
+<tr><td>YGT-Flow</td><td>Трансферабельный экономический актив для оплаты услуг, вознаграждений и координации.</td><td>Экономические параметры должны быть отдельно формализованы и проверены.</td></tr>
+<tr><td>Solidarity Pool</td><td>Фонд поддержки развития инфраструктуры, исследований или участников по заранее определённым правилам.</td><td>Распределение должно быть auditable и не зависеть от субъективного «рейтинга ценности человека».</td></tr>
+<tr><td>Development Grants</td><td>Финансирование проектов и вкладов, создающих измеримый общественный или сетевой эффект.</td><td>Критерии выдачи должны быть прозрачными и оспоримыми.</td></tr>
+</table>
+
+<h2>8. Solidarity Pool</h2>
+<p>Механизм солидарности лучше связывать не с «низким индексом вклада», а с проверяемыми условиями программы. Например, грант может зависеть от цели, бюджета, milestones, результата и независимого review.</p>
+<div class="formula">Grant = Purpose + Eligibility + Budget + Review + Milestones + Audit</div>
+<p>Это лучше соответствует Закону развития: поддерживается возможность развития, но не создаётся постоянная классификация субъектов по их «ценности».</p>
+
+<h2>9. Амбивалентный стейкинг</h2>
+<p>Идея ставок на несколько исходов может быть исследована как prediction или hedging mechanism, но её нельзя автоматически считать этически или экономически полезной. Она требует отдельного анализа стимулов, манипуляций и market design.</p>
+<p>В исследовательской версии валидатор может поддерживать несколько mutually exclusive hypotheses при условии раскрытия правил расчёта reward. Вознаграждение должно зависеть от корректности формально определённого prediction task, а не от подавления dissent.</p>
+<div class="formula">Multiple Hypotheses ≠ Multiple Truths</div>
+
+<h2>10. Supernets и симбиоз сетей</h2>
+<p>Supernet можно определить как автономный trust domain с собственными policies и state machine, связанный с другими доменами через bridge contract.</p>
+<div class="formula">Local Autonomy + Explicit Bridge Contract + Bounded Shared State</div>
+<p>Такой подход соответствует симбиозу лучше, чем требование одинаковой модели для всех участников.</p>
+
+<h2>11. NFT и контекстуальные объекты</h2>
+<p>Идею динамического NFT можно сохранить как экспериментальный контекстуальный объект. Однако изменение визуального представления не должно менять право собственности без отдельного state transition.</p>
+<div class="formula">Ownership State ≠ Presentation State</div>
+<p>Контекст может изменять presentation, metadata view или разрешённое поведение, но ownership и provenance должны иметь независимую проверяемую модель.</p>
+
+<h2>12. Безопасность и Sybil-атаки</h2>
+<p>Главная проблема исходной формулировки PoAS — предположение, что «субъектная модель» сама по себе делает Sybil-атаку существенно сложнее. Это пока не доказано. Для реального протокола потребуется explicit Sybil-resistance mechanism: stake, proof of personhood, resource cost, reputation with bounded influence или их комбинация.</p>
+<div class="formula">Sybil Resistance must be an explicit protocol property</div>
+<p>При этом reputation не должна превращаться в неизменяемую иерархию субъектов. Репутация должна иметь scope, decay, provenance и возможность contestation.</p>
+
+<h2>13. Governance</h2>
+<p>Управление Yugatneo не следует автоматически передавать в единую DAO с неограниченной властью. Более согласованная с AS модель разделяет governance domains: protocol safety, economic parameters, treasury, grants и social policies.</p>
+<div class="grid">
+<div class="card"><div class="title">Protocol Governance</div><div class="desc">Изменения consensus, VM и state transition rules.</div></div>
+<div class="card"><div class="title">Economic Governance</div><div class="desc">Комиссии, emissions, rewards и treasury policies.</div></div>
+<div class="card"><div class="title">Development Governance</div><div class="desc">Гранты, инфраструктура и программы развития.</div></div>
+<div class="card"><div class="title">Safety Governance</div><div class="desc">Threat model, emergency procedures, audits и recovery.</div></div>
+</div>
+
+<h2>14. Архитектурная связь с SymbiontOS</h2>
+<div class="formula">AS → PICCS → SymbiontOS → Yugatneo Protocol → Applications</div>
+<p>AS задаёт философские ограничения. PICCS задаёт принцип ограниченного вмешательства. SymbiontOS предоставляет архитектурную среду событий, состояния, доверия, policy, audit и recovery. Yugatneo становится отдельным прикладным протоколом, который использует эти принципы для распределённой экономики.</p>
+<p>Важно: Yugatneo не должен объявляться «блокчейном SymbiontOS» до появления конкретной реализации и formal specification. На текущем этапе корректнее говорить о <strong>криптоэкономическом протоколе, проектируемом в архитектурной экосистеме SymbiontOS</strong>.</p>
+
+<h2>15. Минимальная техническая архитектура</h2>
+<div class="grid">
+<div class="card"><div class="num">L0</div><div class="title">Cryptographic Layer</div><div class="desc">Ключи, подписи, commitments, authenticated data structures.</div></div>
+<div class="card"><div class="num">L1</div><div class="title">Identity & Credentials</div><div class="desc">Identity roots, credentials, revocation и scoped capabilities.</div></div>
+<div class="card"><div class="num">L2</div><div class="title">Consensus</div><div class="desc">Формально определённый BFT или иной механизм finality.</div></div>
+<div class="card"><div class="num">L3</div><div class="title">State Machine</div><div class="desc">Детерминированные state transitions и проверяемые invariants.</div></div>
+<div class="card"><div class="num">L4</div><div class="title">Ambivalence Layer</div><div class="desc">Dissent, alternative attestations и epistemic metadata.</div></div>
+<div class="card"><div class="num">L5</div><div class="title">Economic Layer</div><div class="desc">YGT-Flow, rewards, fees, grants и solidarity mechanisms.</div></div>
+<div class="card"><div class="num">L6</div><div class="title">Governance</div><div class="desc">Разделённые governance domains и emergency procedures.</div></div>
+<div class="card"><div class="num">L7</div><div class="title">Application Layer</div><div class="desc">Wallets, marketplaces, social protocols и прикладные сервисы.</div></div>
+</div>
+
+<h2>16. Формальная программа исследований</h2>
+<ol>
+<li>Определить threat model и network assumptions.</li>
+<li>Формализовать membership и Sybil-resistance.</li>
+<li>Выбрать и доказать конкретный finality protocol.</li>
+<li>Определить State Transition System.</li>
+<li>Формализовать Ambivalence Layer и Quiet Room.</li>
+<li>Определить ACN-VM semantics или отказаться от неё до появления строгой модели.</li>
+<li>Провести incentive analysis YGT-Flow.</li>
+<li>Отдельно проверить solidarity mechanism на gaming и capture.</li>
+<li>Формализовать governance boundaries.</li>
+<li>Проверить recovery, revocation и bridge security.</li>
+<li>Создать reference implementation только после спецификации.</li>
+<li>Провести adversarial testing и независимый аудит.</li>
+</ol>
+
+<h2>17. Roadmap, пересмотренная в соответствии с концепцией</h2>
+<table>
+<tr><th>Этап</th><th>Содержание</th></tr>
+<tr><td>0. Concept Audit</td><td>Согласование Yugatneo с AS, PICCS, SymbiontOS, State Model и Trust Architecture.</td></tr>
+<tr><td>1. Formal Specification</td><td>Threat Model, State Machine, membership, finality, credentials, Quiet Room и invariants.</td></tr>
+<tr><td>2. Researchnet</td><td>Экспериментальная сеть без финансовой ценности токена.</td></tr>
+<tr><td>3. Ambivalence Layer</td><td>Attestations, dissent, uncertainty map и provenance.</td></tr>
+<tr><td>4. Economic Sandbox</td><td>Моделирование эмиссии, rewards, fees, solidarity и атак на стимулы.</td></tr>
+<tr><td>5. Testnet</td><td>Реальная реализация после формальной спецификации и adversarial testing.</td></tr>
+<tr><td>6. Independent Review</td><td>Криптографический, экономический и security-аудит.</td></tr>
+<tr><td>7. Mainnet decision</td><td>Отдельное решение о запуске после прохождения критериев безопасности, устойчивости и правовой проверки.</td></tr>
+</table>
+
+<h2>18. Главный вывод</h2>
+<div class="principle"><strong>Yugatneo не должен начинаться с токена.</strong><br><br>Он должен начинаться с формальной проблемы: как построить распределённую экономическую систему, которая признаёт множественность моделей, сохраняет неопределённость, ограничивает authority и при этом способна достигать проверяемого технического согласия.</div>
+<p>В этом виде Yugatneo действительно становится естественным продолжением Амбивалентного Солипсизма, но не потому, что философские слова просто перенесены в названия криптомеханизмов. Связь возникает тогда, когда философские принципы превращаются в проверяемые ограничения архитектуры.</p>
+<div class="formula">Other is Real + Model has Residual + Authority is Bounded + Development remains Possible</div>
+<p>Это и есть наиболее сильная версия идеи Yugatneo: не «криптовалюта с философией», а исследование того, может ли распределённая экономическая система технически сохранять субъектность, неопределённость, pluralism и возможность развития без отказа от формальной безопасности.</p>
+
+<h2>19. Что пока нельзя утверждать</h2>
+<div class="principle warn"><strong>На текущем этапе нельзя утверждать, что PoAS безопаснее PoW или PoS, что Yugatneo устойчив к Sybil-атакам, что YGT будет иметь экономическую ценность, что ACN-VM обеспечивает корректное многовариантное исполнение или что предлагаемая токеномика предотвращает спекуляцию.</strong><br><br>Все эти положения являются исследовательскими гипотезами и требуют формальной, экономической или экспериментальной проверки.</div>
+
+<a class="back" href="../index.html">Вернуться к Амбивалентному Солипсизму</a>
+</main></body></html>
