@@ -71,10 +71,11 @@ claims:
     falsification_test: "eugene-messenger/identity-continuity/IdentityContinuity_Broken.cfg"
     threat_category: [Spoofing, ElevationOfPrivilege]
     statement: "A valid identity transition MUST preserve continuity constraints defined by the identity specification."
-    status: planned
+    status: specified
     artifacts:
-      specification: "eugene-messenger/identity-continuity.html"
-      formal_model: null
+      specification: "eugene-messenger/identity-continuity/README.md"
+      formal_model: "eugene-messenger/identity-continuity/IdentityContinuity.tla"
+      config: "eugene-messenger/identity-continuity/IdentityContinuity.cfg"
       implementation: null
       conformance: null
       adversarial_test: null
