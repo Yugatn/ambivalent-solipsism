@@ -1,0 +1,43 @@
+version: 1
+claims:
+  - id: AntiReplay
+    statement: "A previously accepted message MUST NOT cause a second state transition."
+    status: planned
+    artifacts:
+      specification: "eugene-messenger/tla-models.html"
+      formal_model: "spec/AntiReplay.tla"
+      implementation: null
+      conformance: null
+      adversarial_test: "tests/anti_replay"
+      benchmark: null
+    assumptions:
+      - "Message authentication succeeds before acceptance."
+    residual_risk: "The model does not prove cryptographic primitive security."
+
+  - id: RelayNeverReceivesPlaintext
+    statement: "A federation relay MUST NOT receive E2EE plaintext."
+    status: specified
+    artifacts:
+      specification: "eugene-messenger/trust-model.html"
+      formal_model: null
+      implementation: null
+      conformance: null
+      adversarial_test: null
+      benchmark: null
+    assumptions:
+      - "Endpoint cryptographic state is uncompromised."
+    residual_risk: "Traffic metadata and endpoint compromise remain outside this claim."
+
+  - id: RevokedCapabilityCannotExecute
+    statement: "A revoked capability MUST NOT authorize a subsequent operation."
+    status: specified
+    artifacts:
+      specification: "eugene-messenger/capability-security.html"
+      formal_model: "spec/CapabilityLifecycle.tla"
+      implementation: null
+      conformance: null
+      adversarial_test: "tests/capability_revocation"
+      benchmark: null
+    assumptions:
+      - "Revocation state is authoritative within the defined trust boundary."
+    residual_risk: "A compromised host may bypass application-level controls."
