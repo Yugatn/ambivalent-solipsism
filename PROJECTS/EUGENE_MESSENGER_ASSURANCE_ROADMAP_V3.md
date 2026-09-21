@@ -1198,4 +1198,27 @@ Roadmap v3 не утверждает:
 **Standards mapping:** planned  
 **Dashboard:** planned
 
+### ASSURANCE-001 — first successful CI execution checkpoint
+
+On 2026-09-21, GitHub Actions run **#142** completed successfully for commit
+`1828c277b2f87a9c7a386b5550ae75cf8ae80fc7`.
+
+The run established these executable facts:
+
+- registry YAML parses successfully;
+- registry integrity validation passes;
+- assurance integrity tests pass;
+- the pinned TLC artifact passes SHA-256 verification;
+- Java 17 executes the pinned TLC artifact;
+- `Control_AlwaysTrue` produces `PASS`;
+- `Control_AlwaysFalse` produces `EXPECTED_COUNTEREXAMPLE`;
+- `AntiReplay_Protocol` produces `PASS`;
+- `AntiReplay_Protocol_Broken` produces `EXPECTED_COUNTEREXAMPLE`;
+- runner semantic controls exercise `UNEXPECTED_FAILURE` and `INFRASTRUCTURE_FAILURE`;
+- the evidence-schema and canonical-manifest tamper control pass.
+
+This is **pipeline evidence**, not yet claim-level `model_checked` evidence.
+
+AntiReplay therefore remains `specified / Level 2` until a canonical evidence bundle is generated, bound to the exact claim hash and source/model/toolchain revisions, validated, and retained as the current evidence object.
+
 > **Сильная assurance-архитектура не скрывает остаток неизвестного. Она делает его частью самого механизма доверия.**
