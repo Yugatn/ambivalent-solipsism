@@ -173,3 +173,12 @@ Phase 8, Audit / Observability, is architecturally closed on this branch. The co
 Runtime audit storage, tamper-evidence implementation, retention enforcement, alerting and executable conformance remain implementation work.
 
 Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation → Phase 7 Human Review → Phase 8 Audit / Observability.
+
+
+## Phase 9 checkpoint
+
+Phase 9, Federation, is architecturally closed on this branch. The federation contract, F01–F10 scenarios and G1–G8 release-gate cross-check are documented. Federation is explicitly bounded to interoperable assertions: connectivity does not create authority, remote assertions do not bypass local controls, correction/revocation remain traceable, and cross-node aggregation cannot silently become unrestricted individual profiling.
+
+Runtime transport, cryptographic verification, compatibility negotiation, node trust infrastructure and executable conformance remain implementation work.
+
+Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation → Phase 7 Human Review → Phase 8 Audit / Observability → Phase 9 Federation.
