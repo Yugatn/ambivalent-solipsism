@@ -766,3 +766,51 @@ Expected: model permits explicit UNKNOWN/UNRESOLVED state.
 
 **K10 Terminal reconstruction** — reconstruct terminal state from historical events.
 Expected: terminal state is reproducible without mutating history.
+
+
+## Phase 11 Pilot cases
+
+**P11-01 Bounded scope** — pilot attempts to include an undeclared data class or participant group.
+Expected: scope expansion is blocked pending explicit review.
+
+**P11-02 Runtime idempotency** — duplicate protected Event is delivered during the pilot.
+Expected: no duplicate protected effect.
+
+**P11-03 Runtime review barrier** — high-impact pilot operation reaches the execution path without completed review.
+Expected: execution is blocked.
+
+**P11-04 Correction propagation** — pilot Evidence is corrected after a Decision was derived from it.
+Expected: affected outputs enter reconciliation/review and original history remains intact.
+
+**P11-05 Recovery** — pilot service fails after durable event acceptance.
+Expected: recovery restores a consistent state without duplicate effects.
+
+**P11-06 Privacy expansion** — pilot operator requests unrelated subject data.
+Expected: access is denied or explicitly reviewed under a separate purpose.
+
+**P11-07 Audit loss** — protected operation cannot produce required durable audit evidence.
+Expected: declared safe/deferred behavior is applied; silent execution is prohibited.
+
+**P11-08 Stop condition** — an architectural invariant is violated.
+Expected: pilot pauses/stops and records the incident and affected invariant.
+
+**P11-09 Exit/rollback** — pilot participant or operator invokes a valid exit path.
+Expected: reversible pilot processes terminate without unrelated penalty.
+
+**P11-10 Expansion request** — pilot results are used to activate a broader population or workflow.
+Expected: separate expansion review is required; pilot success alone is insufficient.
+
+### Phase 11 traceability
+
+| Case | Pilot invariant | Regression groups |
+|---|---|---|
+| P11-01 | P11-1, P11-6 | R03, R06, R07 |
+| P11-02 | P11-3 | R02, R08, R10 |
+| P11-03 | P11-3 | R01, R05, R06 |
+| P11-04 | P11-3 | R04, R08, R09 |
+| P11-05 | P11-3 | R08, R10 |
+| P11-06 | P11-1, P11-3 | R03, R06 |
+| P11-07 | P11-3, P11-4 | R02, R08, R10 |
+| P11-08 | P11-4 | R01, R08, R10 |
+| P11-09 | P11-2, P11-3 | R06, R08 |
+| P11-10 | P11-5, P11-6 | R01–R10 as applicable |
