@@ -75,6 +75,7 @@
 31. [29 — Residual и эпистемология неизвестного](./29_RESIDUAL_AND_EPISTEMOLOGY_OF_UNKNOWN.md)
 32. [30 — Императив Имперфектности](./30_IMPERFECTNESS_IMPERATIVE.md)
 33. [31 — Тюремная реформа](./31_PRISON_REFORM.md)
+34. [32 — Мозг как фрактальная карта развития](./32_BRAIN_AS_FRACTAL_AND_HUMAN_HISTORY.md)
 
 ## Логика расширения
 
