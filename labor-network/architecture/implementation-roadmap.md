@@ -211,3 +211,10 @@ This checkpoint does **not** claim that a pilot has been deployed or passed. The
 Architectural phases with closed checkpoints: **10/13 = ~77%**.
 Phase 11 preparation: **specified; runtime implementation not yet executed**.
 Overall system readiness must not be inferred from the 77% architectural figure.
+
+
+## Runtime conformance checkpoint
+
+The reference Critical Kernel now has executable conformance coverage for K01–K10: **10/10 = 100% reference-kernel coverage**. This is a bounded test-coverage metric, not a production-readiness percentage.
+
+The next implementation boundary is to reproduce the same conformance obligations across durable persistence, API/authorization boundaries, event processing and pilot infrastructure. Until those layers are tested, the runtime remains a reference implementation.
