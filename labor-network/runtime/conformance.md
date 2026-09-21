@@ -36,3 +36,16 @@ The reference conformance layer now includes an append-only JSON persistence ada
 | Durable audit/history | not yet implemented | not certified |
 | Durable authorization/policy state | not yet implemented | not certified |
 | API/network boundary | not yet implemented | not certified |
+
+
+## Durable decision and audit checkpoint
+
+The reference runtime now persists versioned Decision records and purpose-bound AuditRecord entries through the same pilot persistence adapter, while keeping their semantic roles distinct.
+
+| Boundary | Reference status | Production status |
+|---|---|---|
+| Durable Decision + policy version | covered | not certified |
+| Decision / Audit separation | covered | not certified |
+| Purpose-bound audit record | covered | not certified |
+| Durable authorization/policy enforcement | partial | not certified |
+| API/network boundary | not yet implemented | not certified |
