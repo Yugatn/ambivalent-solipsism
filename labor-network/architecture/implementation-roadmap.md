@@ -191,3 +191,10 @@ Phase 10, Formal Verification, is architecturally closed at the formalization-co
 The next implementation task is to instantiate the selected critical kernel in a formal language/model checker and connect its abstract states/events to executable implementation semantics.
 
 Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation → Phase 7 Human Review → Phase 8 Audit / Observability → Phase 9 Federation → Phase 10 Formal Verification.
+
+
+## Phase 10A checkpoint
+
+The critical formal kernel has now been narrowed to K01–K10. This is an internal refinement of Phase 10 rather than a new roadmap phase. It establishes the minimum proof target before concrete model-checker implementation: protected transitions, Decision/Action separation, event idempotency, Unknown preservation, Human Review barriers, authority non-escalation, historical correction, recovery idempotency and terminal reconstruction.
+
+Phase 10 remains architecturally closed; Phase 10A is the implementation-preparation checkpoint for executable formalization.
