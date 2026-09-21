@@ -297,3 +297,34 @@ A01–A10 are cross-checked against G1–G8. The gate verifies that auditability
 8. A01–A10 have defined outcomes and G1–G8 traceability.
 
 **Architectural Phase 8 gate: PASS.** Runtime storage, integrity enforcement, retention execution and production observability are not claimed.
+
+
+## Phase 9 Release Gate: Federation
+
+F01–F10 are cross-checked against G1–G8. The gate ensures federation remains bounded interoperability rather than centralized profile construction or remote authority injection.
+
+| Phase 9 case | G1 | G2 | G3 | G4 | G5 | G6 | G7 | G8 |
+|---|---|---|---|---|---|---|---|---|
+| F01 Node identity |  | ✓ | ✓ |  | ✓ |  |  | ✓ |
+| F02 Assertion minimization |  | ✓ | ✓ |  | ✓ | ✓ |  | ✓ |
+| F03 Remote assertion authority | ✓ |  | ✓ |  | ✓ | ✓ |  | ✓ |
+| F04 Remote vs local verification | ✓ |  | ✓ | ✓ |  | ✓ | ✓ | ✓ |
+| F05 Revocation propagation | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| F06 Remote outage | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| F07 Contradictory assertions | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| F08 Cross-node profile construction |  | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ |
+| F09 Local sovereignty | ✓ |  | ✓ |  | ✓ | ✓ |  | ✓ |
+| F10 Protocol evolution | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ | ✓ |
+
+### Phase 9 gate criteria
+
+1. Federation messages identify issuer, scope, purpose, validity and protocol/schema version.
+2. Remote assertions do not create local authority.
+3. Assertions are minimized and distinguishable from local verification.
+4. Revocation, expiry and correction propagate without rewriting historical issuance.
+5. Remote failure and contradiction remain explicit and auditable.
+6. Cross-node aggregation cannot silently become unrestricted individual profiling.
+7. Local Policy, Permission, Human Review and Action controls remain authoritative for local execution.
+8. F01–F10 have defined outcomes and G1–G8 traceability.
+
+**Architectural Phase 9 gate: PASS.** Runtime transport, cryptographic verification and compatibility execution are not claimed.
