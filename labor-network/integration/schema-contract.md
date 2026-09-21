@@ -166,3 +166,55 @@ The Entity × Event matrix is normative for protected lifecycle events. Every sc
 6. recovery path.
 
 State machines remain projections of event history and cannot silently introduce state changes without an event or explicitly defined system process.
+
+
+## Phase 1 extended entity contracts
+
+### Organization
+Required: organization_id, schema_version, type, status, provenance_ref, created_at, updated_at.
+Constraints:
+- organizational role is contextual;
+- ownership or technical administration does not create unrestricted authority over subjects;
+- organization status is not a subject-value score.
+
+### Permission
+Required: permission_id, schema_version, subject_ref, actor_ref, purpose, scope, basis, granted_at, expires_at, status, provenance_ref.
+Constraints:
+- permission is purpose-bound and scope-bound;
+- expiry/revocation are explicit;
+- technical access is not equivalent to permission;
+- permission cannot silently broaden through federation.
+
+### Dispute
+Required: dispute_id, schema_version, subject_ref, object_ref, opened_at, status, grounds, evidence_refs, resolution_ref, provenance_ref.
+Constraints:
+- opening a dispute does not establish the disputed claim as true or false;
+- disputed evidence remains distinguishable from verified evidence;
+- resolution is separately attributable and auditable.
+
+### Support
+Required: support_id, schema_version, subject_ref, program_ref, purpose, eligibility_basis, status, started_at, ended_at, provenance_ref.
+Constraints:
+- support eligibility is contextual;
+- support status is not a reputation score;
+- support systems cannot silently become disciplinary systems.
+
+### Resource
+Required: resource_id, schema_version, owner_ref, type, availability, access_policy_ref, provenance_ref, created_at, updated_at.
+Constraints:
+- resource ownership does not imply authority over unrelated subjects;
+- access follows explicit policy;
+- availability and access permission remain separate concepts.
+
+### Relation
+Required: relation_id, schema_version, source_ref, target_ref, relation_type, context, validity, provenance_ref, created_at, updated_at.
+Constraints:
+- a relation is contextual evidence of a connection, not a value judgment;
+- relation validity may expire;
+- derived relations must retain derivation provenance.
+
+## Extended schema review gate
+
+The same review requirements apply to these six entities. Changes affecting authority, purpose, scope, privacy, subject control, provenance, lifecycle or impact classification require architectural review.
+
+The extended entities do not alter the nine-object core contract and must remain interoperable with Event, State, Decision, Action, Policy and Audit.
