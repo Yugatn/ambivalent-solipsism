@@ -3,6 +3,7 @@ pub mod clock;
 pub mod errors;
 pub mod favorite;
 pub mod feed;
+pub mod hidden_archive;
 pub mod ids;
 pub mod message;
 pub mod operation;
