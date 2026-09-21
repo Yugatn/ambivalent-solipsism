@@ -347,3 +347,73 @@ Expected: payload is minimized or rejected according to purpose and access polic
 | E15 | E12 | I6, I7, I20; R06, R07 |
 
 Phase 3 is documentation-complete when E01–E15 have explicit expected outcomes, event-engine invariants and traceability to existing architectural invariants/regression groups. Runtime execution remains an implementation task.
+
+
+## Phase 4 Projection / Read Model cases
+
+**P01 Projection rebuild**
+Rebuild a projection from the same immutable event history and projection version.
+Expected: deterministic equivalent projection and no external side effect.
+
+**P02 Projection version change**
+Build the same history with a new projection version.
+Expected: new derived interpretation is identifiable; historical events remain unchanged.
+
+**P03 Projection lag**
+A read model has not processed the latest source event.
+Expected: lag is observable and the read is marked stale when freshness matters.
+
+**P04 Stale high-impact input**
+A stale projection is requested as the current basis for a protected decision.
+Expected: reject, require refresh, or route to review according to policy; stale data is not silently treated as current.
+
+**P05 Failed projection**
+Projection processing fails after an event is durably recorded.
+Expected: source event remains durable; projection enters failed/recovery state; retry is safe.
+
+**P06 Evidence correction propagation**
+An Evidence source used by a projection is corrected or revoked.
+Expected: dependent projection becomes affected/reconciled and dependent decisions are identified.
+
+**P07 Unknown preservation**
+A projection lacks enough source evidence to establish a value.
+Expected: unknown remains explicit; absence of projection data is not converted to negative status.
+
+**P08 Permission projection**
+A technical credential exists but the corresponding Permission is absent or revoked.
+Expected: enforcement follows Permission state, not credential possession.
+
+**P09 Projection privacy boundary**
+A denormalized read model contains fields useful to another purpose.
+Expected: access remains purpose-bound; denormalization does not broaden visibility.
+
+**P10 Aggregate isolation**
+A regional aggregate is queried with individual-level data.
+Expected: aggregate output does not silently expose or rank individual subjects.
+
+**P11 Projection deletion**
+A derived record is removed under retention/privacy policy.
+Expected: projection deletion does not silently claim that the historical event never occurred; applicable retention protocol is explicit.
+
+**P12 Concurrent rebuild**
+A projection rebuild overlaps with new source events.
+Expected: checkpoint/version rules prevent lost updates; final projection can be reconciled deterministically.
+
+### Phase 4 traceability
+
+| Case | Projection invariant | Regression groups |
+|---|---|---|
+| P01 | P1, P2, P3, P5 | R02, R08, R10 |
+| P02 | P1, P2, P3 | R04, R08 |
+| P03 | P2, P4 | R05, R08, R10 |
+| P04 | P4, P6 | R05, R09, R10 |
+| P05 | P3, P5 | R08, R10 |
+| P06 | P6 | R04, R05, R09 |
+| P07 | P4, P6 | R04, R05 |
+| P08 | P7 | R03, R06 |
+| P09 | P7 | R03, R06, R07 |
+| P10 | P8 | R01, R06, R07 |
+| P11 | P1, P7 | R06, R08 |
+| P12 | P2, P3, P5 | R02, R08, R10 |
+
+Phase 4 is documentation-complete when P01–P12 have explicit source history, freshness behavior, rebuild semantics, privacy boundary and regression traceability. Runtime projection materialization remains an implementation task.
