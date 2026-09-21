@@ -194,3 +194,13 @@
 - [Тестовые сценарии](test-scenarios.md)
 
 Формальный контур определяет события, сущности, политики доступа и проверяемые сценарии, связывая философские ограничения СТСети с исполнимой архитектурой.
+
+
+## 25 · Reconciliation, Human Review и Audit
+
+- [Граф зависимостей и reconciliation](reconciliation-graph.md)
+- [Human Review](human-review.md)
+- [Audit и наблюдаемость](audit-and-observability.md)
+- [Архитектурный review](architecture-review.md)
+
+Этот слой связывает provenance, policy decisions и исправления: ошибка в исходных данных может быть прослежена до зависимых решений, а высокоэффектные действия получают формализованный пересмотр.
