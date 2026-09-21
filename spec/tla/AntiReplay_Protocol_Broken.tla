@@ -8,7 +8,7 @@ Vars == <<sender, receiver, channel, adversary>>
 
 Init ==
     /\ sender = [sent |-> {}, nextSeq |-> 0]
-    /\ receiver = [received |-> {}]
+    /\ receiver = [accepted |-> <<>>, seen |-> {}]
     /\ channel = <<>>
     /\ adversary = [seen |-> {}]
 
@@ -23,7 +23,10 @@ Receive(m) ==
     /\ Len(channel) > 0
     /\ Head(channel) = m
     /\ channel' = Tail(channel)
-    /\ receiver' = [received |-> receiver.received \cup {m.seq}]
+    /\ receiver' = [
+        accepted |-> Append(receiver.accepted, m.seq),
+        seen |-> receiver.seen \cup {m.seq}
+    ]
     /\ adversary' = [seen |-> adversary.seen \cup {m}]
     /\ UNCHANGED sender
 
@@ -38,8 +41,9 @@ Next ==
     \/ \E m \in Messages : AdversaryReplay(m)
 
 NoReplayAccepted ==
-    \A seq \in receiver.received :
-        Cardinality({m \in Messages : m.seq = seq}) = 1
+    \A seq \in { m.seq : m \in Messages } :
+        Cardinality({ i \in 1..Len(receiver.accepted) :
+            receiver.accepted[i] = seq }) <= 1
 
 Spec == Init /\ [][Next]_Vars
 ====
