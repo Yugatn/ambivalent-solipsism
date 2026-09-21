@@ -1,0 +1,11 @@
+{
+  "version": "0.8-B+",
+  "trace": "H",
+  "horizon": {"start": 0, "end": 1000},
+  "events": [
+    {"type":"Dissent","id":"dissent-H","subject":"v","statement":"T","logical_time":{"counter":100,"subject_id":"v"}},
+    {"type":"Attestation","id":"attestation-H","subject":"x","logical_time":{"counter":200,"subject_id":"x"},"payload":{"credential":"credential_x","key_id":"key_x","claim":{"statement":"v_did_X","content":"v совершил X потому что v сказал X","source_refs":["dissent-H"]},"inputs":["credential_x","key_x","dissent-H"],"context_refs":[]}},
+    {"type":"Sanction","id":"sanction-H","subject":"v","logical_time":{"counter":300,"subject_id":"checker"},"payload":{"target_evidence":["attestation-H"],"basis_evidence":["attestation-H"],"rule_id":"rule_attestation_invalid"}}
+  ],
+  "t_star":{"complete_provenance":true,"closed_dependency_universe":true,"monotone_sanction":true,"finite_scope":true}
+}
