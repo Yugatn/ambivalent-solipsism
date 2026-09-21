@@ -1,0 +1,56 @@
+name: Eugene Messenger Assurance
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  assurance:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run assurance unit tests
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          pytest -q tests/assurance
+
+      - name: Validate TLA+ source presence
+        run: |
+          test -s theories/AssuranceState.tla
+
+      - name: Assurance negative control
+        run: |
+          python - <<'PY'
+          import hashlib, json, subprocess, sys, tempfile
+          from pathlib import Path
+
+          manifest = {"claim_id":"AntiReplay","result":"pass","source_revision":"git:ci"}
+          manifest["manifest_hash"] = "sha256:" + hashlib.sha256(
+              json.dumps(manifest, sort_keys=True, separators=(",", ":")).encode()
+          ).hexdigest()
+
+          with tempfile.TemporaryDirectory() as d:
+              p = Path(d) / "manifest.json"
+              p.write_text(json.dumps(manifest), encoding="utf-8")
+              assert subprocess.run(
+                  [sys.executable, "scripts/assurance/verify_manifest.py", str(p)]
+              ).returncode == 0
+
+              manifest["result"] = "tampered"
+              p.write_text(json.dumps(manifest), encoding="utf-8")
+              assert subprocess.run(
+                  [sys.executable, "scripts/assurance/verify_manifest.py", str(p)]
+              ).returncode != 0
+          PY
