@@ -328,3 +328,35 @@ F01–F10 are cross-checked against G1–G8. The gate ensures federation remains
 8. F01–F10 have defined outcomes and G1–G8 traceability.
 
 **Architectural Phase 9 gate: PASS.** Runtime transport, cryptographic verification and compatibility execution are not claimed.
+
+
+## Phase 10 Release Gate: Formal Verification
+
+FV01–FV12 are checked against G1–G8. The gate distinguishes formal-model properties from implementation certification and requires explicit proof scope and versioned proof obligations.
+
+| Phase 10 case | G1 | G2 | G3 | G4 | G5 | G6 | G7 | G8 |
+|---|---|---|---|---|---|---|---|---|
+| FV01 Unauthorized transition | ✓ |  | ✓ | ✓ |  |  |  | ✓ |
+| FV02 Decision-to-Action bypass | ✓ | ✓ |  | ✓ |  | ✓ |  | ✓ |
+| FV03 Duplicate event effect | ✓ | ✓ |  | ✓ |  |  |  | ✓ |
+| FV04 Unknown preservation |  |  |  | ✓ |  | ✓ | ✓ | ✓ |
+| FV05 High-impact review bypass | ✓ |  |  |  |  | ✓ |  | ✓ |
+| FV06 Authority from data/federation | ✓ | ✓ | ✓ |  | ✓ | ✓ |  | ✓ |
+| FV07 Historical overwrite | ✓ | ✓ |  | ✓ | ✓ |  | ✓ | ✓ |
+| FV08 Exit integrity |  | ✓ |  | ✓ |  | ✓ | ✓ | ✓ |
+| FV09 Bounded recovery | ✓ | ✓ |  | ✓ |  |  | ✓ | ✓ |
+| FV10 Counterexample traceability | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| FV11 Model-version change | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| FV12 Abstraction boundary | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+### Phase 10 gate criteria
+
+1. The formal proof scope and abstraction boundary are explicit.
+2. Critical safety properties are represented as machine-checkable obligations.
+3. Unknown and required nondeterminism are not erased for model convenience.
+4. Counterexamples are reproducible and traceable.
+5. Formal model/version changes invalidate affected proof obligations until rechecked.
+6. Formal verification is not represented as runtime or production certification.
+7. FV01–FV12 have defined outcomes and G1–G8 traceability.
+
+**Architectural Phase 10 gate: PASS.** This closes the documentation/formalization contract layer; actual model checking and executable conformance remain implementation work.
