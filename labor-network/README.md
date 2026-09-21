@@ -278,3 +278,25 @@
 - [Human Review](policy/review.md)
 
 Policy отделён от Domain: сущности описывают предметную область, а Policy определяет допустимые действия в конкретном контексте.
+
+
+## 32 · Event Layer
+
+- [Event](event/README.md)
+- [Lifecycle](event/lifecycle.md)
+- [Types](event/types.md)
+- [Idempotency](event/idempotency.md)
+
+## 33 · Evidence Layer
+
+- [Evidence](evidence/README.md)
+- [Provenance](evidence/provenance.md)
+- [Verification](evidence/verification.md)
+- [Challenge](evidence/challenge.md)
+
+## 34 · Decision Layer
+
+- [Decision](decision/README.md)
+- [Lifecycle](decision/lifecycle.md)
+- [Impact Classification](decision/impact.md)
+- [Reconciliation](decision/reconciliation.md)
