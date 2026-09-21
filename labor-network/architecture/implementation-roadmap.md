@@ -146,3 +146,12 @@ Phase 4 Projection / Read Model is now architecturally closed at the documentati
 The next architectural layer is Provenance / Dependency Graph: making explicit which Evidence, Events, Decisions, Policies and projections depend on one another, so correction and revocation can propagate without hidden dependencies.
 
 Runtime materialization, executable tests and production certification remain implementation work.
+
+
+## Phase 6 checkpoint
+
+Phase 6, Policy Engine / Impact Evaluation, is architecturally closed on this branch. The policy contract, structured impact classification, Q01–Q12 scenarios and G1–G8 release-gate cross-check are documented. The gate explicitly preserves separation between policy evaluation, normative Decision and executed Action; treats uncertainty as unresolved rather than as a negative subject outcome; requires human review for high-impact operations; and preserves policy-versioned history.
+
+This checkpoint does not claim runtime certification, executable conformance, deployment readiness or production safety. Those remain implementation and integration work.
+
+Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation.
