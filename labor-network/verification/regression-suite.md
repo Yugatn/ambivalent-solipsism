@@ -202,3 +202,36 @@ Phase 4 release-gate cross-check is documentation-complete for P01–P12. Runtim
 6. Changes to dependency semantics that affect authority, privacy or impact require architectural review.
 
 Phase 5 release-gate cross-check is documentation-complete for V01–V12. Runtime graph execution remains unclaimed.
+
+
+## Phase 6 Release Gate: Policy Engine / Impact Evaluation
+
+Q01–Q12 are cross-checked against the existing G1–G8 structural gates. These gates validate architectural separation and safety properties; they do not constitute runtime certification.
+
+| Phase 6 case | G1 | G2 | G3 | G4 | G5 | G6 | G7 | G8 |
+|---|---|---|---|---|---|---|---|---|
+| Q01 Policy versioning |  |  |  | ✓ |  |  |  | ✓ |
+| Q02 Evidence insufficiency |  |  |  | ✓ |  | ✓ | ✓ | ✓ |
+| Q03 Impact escalation | ✓ |  |  |  |  | ✓ |  | ✓ |
+| Q04 Subject-value scoring | ✓ | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ |
+| Q05 Permission vs authority | ✓ |  | ✓ |  | ✓ | ✓ |  | ✓ |
+| Q06 Evidence vs execution | ✓ |  |  | ✓ |  | ✓ |  | ✓ |
+| Q07 Stale projection |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Q08 Policy conflict | ✓ |  |  | ✓ |  | ✓ | ✓ | ✓ |
+| Q09 High-impact automation | ✓ | ✓ |  |  | ✓ | ✓ | ✓ | ✓ |
+| Q10 Explanation minimization |  | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ |
+| Q11 Policy change propagation |  |  |  | ✓ |  | ✓ | ✓ | ✓ |
+| Q12 Recovery/appeal | ✓ |  |  | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+### Phase 6 gate criteria
+
+1. Policy evaluation remains separate from Action execution.
+2. Impact classification never becomes a subject-value score.
+3. High-impact operations retain human review.
+4. UNKNOWN/REVIEW_REQUIRED is preserved when evidence, provenance or policy resolution is insufficient.
+5. Policy versions and historical outcomes remain reconstructable.
+6. Technical access, Projection visibility or provenance visibility cannot create normative authority.
+7. Explanations remain purpose-bound and privacy-minimized.
+8. Q01–Q12 have explicit expected outcomes and G1–G8 traceability.
+
+**Architectural Phase 6 gate: PASS.** Runtime implementation and executable conformance testing are not claimed by this documentation gate.
