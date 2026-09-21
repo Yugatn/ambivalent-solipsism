@@ -49,3 +49,16 @@ The reference runtime now persists versioned Decision records and purpose-bound 
 | Purpose-bound audit record | covered | not certified |
 | Durable authorization/policy enforcement | partial | not certified |
 | API/network boundary | not yet implemented | not certified |
+
+
+## Durable authorization checkpoint
+
+The reference runtime now requires an explicit persisted Decision for protected execution. Authorization is denied when the Decision is missing, denied, bound to another policy version, or still requires review.
+
+| Boundary | Reference status | Production status |
+|---|---|---|
+| Persisted Decision required for execution | covered | not certified |
+| Policy-version match | covered | not certified |
+| Review completion guard | covered | not certified |
+| Denied Decision blocks execution | covered | not certified |
+| API/network authorization boundary | not yet implemented | not certified |
