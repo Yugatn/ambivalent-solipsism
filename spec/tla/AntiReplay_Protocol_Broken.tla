@@ -26,7 +26,7 @@ Replay(m) ==
 
 Receive(m) ==
     /\ pending = m
-    /\ pending' = -1
+    /\ pending' = 2
     /\ acceptedCount' = [acceptedCount EXCEPT ![m] = @ + 1]
     /\ UNCHANGED seen
 
