@@ -214,3 +214,13 @@
 - [Формальная верификация](formal-verification.md)
 
 Этот слой превращает архитектурные инварианты в допустимые состояния, переходы, защитные проверки и формально проверяемые свойства.
+
+
+## 27 · Decision Lifecycle, Subject Control и Roadmap
+
+- [Жизненный цикл решения](decision-lifecycle.md)
+- [Согласованность и конкурирующие изменения](consistency-model.md)
+- [Субъектный контроль](subject-control.md)
+- [Дорожная карта реализации](implementation-roadmap.md)
+
+Новый слой связывает state machines, policy decisions, human review, субъектный контроль и последовательную реализацию прототипа.
