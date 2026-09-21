@@ -91,3 +91,38 @@ The Event Engine contract is cross-checked against the canonical Entity × Event
 The matrix is architecturally compatible with Phase 3 when each protected event has an explicit actor/source, guard, result/state or validity effect, invariant, audit requirement, recovery path, idempotency behavior and ordering/causality requirement where applicable.
 
 This cross-check is documentation-level. Runtime Event Engine execution remains an implementation task.
+
+
+## Phase 4 Projection × Entity × Event cross-check
+
+Projection is a derived read layer. The following canonical projection families are permitted:
+
+| Projection family | Primary entities/events | Freshness sensitivity | Rebuild basis | Protected use |
+|---|---|---|---|---|
+| Subject current profile | Subject, Evidence, Relation | high for access/decision contexts | subject-scoped event history | profile display; never subject replacement |
+| Opportunity view | Opportunity, Organization, Resource | medium/high | opportunity events | discovery and matching |
+| Engagement status | Engagement, Decision, Action | high | engagement and decision/action history | current workflow state |
+| Evidence validity view | Evidence, verification/revocation events | high | evidence lineage | decision input |
+| Decision status | Decision, PolicyDecision, Review events | high | decision lineage | explainable decision display |
+| Permission view | Permission, consent/revocation events | high | permission history | access enforcement |
+| Dispute view | Dispute, Evidence, Review events | high | dispute lineage | review workflow |
+| Support view | Support, eligibility/approval events | medium/high | support history | service coordination |
+| Resource availability | Resource, allocation/release events | medium | resource history | allocation/discovery |
+| Regional aggregate | de-identified/aggregated domain events | declared aggregate freshness | aggregate event stream | regional analytics; not individual ranking |
+| Audit/observability view | AuditRecord and processing metadata | operational | append-only audit history | integrity and operations |
+
+### Projection safety rules
+
+1. A projection row MUST retain references sufficient to identify its source event position and projection version.
+2. A projection MUST distinguish `unknown`, `stale`, `rebuilding` and `current` where freshness affects interpretation.
+3. A projection may summarize Evidence but MUST NOT convert an unverified or expired claim into verified truth.
+4. A projection may summarize Decision but MUST NOT create Action authority.
+5. A Permission projection is an enforcement view, not the authority that created the Permission.
+6. Regional aggregates MUST not expose a hidden individual ranking dimension merely because the underlying events are available.
+7. When source correction affects a protected projection, the projection enters affected/reconciliation status before dependent high-impact decisions are treated as current.
+8. Projection rebuilds MUST be idempotent and side-effect free.
+9. Deletion from a projection for privacy/retention reasons MUST NOT be represented as deletion of the underlying historical event unless a separate lawful retention protocol explicitly governs that history.
+
+### Phase 4 matrix closure
+
+Every protected projection family must have a declared source-event set, freshness class, rebuild basis, access scope, correction behavior and protected-use boundary before implementation.
