@@ -31,6 +31,21 @@ ExplicitGlobalMetric(P)</div>
   BlindSpots
 }</div>
 <p>Наличие evidence не означает достаточного покрытия. Частично покрытый scope не может маркироваться как полностью проверенный.</p>
+<h2>01B. Opposable and Provable Invariants</h2>
+<p>Vertical Slice v0.5 показал, что не все safety-инварианты имеют одинаковую epistemic форму. Это не иерархия ценности, а различие проверяемости.</p>
+<div class="formula">Opposable Invariant:
+  bounded evidence can expose violation,
+  but absence of counterexample does not establish universal satisfaction.
+
+Provable Invariant:
+  a declared bounded scope may admit a proof or exhaustive verification
+  under explicit assumptions.
+
+Classification ≠ Safety Ranking</div>
+<table><tr><th>Class</th><th>Допустимый claim</th><th>Ограничение</th></tr>
+<tr><td>Opposable</td><td>VIOLATION обнаружена в заявленном scope или UNRESOLVED.</td><td>Отсутствие counterexample не является PASS без отдельного proof basis.</td></tr>
+<tr><td>Provable</td><td>PROVEN/PASS в явно bounded scope и assumptions.</td><td>Не переносится автоматически за пределы scope.</td></tr></table>
+<p>Предварительная классификация является исследовательской гипотезой и подлежит отдельной проверке для каждого invariant. Она не меняет нормативный статус инварианта.</p>
 <h2>01. Формальный язык и семантика</h2><p>Инвариант рассматривается как предикат над трассой протокола, а не только над одним состоянием.</p><div class="formula">i : Trace(Protocol) → {true, false, unresolved}</div><p>Минимальный LTL-подобный язык:</p><div class="formula">φ ::= true | false | p | ¬φ | φ ∧ φ | φ ∨ φ | G φ | F φ | X φ | φ U φ | ∀s:φ | ∃s:φ</div><p><code>G</code> означает «всегда», <code>F</code> — «когда-либо», <code>X</code> — «в следующем состоянии», <code>U</code> — «до тех пор, пока». Это исследовательский язык, а не утверждение о выбранном формальном верификаторе.</p><h3>Preserve()</h3><div class="formula">Preserve(i,U,T) =
   ∀t ∈ T : i(Trace_U,t) ≠ false</div><p><code>unresolved</code> не считается доказанным нарушением, но запрещает делать вид, что безопасность установлена. При unresolved применяются ограничения по необратимости, автоматизации и сроку действия решения.</p><h3>Expressiveness Boundary</h3><p>Не все свойства, особенно I-5, выразимы в простом LTL. Частичная формализация допустима, если её границы явно указаны. Неформализованное утверждение не должно маркироваться как machine-checked.</p><h2>02. Реестр I-1 … I-12</h2><table><tr><th>ID</th><th>Инвариант</th><th>Минимальное формальное ядро</th><th>Критерий нарушения</th></tr><tr><td>I-1</td><td>Dissent</td><td><code>G(Dissent(s,d) → ¬SanctionForDissent(s,d))</code></td><td>Санкция вызвана самим фактом несогласия.</td></tr><tr><td>I-2</td><td>Identity</td><td><code>G(NotTransferable(IdentityRoot))</code></td><td>Identity Root отчуждается как актив или залог.</td></tr><tr><td>I-3</td><td>Epistemic Non-Reduction</td><td><code>G(Finalized(x) → ResidualScope(x) ≠ ∅)</code></td><td>Finality объявляется доказательством полного знания.</td></tr><tr><td>I-4</td><td>Truth Layers</td><td>Раздельные predicates для protocol, reality, moral, subjective и collective claims.</td><td>Один слой автоматически объявляется другим.</td></tr><tr><td>I-5</td><td>No Total Metric</td><td>Требует более выразительной спецификации; scope, decay и contestability обязательны.</td><td>Единый score становится универсальным основанием ценности или всех прав.</td></tr><tr><td>I-6</td><td>Exit</td><td><code>G(Exit ≠ AttackByDefault)</code></td><td>Выход сам по себе считается нарушением.</td></tr><tr><td>I-7</td><td>Portability</td><td><code>Portable(SelfState) ∧ ¬Portable(DelegatedAuthority)</code></td><td>Чужая authority или коллективное состояние присваивается как личное.</td></tr><tr><td>I-8</td><td>Upgrade Accountability</td><td><code>Upgrade → ConstitutionalCheck</code></td><td>Правила изменены без проверяемого transition.</td></tr><tr><td>I-9</td><td>Minimum Knowledge</td><td><code>RequiredKnowledge(action) ≤ NecessaryKnowledge(action)</code></td><td>Для действия собирается или удерживается избыточная authority-relevant информация.</td></tr><tr><td>I-10</td><td>Irreversibility</td><td><code>Irreversibility ↑ ⇒ Evidence ↑, Automation ↓</code></td><td>Необратимое действие получает менее строгую проверку, чем обратимое.</td></tr><tr><td>I-11</td><td>Residual</td><td><code>Finality(state) ⇏ Residual = ∅</code></td><td>Финализация используется для утверждения исчерпанности знания.</td></tr><tr><td>I-12</td><td>Trust Composition</td><td><code>Trust(A,B) ∧ Trust(B,C) ⇏ Trust(A,C)</code></td><td>Транзитивность доверия предполагается без явного proof/assumption.</td></tr></table><h2>03. Temporal Consistency</h2><p>Каждый инвариант должен объявлять горизонт действия и допустимое время неопределённости.</p><div class="formula">Hold(i,T) = ∀t∈T : i(t)=true
 
@@ -73,7 +88,36 @@ Yugatneo
 Consensus, ledger, epistemic layer, ACN-VM, economy, governance
 
 Constitutional Layer
-Ограничение эволюции Yugatneo</div><p>Constitutional layer не определяет абсолютную истину. Он определяет границы, внутри которых протокол может изменяться, сохраняя заявленную архитектурную идентичность.</p><h2>11. Open Problems</h2><ul><li>Формальная семантика I-5 и проверка explicit, distributed и emergent global ranking.</li><li>Разделение Truth, Applicability и Decidability.</li><li>Формальная модель Evidence Coverage.</li><li>Условия legitimate reversion и bounded exit delay.</li><li>Корректная дефиниция InvariantDistance.</li><li>Доказательство finite-depth checker architecture.</li><li>Композиция constitutional checks между trust domains.</li><li>Защита от poisoning evidence и capture checker'а.</li><li>Формальная модель recovery после нарушения.</li><li>Связь LTL-подобного языка с machine-checked verification.</li><li>Определение допустимых emergency amendments.</li><li>Формальная семантика Evidence Arbitration.</li><li>Граница Meta-Check без скрытой authority hierarchy.</li><li>Формат Boundary Statement для всех существенных слоёв.</li></ul><h2>12. Что пока нельзя утверждать</h2><div class="note"><ul><li>Нельзя утверждать, что инварианты уже неизменяемы.</li><li>Нельзя утверждать, что checker не может быть захвачен.</li><li>Нельзя утверждать, что I-5 защищён от distributed или emergent global ranking.</li><li>Нельзя утверждать, что I-13 и I-14 уже имеют machine-checked semantics.</li><li>Нельзя утверждать, что erosion detection решена.</li><li>Нельзя утверждать, что formal language достаточен для всей конституции.</li><li>Нельзя утверждать production safety до reference implementation и adversarial validation.</li><li>Нельзя утверждать, что Evidence Arbitration исключает скрытую иерархию.</li><li>Нельзя утверждать, что Meta-Check невозможно превратить в новый центр authority.</li></ul></div>
+Ограничение эволюции Yugatneo</div><p>Constitutional layer не определяет абсолютную истину. Он определяет границы, внутри которых протокол может изменяться, сохраняя заявленную архитектурную идентичность.</p><h2>12. Vertical Slice v0.5 · I-1</h2>
+<p>I-1 прошёл первый vertical slice от natural-language refinement до reference evaluator sketch, adversarial traces и regression test. Slice не считается полной верификацией.</p>
+<div class="formula">Natural Language
+→ Refinement
+→ Concrete Syntax
+→ Three-Axis Evaluation
+→ Reference Evaluator
+→ Adversarial Trace
+→ Regression Test</div>
+<h3>I-1 refinement</h3>
+<div class="formula">I-1a: Dissent не наказывается напрямую.
+
+I-1b: Sanction допустима только при independently established
+attack evidence, отделимом от самого dissent.</div>
+<h3>Counterfactual Independence</h3>
+<p><code>Independent(e,d)</code> требует установить, сохранило бы evidence <code>e</code> валидность при отсутствии dissent <code>d</code>. Возможные исследовательские методы: provenance tracing, causal graph analysis, bounded counterfactual logic и AAS counterfactual simulation.</p>
+<p>До определения этой функции I-1b остаётся частично проверяемым.</p>
+<h3>Vertical Slice outcomes</h3>
+<table><tr><th>Trace</th><th>Результат</th></tr>
+<tr><td>Прямая санкция за dissent</td><td>VIOLATION</td></tr>
+<tr><td>Evidence зависит от dissent, затем sanction</td><td>VIOLATION</td></tr>
+<tr><td>Независимо полученное attack evidence</td><td>UNRESOLVED без полного coverage; не нарушение I-1</td></tr>
+<tr><td>Неполный provenance</td><td>UNRESOLVED / UNDECIDABLE</td></tr>
+<tr><td>Нет dissent в заявленном scope</td><td>OUT_OF_SCOPE / STALE, не PASS</td></tr></table>
+<p>Vertical slice не даёт оснований утверждать, что I-1 verified. Он показывает, что спецификация допускает исполняемую проверку и выявляет конкретные незакрытые зависимости.</p>
+<h3>Structural hypothesis</h3>
+<p>Для opposable safety-инвариантов отсутствие найденного нарушения следует трактовать как отсутствие counterexample в покрытом scope, а не как универсальное доказательство безопасности. Это исследовательская гипотеза до формального обоснования класса инвариантов.</p>
+<h3>What Cannot Be Claimed</h3>
+<ul><li>I-1 не считается verified.</li><li><code>Independent(e,d)</code> не считается решённым в общем случае.</li><li>Regression test не доказывает защиту всего counterexample class.</li><li>Opposable/Provable не является завершённой классификацией всех инвариантов.</li></ul>
+<h2>11. Open Problems</h2><ul><li>Counterfactual Independence для I-1b.</li><li>Формальная семантика I-5 и проверка explicit, distributed и emergent global ranking.</li><li>Разделение Truth, Applicability и Decidability.</li><li>Формальная модель Evidence Coverage.</li><li>Условия legitimate reversion и bounded exit delay.</li><li>Корректная дефиниция InvariantDistance.</li><li>Доказательство finite-depth checker architecture.</li><li>Композиция constitutional checks между trust domains.</li><li>Защита от poisoning evidence и capture checker'а.</li><li>Формальная модель recovery после нарушения.</li><li>Связь LTL-подобного языка с machine-checked verification.</li><li>Определение допустимых emergency amendments.</li><li>Формальная семантика Evidence Arbitration.</li><li>Граница Meta-Check без скрытой authority hierarchy.</li><li>Формат Boundary Statement для всех существенных слоёв.</li></ul><h2>12. Что пока нельзя утверждать</h2><div class="note"><ul><li>Нельзя утверждать, что инварианты уже неизменяемы.</li><li>Нельзя утверждать, что checker не может быть захвачен.</li><li>Нельзя утверждать, что I-5 защищён от distributed или emergent global ranking.</li><li>Нельзя утверждать, что I-13 и I-14 уже имеют machine-checked semantics.</li><li>Нельзя утверждать, что erosion detection решена.</li><li>Нельзя утверждать, что formal language достаточен для всей конституции.</li><li>Нельзя утверждать production safety до reference implementation и adversarial validation.</li><li>Нельзя утверждать, что Evidence Arbitration исключает скрытую иерархию.</li><li>Нельзя утверждать, что Meta-Check невозможно превратить в новый центр authority.</li></ul></div>
 <h2>14. Evidence Arbitration</h2>
 <p>Разные evidence providers не образуют заранее заданную иерархию. Их результаты могут быть совместимыми, частично покрывающими друг друга или противоречащими.</p>
 <div class="formula">Arbitration(e₁,e₂) ∈ {
