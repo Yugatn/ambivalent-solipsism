@@ -25,12 +25,16 @@ run_model Control_AlwaysTrue.tla Control_AlwaysTrue.cfg pass "$EVIDENCE_DIR/cont
 run_model Control_AlwaysFalse.tla Control_AlwaysFalse.cfg counterexample "$EVIDENCE_DIR/control_false.log" AlwaysFalse
 run_model AntiReplay_Broken.tla AntiReplay_Broken.cfg counterexample "$EVIDENCE_DIR/broken.log" NoReplayAccepted
 sha256sum "$EVIDENCE_DIR"/*.log > "$EVIDENCE_DIR/checksums.sha256"
+TLA_JAR_SHA256="$(sha256sum "$TLA2TOOLS_JAR" | cut -d" " -f1)"
+JAVA_VERSION="$(java -version 2>&1 | head -n 1)"
 cat > "$EVIDENCE_DIR/manifest.json" <<EOF
 {
   "schema_version": 1,
   "claim_id": "AntiReplay",
   "source_revision": "${GITHUB_SHA:-unknown}",
   "tool": "TLA+ TLC",
+  "java_version": "${JAVA_VERSION}",
+  "tla2tools_sha256": "${TLA_JAR_SHA256}",
   "positive_verdict": "PASS",
   "negative_verdict": "EXPECTED_COUNTEREXAMPLE",
   "evidence_files": ["positive.log", "broken.log", "checksums.sha256"]
