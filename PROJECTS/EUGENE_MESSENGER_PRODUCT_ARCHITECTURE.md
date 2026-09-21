@@ -242,3 +242,21 @@ The following targets are intentionally not promoted to `model_checked`:
 `FeedDirectionInvariant`, `FavoriteStateAtomicity`, `FavoriteFolderSymmetry`, `ArchiveFavoriteOrthogonality`, `ArchiveUnlockRateLimit`, `HiddenArchiveSecretNonDisclosure`, and `ProtocolOrderingIndependentOfUI`.
 
 Each requires executable tests and, where appropriate, a TLA+ model before a stronger assurance status is allowed.
+
+
+## 11. Executable domain baseline
+
+The product model is now backed by an independent Rust domain prototype under `eugene-messenger/core/domain`.
+
+The baseline defines:
+
+- `FavoriteState = None | Left | Right`;
+- `FavoriteOperation` with `operation_id`, `device_id` and HLC timestamp;
+- deterministic operation ordering;
+- duplicate-operation idempotence;
+- normalized swipe distance with a 30% default threshold and 500 ms maximum duration;
+- independent `ArchiveState`;
+- process-local, non-serializable `UnlockSession`;
+- local hidden-archive rate limiting.
+
+These are implementation artifacts, not claims of completed formal verification. The Claim Registry remains at `status: specified`, `level: 2` until executable evidence and formal models are actually checked.
