@@ -1,6 +1,11 @@
-schema_version: pipeline-controls/v1
+schema_version: pipeline-controls/v2
 
 controls:
+  - id: Control_AlwaysTrue
+    type: pipeline_control
+    statement: A model with an invariant that is always true MUST produce PASS.
+    expected_result: pass
+
   - id: Control_AlwaysFalse
     type: pipeline_control
     statement: A deliberately broken model MUST produce an expected counterexample.
