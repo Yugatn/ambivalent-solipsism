@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Eugene Messenger Trace",
+  "type": "object",
+  "required": ["schema_version", "claim_id", "claim_hash", "model_version", "run_id", "source_revision", "events"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "claim_id": {"type": "string"},
+    "claim_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "model_version": {"type": "string"},
+    "run_id": {"type": "string"},
+    "source_revision": {"type": "string"},
+    "events": {"type": "array"}
+  }
+}
