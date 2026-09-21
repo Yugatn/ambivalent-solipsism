@@ -18,7 +18,7 @@
 
 ## Правило перехода
 
-`LEGACY` → `COPIED` → `LINKED` → `VERIFIED` → `DUPLICATE_CANDIDATE` → `DEPRECATED` → `REMOVED`
+`LEGACY`, затем `COPIED`, затем `LINKED`, затем `VERIFIED`, затем `DUPLICATE_CANDIDATE`, затем `DEPRECATED`, и только после этого `REMOVED`.
 
 Переход через несколько состояний за один шаг не допускается.
 
