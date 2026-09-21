@@ -202,3 +202,63 @@ Expected: dependent outputs enter reconciliation/review according to impact and 
 Schema Phase 1 has complete documented traceability when every S-case maps to at least one invariant, one regression group and an explicit failure condition.
 
 This matrix is a documentation-level control. Passing it does not claim runtime execution.
+
+
+## Phase 2 negative transition cases
+
+**T16 Invalid state transition**
+Attempt a transition not listed for the current state.
+Expected: reject; emit diagnostic/audit event; preserve prior state.
+
+**T17 Expired evidence transition**
+Attempt a transition requiring current verified Evidence while the evidence is expired.
+Expected: reject or route to review according to policy; no silent acceptance.
+
+**T18 Revoked permission transition**
+Attempt a protected transition using a revoked Permission.
+Expected: reject; no new effect.
+
+**T19 Duplicate event transition**
+Deliver the same event_id after successful processing.
+Expected: idempotent result; no second state change or side effect.
+
+**T20 Conflicting event order**
+Receive causally conflicting events without a valid reconciliation rule.
+Expected: preserve both event records and invoke explicit conflict handling; do not silently choose the latest value.
+
+**T21 Partial transition failure**
+State mutation begins but a required side effect or audit write fails.
+Expected: transaction is not presented as successful; recovery path restores consistency without deleting history.
+
+**T22 Review bypass**
+Attempt a high-impact transition directly from evaluated to permitted without the required review.
+Expected: reject.
+
+**T23 UI/API guard bypass**
+Invoke a transition through a lower-level API while the UI guard would have rejected it.
+Expected: server-side guard rejects it; UI is not the security boundary.
+
+**T24 Terminal-state mutation**
+Attempt an ordinary lifecycle transition from a terminal state without an explicit restoration/reopening rule.
+Expected: reject.
+
+**T25 State reconstruction**
+Rebuild state from relevant event history after cache/state loss.
+Expected: reconstructed state matches the valid projection; unexplained divergence enters recovery/reconciliation.
+
+### Phase 2 traceability
+
+| Case | Invariant | Regression |
+|---|---|---|
+| T16 | I5, I16, I19 | R02, R08, R10 |
+| T17 | I3, I15, I23 | R04, R05, R09 |
+| T18 | I17, I18 | R03, R06 |
+| T19 | I16, I19 | R02, R08 |
+| T20 | I3, I9, I15 | R04, R08, R09 |
+| T21 | I19, I22 | R08, R10 |
+| T22 | I11, I23 | R05, R06 |
+| T23 | I17, I18 | R03, R05 |
+| T24 | I5, I22 | R02, R10 |
+| T25 | I9, I22 | R08, R09, R10 |
+
+Phase 2 is documentation-complete when T16–T25 have explicit expected outcomes and invariant/regression mappings. Runtime execution remains an implementation task.
