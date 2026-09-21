@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yugatneo · Evidence Dependency Model v0.8</title>
+<style>
+body{margin:0;background:#050807;color:#d9ffe5;font:16px/1.68 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:1050px;margin:auto;padding:44px 22px}
+a{color:#8cffae;text-decoration:none}
+.nav{display:flex;gap:24px;margin-bottom:34px;font-size:13px;letter-spacing:.08em}
+.ey{color:#69d98c;font-size:12px;letter-spacing:.18em}
+h1{font-size:clamp(34px,6vw,64px);line-height:1.04;margin:12px 0}
+.lead{font-size:20px;color:#a9cdb2}
+h2{margin-top:52px;color:#8cffae}
+.formula,.note{margin:18px 0;padding:18px;border:1px solid #21452d;background:#071009}
+.formula{font-family:ui-monospace,SFMono-Regular,monospace;color:#baffc9;white-space:pre-wrap;overflow:auto}
+.note strong{color:#8cffae}
+table{width:100%;border-collapse:collapse;margin:20px 0}
+td,th{border:1px solid #21452d;padding:11px;text-align:left;vertical-align:top}
+th{color:#8cffae}
+li{margin:7px 0}
+footer{margin-top:60px;color:#62816b;font-size:12px}
+</style>
+</head>
+<body>
+<main>
+<div class="nav"><a href="./">YUGATNEO</a><a href="../">ГЛАВНОЕ МЕНЮ</a></div>
+<div class="ey">YUGATNEO / EPISTEMIC LAYER / v0.8</div>
+<h1>Evidence Dependency Model v0.8</h1>
+<p class="lead">Уточнение Counterfactual Independence для I-1b: зависимость evidence от dissent, validity semantics и фактическое основание санкции рассматриваются как отдельные отношения.</p>
+<div class="note"><strong>Статус.</strong> Исследовательская спецификация. v0.8 не заявляет полной доказанности модели, полноты пространства зависимостей или production readiness.</div>
+<h2>1. Основная идея</h2>
+<p>Structural, Generative, Semantic и Validity не являются взаимоисключающими классами. Они являются независимыми отношениями, которые могут одновременно выполняться.</p>
+<div class="formula">DependencyVector(e,d) = {
+  Structural,
+  Generative,
+  Semantic,
+  Validity
+}</div>
+<h2>2. No Free Validity</h2>
+<p>Evidence не получает статус VALID автоматически. Для каждого типа evidence требуется собственная validity rule и проверяемый witness.</p>
+<div class="formula">Evidence + Validity Rule + Preconditions + Witness = Validity Result</div>
+<p>Validity не равна Truth, Interpretation или Authority.</p>
+<h2>3. Mandatory Validity Dependency</h2>
+<div class="formula">Valid(e,P) = VALID
+AND
+Valid(e,P minus d) = INVALID
+AND
+DependencyWitness(e,d,P) = valid</div>
+<p>Если после удаления dissent результат становится UNKNOWN, это UNRESOLVED, а не доказанная зависимость.</p>
+<h2>4. Validity Certificate</h2>
+<div class="formula">ValidityCertificate = {
+  EvidenceID,
+  RuleID,
+  Preconditions,
+  Witnesses,
+  MandatoryDependencies,
+  OptionalDependencies,
+  Scope,
+  VerificationMethod,
+  Decidability
+}</div>
+<p>Validity certificate входит в dependency closure, поэтому скрытая зависимость через certificate не теряется.</p>
+<h2>5. Sanction Basis</h2>
+<div class="formula">SanctionBasis = {
+  SanctionID,
+  Subject,
+  EvidenceSet,
+  DecisionRule,
+  DecisionMaker,
+  Scope,
+  Timestamp,
+  Provenance
+}</div>
+<p>Сам факт зависимости evidence от dissent ещё не является нарушением I-1b. Нужно установить, что это evidence было mandatory basis санкции.</p>
+<h2>6. I-1b v0.8</h2>
+<div class="formula">Sanction(s,e)
+AND Dissent(s,d)
+AND MandatoryValidityDependency(e,d)
+= VIOLATION</div>
+<p>При отсутствии доказуемого обязательного звена система должна сохранять NOT_VIOLATED или UNRESOLVED в зависимости от покрытия и разрешимости.</p>
+<h2>7. Adversarial traces</h2>
+<table>
+<tr><th>Trace</th><th>Сценарий</th><th>Ожидаемый результат</th></tr>
+<tr><td>F</td><td>Structural context без обязательной зависимости</td><td>NOT_VIOLATED</td></tr>
+<tr><td>G</td><td>Semantic dependence, но validity независима</td><td>NOT_VIOLATED</td></tr>
+<tr><td>H</td><td>Validity обязательно зависит от dissent и есть witness</td><td>VIOLATION</td></tr>
+<tr><td>I</td><td>Неполная provenance</td><td>UNRESOLVED</td></tr>
+<tr><td>L</td><td>Зависимость скрыта через validity certificate</td><td>VIOLATION</td></tr>
+<tr><td>M</td><td>Evidence зависит от dissent, но sanction основана на независимом evidence</td><td>NOT_VIOLATED</td></tr>
+</table>
+<h2>8. Local Soundness</h2>
+<p>Целевая теорема требует, чтобы каждый результат VIOLATION сопровождался существованием dissent, evidence и sanction, соединённых доказуемой mandatory validity dependency и mandatory sanction basis.</p>
+<div class="formula">VIOLATION
+requires
+Dependency Witness + Validity Witness + Sanction Basis</div>
+<p>Это пока proof obligation, а не доказанная теорема.</p>
+<h2>9. AAS</h2>
+<p>AAS может искать CandidateDependency, HiddenDependency и CandidateValidityWitness, но его результат остаётся evidence.</p>
+<div class="formula">AAS Finding ≠ Formal Proof</div>
+<h2>10. Следующий milestone</h2>
+<ul>
+<li>ValidityRule для attestation.</li>
+<li>ValidityCertificate.</li>
+<li>SanctionBasis.</li>
+<li>Traces H, L и M.</li>
+<li>Bounded Local Soundness.</li>
+<li>Поиск counterexample к Local Completeness.</li>
+<li>Проверка ResourceDependence и ContextDependence.</li>
+</ul>
+<h2>11. Граница утверждений</h2>
+<p>Пока нельзя утверждать, что I-1b полностью доказан, что T★ максимален, что четыре отношения образуют полное пространство зависимостей, что hidden dependencies всегда обнаруживаются или что модель готова к production.</p>
+<div class="formula">UNRESOLVED ≠ VIOLATION
+Dependency ≠ Violation
+Evidence ≠ Sanction Basis
+Validity ≠ Truth
+AAS Finding ≠ Proof</div>
+<footer>Yugatneo · Evidence Dependency Model v0.8</footer>
+</main>
+</body>
+</html>
