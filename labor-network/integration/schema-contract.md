@@ -22,7 +22,7 @@ Evidence должен позволять определить происхожд
 
 ## 4. Decision
 
-Минимально: decision_id, subject, action, context, evidence_refs, policy_version, impact_class, outcome, reason_code, review_status.
+Минимально: decision_id, subject_ref, context, evidence_refs, policy_version, impact_class, outcome, reason_code, review_status. Decision не содержит обязательного action; фактическое исполнение описывается отдельным Action.
 
 ## 5. Permission
 
@@ -132,3 +132,37 @@ A Phase 1 schema change requires review when it changes:
 - lifecycle semantics.
 
 A field addition is not automatically a harmless extension if it changes one of these semantics.
+
+
+## Phase 1 consistency findings
+
+The schema review identified and resolved one architectural ambiguity:
+
+- Decision previously referenced an action as a required field.
+- The canonical architecture separates Decision from Action.
+- Decision therefore records the permitted or denied consequence and its basis; Action records actual execution separately.
+- A Decision may optionally reference a planned effect, but execution is never implied by the existence of a Decision.
+
+The following entities remain part of the broader canonical entity model and require contracts in subsequent schema slices:
+
+- Organization
+- Dispute
+- Support
+- Resource
+- Permission
+- Relation
+
+They are not removed by the nine-object Phase 1 core. Their contracts must preserve the same authority, provenance, privacy, lifecycle and audit invariants.
+
+## Entity/Event consistency rule
+
+The Entity × Event matrix is normative for protected lifecycle events. Every schema object participating in a stateful lifecycle must map its mutating events to:
+
+1. source/actor;
+2. guard;
+3. resulting state;
+4. invariant;
+5. audit requirement;
+6. recovery path.
+
+State machines remain projections of event history and cannot silently introduce state changes without an event or explicitly defined system process.
