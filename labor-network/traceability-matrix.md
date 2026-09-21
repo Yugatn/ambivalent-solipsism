@@ -45,3 +45,15 @@
 | dispute | dispute state | dispute event | review | resolution effect |
 | high-impact consequence | target state | action event | reviewed decision | audited action |
 
+
+
+## Operational coverage
+
+Audit, Privacy, Support and Regional layers are now connected to the traceability model.
+
+| Layer | Principle | Control | Audit |
+|---|---|---|---|
+| Audit | traceability | integrity | required |
+| Privacy | purpose limitation | scope / retention | required for material access |
+| Support | development | eligibility / purpose | required |
+| Regional | non-individualized analysis | aggregation / scope | required for material decisions |
