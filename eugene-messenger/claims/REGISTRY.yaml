@@ -3,66 +3,75 @@ version: 1
 claims:
   - id: FavoriteStateAtomicity
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:8e97aab47b41772b051d9c1defe5d0a1c68069ce7150f7b3c18dbca5ed6e7bfa
   - id: FavoriteStateHLCDeterministic
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:8af3c8457c10dee02ce4311e9b312f9a43d664d566045e0ca9000dec4b459564
   - id: FavoriteAccessibleEquivalent
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:2ef8fcc50a8bd8b65f26192864c6ed312d4972eb42f8c17675638d18b3116607
   - id: FavoriteArchiveOrthogonality
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:95dc892072f3f4fa90b78abfa24ef413874a0cc5652874f49704064f4aa3f4d5
   - id: FavoriteOperationIdempotence
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:b84dfbdc3d6328db0f6140256501350bd9b4fc9ecf27dd78ba9eeb8cb36efd59
   - id: FavoriteOperationAppendOnly
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:4dafe3809e29a29da33e387cb13c479d23cee2b8c5e7fdfc9c1d315b8f5b4edc
   - id: SwipeThresholdDeterminism
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:3cb3f7e2df4bc5f357f784f0097b654c0e3ab069594c4d1cfd4a3066b4fd620c
   - id: SwipeNormalizedDistance
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:8089a9a456c822ccc0585d661962fa92751ccd0d0184d4e5d160a6cb235de7fc
   - id: UndoAppendOnly
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:eb8501d7aad457f7fc5fe95ef8c6fa563410464cb5ab33910b7e66bd1d9a361c
   - id: FeedDirectionInvariant
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:d65da4039102c5715cbb606f7a274623c36aabd44e6d68077d13271386b8b0cd
   - id: ProtocolOrderingIndependentOfUI
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:db2cb1be0a42d83b0cbfe61c8ec5638a3ae3ce1045a36e7d75000e41f2c8e52a
   - id: HiddenArchiveSecretNonDisclosure
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:f686f095b9421a3df31da506437c6c6678b1a7c387d16fb7fc6cf869eb040246
   - id: HiddenArchiveRateLimit
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:bdc6559459a09dc08362b67750b557d643db14a380aa80619979805df7ac2eb5
   - id: HiddenArchiveSearchHistoryIsolation
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:f8bdddbe88fac8a0e71dc17847d8c6ac8f3da4c8676b1b6484b936605d8fcd58
   - id: HiddenArchiveTimingConstant
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:288ade86e51556b3a82de038a602a3e94adcf7868376f5d404ebcb0d9e29c75e
   - id: HiddenArchiveSessionNotPersisted
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:c7bf1a0082167d849acf545120ad3a381929db62c3f48dc8efbf23e3b0f9e1cd
   - id: FavoriteAfterDeleteSemantics
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:1a314facb19339422f402c2dcec071871004c7dd0f4fdfde479ca1e3e8c9bb3f
   - id: FavoriteStateNotInheritedByDerivedMessages
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:4160eac0f58870842589ceff28d16b28b65e4caaff669cb6c8762f2159e22711
   - id: LogicalClockMonotonic
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:d41ef9fbe891357afde99ba42367da08a106ac3338a04a1fa67d5b784bce756b
   - id: MultiDeviceConvergence
     status: specified
-    level: 2
+    level: 2\n    claim_hash: sha256:ac9de987bccd9daa23e9d063b965759450add28d3c3116bbcc90137a97a58703
 
 policy:
   rule: >
     A claim may become model_checked only after the corresponding executable
     model and evidence bundle are actually produced and reproducibly verified.
+
+assurance:
+  assumption_lifecycle:
+    rule: "Invalidated assumptions cascade to dependent claims and evidence."
+  composition:
+    rule: "A composed claim is no stronger than its weakest verified dependency."
+  controls:
+    Control_AlwaysTrue: "must PASS"
+    Control_AlwaysFalse: "must produce EXPECTED_COUNTEREXAMPLE"
