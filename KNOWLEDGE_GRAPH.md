@@ -133,3 +133,10 @@
 - `PROJECTS/EUGENE_MESSENGER_SELF_DEVELOPING_SECURITY.md` — `uses`.
 
 Положение о взаимном изменении пространства возможностей пока не является каноном. Его проверка должна включать критическую оценку детерминизма, измеримости, зависимости и долгосрочных последствий для автономии.
+
+
+## Новый тематический узел прав развития
+
+`DEVELOPMENT/ECONOMIC_SOCIAL_AND_CULTURAL_RIGHTS.md` — `COPIED`.
+
+Связи: `DEVELOPMENT/LAW_OF_DEVELOPMENT.md` — `extends`; `DEVELOPMENT/RIGHTS_AND_FREEDOMS.md` — `extends`; `DEVELOPMENT/SUBJECT_RIGHTS_AND_PERSONAL_AUTONOMY.md` — `extends`; `DEVELOPMENT/INFORMATION_AI_AND_REVIEW_RIGHTS.md` — `uses`; `PHILOSOPHY/SUBJECT_AI_MUTUAL_POSSIBILITY_SPACE.md` — `uses`.
