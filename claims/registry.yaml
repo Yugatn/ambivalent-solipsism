@@ -289,6 +289,30 @@ claims:
         - conjunction
         - refinement
 
+  - id: Control_AlwaysTrue
+    type: pipeline_control
+    status: specified
+    level: 2
+    statement: A model with an invariant that is always true MUST produce PASS.
+    expected_result: pass
+    formal_model:
+      type: tla+
+      path: controls/Control_AlwaysTrue.tla
+      protocol_model: executable
+      config: controls/Control_AlwaysTrue.cfg
+
+  - id: Control_AlwaysFalse
+    type: pipeline_control
+    status: specified
+    level: 2
+    statement: A model with an invariant FALSE MUST produce an expected counterexample.
+    expected_result: expected_counterexample
+    formal_model:
+      type: tla+
+      path: controls/Control_AlwaysFalse.tla
+      protocol_model: executable
+      config: controls/Control_AlwaysFalse.cfg
+
 compositions:
   - id: AntiReplay_AND_IdentityContinuity
     operator: conjunction
