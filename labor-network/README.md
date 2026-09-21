@@ -10,19 +10,19 @@
 
 ## Архитектура раздела
 
-- [Принципы](principles.md)
-- [Субъект и мотивация](subject-and-motivation.md)
-- [Профессиональный профиль](professional-profile.md)
-- [Профессиональная история](professional-history.md)
-- [Работодатель и вакансии](employer-and-recruitment.md)
-- [Условия труда и обратная связь](work-conditions.md)
-- [Репутация и доверие](reputation.md)
-- [Proof of Development](proof-of-development.md)
-- [Региональный вклад и социальные программы](regional-development.md)
-- [Самозанятые и профессиональные услуги](self-employed.md)
-- [Образование и PROF-MAP](education-and-prof-map.md)
-- [Безопасность и государственная интеграция](privacy-and-state-integration.md)
-- [Техническая архитектура и интерфейс](architecture.md)
+- [Принципы](governance/principles.md)
+- [Субъект и мотивация](domain/subject-and-motivation.md)
+- [Профессиональный профиль](domain/professional-profile.md)
+- [Профессиональная история](domain/professional-history.md)
+- [Работодатель и вакансии](domain/employer-and-recruitment.md)
+- [Условия труда и обратная связь](domain/work-conditions.md)
+- [Репутация и доверие](domain/reputation.md)
+- [Proof of Development](domain/proof-of-development.md)
+- [Региональный вклад и социальные программы](regional/development.md)
+- [Самозанятые и профессиональные услуги](domain/self-employed.md)
+- [Образование и PROF-MAP](domain/education-and-prof-map.md)
+- [Безопасность и государственная интеграция](privacy/state-integration.md)
+- [Техническая архитектура и интерфейс](architecture/overview.md)
 
 ## Ядро
 
@@ -78,7 +78,7 @@
 
 ## Интеграционная карта
 
-- [Карта интеграции СТСети](integration-map.md)
+- [Карта интеграции СТСети](integration/map.md)
 
 Она фиксирует связи проекта с каноном АС, Конституцией, экономикой, Human Network, PROF-MAP, PSY-TOOLS, Proof of Development, PICCS, EthicalAudit и государственной инфраструктурой. Это не новая философская норма, а контрольная архитектурная карта.
 
@@ -119,129 +119,129 @@
 
 ## 17 · Экономический контур
 
-- [Экономика труда и вознаграждение](economy-and-remuneration.md)
-- [Преимущества и стимулы](benefits-and-incentives.md)
-- [Solidarity Fund](solidarity-fund.md)
+- [Экономика труда и вознаграждение](economy/remuneration.md)
+- [Преимущества и стимулы](support/benefits-and-incentives.md)
+- [Solidarity Fund](support/solidarity-fund.md)
 
 Экономический контур отделяет измеримые экономические отношения от ценности субъекта и связывает вознаграждение, развитие и взаимопомощь с принципами АС.
 
 
 ## 18 · Жизненный цикл
 
-- [Жизненный цикл трудового взаимодействия](work-lifecycle.md)
-- [Подбор и сопоставление](recruitment-and-matching.md)
-- [Трудовые споры и восстановление](dispute-resolution.md)
-- [Переходы, перерывы и безработица](transition-and-unemployment.md)
+- [Жизненный цикл трудового взаимодействия](state/work-lifecycle.md)
+- [Подбор и сопоставление](domain/recruitment-and-matching.md)
+- [Трудовые споры и восстановление](dispute/resolution.md)
+- [Переходы, перерывы и безработица](support/transition-and-unemployment.md)
 
 Жизненный цикл рассматривает труд как изменяющийся процесс, а не как одно решение о найме.
 
 
 ## 19 · Инфраструктура, развитие и коллективное действие
 
-- [Инфраструктура и мобильность труда](infrastructure-and-mobility.md)
-- [Цифровой доступ и рабочая инфраструктура](digital-access.md)
-- [Образование, навыки и переходы](education-and-skills.md)
-- [Коллективное действие и представительство](collective-action.md)
+- [Инфраструктура и мобильность труда](regional/infrastructure-and-mobility.md)
+- [Цифровой доступ и рабочая инфраструктура](support/digital-access.md)
+- [Образование, навыки и переходы](domain/education-and-skills.md)
+- [Коллективное действие и представительство](collective/action.md)
 
 СТСеть рассматривает возможность трудиться как взаимодействие субъекта с социальной, транспортной, цифровой и образовательной средой.
 
 
 ## 20 · Региональное развитие
 
-- [Региональные узлы СТСети](regional-nodes.md)
-- [Региональная экономика и распределение возможностей](regional-economy.md)
-- [Транспорт и труд](transport-work-integration.md)
-- [Локальные проекты и развитие](local-projects.md)
+- [Региональные узлы СТСети](regional/nodes.md)
+- [Региональная экономика и распределение возможностей](regional/economy.md)
+- [Транспорт и труд](regional/transport-work-integration.md)
+- [Локальные проекты и развитие](domain/local-projects.md)
 
 Региональный контур связывает трудовые возможности с инфраструктурой территории, не превращая региональную аналитику в рейтинг жителей.
 
 
 ## 21 · Государственный контур
 
-- [Государственный интерфейс](state-interface.md)
-- [Социальная защита и переходы](social-protection.md)
-- [Налоги, взносы и общественный вклад](tax-and-contribution.md)
-- [Государственные программы развития](public-programs.md)
+- [Государственный интерфейс](integration/state-interface.md)
+- [Социальная защита и переходы](support/social-protection.md)
+- [Налоги, взносы и общественный вклад](economy/tax-and-contribution.md)
+- [Государственные программы развития](support/public-programs.md)
 
 Государственный контур определяет интерфейс между СТСетью и государственными функциями, сохраняя разделение полномочий, минимизацию данных и право субъекта на объяснение и пересмотр.
 
 
 ## 22 · Информационная архитектура
 
-- [Информационная архитектура](information-architecture.md)
-- [Идентичность и согласие](identity-and-consent.md)
-- [Доверие и provenance](trust-and-provenance.md)
-- [Управление данными](data-governance.md)
+- [Информационная архитектура](architecture/information-architecture.md)
+- [Идентичность и согласие](privacy/identity-and-consent.md)
+- [Доверие и provenance](evidence/trust-and-provenance.md)
+- [Управление данными](privacy/data-governance.md)
 
 Информационный контур разделяет исходные данные, утверждения, сигналы, выводы и решения и ограничивает использование данных их конкретным назначением.
 
 
 ## 23 · Техническое ядро
 
-- [Техническое ядро](technical-core.md)
-- [Permissions, consent и делегирование](permissions-and-consent.md)
-- [API и межсистемное взаимодействие](api-and-interoperability.md)
-- [Формальные инварианты](invariants.md)
+- [Техническое ядро](architecture/technical-core.md)
+- [Permissions, consent и делегирование](privacy/permissions-and-consent.md)
+- [API и межсистемное взаимодействие](integration/api-and-interoperability.md)
+- [Формальные инварианты](verification/invariants.md)
 
 Технический контур превращает принципы СТСети в проверяемые события, состояния, полномочия, API-контракты и инварианты.
 
 
 ## 24 · Формальный протокол
 
-- [Протокол событий](event-protocol.md)
-- [Модель сущностей](entity-model.md)
-- [Policy Engine](policy-engine.md)
-- [Тестовые сценарии](test-scenarios.md)
+- [Протокол событий](event/protocol.md)
+- [Модель сущностей](architecture/entity-model.md)
+- [Policy Engine](policy/engine.md)
+- [Тестовые сценарии](verification/test-scenarios.md)
 
 Формальный контур определяет события, сущности, политики доступа и проверяемые сценарии, связывая философские ограничения СТСети с исполнимой архитектурой.
 
 
 ## 25 · Reconciliation, Human Review и Audit
 
-- [Граф зависимостей и reconciliation](reconciliation-graph.md)
-- [Human Review](human-review.md)
-- [Audit и наблюдаемость](audit-and-observability.md)
-- [Архитектурный review](architecture-review.md)
+- [Граф зависимостей и reconciliation](decision/reconciliation-graph.md)
+- [Human Review](decision/human-review.md)
+- [Audit и наблюдаемость](audit/observability-architecture.md)
+- [Архитектурный review](architecture/review.md)
 
 Этот слой связывает provenance, policy decisions и исправления: ошибка в исходных данных может быть прослежена до зависимых решений, а высокоэффектные действия получают формализованный пересмотр.
 
 
 ## 26 · State Machines и Safety Kernel
 
-- [State Machines](state-machines.md)
-- [Спецификация переходов](state-transition-spec.md)
-- [Safety Kernel](safety-kernel.md)
-- [Формальная верификация](formal-verification.md)
+- [State Machines](state/machines.md)
+- [Спецификация переходов](state/transition-spec.md)
+- [Safety Kernel](security/safety-kernel.md)
+- [Формальная верификация](verification/formal-verification.md)
 
 Этот слой превращает архитектурные инварианты в допустимые состояния, переходы, защитные проверки и формально проверяемые свойства.
 
 
 ## 27 · Decision Lifecycle, Subject Control и Roadmap
 
-- [Жизненный цикл решения](decision-lifecycle.md)
-- [Согласованность и конкурирующие изменения](consistency-model.md)
-- [Субъектный контроль](subject-control.md)
-- [Дорожная карта реализации](implementation-roadmap.md)
+- [Жизненный цикл решения](decision/decision-lifecycle.md)
+- [Согласованность и конкурирующие изменения](architecture/consistency-model.md)
+- [Субъектный контроль](privacy/subject-control.md)
+- [Дорожная карта реализации](architecture/implementation-roadmap.md)
 
 Новый слой связывает state machines, policy decisions, human review, субъектный контроль и последовательную реализацию прототипа.
 
 
 ## 28 · Machine Contracts и Invariants
 
-- [Машинные контракты](schema-contract.md)
-- [Матрица Entity × Event × Guard × Invariant](entity-event-matrix.md)
-- [Federation Contract](federation-contract.md)
-- [Формальные инварианты](invariants.md)
+- [Машинные контракты](integration/schema-contract.md)
+- [Матрица Entity × Event × Guard × Invariant](architecture/entity-event-matrix.md)
+- [Federation Contract](integration/federation-contract.md)
+- [Формальные инварианты](verification/invariants.md)
 
 Этот слой фиксирует минимальные контракты данных, границы федерации и свойства, которые реализация не должна нарушать.
 
 
 ## 29 · Migration Audit и Traceability
 
-- [Content-Level Audit](content-audit.md)
-- [Migration Map](migration-map.md)
-- [Traceability Matrix](traceability-matrix.md)
-- [Regression Suite](regression-suite.md)
+- [Content-Level Audit](migration/content-audit.md)
+- [Migration Map](migration/map.md)
+- [Traceability Matrix](migration/traceability-matrix.md)
+- [Regression Suite](verification/regression-suite.md)
 
 Эти документы контролируют не только наличие исходных файлов, но и сохранение их смыслового содержания после декомпозиции.
 
