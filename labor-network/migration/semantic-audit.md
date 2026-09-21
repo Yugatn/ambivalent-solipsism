@@ -263,3 +263,32 @@ The canonical versions retain the substantive legacy constraints while adding or
 MIGRATION_MANIFEST.md → migration/manifest.md was found to be incomplete and was repaired in commit aa3042a01a7134aa30fa8176bc746f7850c2059f3. The canonical manifest now retains the historical migration baseline, current 66-file coverage, semantic classifications, and completion criteria.
 
 At this checkpoint, the identified legacy-to-canonical pairwise audit has no unresolved content-loss finding. The remaining work is cross-module consistency and regression validation, not filename migration.
+
+
+## Cross-module consistency checkpoint
+
+The core control chain was reviewed as a coherent architecture:
+
+- Event protocol preserves event identity, causality, provenance and idempotency.
+- State machines distinguish current state from event history.
+- State transition specification requires authority and policy guards and rejects invalid transitions without partial state mutation.
+- Decision lifecycle separates evidence, policy, decision, review and effect.
+- Policy Engine returns permit, deny, review or unknown and does not infer authority from technical capability.
+- Evidence/provenance remains distinct from decision and preserves uncertainty.
+- Human Review is triggered for defined high-impact or disputed outcomes and receives a minimal relevant evidence set.
+- Subject Control provides visibility, correction, contest, delegation, portability and exit.
+- Data Governance applies purpose limitation, minimization, access context and audit constraints.
+- Safety Kernel checks authority, purpose, provenance, impact, reversibility, review and audit preparation without becoming the sole business executor.
+- Formal invariants and regression groups explicitly cover authority, provenance, contestability, reversibility, minimal disclosure, unknown preservation, idempotency, recovery and review.
+
+No contradiction was identified in this checkpoint between Event, State, Decision, Policy, Evidence, Privacy, Security and Verification layers.
+
+The employer-and-recruitment canonical module contains an additional normative distinction between mandatory conditions, preferences, verifiable requirements and evaluative judgments; this is classified as intentional refinement and does not remove the legacy recruitment constraints.
+
+The professional-history, professional-profile and proof-of-development canonical modules were reviewed at line level. Their differences from legacy are structural consolidation/refinement; substantive legacy constraints remain represented.
+
+### Pairwise closure
+
+The identified legacy-to-canonical migration set is now closed for content-loss findings. Legacy files remain preserved as non-canonical comparison material.
+
+The next gate is regression validation against the declared invariants and cross-module release conditions.
