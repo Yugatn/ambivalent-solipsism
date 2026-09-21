@@ -2,70 +2,140 @@
 
 ## Progress dashboard
 
-```
-Specification Yugatneo:                 68%
-Regression Contract:                   95%
-Canonical Serialization:               80%
-Typed Data Model:                      75%
-Level 1 Reference Implementation:      32%
+Specification Yugatneo: 68%
+Level 1 Reference Implementation: 55% (Phase 3 target)
 
-ProvenanceGraph:                       60%
-ValidityRule_ATT:                      45%
-DependencyCertificate:                 45%
-I-1a / I-1b evaluator:                40%
-Witness Independence Level 2:          30%
-Regression Tests:                      40%
-CI:                                    25%
-```
+Regression Contract: 95%
+Canonical Serialization: 90%
+Typed Data Model: 80%
+ProvenanceGraph: 75%
+ValidityRule_ATT: 45%
+DependencyCertificate: 50%
+I-1a / I-1b evaluator: 55%
+Witness Independence Level 2: 30%
+Regression Tests: 55%
+CI: 45%
 
-These percentages are specification maturity estimates, not claims of production readiness or protocol correctness.
+Phase 3:
+Binary CBOR I/O: 90%
+Schema Validation + Error Codes: 80%
+Operational T-star Checker: 70%
 
-## Current state
+Phase 4–5:
+Property Testing: 0%
+Mutation Testing: 0%
+Fuzzing: 0%
+Differential Implementation: 0%
+Security Review: 0%
 
-The branch has crossed the boundary from fixture-selected output to an executable Level 1 analysis path.
+Percentages describe implementation maturity against the current Level 1 scope. They are not claims of protocol correctness, security, or production readiness.
 
-### Implemented
+## Phase 3 result
 
-- typed Trace/Event/LogicalTime model;
-- explicit T★ closed-world gate;
-- Truth, Applicability and Decidability result axes;
-- DependencyStatus and I-1a/I-1b result axes;
-- executable ProvenanceGraph;
-- input, context and certificate edge classes;
-- certificate closure traversal;
-- executable attestation validity evaluation;
-- VALID to INVALID counterfactual dependency;
-- VALID to UNKNOWN counterfactual handling;
-- explicit mandatory and uncertain validity references;
-- explicit DependencyCertificate computation;
-- Level 2 witness-independence gate;
-- executable I-1a and I-1b evaluation;
-- M regression demonstrating certificate-closure sensitivity;
-- L regression demonstrating UNKNOWN is not INVALID;
-- deterministic serialization foundation;
-- SHA-256 domain separation;
-- regression test harness;
-- GitHub Actions for formatting, tests and Clippy.
+Phase 3 establishes three connected foundations:
 
-## Remaining gates before Level 1 Complete
+1. Binary deterministic CBOR input/output.
+2. Strict structural schema validation with stable error codes.
+3. Operational T-star evaluation computed from trace content.
 
-1. binary CBOR input/output path;
-2. typed schema validation with stable error codes;
-3. signed ValidityCertificate representation;
-4. complete T★ operational checks rather than trace-declared flags;
-5. full witness closure model;
-6. mutation testing;
-7. property tests for graph closure and deterministic serialization;
-8. fuzzing;
-9. independent implementation or differential checker;
-10. security review.
+The implementation no longer treats the T-star flags embedded in a trace as authoritative.
 
-## Important implementation boundary
+## Binary CBOR
 
-The engine is content-driven for the current attestation contract. It still uses an explicit closed-world dependency schema. This is deliberate: Level 1 can only reason over dependencies represented inside its declared universe.
+The reference implementation now:
 
-Certificate closure is now part of the actual computation rather than a fixture-only expected result.
+- accepts JSON and CBOR input;
+- emits canonical deterministic CBOR;
+- rejects non-canonical CBOR after decode and re-canonicalization;
+- rejects floats and tags in the Level 1 profile;
+- rejects trailing bytes;
+- uses preferred integer serialization;
+- orders map keys by deterministic CBOR key encoding;
+- performs byte-stable encode/decode round trips.
+
+## Schema validation
+
+Stable schema error codes are now part of the implementation boundary.
+
+Validation covers:
+
+- supported protocol version;
+- non-empty traces;
+- horizon consistency;
+- unique event identifiers;
+- logical-time structure and horizon membership;
+- canonical event ordering;
+- declared external references;
+- certificate-closure references;
+- provenance cycles.
+
+Schema validation is deliberately separate from semantic T-star evaluation.
+
+## Operational T-star
+
+The four T-star dimensions are computed:
+
+- Complete Provenance;
+- Closed Dependency Universe;
+- Monotone Sanction;
+- Finite Scope.
+
+A trace cannot become T-star compliant merely by setting a boolean flag.
+
+For the current closed-world profile:
+
+- unresolved or undeclared references are detected;
+- attestation credential and key presence is checked;
+- source references must have explicit provenance edges;
+- sanction basis must exist and not be temporally retroactive;
+- logical events must remain inside the declared horizon.
+
+## Regression boundary
+
+F/G/H/I/L/M remain the normative regression classes.
+
+Trace I is now outside T-star because the operational checker detects missing attestation credential/key material. It is not outside T-star merely because its fixture declares complete_provenance=false.
+
+Trace M continues to require certificate closure.
+
+Trace L continues to enforce UNKNOWN != INVALID.
+
+## Important limitation
+
+The operational T-star checker is a Level 1 closed-world checker. It does not prove absence of dependencies outside the represented graph.
+
+Likewise, schema validation is not a proof of semantic correctness.
+
+## Next gates
+
+### Phase 4
+
+- property tests for graph closure and canonical serialization;
+- mutation testing against F/G/H/I/L/M;
+- stronger counterfactual witness representation.
+
+### Phase 5
+
+- parser fuzzing;
+- differential implementation;
+- independent security review.
+
+### Later
+
+- signed ValidityCertificate;
+- Oracle, Proof and Observation validity rules;
+- complete Witness Independence Level 3;
+- networked execution and distributed protocol layers.
 
 ## Non-claims
 
-Passing F/G/H/I/L/M does not establish distributed safety, production security, consensus correctness, AAS correctness, economic safety, or Mainnet readiness.
+Phase 3 does not establish:
+
+- production security;
+- distributed consensus safety;
+- PoAS correctness;
+- AAS correctness;
+- complete hidden-dependency detection;
+- completeness of ValidityRule_ATT;
+- Level 1 finality;
+- Mainnet readiness.
