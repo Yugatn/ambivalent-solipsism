@@ -167,7 +167,8 @@ Threads: https://www.threads.com/@yugatneo
 
 ### Инфраструктура и развитие
 
-- [СТСеть](PROJECTS/STSET_NETWORK.md)
+- [Связанная транспортная сеть](PROJECTS/STSET_NETWORK.md)
+- [Социальная Трудовая Сеть](labor-network/README.md)
 - [Единая система общественного транспорта](PROJECTS/UNIFIED_PUBLIC_TRANSPORT.md)
 - [Цифровой двойник транспорта](PROJECTS/TRANSPORT_DIGITAL_TWIN.md)
 - [Субсидирование курьеров и таксистов](PROJECTS/COURIER_TAXI_SUBSIDY.md)
