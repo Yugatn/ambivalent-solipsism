@@ -198,3 +198,16 @@ Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2
 The critical formal kernel has now been narrowed to K01–K10. This is an internal refinement of Phase 10 rather than a new roadmap phase. It establishes the minimum proof target before concrete model-checker implementation: protected transitions, Decision/Action separation, event idempotency, Unknown preservation, Human Review barriers, authority non-escalation, historical correction, recovery idempotency and terminal reconstruction.
 
 Phase 10 remains architecturally closed; Phase 10A is the implementation-preparation checkpoint for executable formalization.
+
+
+## Phase 11 checkpoint
+
+Phase 11, Pilot, is now architecturally specified and ready for executable implementation. The pilot contract defines a bounded vertical slice, reversible consequences, runtime acceptance criteria, stop conditions and a separate expansion gate. P11-01–P11-10 are the minimum executable pilot scenarios.
+
+This checkpoint does **not** claim that a pilot has been deployed or passed. The next work is implementation of the minimum vertical slice and execution of the acceptance scenarios against it.
+
+### Progress indicator
+
+Architectural phases with closed checkpoints: **10/13 = ~77%**.
+Phase 11 preparation: **specified; runtime implementation not yet executed**.
+Overall system readiness must not be inferred from the 77% architectural figure.
