@@ -150,3 +150,31 @@ class ConformanceTraceTests(unittest.TestCase):
         k.decide(permitted=True)
         k.execute()
         self.assertEqual(k.reconstruct()["action"], "executed")
+
+
+class DurableBoundaryTests(unittest.TestCase):
+    def test_duplicate_event_is_blocked_by_durable_identity(self):
+        import tempfile
+        from pathlib import Path
+        from pilot_kernel import DurableKernelStore, record_event_durably
+        with tempfile.TemporaryDirectory() as d:
+            store = DurableKernelStore(str(Path(d) / "events.json"))
+            k = PilotKernel()
+            e = Event("durable-1", "engagement.created")
+            self.assertTrue(record_event_durably(k, store, e))
+            self.assertFalse(record_event_durably(k, store, e))
+            self.assertEqual(len(store.load()), 1)
+
+    def test_durable_history_survives_new_kernel_instance(self):
+        import tempfile
+        from pathlib import Path
+        from pilot_kernel import DurableKernelStore, record_event_durably
+        with tempfile.TemporaryDirectory() as d:
+            path = str(Path(d) / "events.json")
+            store = DurableKernelStore(path)
+            first = PilotKernel()
+            e = Event("durable-2", "engagement.created")
+            self.assertTrue(record_event_durably(first, store, e))
+            second = PilotKernel()
+            self.assertFalse(record_event_durably(second, store, e))
+            self.assertEqual(store.event_ids(), frozenset({"durable-2"}))
