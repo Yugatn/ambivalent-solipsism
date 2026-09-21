@@ -227,3 +227,29 @@ def execute_authorized_action(
     if not authorize_execution(store, authorization):
         raise ValueError("durable authorization denied")
     return kernel.execute()
+
+
+@dataclass(frozen=True)
+class ActionRequest:
+    request_id: str
+    decision_id: str
+    policy_version: str
+    review_state: str
+    permitted: bool
+    action_type: str
+
+
+def handle_action_request(
+    kernel: PilotKernel,
+    store: DurableKernelStore,
+    request: ActionRequest,
+) -> bool:
+    """Reference API boundary: external requests cannot bypass authorization."""
+    authorization = ExecutionAuthorization(
+        decision_id=request.decision_id,
+        permitted=request.permitted,
+        policy_version=request.policy_version,
+        review_state=request.review_state,
+        action_type=request.action_type,
+    )
+    return execute_authorized_action(kernel, store, authorization)
