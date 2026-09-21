@@ -9,6 +9,7 @@ pub struct FavoriteOperation {
     pub operation_id: OperationId,
     pub message_id: MessageId,
     pub target: FavoriteState,
+    pub previous_state: FavoriteState,
     pub device_id: DeviceId,
     pub logical_time: HlcTimestamp,
 }
