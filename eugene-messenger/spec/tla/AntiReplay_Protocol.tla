@@ -21,17 +21,22 @@ Receive(m) ==
     /\ acceptCount' = [acceptCount EXCEPT ![m] = @ + 1]
     /\ stateVersion' = stateVersion + 1
 
-EpochMonotonic ==
-    stateVersion' >= stateVersion
-
-OldEpochCannotMutateState ==
-    \A oldEpoch \in 0..stateVersion :
-        oldEpoch < stateVersion => stateVersion' > oldEpoch
+Next ==
+    Receive(Seq1) \/ UNCHANGED vars
 
 NoReplayAccepted ==
     \A s \in DOMAIN acceptCount : acceptCount[s] <= 1
 
+EpochMonotonic ==
+    [](stateVersion' >= stateVersion)
+
+OldEpochCannotMutateState ==
+    [](
+        \A oldEpoch \in 0..stateVersion :
+            oldEpoch < stateVersion => stateVersion' > oldEpoch
+    )
+
 Spec ==
-    Init /\ [][Receive(Seq1)]_vars
+    Init /\ [][Next]_vars
 
 ====
