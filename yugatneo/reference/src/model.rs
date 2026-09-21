@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Trace {
     pub version: String,
     pub trace: String,
@@ -12,15 +12,25 @@ pub struct Trace {
     pub counterfactual: Option<Counterfactual>,
     #[serde(default)]
     pub certificate_closure: Option<serde_json::Map<String, Value>>,
+    #[serde(default)]
+    pub metadata: Metadata,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct Metadata {
+    #[serde(default)]
+    pub external_ids: Vec<String>,
+    #[serde(default)]
+    pub declared_scopes: Vec<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Horizon {
     pub start: u64,
     pub end: u64,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Event {
     #[serde(rename = "type")]
     pub kind: String,
@@ -33,21 +43,25 @@ pub struct Event {
     pub payload: Value,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct LogicalTime {
     pub counter: u64,
     pub subject_id: String,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TStar {
+    #[serde(default)]
     pub complete_provenance: bool,
+    #[serde(default)]
     pub closed_dependency_universe: Option<bool>,
+    #[serde(default)]
     pub monotone_sanction: bool,
+    #[serde(default)]
     pub finite_scope: bool,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Counterfactual {
     pub removed: String,
     pub modified_validity: String,
@@ -60,7 +74,7 @@ pub enum TriState {
     Unresolved,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 pub enum Validity {
     Valid,
     Invalid,
@@ -81,12 +95,5 @@ impl Trace {
 
     pub fn events_of<'a>(&'a self, kind: &'a str) -> impl Iterator<Item = &'a Event> + 'a {
         self.events.iter().filter(move |event| event.kind == kind)
-    }
-
-    pub fn in_t_star(&self) -> bool {
-        self.t_star.complete_provenance
-            && self.t_star.closed_dependency_universe == Some(true)
-            && self.t_star.monotone_sanction
-            && self.t_star.finite_scope
     }
 }
