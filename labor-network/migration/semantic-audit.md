@@ -95,3 +95,37 @@ Status: **covered**
 ## Legacy preservation
 
 Legacy files remain untouched and serve as the comparison baseline until the semantic audit is closed.
+
+
+## Block-level audit register
+
+The following legacy concerns are explicitly represented in the structured architecture:
+
+| Legacy concern | Canonical destination | Treatment |
+|---|---|---|
+| architecture | architecture/ | refined |
+| entity model | architecture/entity-model.md | refined |
+| event protocol | event/ | refined |
+| state machines | state/ | refined |
+| policy engine | policy/ | refined |
+| permissions and consent | privacy/ + policy/ | refined |
+| professional profile | domain/professional-profile.md | preserved/refined |
+| recruitment and matching | domain/ + policy/ | refined |
+| education and skills | domain/ + support/ | refined |
+| remuneration | economy/ | refined |
+| self-employment | domain/ | preserved/refined |
+| regional development | regional/ | refined |
+| transport/work integration | regional/ | refined |
+| social protection | support/ | refined |
+| solidarity fund | support/ | refined |
+| evidence/provenance | evidence/ | refined |
+| reputation | domain/reputation.md | preserved/refined |
+| disputes | dispute/ + decision/ | refined |
+| audit/observability | audit/ | refined |
+| privacy/data governance | privacy/ | refined |
+| security/safety kernel | security/ | refined |
+| API/interoperability | integration/ | refined |
+| formal verification | verification/ | refined |
+| migration controls | migration/ | refined |
+
+This register records the semantic destination at the domain level. Detailed source-to-block verification remains the final audit step.
