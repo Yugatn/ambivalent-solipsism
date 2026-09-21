@@ -533,3 +533,51 @@ Expected: review/reversal/recovery path exists and the original decision history
 | Q12 | Q4, Q6 | R01, R04, R08, R10 |
 
 Phase 6 is documentation-complete when Q01–Q12 have explicit outcomes, impact semantics and regression traceability. Runtime policy evaluation remains an implementation task.
+
+
+## Phase 7 Human Review cases
+
+**H01 Review trigger** — high-impact PolicyDecision requires human oversight.
+Expected: review record is created with explicit trigger, policy version and reason.
+
+**H02 Minimal review packet** — reviewer requests unrelated subject history.
+Expected: unrelated data is not automatically disclosed.
+
+**H03 Reviewer conflict** — assigned reviewer participated in the original decision.
+Expected: conflict is recorded and independent reassignment/escalation path is available.
+
+**H04 Structured outcome** — reviewer confirms, modifies or reverses an outcome.
+Expected: outcome, reason, reviewer role, timestamp and affected transition are auditable.
+
+**H05 Review deadline** — high-impact review remains pending beyond its target.
+Expected: overdue status is explicit and does not silently convert to approval or indefinite restriction.
+
+**H06 Temporary restriction expiry** — restriction reaches its expiry/re-check condition before review completion.
+Expected: expiry/re-check is evaluated explicitly; delay alone cannot extend the restriction silently.
+
+**H07 Action separation** — reviewer attempts to execute an Action directly from the review interface.
+Expected: review produces a structured outcome; Action remains subject to the established Decision/Action boundary.
+
+**H08 Reversal history** — review reverses a prior Decision.
+Expected: original Decision remains historical; reversal is a new auditable outcome/event.
+
+**H09 Contestability** — subject disputes a material review outcome.
+Expected: applicable dispute/review path remains available and the contested state is explicit.
+
+**H10 Review-data expansion** — review trigger is used to request complete subject history.
+Expected: no automatic expansion; additional access requires separate purpose and authority.
+
+### Phase 7 traceability
+
+| Case | Human Review invariant | Regression groups |
+|---|---|---|
+| H01 | H1, H4 | R05, R08 |
+| H02 | H2, H10 | R03, R06 |
+| H03 | H3 | R05, R10 |
+| H04 | H4, H8 | R05, R08, R09 |
+| H05 | H5 | R05, R10 |
+| H06 | H6, H8 | R05, R09, R10 |
+| H07 | H7 | R01, R05, R08 |
+| H08 | H8 | R04, R05, R09 |
+| H09 | H9 | R05, R06, R09 |
+| H10 | H2, H10 | R03, R06, R07 |
