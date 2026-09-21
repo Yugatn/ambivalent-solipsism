@@ -269,8 +269,109 @@ Evidence(Researchnet) ≠ Evidence(Mainnet)</div>
 </ul>
 </div>
 
+
+<h2>21. Counterexample Class</h2>
+<p>Один trace является экземпляром нарушения, но не обязательно описывает весь класс поведения. Поэтому воспроизводимый counterexample должен иметь два уровня: конкретный trace и обобщённый class hypothesis.</p>
+<div class="formula">CounterexampleClass = {
+  Pattern,
+  Invariant,
+  MinimalityWitness,
+  GeneralizationBound,
+  CoverageExpansion,
+  FalsificationConditions
+}</div>
+<p><code>MinimalPrefix</code> признаётся witness только если сохраняет три свойства: само нарушение инварианта, trigger structure и необходимую context dependency. Если минимизация удаляет механизм возникновения нарушения, результат является artefact of minimization, а не полноценным minimal witness.</p>
+<div class="formula">RegressionTest = {
+  CounterexampleClass,
+  ReproductionTrace
+}</div>
+<p>Trace обеспечивает воспроизводимость конкретного случая. Class защищает от известных вариаций. GeneralizationBound ограничивает область, в которой class может рассматриваться как counterexample hypothesis; за этой границей требуется новое evidence.</p>
+
+<h2>22. Coverage-Ceiling</h2>
+<p>SimulationBudget задаёт не только стоимость эксперимента, но и верхнюю границу возможного исследовательского покрытия.</p>
+<div class="formula">CoverageUpperBound(B,C) ≤
+  f(B, |Scope|, |ActionSpace|, |PopulationDiversity|)</div>
+<p>Здесь <code>f</code> является неубывающей функцией только при фиксированной модели пространства. Если scope, action space или population diversity не ограничены, конечный budget не превращается в полное покрытие.</p>
+<div class="formula">CoverageClaim = {
+  Bounds,
+  BlindSpots,
+  OpenRegions
+}</div>
+<p>Следовательно, число шагов или запусков само по себе не является coverage claim. Большой budget при малом diversity может давать <code>CoverageIllusion</code>.</p>
+
+<h2>23. Negative Results</h2>
+<p>Отсутствие найденного counterexample является самостоятельным результатом эксперимента, но не PASS.</p>
+<div class="formula">NegativeResult = {
+  Contract,
+  Coverage,
+  Budget,
+  FailureToFind,
+  HonestLimits,
+  FalsificationConditions
+}
+
+NegativeResult = U + CoverageAnnotation</div>
+<p>Negative results публикуются вместе с blind spots и open regions. Количество negative results или regression tests не является метрикой безопасности.</p>
+
+<h2>24. Differential Simulation for I-5</h2>
+<p>Для emergent functional ordering AAS использует differential experiments. Две популяции или две конфигурации interface сравниваются при максимально сопоставимом контракте.</p>
+<div class="formula">Population A: Interface X available
+Population B: Interface X unavailable
+
+Differential(A,B)
+  → candidate systematic subject ordering</div>
+<p>Если наблюдается устойчивое различие, которое коррелирует с subject ordering и влияет на access, authority, rights, opportunity или resource allocation, результат становится кандидатом для I-5 evaluation. Differential simulation не доказывает отсутствие ranking и не заменяет Constitutional Check.</p>
+
+<h2>25. Objective Library as Contested Object</h2>
+<div class="formula">ObjectiveRecord = {
+  ObjectiveID,
+  Proposal,
+  ProposerSet,
+  DissentWindow,
+  Version,
+  SunsetClause,
+  Reversibility,
+  EvidenceBasis
+}</div>
+<p>Objective не должен добавляться или удаляться одним actor без declared governance process. Public dissent и sunset не гарантируют отсутствие capture; они делают drift наблюдаемым.</p>
+<p>Особый риск: удобные objectives могут систематически переживать неудобные под видом stale objectives. Это differential-governance problem и отдельный объект исследования.</p>
+
+<h2>26. Expanded Boundary Statement</h2>
+<div class="formula">AAS Can:
+  adversarial traces
+  counterexamples
+  counterexample classes
+  negative results
+  differential candidates
+  regression inputs
+
+AAS Cannot:
+  prove absence of violation
+  define invariant meaning
+  establish production safety
+  become governance authority
+  replace Researchnet
+  replace adversarial science
+
+Checked by:
+  Constitutional Check, Level 1
+  Meta-Check, Level 2
+
+Recursion:
+  Level 3 does not exist</div>
+<p>Boundary Statement фиксирует не слабость AAS, а предел его epistemic role. Расширение полномочий AAS без отдельного constitutional transition является boundary violation.</p>
+
+<h2>27. Что пока нельзя утверждать</h2>
+<div class="note"><ul>
+<li>Нельзя утверждать, что CounterexampleClass обобщает все вариации атаки.</li>
+<li>Нельзя утверждать, что Coverage-Ceiling даёт реальную числовую оценку покрытия без валидированной функции <code>f</code>.</li>
+<li>Нельзя утверждать, что NegativeResult повышает safety.</li>
+<li>Нельзя утверждать, что differential simulation обнаружит emergent ranking в общем случае.</li>
+<li>Нельзя утверждать, что governance Objective Library не будет дрейфовать.</li>
+<li>Нельзя утверждать, что Meta-Check не станет новым центром authority.</li>
+</ul></div>
 <h2>20. Статус слоя</h2>
-<div class="card"><div class="metric">25%</div><p>Архитектура и epistemic boundary специфицированы. Experimental Contract, agent model, coverage, counterexample model и executable simulator ещё не реализованы.</p></div>
+<div class="card"><div class="metric">35%</div><p>Архитектура, Experimental Contract, agent model, coverage, counterexample classes и differential model специфицированы. Executable simulator, validated coverage function и machine-checked evidence pipeline ещё не реализованы.</p></div>
 <div class="formula">AAS = Adversarial Evidence Generator
 AAS ≠ Authority
 AAS ≠ Verdict
