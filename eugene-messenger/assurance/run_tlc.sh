@@ -15,7 +15,7 @@ run_model() {
   if [[ "$expected" == "pass" && $rc -ne 0 ]]; then echo "REAL_VERIFICATION_FAILURE model=$model rc=$rc"; return 1; fi
   if [[ "$expected" == "counterexample" && $rc -eq 0 ]]; then echo "UNEXPECTED_PASS model=$model"; return 2; fi
   if [[ "$expected" == "counterexample" ]]; then
-    grep -q "Invariant ${invariant} is violated" "$out" || { echo "COUNTEREXAMPLE_NOT_CONFIRMED model=$model"; return 3; }
+    grep -Eq "(Invariant|Temporal property) ${invariant} is violated" "$out" || { echo "COUNTEREXAMPLE_NOT_CONFIRMED model=$model"; return 3; }
     echo "EXPECTED_COUNTEREXAMPLE model=$model"
   else echo "PASS model=$model"; fi
 }
