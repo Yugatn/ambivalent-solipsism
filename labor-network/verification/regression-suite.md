@@ -235,3 +235,34 @@ Q01–Q12 are cross-checked against the existing G1–G8 structural gates. These
 8. Q01–Q12 have explicit expected outcomes and G1–G8 traceability.
 
 **Architectural Phase 6 gate: PASS.** Runtime implementation and executable conformance testing are not claimed by this documentation gate.
+
+
+## Phase 7 Release Gate: Human Review
+
+H01–H10 are checked against G1–G8 to ensure Human Review strengthens oversight without creating hidden authority, unrestricted profiling or direct execution powers.
+
+| Phase 7 case | G1 | G2 | G3 | G4 | G5 | G6 | G7 | G8 |
+|---|---|---|---|---|---|---|---|---|
+| H01 Review trigger | ✓ |  |  |  |  | ✓ |  | ✓ |
+| H02 Minimal review packet |  | ✓ | ✓ |  | ✓ | ✓ |  | ✓ |
+| H03 Reviewer conflict | ✓ |  |  |  |  | ✓ |  | ✓ |
+| H04 Structured outcome | ✓ | ✓ |  | ✓ |  | ✓ |  | ✓ |
+| H05 Review deadline | ✓ |  |  |  |  | ✓ | ✓ | ✓ |
+| H06 Temporary restriction expiry | ✓ |  |  | ✓ |  | ✓ | ✓ | ✓ |
+| H07 Action separation | ✓ |  |  |  |  | ✓ |  | ✓ |
+| H08 Reversal history | ✓ |  |  | ✓ |  | ✓ | ✓ | ✓ |
+| H09 Contestability | ✓ |  |  | ✓ |  | ✓ | ✓ | ✓ |
+| H10 Review-data expansion |  | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ |
+
+### Phase 7 gate criteria
+
+1. Review triggers and outcomes are explicit and auditable.
+2. Review access remains purpose-bound and minimally disclosed.
+3. Reviewer conflicts are visible and have an escalation/reassignment path.
+4. Human Review cannot directly execute protected Actions.
+5. High-impact review has a target deadline; temporary restrictions have expiry/re-check conditions.
+6. Reversal and recovery preserve original history.
+7. Contestability remains explicit where applicable.
+8. H01–H10 have defined outcomes and G1–G8 traceability.
+
+**Architectural Phase 7 gate: PASS.** Runtime queue assignment, SLA enforcement and executable conformance are not claimed.
