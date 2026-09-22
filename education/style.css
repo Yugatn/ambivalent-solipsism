@@ -39,3 +39,5 @@
 .route span{color:var(--muted);font-size:14px}
 @media(max-width:900px){.quick-grid{grid-template-columns:1fr}.route-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.route-grid{grid-template-columns:1fr}}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}.card:hover,.route:hover,.route:focus-visible{transform:none!important}}
