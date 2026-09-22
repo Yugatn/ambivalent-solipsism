@@ -75,3 +75,16 @@ The reference runtime now exposes a bounded ActionRequest entry point that deleg
 | Policy mismatch blocked at API boundary | covered | not certified |
 | Direct protected execution from API payload | not exposed | not certified |
 | Network transport/authentication | not implemented | not certified |
+
+
+## HTTP adapter checkpoint
+
+A minimal standard-library HTTP adapter now exposes /action and delegates to the existing ActionRequest authorization path. The adapter is intentionally a reference adapter: it does not claim transport authentication, TLS, production hardening, rate limiting or distributed deployment.
+
+| Boundary | Reference status | Production status |
+|---|---|---|
+| HTTP request reaches existing authorization path | covered | not certified |
+| Missing persisted Decision rejected | covered | not certified |
+| Direct API-to-Action bypass | not exposed by adapter | not certified |
+| Transport authentication | not implemented | not certified |
+| TLS / network hardening | not implemented | not certified |
