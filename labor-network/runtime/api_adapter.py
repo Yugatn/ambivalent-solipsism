@@ -55,3 +55,23 @@ def make_handler(kernel: PilotKernel, store: DurableKernelStore) -> type[BaseHTT
 
 def serve(kernel: PilotKernel, store: DurableKernelStore, host: str = "127.0.0.1", port: int = 8080) -> None:
     HTTPServer((host, port), make_handler(kernel, store)).serve_forever()
+
+
+@dataclass(frozen=True)
+class ApiPrincipal:
+    principal_id: str
+    authenticated: bool
+
+
+def authenticate_principal(headers) -> ApiPrincipal:
+    token = headers.get("X-Principal-Token")
+    if not token:
+        return ApiPrincipal("", False)
+    # Reference-only identity mapping. Real credential verification is out of scope.
+    return ApiPrincipal(token, True)
+
+
+def request_fingerprint(payload: dict) -> str:
+    import hashlib
+    canonical = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(canonical).hexdigest()
