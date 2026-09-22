@@ -119,3 +119,20 @@
 - `cosmology.cellular_world` related_to `brain.fractal_history`
 - `epistemology.majority` related_to `reality.residual`
 - `epistemology.majority` related_to `development.law`
+
+- `mortality.generation` — смена поколений при непрерывности человечества
+- `mortality.body_horizon` — ограниченный телом временной горизонт
+- `mortality.panic_hypothesis` — гипотеза о том, что паника перед конечностью может сужать горизонт решений
+- `future.subjects` — будущие субъекты как продолжение пространства развития
+
+- `mortality.generation` related_to `social.organism.stability`
+- `mortality.generation` related_to `social.cell.human`
+- `mortality.generation` related_to `development.law`
+- `mortality.body_horizon` related_to `subject.perception`
+- `mortality.body_horizon` related_to `body.avatar`
+- `mortality.panic_hypothesis` extends `mortality.body_horizon`
+- `mortality.panic_hypothesis` related_to `social.organism.stability`
+- `mortality.panic_hypothesis` related_to `development.law`
+- `future.subjects` related_to `subject.other`
+- `future.subjects` related_to `development.law`
+- `future.subjects` related_to `mortality.generation`
