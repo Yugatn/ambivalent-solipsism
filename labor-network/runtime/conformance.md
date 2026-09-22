@@ -1,136 +1,41 @@
 # Critical Kernel Conformance Matrix
 
-This matrix records the executable reference-kernel coverage for K01–K10. A test passing in the reference kernel demonstrates that the modeled boundary behaves as specified in that implementation; it does not certify production deployment.
+The reference implementation covers K01–K10 and the current pilot runtime boundaries. Passing reference tests does not certify production deployment.
 
-| Kernel | Boundary | Executable test | Reference status | Production status |
-|---|---|---|---|---|
-| K01 | Unauthorized transition | test_k01_authorization_guard | covered | not certified |
-| K02 | Decision / Action separation | test_k02_decision_action_separation | covered | not certified |
-| K03 | Event idempotency | test_k03_event_idempotency | covered | not certified |
-| K04 | UNKNOWN preservation | test_k04_unknown_preservation | covered | not certified |
-| K05 | Human Review barrier | test_k05_review_barrier | covered | not certified |
-| K06 | Authority non-escalation | test_k06_authority_non_escalation | covered | not certified |
-| K07 | Historical correction | test_k07_history_preservation | covered | not certified |
-| K08 | Recovery guard | test_k08_recovery_guard | covered | not certified |
-| K09 | UNKNOWN representation | test_k09_unknown_is_representable | covered | not certified |
-| K10 | State reconstruction | test_k10_reconstruction | covered | not certified |
+## Critical Kernel
 
-## Interpretation
+Reference-kernel conformance coverage: **10/10 (100%)**.
 
-**Reference-kernel conformance coverage: 10/10 (100%).**
+Production status: **not certified**.
 
-This percentage means that each currently defined Critical Kernel obligation has at least one executable conformance test in the reference implementation. It does not mean the whole STСеть runtime is implemented, secure, deployed or production-ready.
-
-The next conformance layer must map these same obligations to durable storage, API boundaries, authorization, event processing and any federated runtime components introduced by the pilot.
-
-
-## Durable boundary status
-
-The reference conformance layer includes an append-only JSON persistence adapter for Event identity and executable tests covering duplicate delivery and history across a new kernel instance.
+## Runtime boundary status
 
 | Boundary | Reference status | Production status |
 |---|---|---|
-| In-memory K01–K10 | covered | not certified |
+| Critical Kernel K01–K10 | covered | not certified |
 | Durable Event identity | covered | not certified |
-| Cross-instance duplicate suppression | covered | not certified |
-| Durable audit/history | covered | not certified |
-| Durable authorization/policy state | covered | not certified |
-| API/network boundary | covered | not certified |
-
-
-## Durable decision and audit checkpoint
-
-The reference runtime persists versioned Decision records and purpose-bound AuditRecord entries through the same pilot persistence adapter, while keeping their semantic roles distinct.
-
-| Boundary | Reference status | Production status |
-|---|---|---|
-| Durable Decision + policy version | covered | not certified |
-| Decision / Audit separation | covered | not certified |
-| Purpose-bound audit record | covered | not certified |
-| Durable authorization/policy enforcement | covered | not certified |
-| API/network boundary | covered | not certified |
-
-
-## Durable authorization checkpoint
-
-The reference runtime requires an explicit persisted Decision for protected execution. Authorization is denied when the Decision is missing, denied, bound to another policy version, or still requires review.
-
-| Boundary | Reference status | Production status |
-|---|---|---|
-| Persisted Decision required for execution | covered | not certified |
-| Policy-version match | covered | not certified |
-| Review completion guard | covered | not certified |
-| Denied Decision blocks execution | covered | not certified |
-| API/network authorization boundary | covered | not certified |
-
-
-## API boundary checkpoint
-
-The reference runtime exposes a bounded ActionRequest entry point that delegates to the durable authorization boundary. The API-facing path cannot execute a protected Action without a matching persisted Decision, policy version and review state.
-
-| Boundary | Reference status | Production status |
-|---|---|---|
-| API request enters through authorization | covered | not certified |
-| Missing Decision blocked at API boundary | covered | not certified |
-| Policy mismatch blocked at API boundary | covered | not certified |
-| Direct protected execution from API payload | not exposed | not certified |
-| Network transport/authentication | not implemented | not certified |
-
-
-## HTTP adapter checkpoint
-
-A minimal standard-library HTTP adapter exposes /action and now routes that endpoint through the same reference replay/idempotency boundary before protected execution. The adapter is intentionally a reference adapter: it does not claim transport authentication, TLS, production hardening, rate limiting or distributed deployment.
-
-| Boundary | Reference status | Production status |
-|---|---|---|
-| HTTP request reaches existing authorization path | covered | not certified |
-| Missing persisted Decision rejected | covered | not certified |
-| HTTP duplicate request blocked from second execution | covered | not certified |
-| Direct API-to-Action bypass | not exposed by adapter | not certified |
-| Transport authentication | not implemented | not certified |
-| TLS / network hardening | not implemented | not certified |
-
-
-## API security boundary checkpoint
-
-The reference adapter has explicit principal/authentication state and deterministic request fingerprints. These primitives do not constitute real credential verification or transport security.
-
-| Boundary | Reference status | Production status |
-|---|---|---|
-| Explicit authenticated/unauthenticated principal state | covered | not certified |
-| Deterministic request fingerprint | covered | not certified |
-| Replay prevention | covered | not certified |
+| Durable Decision / Audit | covered | not certified |
+| Durable execution authorization | covered | not certified |
+| ActionRequest API boundary | covered | not certified |
+| HTTP /action adapter | covered | not certified |
+| Principal / fingerprint primitives | covered | not certified |
+| Replay / idempotency | covered | not certified |
+| Concurrent identical-request guard | covered in shared-process reference tests | not certified |
+| Transactional reference claim | covered in shared-process reference tests | not certified |
+| Cross-process/distributed atomicity | not implemented | not certified |
+| Crash-safe transactional reservation | not implemented | not certified |
 | Real credential verification | not implemented | not certified |
-| TLS / transport security | not implemented | not certified |
+| TLS / transport hardening | not implemented | not certified |
+| Production database transaction semantics | not implemented | not certified |
 
+## Transactional reference checkpoint
 
-## API replay/idempotency checkpoint
+The file transactional_reference.py adds a deliberately bounded persistence primitive for the next runtime layer. It combines a process-local transaction lock with atomic temporary-file replacement and a logical claim operation. The accompanying tests verify that concurrent callers sharing the same process produce exactly one successful claim and that persisted JSON remains complete after replacement.
 
-The reference API path computes a canonical request fingerprint, checks it before protected execution, and records it after the request completes. A process-local lock makes this check-and-execute sequence atomic for concurrent callers sharing the same Python process. Identical requests therefore produce one non-duplicate result in the reference concurrency test; changed payloads receive different fingerprints.
+This is **not** a distributed transaction protocol. It does not solve multi-process coordination, database isolation, crash-safe work reservation, fencing, leases, or production durability.
 
-The lock is deliberately scoped as a reference boundary only. It does not provide cross-process or distributed atomicity, durable transactional semantics, or crash-safe reservation before execution.
+## Pilot vertical slice
 
-| Boundary | Reference status | Production status |
-|---|---|---|
-| Canonical request fingerprint | covered | not certified |
-| Duplicate API request detection | covered | not certified |
-| Duplicate protected execution prevention | covered | not certified |
-| Concurrent identical request race | covered in shared-process reference test | not certified |
-| Cross-process replay protection | not implemented | not certified |
-| Transactional reservation / crash recovery | not implemented | not certified |
-| Cryptographic request authentication | not implemented | not certified |
+The reference vertical slice connects Event identity, Decision persistence, AuditRecord, execution authorization and replay protection. Its production deployment remains unimplemented.
 
-
-## Pilot vertical-slice checkpoint
-
-The file test_vertical_slice.py now exercises one bounded reference path across durable Event identity, durable Decision, purpose-bound AuditRecord, execution authorization and replay protection. The test verifies that duplicate Event delivery is suppressed, a persisted Decision is required for execution, the AuditRecord remains separately persisted, and a repeated protected request does not execute twice.
-
-| Boundary | Reference status | Production status |
-|---|---|---|
-| Event persistence and duplicate suppression | covered | not certified |
-| Versioned Decision persistence | covered | not certified |
-| Purpose-bound AuditRecord | covered | not certified |
-| Decision-gated Action execution | covered | not certified |
-| Replay-protected Action request | covered | not certified |
-| Cross-layer vertical slice | covered | not certified |
-| Production pilot deployment | not implemented | not certified |
+Legacy STСеть files remain preserved as backup/baseline material and are not part of the runtime replacement path.
