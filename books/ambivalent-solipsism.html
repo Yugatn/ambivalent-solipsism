@@ -819,47 +819,71 @@ main{width:min(790px,calc(100% - 34px));margin:auto;padding:38px 0 110px}.nav{di
 </main><script id="book-reader-v2-script">
 (function(){
 function initBookReader(){
-const root=document.getElementById('bookReaderV2'); if(!root)return;
-const chapters=[...root.querySelectorAll('.chapter')];
-if(!chapters.length)return;
-const stage=root.querySelector('.book-stage');
-stage.innerHTML='';
-let pages=[];
-chapters.forEach((chapter,ci)=>{
- const title=chapter.querySelector('h2')?.textContent||('Глава '+(ci+1));
- const nodes=[...chapter.children].filter(n=>!n.classList.contains('chapter-number'));
- let current=[];
- const flush=()=>{if(current.length){pages.push({chapter:ci,title,nodes:current});current=[]}};
- nodes.forEach(n=>{
-   if(n.tagName==='H2'){flush();return}
-   current.push(n);
-   if(current.length>=4 && (n.tagName==='P'||n.tagName==='BLOCKQUOTE')) flush();
+ const root=document.getElementById('bookReaderV2'); if(!root)return;
+ const stage=root.querySelector('.book-stage'), toc=root.querySelector('.reader-toc');
+ const prev=root.querySelector('[data-book-prev]'), next=root.querySelector('[data-book-next]');
+ const tocBtn=root.querySelector('[data-book-toc]'), label=root.querySelector('[data-book-chapter]');
+ const bar=root.querySelector('.reader-progress span');
+ const chapters=[...document.querySelectorAll('.chapter')];
+ if(!stage||!toc||!chapters.length)return;
+ stage.innerHTML=''; toc.innerHTML='';
+ const pages=[];
+ chapters.forEach((chapter,index)=>{
+   const page=document.createElement('article');
+   page.className='book-page-v2';
+   page.dataset.index=index;
+   const content=document.createElement('div');
+   [...chapter.children].forEach(node=>content.appendChild(node.cloneNode(true)));
+   page.appendChild(content);
+   const number=document.createElement('div');
+   number.className='page-label-v2';
+   number.textContent='СТРАНИЦА '+(index+1)+' / '+chapters.length;
+   page.appendChild(number);
+   stage.appendChild(page); pages.push(page);
+   const b=document.createElement('button');
+   b.type='button';
+   b.setAttribute('aria-label','Перейти к '+(chapter.querySelector('h2')?.textContent||('главе '+(index+1))));
+   b.textContent=chapter.querySelector('h2')?.textContent||('Глава '+(index+1));
+   b.addEventListener('click',()=>showPage(index));
+   toc.appendChild(b);
+   chapter.setAttribute('aria-hidden','true');
+   chapter.style.display='none';
  });
- flush();
-});
-pages.forEach((pg,i)=>{
- const el=document.createElement('article'); el.className='book-page-v2';
- const content=document.createElement('div');
- pg.nodes.forEach(n=>content.appendChild(n.cloneNode(true)));
- el.appendChild(content);
- const lab=document.createElement('div');lab.className='page-label-v2';lab.textContent='СТРАНИЦА '+(i+1)+' / '+pages.length;el.appendChild(lab);
- stage.appendChild(el);pg.el=el;
-});
-let current=0;
-const prev=root.querySelector('[data-book-prev]'),next=root.querySelector('[data-book-next]'),tocBtn=root.querySelector('[data-book-toc]'),toc=root.querySelector('.reader-toc'),progress=root.querySelector('.reader-progress span'),chapterLabel=root.querySelector('[data-book-chapter]');
-pages.forEach((pg,i)=>{const b=document.createElement('button');b.textContent='Глава '+(pg.chapter+1)+': '+pg.title+(i===0?'':'');b.onclick=()=>{current=i;render();toc.classList.remove('open');};toc.appendChild(b);});
-function render(){
- pages.forEach((p,i)=>p.el.classList.toggle('active',i===current));
- prev.disabled=current===0;next.disabled=current===pages.length-1;
- progress.style.width=((current+1)/pages.length*100)+'%';
- chapterLabel.textContent=pages[current].title;
- window.scrollTo({top:0,behavior:'smooth'});
-}
-prev.onclick=()=>{if(current){current--;render()}};
-next.onclick=()=>{if(current<pages.length-1){current++;render()}};
-tocBtn.onclick=()=>toc.classList.toggle('open');
-document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'&&!prev.disabled)prev.click();if(e.key==='ArrowRight'&&!next.disabled)next.click()});
-render();
+ let current=0;
+ function showPage(index){
+   if(index<0||index>=pages.length)return;
+   current=index;
+   pages.forEach((p,i)=>p.classList.toggle('active',i===current));
+   const ch=chapters[current];
+   label.textContent=(ch.querySelector('.chapter-number')?.textContent||('Глава '+(current+1)))+' · '+(ch.querySelector('h2')?.textContent||'');
+   bar.style.width=((current+1)/pages.length*100)+'%';
+   prev.disabled=current===0; next.disabled=current===pages.length-1;
+   prev.setAttribute('aria-label','Предыдущая глава');
+   next.setAttribute('aria-label','Следующая глава');
+   tocBtn.setAttribute('aria-expanded',toc.classList.contains('open')?'true':'false');
+   if(location.hash!==('#'+(ch.id||''))) history.replaceState(null,'',ch.id?('#'+ch.id):location.pathname);
+ }
+ prev.addEventListener('click',()=>showPage(current-1));
+ next.addEventListener('click',()=>showPage(current+1));
+ tocBtn.addEventListener('click',()=>{
+   const open=toc.classList.toggle('open');
+   tocBtn.setAttribute('aria-expanded',open?'true':'false');
+ });
+ document.addEventListener('keydown',e=>{
+   if(e.target.matches('input,textarea,select,button,a'))return;
+   if(e.key==='ArrowLeft')showPage(current-1);
+   if(e.key==='ArrowRight')showPage(current+1);
+ });
+ let touchX=null;
+ stage.addEventListener('touchstart',e=>{touchX=e.changedTouches[0].clientX},{passive:true});
+ stage.addEventListener('touchend',e=>{
+   if(touchX===null)return;
+   const dx=e.changedTouches[0].clientX-touchX; touchX=null;
+   if(Math.abs(dx)>55) showPage(current+(dx<0?1:-1));
+ },{passive:true});
+ const requested=location.hash.match(/^#a(\d+)$/);
+ const initial=requested?chapters.findIndex(ch=>ch.id===location.hash.slice(1)):-1;
+ showPage(initial>=0?initial:0);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initBookReader);else initBookReader();
 })();
