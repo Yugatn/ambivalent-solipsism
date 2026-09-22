@@ -14,3 +14,16 @@
 ## Важно
 
 Интерфейсы, названия команд и сочетания клавиш меняются между версиями, операционными системами и пользовательскими раскладками. Перед публикацией конкретной комбинации её необходимо проверять по актуальной документации или настройкам самого приложения.
+
+
+## Программирование
+
+- [Навигация по языкам](programming/index.md)
+- [Python](programming/python.md)
+- [JavaScript и TypeScript](programming/javascript-typescript.md)
+- [Dart и Flutter](programming/dart-flutter.md)
+- [Swift](programming/swift.md)
+- [Kotlin](programming/kotlin.md)
+- [Rust и Go](programming/rust-go.md)
+- [SQL, HTML и CSS](programming/sql-web-basics.md)
+- [Маршрут обучения](programming/learning-path.md)
