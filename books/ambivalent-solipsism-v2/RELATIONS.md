@@ -153,3 +153,29 @@
 - `future.possibility` related_to `future.subjects`
 - `future.possibility` related_to `development.law`
 - `future.possibility` related_to `reality.residual`
+
+- `symbiont.os.ecosystem` — Симбионт ОС как распределённая информационная экосистема интеллектуальных агентов
+- `symbiont.os.privacy` — минимизация раскрытия идентичности и данных
+- `symbiont.os.anonymity` — архитектурная цель анонимной коммуникации при сохранении проверяемых полномочий
+- `symbiont.os.agent_mesh` — взаимодействие специализированных агентов без обязательного объединения всех данных
+- `symbiont.os.authorization` — разделение сообщения, идентичности, полномочия и разрешения на действие
+- `symbiont.os.audit` — независимая проверка действий, ошибок и ограничений
+- `symbiont.os.uncertainty` — сохранение неопределённости о состоянии агентов и среды
+
+- `symbiont.os.ecosystem` extends `ai.symbiotic_intelligence`
+- `symbiont.os.ecosystem` related_to `engineering.symbiontos`
+- `symbiont.os.ecosystem` related_to `social.myelin`
+- `symbiont.os.ecosystem` related_to `social.organism.stability`
+- `symbiont.os.privacy` related_to `symbiont.os.ecosystem`
+- `symbiont.os.privacy` related_to `development.law`
+- `symbiont.os.anonymity` related_to `symbiont.os.privacy`
+- `symbiont.os.anonymity` related_to `engineering.eugene_messenger`
+- `symbiont.os.agent_mesh` related_to `ai.symbiotic_intelligence`
+- `symbiont.os.agent_mesh` related_to `symbiont.os.ecosystem`
+- `symbiont.os.authorization` related_to `engineering.eugene_messenger`
+- `symbiont.os.authorization` related_to `ethics.piccs`
+- `symbiont.os.authorization` related_to `symbiont.os.audit`
+- `symbiont.os.audit` related_to `ethics.piccs`
+- `symbiont.os.audit` related_to `symbiont.os.uncertainty`
+- `symbiont.os.uncertainty` related_to `reality.residual`
+- `symbiont.os.uncertainty` related_to `ai.subjectivity`
