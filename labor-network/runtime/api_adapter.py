@@ -8,8 +8,14 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from threading import RLock
 
 from pilot_kernel import ActionRequest, DurableKernelStore, PilotKernel, handle_action_request
+
+
+# Reference-only process lock. It prevents a check-then-execute race between
+# callers sharing this Python process. It is not distributed transactionality.
+_REQUEST_LOCK = RLock()
 
 
 def process_action_payload(
@@ -82,9 +88,9 @@ def process_idempotent_action_request(
     store: DurableKernelStore,
     payload: dict,
 ) -> dict:
-    """Persist request identity before protected execution."""
+    """Atomically claim a request fingerprint within this reference process."""
     fingerprint = request_fingerprint(payload)
-    with store.transaction():
+    with _REQUEST_LOCK:
         for record in store.load():
             if record.get("request_fingerprint") == fingerprint:
                 return {
