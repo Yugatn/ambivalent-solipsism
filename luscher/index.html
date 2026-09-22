@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071014">
+<title>Цветовой выбор · современная методика Люшера</title>
+<style>
+:root{--bg:#071014;--panel:#0d1a1f;--panel2:#101f25;--text:#edf5f3;--muted:#a9bab8;--line:#294047;--accent:#73e6ca;--focus:#fff}
+*{box-sizing:border-box}html{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#173139 0,transparent 42%),var(--bg);line-height:1.6}
+main{width:min(1100px,calc(100% - 28px));margin:auto;padding:34px 0 70px}
+header{padding:20px 0 28px;text-align:center}
+.kicker{font:12px ui-monospace,SFMono-Regular,monospace;letter-spacing:.16em;color:var(--accent);text-transform:uppercase}
+h1{font-size:clamp(28px,5vw,48px);line-height:1.08;margin:12px 0}
+.lead{max-width:760px;margin:auto;color:var(--muted);font-size:17px}
+.notice,.card{background:rgba(13,26,31,.92);border:1px solid var(--line);border-radius:22px;padding:22px;margin:18px 0;box-shadow:0 14px 50px rgba(0,0,0,.18)}
+.notice strong{color:var(--text)}
+h2{font-size:23px;margin:0 0 12px}
+.small{font-size:14px;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0}
+.step{padding:14px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.025)}
+.step b{display:block;color:var(--accent);margin-bottom:5px}
+#progress{height:8px;background:#1a2a30;border-radius:99px;overflow:hidden;margin:15px 0 22px}
+#progress span{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+.palette{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.color-btn{position:relative;min-height:145px;border:2px solid transparent;border-radius:19px;cursor:pointer;color:#fff;text-align:left;padding:16px;display:flex;flex-direction:column;justify-content:flex-end;transition:transform .18s,border-color .18s,box-shadow .18s}
+.color-btn:hover{transform:translateY(-2px)}
+.color-btn:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.color-btn[aria-pressed=true]{border-color:#fff;box-shadow:0 0 0 3px rgba(115,230,202,.55)}
+.color-code{font:12px ui-monospace,SFMono-Regular,monospace;opacity:.9}
+.color-name{font-weight:700;font-size:18px}
+#instruction{font-size:18px;margin:4px 0 0}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+button.action{border:1px solid var(--line);border-radius:13px;padding:11px 15px;background:#13252b;color:var(--text);cursor:pointer;font-weight:650}
+button.action:hover{border-color:var(--accent)}
+button.action:focus-visible{outline:3px solid var(--focus)}
+button.action.primary{background:var(--accent);color:#06100f;border-color:var(--accent)}
+#ranking{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.rank{display:flex;align-items:center;gap:8px;border:1px solid var(--line);padding:7px 10px;border-radius:999px;background:#0a171b}
+.dot{width:20px;height:20px;border-radius:50%;border:1px solid rgba(255,255,255,.4)}
+.hidden{display:none}
+.result-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+.bars{display:grid;gap:10px}
+.barrow{display:grid;grid-template-columns:92px 1fr 34px;gap:9px;align-items:center}
+.track{height:15px;background:#18282e;border-radius:99px;overflow:hidden}
+.fill{height:100%;border-radius:99px}
+.result-order{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.result-item{padding:12px;border:1px solid var(--line);border-radius:14px}
+.result-item b{display:block}.tag{font:11px ui-monospace,SFMono-Regular,monospace;color:var(--accent)}
+footer{margin-top:30px;color:var(--muted);font-size:13px}
+a{color:var(--accent)}
+@media(max-width:760px){.steps{grid-template-columns:1fr 1fr}.palette{grid-template-columns:1fr 1fr}.result-grid{grid-template-columns:1fr}.color-btn{min-height:120px}}
+@media(max-width:430px){main{width:min(100% - 18px,1100px)}.palette{gap:9px}.color-btn{min-height:105px;padding:12px}.color-name{font-size:16px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div class="kicker">Амбивалентный Солипсизм · PSY-TOOLS</div>
+<h1>Цветовой выбор</h1>
+<p class="lead">Современная исследовательская версия методики, вдохновлённой цветовым тестом Люшера. Она используется для наблюдения за актуальными предпочтениями и последующего самоописания, а не для постановки диагноза или определения личности по цвету.</p>
+</header>
+
+<section class="notice">
+<strong>Важное ограничение метода.</strong>
+Классический тест Люшера имеет историческое значение, но его психометрические свойства неоднозначны. В исследованиях сообщались низкая тест-ретест надёжность и проблемы с валидностью отдельных интерпретаций. Поэтому здесь сохранена идея последовательного выбора цветов, но убраны диагностические обещания и категорические выводы.
+<div class="small" style="margin-top:10px">Источники: Braün & Bonta (1979), Ledford & Hoke (1981), Kertzman et al. (2003), обзор цвето-эмоциональных связей Jonauskaite & Mohr (2025).</div>
+</section>
+
+<section class="card">
+<h2>Как проходить</h2>
+<div class="steps">
+<div class="step"><b>01 · Условия</b>Спокойное место и обычное комфортное освещение.</div>
+<div class="step"><b>02 · Не анализировать</b>Не ищите «правильный» цвет и не пытайтесь угадать значение.</div>
+<div class="step"><b>03 · Выбор</b>На каждом шаге выбирайте цвет, который сейчас субъективно больше привлекает.</div>
+<div class="step"><b>04 · Контекст</b>После ранжирования опишите, что происходило с вами во время выбора.</div>
+</div>
+<p class="small">Экран, яркость, цветовой профиль устройства и особенности цветового зрения могут менять восприятие оттенков. Поэтому результаты разных устройств не следует считать полностью сопоставимыми.</p>
+</section>
+
+<section class="card" id="test">
+<h2>Последовательный выбор</h2>
+<p id="instruction">Выберите цвет, который сейчас кажется наиболее привлекательным.</p>
+<div id="progress"><span></span></div>
+<div class="palette" id="palette"></div>
+<div id="ranking" aria-live="polite"></div>
+<div class="actions">
+<button class="action" id="back">Вернуть последний выбор</button>
+<button class="action" id="reset">Начать заново</button>
+</div>
+</section>
+
+<section class="card hidden" id="result">
+<h2>Ваш профиль выбора</h2>
+<p class="small">Это описание структуры выбора, а не психологический диагноз. Значение цвета не является доказанным прямым индикатором черты личности.</p>
+<div class="result-grid">
+<div><h3>Позиции</h3><div class="bars" id="bars"></div></div>
+<div><h3>Полная последовательность</h3><div class="result-order" id="resultOrder"></div></div>
+</div>
+<div class="notice">
+<strong>Саморефлексия.</strong>
+Ответьте письменно на три вопроса: «Что я сейчас хотел приблизить к себе?», «Что я хотел оставить дальше от себя?», «Какая часть выбора могла зависеть от ситуации, освещения или настроения?»
+</div>
+<div class="actions"><button class="action primary" id="repeat">Повторить через время</button><button class="action" id="copy">Скопировать результат</button></div>
+</section>
+
+<section class="card">
+<h2>Почему эта версия отличается от классической</h2>
+<p>Современная версия сохраняет наблюдаемую процедуру предпочтения, но отделяет её от сильных утверждений о личности. Исследования действительно показывают, что люди систематически связывают цвета с эмоциональными категориями, однако эти связи зависят от оттенка, светлоты, насыщенности и контекста и не означают, что выбор одного цвета надёжно раскрывает личность.</p>
+<p>Поэтому результат здесь представляет собой <strong>модель текущего выбора</strong>. Модель может быть полезна для разговора с собой или исследовательского сбора данных, но она не исчерпывает субъекта.</p>
+</section>
+
+<footer>
+<strong>Принцип проекта:</strong> «Другой — реален». Результат теста является моделью, а не самим человеком.<br>
+<a href="../">Вернуться в Амбивалентный Солипсизм</a>
+</footer>
+</main>
+<script>
+const colors=[
+{id:"blue",name:"Синий",code:"01",hex:"#3158A8"},
+{id:"green",name:"Зелёный",code:"02",hex:"#16864A"},
+{id:"red",name:"Красный",code:"03",hex:"#D83A32"},
+{id:"yellow",name:"Жёлтый",code:"04",hex:"#E8B92E"},
+{id:"violet",name:"Фиолетовый",code:"05",hex:"#7A4BA8"},
+{id:"brown",name:"Коричневый",code:"06",hex:"#7A4B32"},
+{id:"black",name:"Чёрный",code:"07",hex:"#161A1D"},
+{id:"gray",name:"Серый",code:"08",hex:"#747C80"}
+];
+let order=[];
+const palette=document.getElementById("palette"),ranking=document.getElementById("ranking"),result=document.getElementById("result"),progress=document.querySelector("#progress span"),instruction=document.getElementById("instruction");
+function render(){
+ palette.innerHTML="";
+ colors.filter(c=>!order.includes(c.id)).forEach(c=>{
+  const b=document.createElement("button");b.className="color-btn";b.type="button";b.dataset.id=c.id;b.style.background=c.hex;
+  b.setAttribute("aria-label",c.name+" "+c.code);b.innerHTML='<span class="color-code">'+c.code+'</span><span class="color-name">'+c.name+"</span>";
+  b.onclick=()=>choose(c.id);palette.appendChild(b);
+ });
+ ranking.innerHTML=order.map((id,i)=>{const c=colors.find(x=>x.id===id);return '<span class="rank"><span class="dot" style="background:'+c.hex+'"></span><span>'+(i+1)+". "+c.name+"</span></span>"}).join("");
+ progress.style.width=(order.length/colors.length*100)+"%";
+ instruction.textContent=order.length<colors.length?"Выберите цвет, который сейчас кажется наиболее привлекательным.":"Последовательность завершена. Посмотрите на структуру выбора и ответьте на вопросы саморефлексии.";
+ if(order.length===colors.length) showResult();
+}
+function choose(id){if(!order.includes(id)){order.push(id);render();document.getElementById("test").scrollIntoView({behavior:"smooth",block:"center"})}}
+function showResult(){
+ result.classList.remove("hidden");
+ const bars=document.getElementById("bars"),ro=document.getElementById("resultOrder");
+ bars.innerHTML=order.map((id,i)=>{const c=colors.find(x=>x.id===id);const pct=Math.round((8-i)/8*100);return '<div class="barrow"><span>'+c.name+'</span><span class="track"><span class="fill" style="width:'+pct+'%;background:'+c.hex+'"></span></span><b>'+(i+1)+'</b></div>'}).join("");
+ ro.innerHTML=order.map((id,i)=>{const c=colors.find(x=>x.id===id);return '<div class="result-item"><span class="tag">POSITION '+(i+1)+'</span><b>'+c.name+'</b><span class="small">Код '+c.code+"</span></div>"}).join("");
+ result.scrollIntoView({behavior:"smooth",block:"start"});
+}
+document.getElementById("back").onclick=()=>{if(order.length){order.pop();result.classList.add("hidden");render()}};
+document.getElementById("reset").onclick=()=>{order=[];result.classList.add("hidden");render();document.getElementById("test").scrollIntoView({behavior:"smooth"})};
+document.getElementById("repeat").onclick=()=>{order=[];result.classList.add("hidden");render();document.getElementById("test").scrollIntoView({behavior:"smooth"})};
+document.getElementById("copy").onclick=async()=>{const text="Цветовой выбор — последовательность: "+order.map((id,i)=>{const c=colors.find(x=>x.id===id);return (i+1)+". "+c.name+" ("+c.code+")"}).join(", ");try{await navigator.clipboard.writeText(text);alert("Результат скопирован.")}catch(e){alert(text)}};
+render();
+</script>
+</body>
+</html>
