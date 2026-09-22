@@ -1,0 +1,239 @@
+# Дорожная карта реализации СТСети
+
+## Phase 0 — Canon
+
+Зафиксировать принципы, термины и границы проекта.
+
+## Phase 1 — Schema
+
+Создать машинные схемы сущностей, событий, permissions, policy decisions и audit records.
+
+## Phase 2 — State machines
+
+Реализовать state transitions и guard conditions.
+
+## Phase 3 — Policy Engine
+
+Вынести ключевые правила в тестируемый policy layer.
+
+## Phase 4 — Event Core
+
+Реализовать idempotency, causation, correlation, versioning и replay protection.
+
+## Phase 5 — Provenance graph
+
+Реализовать зависимости Evidence, Claims, Decisions и Actions.
+
+## Phase 6 — Reconciliation
+
+Добавить поиск зависимых решений после исправления исходных данных.
+
+## Phase 7 — Human Review
+
+Реализовать review queue, reason codes, сроки и результаты пересмотра.
+
+## Phase 8 — Audit
+
+Добавить защищённый audit trail и observability без лишнего копирования пользовательских данных.
+
+## Phase 9 — Federation
+
+Реализовать API-контракты и минимальные проверяемые утверждения между независимыми узлами.
+
+## Phase 10 — Formal verification
+
+Формализовать критические state machines и invariants.
+
+## Phase 11 — Pilot
+
+Пилотировать на ограниченном сценарии с обратимыми последствиями.
+
+## Phase 12 — Expansion
+
+Расширять функциональность только после прохождения архитектурного review и регрессионных тестов.
+
+## Gate principle
+
+Каждая следующая фаза должна сохранять инварианты предыдущей.
+
+
+## Current implementation checkpoint
+
+Документная и архитектурная подготовка Phase 0 завершена.
+
+Закрыты следующие контрольные ворота:
+
+- Canon и терминологические границы зафиксированы.
+- File migration: 66/66 canonical destinations.
+- Semantic migration audit: закрыт для текущего набора legacy-источников.
+- Core cross-module consistency: проверена для Event, State, Evidence, Decision, Policy, Privacy, Security, Human Review и Audit.
+- Regression matrix: T01–T15 связана с инвариантами и regression groups.
+- Release gate: структурные проверки G1–G8 зафиксированы.
+- Runtime production validation: не заявляется как выполненная.
+
+## Next execution phase
+
+Следующей рабочей фазой является Phase 1 — Schema.
+
+Минимальный первый срез реализации должен включать:
+
+1. Subject
+2. Opportunity
+3. Engagement
+4. Evidence
+5. Decision
+6. Action
+7. Event
+8. PolicyDecision
+9. AuditRecord
+
+Для каждого объекта должны быть определены:
+
+- стабильный идентификатор;
+- версия схемы;
+- provenance;
+- timestamp;
+- context/purpose;
+- access scope;
+- lifecycle/state;
+- связи с событиями и решениями;
+- правила исправления и отзыва там, где они применимы.
+
+### Implementation boundary
+
+На Phase 1 запрещается молча добавлять новые нормативные полномочия. Схема должна сначала выражать уже утверждённую архитектуру.
+
+Новые поля, которые способны изменить полномочия, субъектный контроль, privacy scope или impact classification, требуют отдельного architectural review.
+
+### Next gate
+
+Phase 1 считается завершённой только после:
+
+- schema contract review;
+- invariant mapping;
+- positive and negative test cases;
+- проверяемой обратной совместимости там, где она требуется;
+- фиксации миграции версий схемы.
+
+После этого можно переходить к Phase 2 — State Machines.
+
+
+## Current phase alignment
+
+The roadmap numbering above is a historical planning sequence and no longer matches the completed architectural work one-to-one. The current implementation track has advanced through the following documented gates:
+
+- Phase 0: Canon and migration — **closed** for the current 66-file migration set.
+- Phase 1: Schema — **architecturally closed**; 15 canonical entity contracts, lifecycle consistency and S01–S18 validation are documented.
+- Phase 2: State Machines — **architecturally closed**; state classification, protected transitions and T16–T25 are documented.
+- Phase 3: Event Engine — **architecturally closed at contract/regression level**; event envelope, idempotency, causality, ordering, replay, reconciliation and E01–E15 are documented and cross-checked against G1–G8.
+- Runtime execution — **not claimed**; implementation and executable validation remain future work.
+
+### Concept and project preservation
+
+The migration did **not** replace the broader Ambivalent Solipsism concept or its independent projects. The Social Labor Network is being developed as one applied architectural branch of the existing ecosystem.
+
+The canonical repository root continues to contain the wider concept and project layers, including the philosophy/concept documents and project areas for PROF-MAP, PSY-TOOLS-related work, Eugene Messenger, PICCS, Symbiont, Cinema Catharsis and infrastructure/transport projects. The labor-network migration concerns the STСеть branch and its 66 legacy files; it is not a migration of the entire repository into labor-network/.
+
+The current queue is therefore **not a backlog of untransferred concept/project files**. The remaining queue concerns implementation and cross-project integration: executable schemas, state/event runtime, policy execution, provenance/reconciliation, review, audit, federation, formal verification and pilots.
+
+Legacy STСеть files remain preserved as non-canonical comparison material. Broader AS/project documents remain in their existing canonical project locations unless a separate migration is explicitly initiated.
+
+
+## Phase 4 completion checkpoint
+
+Phase 4 Projection / Read Model is now architecturally closed at the documentation level. The contract, projection families, Entity × Event cross-check, P01–P12 scenarios and G1–G8 release-gate traceability are present.
+
+The next architectural layer is Provenance / Dependency Graph: making explicit which Evidence, Events, Decisions, Policies and projections depend on one another, so correction and revocation can propagate without hidden dependencies.
+
+Runtime materialization, executable tests and production certification remain implementation work.
+
+
+## Phase 6 checkpoint
+
+Phase 6, Policy Engine / Impact Evaluation, is architecturally closed on this branch. The policy contract, structured impact classification, Q01–Q12 scenarios and G1–G8 release-gate cross-check are documented. The gate explicitly preserves separation between policy evaluation, normative Decision and executed Action; treats uncertainty as unresolved rather than as a negative subject outcome; requires human review for high-impact operations; and preserves policy-versioned history.
+
+This checkpoint does not claim runtime certification, executable conformance, deployment readiness or production safety. Those remain implementation and integration work.
+
+Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation.
+
+
+## Phase 7 checkpoint
+
+Phase 7, Human Review, is architecturally closed on this branch. The review contract, H01–H10 scenarios and G1–G8 release-gate cross-check are documented. The architecture keeps review bounded by purpose, evidence minimization, reviewer independence, deadlines, contestability and historical traceability. Human Review cannot become unrestricted subject profiling or direct Action execution.
+
+Runtime review queue, assignment, SLA enforcement, notification, persistence and executable conformance remain implementation work.
+
+Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation → Phase 7 Human Review.
+
+
+## Phase 8 checkpoint
+
+Phase 8, Audit / Observability, is architecturally closed on this branch. The contract, A01–A10 scenarios and G1–G8 release-gate cross-check are documented. AuditRecord remains distinct from telemetry and unrestricted surveillance; audit access is itself auditable; aggregate observability cannot silently become individual profiling; and audit failure/retention/correction semantics are explicit.
+
+Runtime audit storage, tamper-evidence implementation, retention enforcement, alerting and executable conformance remain implementation work.
+
+Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation → Phase 7 Human Review → Phase 8 Audit / Observability.
+
+
+## Phase 9 checkpoint
+
+Phase 9, Federation, is architecturally closed on this branch. The federation contract, F01–F10 scenarios and G1–G8 release-gate cross-check are documented. Federation is explicitly bounded to interoperable assertions: connectivity does not create authority, remote assertions do not bypass local controls, correction/revocation remain traceable, and cross-node aggregation cannot silently become unrestricted individual profiling.
+
+Runtime transport, cryptographic verification, compatibility negotiation, node trust infrastructure and executable conformance remain implementation work.
+
+Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation → Phase 7 Human Review → Phase 8 Audit / Observability → Phase 9 Federation.
+
+
+## Phase 10 checkpoint
+
+Phase 10, Formal Verification, is architecturally closed at the formalization-contract level. The proof boundary, critical safety properties, FV01–FV12 cases, counterexample requirements and G1–G8 release-gate cross-check are documented. The model is explicitly bounded to a critical kernel and does not claim that an abstract proof certifies an implementation.
+
+The next implementation task is to instantiate the selected critical kernel in a formal language/model checker and connect its abstract states/events to executable implementation semantics.
+
+
+## Phase 10A checkpoint
+
+The critical formal kernel has now been narrowed to K01–K10. This is an internal refinement of Phase 10 rather than a new roadmap phase. It establishes the minimum proof target before concrete model-checker implementation: protected transitions, Decision/Action separation, event idempotency, Unknown preservation, Human Review barriers, authority non-escalation, historical correction, recovery idempotency and terminal reconstruction.
+
+Phase 10 remains architecturally closed; Phase 10A is the implementation-preparation checkpoint for executable formalization.
+
+
+## Phase 11 checkpoint
+
+Phase 11, Pilot, is now architecturally specified and ready for executable implementation. The pilot contract defines a bounded vertical slice, reversible consequences, runtime acceptance criteria, stop conditions and a separate expansion gate. P11-01–P11-10 are the minimum executable pilot scenarios.
+
+This checkpoint does **not** claim that a pilot has been deployed or passed. The next work is implementation of the minimum vertical slice and execution of the acceptance scenarios against it.
+
+### Progress indicator
+
+Architectural phases with closed checkpoints: **10/13 = ~77%**.
+Phase 11 preparation: **specified; runtime implementation not yet executed**.
+Overall system readiness must not be inferred from the 77% architectural figure.
+
+
+## Runtime conformance checkpoint
+
+The reference Critical Kernel now has executable conformance coverage for K01–K10: **10/10 = 100% reference-kernel coverage**. This is a bounded test-coverage metric, not a production-readiness percentage.
+
+The reference runtime has now advanced through durable Event identity, durable Decision and Audit records, persisted execution authorization, an ActionRequest API boundary, a minimal HTTP adapter, explicit API principal/fingerprint primitives, replay/idempotency protection, and a process-local concurrency guard for identical requests.
+
+The concurrency guard has an explicit scope: it serializes the check-and-execute sequence only for callers sharing the same reference Python process. Cross-process/distributed atomicity, crash-safe transactional reservation, real credential verification, TLS, rate limiting and production persistence remain open.
+
+### Runtime layer status
+
+| Layer | Reference status | Production status |
+|---|---|---|
+| Critical Kernel K01–K10 | covered | not certified |
+| Durable Event identity | covered | not certified |
+| Durable Decision / Audit | covered | not certified |
+| Durable execution authorization | covered | not certified |
+| ActionRequest API boundary | covered | not certified |
+| HTTP /action adapter | covered | not certified |
+| Principal / fingerprint primitives | covered | not certified |
+| Replay / idempotency | covered | not certified |
+| Concurrent identical-request guard | covered in shared-process test | not certified |
+| Cross-process/distributed atomicity | not implemented | not certified |
+| Crash-safe reservation | not implemented | not certified |
+| Real credential verification | not implemented | not certified |
+| TLS / transport hardening | not implemented | not certified |
+| Production database/transaction semantics | not implemented | not certified |

@@ -1,0 +1,816 @@
+# Тестовые сценарии СТСети
+
+Тесты проверяют не только функции, но и сохранение архитектурных инвариантов.
+
+## T01. Повтор события
+
+Одно событие доставлено дважды.
+
+Ожидается: одно логическое изменение состояния.
+
+## T02. Исправление исходного факта
+
+Существенная запись исправлена.
+
+Ожидается: история сохранена, зависимые выводы помечены для проверки.
+
+## T03. Неизвестное
+
+Для решения недостаточно данных.
+
+Ожидается: unknown, а не автоматический deny.
+
+## T04. Расширение полномочия
+
+Компонент получил новые данные, но не новое разрешение.
+
+Ожидается: scope остаётся прежним.
+
+## T05. Межсистемный запрос
+
+Работодателю требуется подтверждение квалификации.
+
+Ожидается: передаётся минимальное проверяемое утверждение, а не полная история образования.
+
+## T06. Отозванный доступ
+
+Делегирование отозвано.
+
+Ожидается: дальнейший доступ по этому основанию запрещён.
+
+## T07. Сбой узла
+
+Региональный узел недоступен.
+
+Ожидается: независимые функции продолжают работать.
+
+## T08. Оспаривание
+
+Субъект оспорил существенный факт.
+
+Ожидается: создаётся Dispute; исходный факт не становится автоматически истинным или ложным.
+
+## T09. Высокоэффектное решение
+
+Автоматическая система подготовила существенное решение.
+
+Ожидается: срабатывает предусмотренный механизм human review.
+
+## T10. Конфликт политик
+
+Два правила дают разные результаты.
+
+Ожидается: применяется заранее определённая стратегия конфликта, результат аудируется.
+
+## T11. Истёкший факт
+
+Подтверждение имеет истёкший срок.
+
+Ожидается: состояние expired, а не бесследное удаление истории.
+
+## T12. Изоляция назначения
+
+Данные, полученные для выплаты, запрашиваются для другого процесса без отдельного основания.
+
+Ожидается: запрос отклонён или переведён в review согласно policy.
+
+## T13. Инфраструктурный барьер
+
+Работа доступна, но транспорт не позволяет безопасно добраться.
+
+Ожидается: фиксируется инфраструктурный барьер, а не снижается профессиональный статус субъекта.
+
+## T14. Выход
+
+Субъект завершает необязательное взаимодействие.
+
+Ожидается: соответствующие необязательные процессы прекращаются, а последствия выхода объясняются.
+
+## T15. Производное решение
+
+Исправлен источник, использованный в нескольких решениях.
+
+Ожидается: зависимые решения попадают в reconciliation или review pipeline.
+
+
+## Phase 1 schema validation cases
+
+### Positive cases
+
+**S01 Valid Subject**
+A Subject contains stable identifier, schema version, contextual status, provenance and timestamps.
+Expected: accepted.
+
+**S02 Valid Evidence**
+Evidence contains claim, source, provenance and validity.
+Expected: accepted and remains distinct from Decision.
+
+**S03 Valid Decision**
+Decision contains policy version, evidence references, impact class, outcome, reason and review status.
+Expected: accepted if policy basis and authority guards pass.
+
+**S04 Valid Permission**
+Permission contains explicit actor, subject/resource scope, purpose, basis and validity.
+Expected: accepted; technical access alone is insufficient.
+
+**S05 Valid Action**
+Action references a valid Decision or explicitly permitted non-decision action class and records execution separately.
+Expected: accepted and auditable.
+
+**S06 Valid Dispute**
+Dispute references a target, grounds and available evidence without rewriting the disputed claim.
+Expected: accepted.
+
+### Negative cases
+
+**S07 Missing provenance**
+A material Evidence record has no source/provenance.
+Expected: reject or route to an explicitly defined unverified state; it must not become verified Evidence.
+
+**S08 Authority by data possession**
+A component receives additional subject data but has no additional permission.
+Expected: reject any scope expansion.
+
+**S09 Decision-as-execution**
+A Decision is marked permitted and the system records an Action without the required execution authority/review.
+Expected: reject the Action.
+
+**S10 Permission from technical access**
+A database credential is treated as Permission.
+Expected: reject the authorization interpretation.
+
+**S11 Full-profile federation**
+A qualification request causes unrelated education, employment or support history to be transmitted.
+Expected: reject or minimize to the permitted assertion.
+
+**S12 Disputed claim overwrite**
+Opening a Dispute changes the original Evidence directly from verified to false without a verification process.
+Expected: reject the state mutation.
+
+**S13 Expired Evidence reuse**
+Expired Evidence is used as current verified input without an explicit policy allowing historical use.
+Expected: reject or require review.
+
+**S14 Hidden exit penalty**
+Subject exits an optional process and an unrelated reputation/status penalty is created solely because of exit.
+Expected: reject.
+
+### Review / unknown cases
+
+**S15 Insufficient evidence**
+Required inputs are incomplete.
+Expected: unknown or review_required, according to the applicable policy; never automatic negative inference.
+
+**S16 High-impact automation**
+An automated process proposes a high-impact Decision.
+Expected: review_required before the protected Action.
+
+**S17 Policy conflict**
+Two applicable policies conflict.
+Expected: deterministic conflict handling with provenance and audit; no silent selection.
+
+**S18 Corrected source**
+A source used by dependent Decisions is corrected.
+Expected: dependent outputs enter reconciliation/review according to impact and policy.
+
+
+## Phase 1 traceability matrix
+
+| Schema case | Invariant | Regression | Failure condition |
+|---|---|---|---|
+| S01 | I1, I3 | R01, R04 | missing identity/provenance accepted |
+| S02 | I3, I15 | R04 | evidence is accepted as decision or loses validity |
+| S03 | I3, I11, I17 | R03, R05 | decision accepted without policy/authority basis |
+| S04 | I2, I17, I18 | R03, R06 | technical access creates permission |
+| S05 | I19, I23 | R05, R08 | execution occurs without required decision/review |
+| S06 | I4, I9, I15 | R04, R09 | dispute rewrites source fact |
+| S07 | I3, I15 | R04 | unproven evidence becomes verified |
+| S08 | I17, I18 | R03, R05 | data acquisition expands authority |
+| S09 | I11, I17, I23 | R03, R05 | action bypasses required authority/review |
+| S10 | I17 | R03 | credential interpreted as normative permission |
+| S11 | I6, I7, I20 | R06, R07 | unrelated subject data leaves permitted scope |
+| S12 | I4, I9, I15 | R04, R09 | dispute mutates evidence without process |
+| S13 | I3, I15 | R04, R09 | expired evidence treated as current verified fact |
+| S14 | I12, I24 | R06, R08 | exit produces hidden penalty |
+| S15 | I15 | R04, R05 | missing input becomes automatic negative outcome |
+| S16 | I11, I23 | R05, R06 | high-impact action bypasses review |
+| S17 | I3, I17 | R03, R05, R08 | policy conflict resolved silently |
+| S18 | I9, I19 | R04, R08, R09 | dependent decisions remain unchanged after source correction |
+
+### Phase 1 gate
+
+Schema Phase 1 has complete documented traceability when every S-case maps to at least one invariant, one regression group and an explicit failure condition.
+
+This matrix is a documentation-level control. Passing it does not claim runtime execution.
+
+
+## Phase 2 negative transition cases
+
+**T16 Invalid state transition**
+Attempt a transition not listed for the current state.
+Expected: reject; emit diagnostic/audit event; preserve prior state.
+
+**T17 Expired evidence transition**
+Attempt a transition requiring current verified Evidence while the evidence is expired.
+Expected: reject or route to review according to policy; no silent acceptance.
+
+**T18 Revoked permission transition**
+Attempt a protected transition using a revoked Permission.
+Expected: reject; no new effect.
+
+**T19 Duplicate event transition**
+Deliver the same event_id after successful processing.
+Expected: idempotent result; no second state change or side effect.
+
+**T20 Conflicting event order**
+Receive causally conflicting events without a valid reconciliation rule.
+Expected: preserve both event records and invoke explicit conflict handling; do not silently choose the latest value.
+
+**T21 Partial transition failure**
+State mutation begins but a required side effect or audit write fails.
+Expected: transaction is not presented as successful; recovery path restores consistency without deleting history.
+
+**T22 Review bypass**
+Attempt a high-impact transition directly from evaluated to permitted without the required review.
+Expected: reject.
+
+**T23 UI/API guard bypass**
+Invoke a transition through a lower-level API while the UI guard would have rejected it.
+Expected: server-side guard rejects it; UI is not the security boundary.
+
+**T24 Terminal-state mutation**
+Attempt an ordinary lifecycle transition from a terminal state without an explicit restoration/reopening rule.
+Expected: reject.
+
+**T25 State reconstruction**
+Rebuild state from relevant event history after cache/state loss.
+Expected: reconstructed state matches the valid projection; unexplained divergence enters recovery/reconciliation.
+
+### Phase 2 traceability
+
+| Case | Invariant | Regression |
+|---|---|---|
+| T16 | I5, I16, I19 | R02, R08, R10 |
+| T17 | I3, I15, I23 | R04, R05, R09 |
+| T18 | I17, I18 | R03, R06 |
+| T19 | I16, I19 | R02, R08 |
+| T20 | I3, I9, I15 | R04, R08, R09 |
+| T21 | I19, I22 | R08, R10 |
+| T22 | I11, I23 | R05, R06 |
+| T23 | I17, I18 | R03, R05 |
+| T24 | I5, I22 | R02, R10 |
+| T25 | I9, I22 | R08, R09, R10 |
+
+Phase 2 is documentation-complete when T16–T25 have explicit expected outcomes and invariant/regression mappings. Runtime execution remains an implementation task.
+
+
+## Phase 3 Event Engine cases
+
+**E01 Duplicate delivery**
+Deliver the same canonical event twice.
+Expected: one event record and one logical effect; the second delivery returns the existing processing result.
+
+**E02 Event identity conflict**
+Reuse an existing `event_id` with different payload or schema version.
+Expected: reject/quarantine; original event remains unchanged; reconciliation is recorded.
+
+**E03 Retry after processing failure**
+Persist an event, fail projection processing, then retry.
+Expected: durable event remains available and retry does not duplicate effects.
+
+**E04 Causation chain**
+Create a system-generated event from a prior event.
+Expected: valid `causation_id`; `correlation_id` may group the workflow but is not treated as causal proof.
+
+**E05 Unknown predecessor**
+Receive an event whose `causation_id` is missing from the accessible history.
+Expected: explicit unresolved/quarantined condition; no temporal substitution.
+
+**E06 Causal cycle**
+Attempt to create an ordinary event chain whose causation references form a cycle.
+Expected: reject or quarantine.
+
+**E07 Out-of-order aggregate event**
+Deliver a protected state transition with an earlier sequence after a later sequence.
+Expected: buffer, defer, reject or reconcile according to policy; no incompatible state mutation.
+
+**E08 Timestamp/order mismatch**
+An event has an earlier `occurred_at` but later `recorded_at` than another event.
+Expected: timestamps do not silently reorder protected transitions.
+
+**E09 Replay**
+Rebuild a projection from immutable event history.
+Expected: deterministic valid state; no external side effect is repeated.
+
+**E10 Replay versioning**
+Rebuild the same history under a declared newer projection version.
+Expected: historical events remain intact and the projection version is identifiable.
+
+**E11 Reconciliation**
+Two valid events produce an unresolved aggregate conflict.
+Expected: both records remain, reconciliation basis is recorded, and a reconciliation result is auditable.
+
+**E12 Dependent decision reconciliation**
+Correct an evidence source used by dependent Decisions.
+Expected: affected projections/decisions enter reconciliation or review according to impact and policy.
+
+**E13 Quarantined event**
+Submit an invalid or integrity-failing event.
+Expected: no protected state mutation; diagnostic/audit record exists; recovery path is explicit.
+
+**E14 Non-idempotent external effect**
+A retry could repeat an external payment/notification/permission effect.
+Expected: durable effect status plus an explicit idempotency or compensation protocol prevents silent duplication.
+
+**E15 Event data minimization**
+An event producer attempts to include unrelated sensitive subject history.
+Expected: payload is minimized or rejected according to purpose and access policy.
+
+### Phase 3 traceability
+
+| Case | Event invariant | Existing invariant/regression |
+|---|---|---|
+| E01 | E1, E2, E11 | I16, I19; R02, R08, R10 |
+| E02 | E1, E3, E10 | I9, I15; R04, R08, R09 |
+| E03 | E2, E11 | I19, I22; R08, R10 |
+| E04 | E4, E5 | I9, I22; R08, R09 |
+| E05 | E5, E11 | I9, I22; R08, R10 |
+| E06 | E5 | I9, I22; R08, R10 |
+| E07 | E6, E7, E11 | I5, I16, I19; R02, R08, R10 |
+| E08 | E6, E7 | I5, I16; R02, R08 |
+| E09 | E8, E9 | I9, I22; R08, R10 |
+| E10 | E8, E9 | I9, I22; R08, R09, R10 |
+| E11 | E10, E11 | I9, I15, I22; R04, R08, R09, R10 |
+| E12 | E10 | I9, I19; R04, R08, R09 |
+| E13 | E11, E12 | I19, I22; R08, R10 |
+| E14 | E2, E11 | I19, I23; R05, R08, R10 |
+| E15 | E12 | I6, I7, I20; R06, R07 |
+
+Phase 3 is documentation-complete when E01–E15 have explicit expected outcomes, event-engine invariants and traceability to existing architectural invariants/regression groups. Runtime execution remains an implementation task.
+
+
+## Phase 4 Projection / Read Model cases
+
+**P01 Projection rebuild**
+Rebuild a projection from the same immutable event history and projection version.
+Expected: deterministic equivalent projection and no external side effect.
+
+**P02 Projection version change**
+Build the same history with a new projection version.
+Expected: new derived interpretation is identifiable; historical events remain unchanged.
+
+**P03 Projection lag**
+A read model has not processed the latest source event.
+Expected: lag is observable and the read is marked stale when freshness matters.
+
+**P04 Stale high-impact input**
+A stale projection is requested as the current basis for a protected decision.
+Expected: reject, require refresh, or route to review according to policy; stale data is not silently treated as current.
+
+**P05 Failed projection**
+Projection processing fails after an event is durably recorded.
+Expected: source event remains durable; projection enters failed/recovery state; retry is safe.
+
+**P06 Evidence correction propagation**
+An Evidence source used by a projection is corrected or revoked.
+Expected: dependent projection becomes affected/reconciled and dependent decisions are identified.
+
+**P07 Unknown preservation**
+A projection lacks enough source evidence to establish a value.
+Expected: unknown remains explicit; absence of projection data is not converted to negative status.
+
+**P08 Permission projection**
+A technical credential exists but the corresponding Permission is absent or revoked.
+Expected: enforcement follows Permission state, not credential possession.
+
+**P09 Projection privacy boundary**
+A denormalized read model contains fields useful to another purpose.
+Expected: access remains purpose-bound; denormalization does not broaden visibility.
+
+**P10 Aggregate isolation**
+A regional aggregate is queried with individual-level data.
+Expected: aggregate output does not silently expose or rank individual subjects.
+
+**P11 Projection deletion**
+A derived record is removed under retention/privacy policy.
+Expected: projection deletion does not silently claim that the historical event never occurred; applicable retention protocol is explicit.
+
+**P12 Concurrent rebuild**
+A projection rebuild overlaps with new source events.
+Expected: checkpoint/version rules prevent lost updates; final projection can be reconciled deterministically.
+
+### Phase 4 traceability
+
+| Case | Projection invariant | Regression groups |
+|---|---|---|
+| P01 | P1, P2, P3, P5 | R02, R08, R10 |
+| P02 | P1, P2, P3 | R04, R08 |
+| P03 | P2, P4 | R05, R08, R10 |
+| P04 | P4, P6 | R05, R09, R10 |
+| P05 | P3, P5 | R08, R10 |
+| P06 | P6 | R04, R05, R09 |
+| P07 | P4, P6 | R04, R05 |
+| P08 | P7 | R03, R06 |
+| P09 | P7 | R03, R06, R07 |
+| P10 | P8 | R01, R06, R07 |
+| P11 | P1, P7 | R06, R08 |
+| P12 | P2, P3, P5 | R02, R08, R10 |
+
+Phase 4 is documentation-complete when P01–P12 have explicit source history, freshness behavior, rebuild semantics, privacy boundary and regression traceability. Runtime projection materialization remains an implementation task.
+
+
+## Phase 5 Provenance / Dependency Graph cases
+
+**V01 Decision provenance** — a protected Decision is created from Evidence and Policy.
+Expected: both dependency types are reconstructable and remain distinct.
+
+**V02 Evidence revocation propagation** — source Evidence is revoked after a Decision and Projection depend on it.
+Expected: affected descendants are identified and enter reconciliation/review as required; history remains intact.
+
+**V03 Policy version correction** — a Decision references an obsolete Policy version.
+Expected: the original version remains auditable and affected decisions are identifiable.
+
+**V04 Missing provenance** — a protected Decision lacks a required source link.
+Expected: UNKNOWN/UNRESOLVED; guard cannot be satisfied by inference.
+
+**V05 Authority confusion** — Evidence is marked verified and a consumer attempts to treat it as execution authority.
+Expected: rejected; Evidence remains evidentiary only.
+
+**V06 Dependency cycle** — an unexpected cyclic dependency is submitted.
+Expected: quarantine/reject unless the relation type explicitly permits the cycle.
+
+**V07 Projection lineage** — a read model is traced back to its source events.
+Expected: source position and projection version are reconstructable.
+
+**V08 Action lineage** — an Action is traced to its Decision and relevant policy/evidence basis.
+Expected: authorization and execution remain separate and auditable.
+
+**V09 Privacy-bounded traversal** — reviewer requests provenance beyond the declared purpose.
+Expected: unrelated subject data is not disclosed merely because graph edges exist.
+
+**V10 Reconciliation propagation** — reconciliation changes the validity of an upstream dependency.
+Expected: affected descendants are marked/recomputed according to impact; no silent overwrite.
+
+**V11 Supersession** — a source is superseded by a new version.
+Expected: old provenance remains historical and the new dependency is explicitly versioned.
+
+**V12 Aggregate provenance** — an aggregate regional result is traced backward.
+Expected: lineage supports aggregate verification without silently exposing individual ranking/profile data.
+
+### Phase 5 traceability
+
+| Case | Provenance invariant | Regression groups |
+|---|---|---|
+| V01 | V1, V2, V3 | R04, R08, R09 |
+| V02 | V4, V8 | R04, R08, R09, R10 |
+| V03 | V4, V8 | R04, R08, R09 |
+| V04 | V5 | R04, R07, R09 |
+| V05 | V3 | R01, R04, R08 |
+| V06 | V6 | R08, R10 |
+| V07 | V1, V8 | R02, R08 |
+| V08 | V1, V2, V3 | R01, R04, R08 |
+| V09 | V7 | R03, R06, R07 |
+| V10 | V4, V5, V8 | R04, R07, R08, R10 |
+| V11 | V4, V8 | R04, R08 |
+| V12 | V7, V8 | R03, R06, R07 |
+
+Phase 5 is documentation-complete when V01–V12 have explicit dependency semantics, propagation behavior, privacy boundaries and regression traceability. Runtime graph materialization remains an implementation task.
+
+
+## Phase 6 Policy Engine / Impact cases
+
+**Q01 Policy versioning** — evaluate the same request under two policy versions.
+Expected: each outcome identifies its policy version; history is not rewritten.
+
+**Q02 Evidence insufficiency** — required evidence is missing or unresolved.
+Expected: UNKNOWN/REVIEW_REQUIRED; no silent approval or negative subject outcome.
+
+**Q03 Impact escalation** — an ordinary operation becomes high-impact because context, scope or reversibility changes.
+Expected: stronger controls and human review are required.
+
+**Q04 Impact non-person scoring** — engine receives subject attributes and attempts to use them as a value score.
+Expected: prohibited; impact is derived from operation/context, not subject worth.
+
+**Q05 Permission versus authority** — valid technical access exists without normative Permission.
+Expected: policy evaluation cannot infer authority from technical access.
+
+**Q06 Evidence versus execution** — verified Evidence is supplied where Action authorization is required.
+Expected: insufficient; Decision/Action boundary remains intact.
+
+**Q07 Projection staleness** — current decision context comes from a stale projection.
+Expected: refresh/review according to freshness policy; stale data is not silently current.
+
+**Q08 Policy conflict** — two applicable policies produce incompatible requirements.
+Expected: explicit conflict/review outcome; no arbitrary last-write-wins policy choice.
+
+**Q09 High-impact automation** — automated evaluation reaches a high-impact outcome.
+Expected: prescribed human review cannot be bypassed.
+
+**Q10 Explanation minimization** — explanation requires sensitive provenance.
+Expected: sufficient authorized explanation without unrelated sensitive disclosure.
+
+**Q11 Policy change propagation** — current policy changes after prior Decisions.
+Expected: affected current decisions are identifiable; historical decisions retain their original policy basis.
+
+**Q12 Recovery/appeal** — a high-impact decision is challenged.
+Expected: review/reversal/recovery path exists and the original decision history remains auditable.
+
+### Phase 6 traceability
+
+| Case | Policy invariant | Regression groups |
+|---|---|---|
+| Q01 | Q2, Q6 | R04, R08 |
+| Q02 | Q5 | R04, R07, R09 |
+| Q03 | Q3, Q4 | R01, R05, R09 |
+| Q04 | Q3 | R01, R06, R07 |
+| Q05 | Q7 | R03, R05, R06 |
+| Q06 | Q1, Q7 | R01, R04, R08 |
+| Q07 | Q5, Q8 | R05, R08, R10 |
+| Q08 | Q2, Q5 | R04, R08, R09 |
+| Q09 | Q4 | R01, R05, R09 |
+| Q10 | Q8 | R03, R06, R07 |
+| Q11 | Q2, Q6 | R04, R08, R09 |
+| Q12 | Q4, Q6 | R01, R04, R08, R10 |
+
+Phase 6 is documentation-complete when Q01–Q12 have explicit outcomes, impact semantics and regression traceability. Runtime policy evaluation remains an implementation task.
+
+
+## Phase 7 Human Review cases
+
+**H01 Review trigger** — high-impact PolicyDecision requires human oversight.
+Expected: review record is created with explicit trigger, policy version and reason.
+
+**H02 Minimal review packet** — reviewer requests unrelated subject history.
+Expected: unrelated data is not automatically disclosed.
+
+**H03 Reviewer conflict** — assigned reviewer participated in the original decision.
+Expected: conflict is recorded and independent reassignment/escalation path is available.
+
+**H04 Structured outcome** — reviewer confirms, modifies or reverses an outcome.
+Expected: outcome, reason, reviewer role, timestamp and affected transition are auditable.
+
+**H05 Review deadline** — high-impact review remains pending beyond its target.
+Expected: overdue status is explicit and does not silently convert to approval or indefinite restriction.
+
+**H06 Temporary restriction expiry** — restriction reaches its expiry/re-check condition before review completion.
+Expected: expiry/re-check is evaluated explicitly; delay alone cannot extend the restriction silently.
+
+**H07 Action separation** — reviewer attempts to execute an Action directly from the review interface.
+Expected: review produces a structured outcome; Action remains subject to the established Decision/Action boundary.
+
+**H08 Reversal history** — review reverses a prior Decision.
+Expected: original Decision remains historical; reversal is a new auditable outcome/event.
+
+**H09 Contestability** — subject disputes a material review outcome.
+Expected: applicable dispute/review path remains available and the contested state is explicit.
+
+**H10 Review-data expansion** — review trigger is used to request complete subject history.
+Expected: no automatic expansion; additional access requires separate purpose and authority.
+
+### Phase 7 traceability
+
+| Case | Human Review invariant | Regression groups |
+|---|---|---|
+| H01 | H1, H4 | R05, R08 |
+| H02 | H2, H10 | R03, R06 |
+| H03 | H3 | R05, R10 |
+| H04 | H4, H8 | R05, R08, R09 |
+| H05 | H5 | R05, R10 |
+| H06 | H6, H8 | R05, R09, R10 |
+| H07 | H7 | R01, R05, R08 |
+| H08 | H8 | R04, R05, R09 |
+| H09 | H9 | R05, R06, R09 |
+| H10 | H2, H10 | R03, R06, R07 |
+
+
+## Phase 8 Audit / Observability cases
+
+**A01 Purpose-bound audit** — an audit stream is created without a declared purpose.
+Expected: ingestion is rejected or quarantined until purpose/retention basis is defined.
+
+**A02 Telemetry separation** — operational metrics are used as if they were authoritative AuditRecord evidence.
+Expected: telemetry cannot acquire audit authority by inference.
+
+**A03 Audit access** — a reviewer requests unrelated subject history through audit tooling.
+Expected: purpose and Permission checks restrict unrelated disclosure.
+
+**A04 Audit integrity** — an existing AuditRecord is modified after recording.
+Expected: modification is detectable; correction is represented as a new record/event.
+
+**A05 Audit access audit** — an operator reads protected audit data.
+Expected: the access itself is auditable.
+
+**A06 Aggregate-to-profile escalation** — regional aggregate telemetry is drilled into individual ranking without a separate purpose.
+Expected: escalation is blocked or requires explicit authorization.
+
+**A07 High-impact monitoring** — monitoring of a high-impact operation attempts to bypass Human Review.
+Expected: observability cannot create or remove review requirements.
+
+**A08 Audit outage** — protected execution occurs while durable audit storage is unavailable.
+Expected: operation follows the declared safe/deferred policy; outage is explicitly recorded when possible and never silently erased.
+
+**A09 Retention expiry** — a telemetry class reaches its declared retention limit.
+Expected: expiry/deletion follows its class policy and does not silently rewrite separately retained historical records.
+
+**A10 Correction propagation** — an underlying Decision is corrected.
+Expected: dependent audit indexes/views identify the correction without rewriting the original historical record.
+
+### Phase 8 traceability
+
+| Case | Audit invariant | Regression groups |
+|---|---|---|
+| A01 | A1, A10 | R02, R08 |
+| A02 | A2, A6 | R03, R08 |
+| A03 | A3 | R03, R06, R07 |
+| A04 | A4, A5 | R04, R08, R09 |
+| A05 | A3 | R02, R08 |
+| A06 | A6, A7 | R02, R03, R06 |
+| A07 | A6, A8 | R01, R05, R06 |
+| A08 | A9 | R08, R10 |
+| A09 | A10 | R02, R08, R10 |
+| A10 | A5, A10 | R04, R08, R09 |
+
+
+## Phase 9 Federation cases
+
+**F01 Node identity** — a connected node has no declared governance scope.
+Expected: federation trust/authority is not established.
+
+**F02 Assertion minimization** — a node requests an entire subject record for a narrow verification purpose.
+Expected: request is minimized or rejected according to purpose and access policy.
+
+**F03 Remote assertion authority** — a valid remote assertion is treated as local Action authority.
+Expected: local Permission/Policy/Review controls remain mandatory.
+
+**F04 Remote versus local verification** — remote issuer asserts a fact that local policy requires independent verification for.
+Expected: remote assertion remains distinct from locally verified fact.
+
+**F05 Revocation propagation** — source node revokes an assertion already used downstream.
+Expected: affected dependents are identified and re-evaluated without rewriting historical issuance.
+
+**F06 Remote outage** — source node is unavailable during a protected decision.
+Expected: stale/unavailable status is explicit; outage does not become a negative subject fact.
+
+**F07 Contradictory assertions** — two trusted nodes provide conflicting assertions.
+Expected: conflict follows declared reconciliation policy and remains auditable.
+
+**F08 Cross-node profile construction** — repeated federation exchanges are aggregated into an unrestricted individual profile.
+Expected: aggregation is blocked or bounded by explicit purpose and authorization.
+
+**F09 Local sovereignty** — remote node requests direct execution of a protected local Action.
+Expected: remote request cannot bypass local Decision, Policy and Human Review controls.
+
+**F10 Protocol evolution** — receiving node encounters an unsupported federation schema version.
+Expected: explicit compatibility/failure path; no silent reinterpretation.
+
+### Phase 9 traceability
+
+| Case | Federation invariant | Regression groups |
+|---|---|---|
+| F01 | F1, F2 | R03, R07 |
+| F02 | F3 | R03, R06, R07 |
+| F03 | F2, F7 | R03, R05, R07 |
+| F04 | F4, F6 | R04, R07 |
+| F05 | F5 | R04, R07, R09 |
+| F06 | F6 | R05, R07, R10 |
+| F07 | F5, F6 | R04, R07, R09 |
+| F08 | F8 | R02, R03, R06, R07 |
+| F09 | F7, F9 | R03, R05, R07 |
+| F10 | F10 | R07, R08, R10 |
+
+
+## Phase 10 Formal Verification cases
+
+**FV01 Unauthorized transition** — a transition is attempted without required authority.
+Expected: the model proves the protected state cannot enter the unauthorized successor state.
+
+**FV02 Decision-to-Action bypass** — a permitted Decision attempts to create a protected Action without required review/execution authority.
+Expected: invariant violation is detected; no valid trace permits the bypass.
+
+**FV03 Duplicate event effect** — the same event is delivered repeatedly.
+Expected: idempotency invariant holds; repeated delivery does not create additional protected effects.
+
+**FV04 Unknown preservation** — required evidence is unresolved.
+Expected: model preserves UNKNOWN/REVIEW_REQUIRED rather than deriving a negative business state.
+
+**FV05 High-impact review bypass** — an automated path attempts to skip mandatory Human Review.
+Expected: safety property is violated by the attempted trace and the protected transition remains unreachable.
+
+**FV06 Authority from data/federation** — additional data or remote connectivity is introduced without Permission.
+Expected: authority scope remains unchanged.
+
+**FV07 Historical overwrite** — correction attempts to mutate the original historical event/decision in place.
+Expected: original history remains immutable; correction is represented separately.
+
+**FV08 Exit integrity** — optional process exit triggers an unrelated protected penalty.
+Expected: forbidden penalty state is unreachable solely because of exit.
+
+**FV09 Bounded recovery** — protected processing fails after durable event creation.
+Expected: recovery path reaches a consistent state without deleting the source event or duplicating protected effects.
+
+**FV10 Counterexample traceability** — intentionally weaken one invariant in the model.
+Expected: checker produces a reproducible counterexample demonstrating the affected boundary.
+
+**FV11 Model-version change** — an invariant or state definition changes.
+Expected: affected proof obligations are marked stale until rechecked.
+
+**FV12 Abstraction boundary** — a model omits a transport/storage detail.
+Expected: the omission is explicitly recorded as outside proof scope and is not represented as proven behavior.
+
+### Phase 10 traceability
+
+| Case | Formal invariant | Existing invariants | Regression groups |
+|---|---|---|---|
+| FV01 | FV2, FV6 | I17, I18 | R02, R03 |
+| FV02 | FV2, FV5 | I11, I23 | R05, R08 |
+| FV03 | FV2 | I16 | R02, R08, R10 |
+| FV04 | FV2, FV6 | I15 | R04, R05, R07 |
+| FV05 | FV2, FV5 | I11, I23 | R05, R06 |
+| FV06 | FV2, FV3 | I17, I18, I20 | R03, R07 |
+| FV07 | FV2, FV4 | I9, I19 | R04, R08, R09 |
+| FV08 | FV2 | I12, I24 | R06, R08 |
+| FV09 | FV5, FV6 | I16, I22 | R08, R10 |
+| FV10 | FV4 | all affected invariants | R01–R10 as applicable |
+| FV11 | FV7 | affected invariant set | affected regression groups |
+| FV12 | FV1, FV3, FV8 | selected kernel invariants | R01, R08, R10 |
+
+
+## Phase 10A Critical Kernel cases
+
+**K01 Reachability boundary** — enumerate protected successors from an unauthorized state.
+Expected: no protected successor is reachable.
+
+**K02 Decision/Action refinement** — attempt to map a Decision directly to completed Action.
+Expected: required execution transition remains explicit and bypass is unreachable.
+
+**K03 Event idempotency** — replay the same event identity across acceptance and effect application.
+Expected: protected effect occurs at most once.
+
+**K04 Unknown preservation** — remove or invalidate required provenance during evaluation.
+Expected: UNKNOWN/UNRESOLVED remains represented and does not become a negative subject outcome.
+
+**K05 Review barrier** — high-impact operation reaches execution while review is incomplete.
+Expected: execution state is unreachable.
+
+**K06 Authority non-escalation** — inject technical data access, Projection visibility or federation connectivity.
+Expected: normative authority set is unchanged.
+
+**K07 Historical correction** — correct a recorded event or Decision.
+Expected: original historical record remains reconstructable and corrective lineage is explicit.
+
+**K08 Recovery idempotency** — fail processing after durable event acceptance and retry recovery.
+Expected: no duplicate protected effect.
+
+**K09 Unknown closure** — attempt to force every unresolved state into a binary outcome.
+Expected: model permits explicit UNKNOWN/UNRESOLVED state.
+
+**K10 Terminal reconstruction** — reconstruct terminal state from historical events.
+Expected: terminal state is reproducible without mutating history.
+
+
+## Phase 11 Pilot cases
+
+**P11-01 Bounded scope** — pilot attempts to include an undeclared data class or participant group.
+Expected: scope expansion is blocked pending explicit review.
+
+**P11-02 Runtime idempotency** — duplicate protected Event is delivered during the pilot.
+Expected: no duplicate protected effect.
+
+**P11-03 Runtime review barrier** — high-impact pilot operation reaches the execution path without completed review.
+Expected: execution is blocked.
+
+**P11-04 Correction propagation** — pilot Evidence is corrected after a Decision was derived from it.
+Expected: affected outputs enter reconciliation/review and original history remains intact.
+
+**P11-05 Recovery** — pilot service fails after durable event acceptance.
+Expected: recovery restores a consistent state without duplicate effects.
+
+**P11-06 Privacy expansion** — pilot operator requests unrelated subject data.
+Expected: access is denied or explicitly reviewed under a separate purpose.
+
+**P11-07 Audit loss** — protected operation cannot produce required durable audit evidence.
+Expected: declared safe/deferred behavior is applied; silent execution is prohibited.
+
+**P11-08 Stop condition** — an architectural invariant is violated.
+Expected: pilot pauses/stops and records the incident and affected invariant.
+
+**P11-09 Exit/rollback** — pilot participant or operator invokes a valid exit path.
+Expected: reversible pilot processes terminate without unrelated penalty.
+
+**P11-10 Expansion request** — pilot results are used to activate a broader population or workflow.
+Expected: separate expansion review is required; pilot success alone is insufficient.
+
+### Phase 11 traceability
+
+| Case | Pilot invariant | Regression groups |
+|---|---|---|
+| P11-01 | P11-1, P11-6 | R03, R06, R07 |
+| P11-02 | P11-3 | R02, R08, R10 |
+| P11-03 | P11-3 | R01, R05, R06 |
+| P11-04 | P11-3 | R04, R08, R09 |
+| P11-05 | P11-3 | R08, R10 |
+| P11-06 | P11-1, P11-3 | R03, R06 |
+| P11-07 | P11-3, P11-4 | R02, R08, R10 |
+| P11-08 | P11-4 | R01, R08, R10 |
+| P11-09 | P11-2, P11-3 | R06, R08 |
+| P11-10 | P11-5, P11-6 | R01–R10 as applicable |

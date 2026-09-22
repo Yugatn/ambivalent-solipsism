@@ -10,19 +10,29 @@
 
 ## Архитектура раздела
 
-- [Принципы](principles.md)
-- [Субъект и мотивация](subject-and-motivation.md)
-- [Профессиональный профиль](professional-profile.md)
-- [Профессиональная история](professional-history.md)
-- [Работодатель и вакансии](employer-and-recruitment.md)
-- [Условия труда и обратная связь](work-conditions.md)
-- [Репутация и доверие](reputation.md)
-- [Proof of Development](proof-of-development.md)
-- [Региональный вклад и социальные программы](regional-development.md)
-- [Самозанятые и профессиональные услуги](self-employed.md)
-- [Образование и PROF-MAP](education-and-prof-map.md)
-- [Безопасность и государственная интеграция](privacy-and-state-integration.md)
-- [Техническая архитектура и интерфейс](architecture.md)
+- [Принципы](governance/principles.md)
+- [Субъект и мотивация](domain/subject-and-motivation.md)
+- [Профессиональный профиль](domain/professional-profile.md)
+- [Профессиональная история](domain/professional-history.md)
+- [Работодатель и вакансии](domain/employer-and-recruitment.md)
+- [Условия труда и обратная связь](domain/work-conditions.md)
+- [Репутация и доверие](domain/reputation.md)
+- [Proof of Development](domain/proof-of-development.md)
+- [Региональный вклад и социальные программы](regional/development.md)
+- [Самозанятые и профессиональные услуги](domain/self-employed.md)
+- [Образование и PROF-MAP](domain/education-and-prof-map.md)
+- [Безопасность и государственная интеграция](privacy/state-integration.md)
+- [Техническая архитектура и интерфейс](architecture/overview.md)
+
+## Ядро
+
+СТСеть строится вокруг пяти связанных положений:
+
+1. **Субъектность:** человек не сводится к профессиональной модели.
+2. **Развитие:** труд является одним из процессов развития человека и общества.
+3. **Взаимность:** прозрачность и ответственность должны быть достаточно симметричными.
+4. **Проверяемость:** существенные утверждения и решения должны иметь происхождение, контекст и возможность пересмотра.
+5. **Ограниченное вмешательство:** неопределённость ограничивает полномочия системы, а не расширяет их.
 
 ## Четыре уровня
 
@@ -31,7 +41,7 @@
 3. **Общественный вклад:** трудовой и налоговый вклад, региональное развитие, идеи и солидарные программы.
 4. **Государственная инфраструктура:** необходимые государственные сервисы, защищённый обмен данными, обращения и аудит.
 
-Над всеми уровнями действует контур субъектности: **Privacy, Consent, Context, Audit, Correction, Appeal**.
+Над всеми уровнями действует контур субъектности: **Privacy, Consent, Context, Policy, Audit, Correction, Appeal**.
 
 ## Фундаментальное ограничение
 
@@ -40,3 +50,323 @@
 > **Reality = Model + Residual.**
 
 СТСеть никогда не знает человека полностью. Поэтому цифровая история, рейтинг, психологический профиль, налоговый вклад или результат труда не должны становиться заменой человеку.
+
+## Новый слой: справедливость процесса
+
+СТСеть не обещает автоматически справедливый результат каждого трудового спора. Она задаёт проверяемую процедуру:
+
+**основание, контекст, фиксация, проверка, уведомление, решение, апелляция, аудит.**
+
+Это позволяет отделить принцип справедливости процесса от предположения, что любая автоматизированная оценка уже является справедливым решением.
+
+## Связь с экосистемой
+
+- **PROF-MAP и PSY-TOOLS** помогают исследовать профессиональные направления и развитие.
+- **Proof of Development** фиксирует подтверждаемую часть результатов и развития.
+- **PICCS** ограничивает необратимое вмешательство при неопределённости.
+- **EthicalAudit** выявляет потенциальные нарушения когнитивной безопасности и субъектности.
+- **Information Ecology** задаёт требования к среде, в которой человек получает трудовую и профессиональную информацию.
+- **Eugene Messenger** потенциально может использоваться как защищённый коммуникационный слой.
+- **Solidarity Fund** связан с добровольными механизмами взаимопомощи и развития.
+
+Связи являются архитектурными зависимостями, а не утверждением о полной технической интеграции всех компонентов.
+
+## Статус
+
+СТСеть является развиваемым проектом. Правовые нормы, экономические стимулы, государственные интеграции и технические стандарты должны описываться отдельными спецификациями и проверяться на практике.
+
+
+## Интеграционная карта
+
+- [Карта интеграции СТСети](integration/map.md)
+
+Она фиксирует связи проекта с каноном АС, Конституцией, экономикой, Human Network, PROF-MAP, PSY-TOOLS, Proof of Development, PICCS, EthicalAudit и государственной инфраструктурой. Это не новая философская норма, а контрольная архитектурная карта.
+
+
+## 14 · Новый контрольный контур
+
+СТСеть дополнительно использует четыре ограничения:
+
+- **Недостаточно данных** — отсутствие информации не превращается автоматически в отрицательный вывод.
+- **Срок жизни вывода** — производные оценки устаревают вместе с изменением исходного контекста.
+- **Право на выход** — необязательные сервисы не должны превращаться в обязательное условие участия в обществе.
+- **Восстановление после ошибки** — исправление затрагивает не только запись, но и существенные последствия ошибочного решения.
+
+Эти положения расширяют существующие гарантии, не заменяя их.
+
+## 15 · Трассируемость
+
+Для существенного механизма должна быть восстановима цепочка:
+
+**принцип, основание, правило, техническое действие, событие, решение, аудит.**
+
+Так СТСеть становится не просто набором функций, а проверяемой архитектурой.
+
+## 16 · Критерий зрелости
+
+Новый модуль считается достаточно проработанным, если можно ответить:
+
+1. какую возможность он создаёт;
+2. какой риск добавляет;
+3. какие данные использует;
+4. кто получает полномочие;
+5. как субъект узнаёт о результате;
+6. как исправляется ошибка;
+7. как происходит апелляция;
+8. что происходит при недостатке данных или отказе внешней системы.
+
+
+
+## 17 · Экономический контур
+
+- [Экономика труда и вознаграждение](economy/remuneration.md)
+- [Преимущества и стимулы](support/benefits-and-incentives.md)
+- [Solidarity Fund](support/solidarity-fund.md)
+
+Экономический контур отделяет измеримые экономические отношения от ценности субъекта и связывает вознаграждение, развитие и взаимопомощь с принципами АС.
+
+
+## 18 · Жизненный цикл
+
+- [Жизненный цикл трудового взаимодействия](state/work-lifecycle.md)
+- [Подбор и сопоставление](domain/recruitment-and-matching.md)
+- [Трудовые споры и восстановление](dispute/resolution.md)
+- [Переходы, перерывы и безработица](support/transition-and-unemployment.md)
+
+Жизненный цикл рассматривает труд как изменяющийся процесс, а не как одно решение о найме.
+
+
+## 19 · Инфраструктура, развитие и коллективное действие
+
+- [Инфраструктура и мобильность труда](regional/infrastructure-and-mobility.md)
+- [Цифровой доступ и рабочая инфраструктура](support/digital-access.md)
+- [Образование, навыки и переходы](domain/education-and-skills.md)
+- [Коллективное действие и представительство](collective/action.md)
+
+СТСеть рассматривает возможность трудиться как взаимодействие субъекта с социальной, транспортной, цифровой и образовательной средой.
+
+
+## 20 · Региональное развитие
+
+- [Региональные узлы СТСети](regional/nodes.md)
+- [Региональная экономика и распределение возможностей](regional/economy.md)
+- [Транспорт и труд](regional/transport-work-integration.md)
+- [Локальные проекты и развитие](domain/local-projects.md)
+
+Региональный контур связывает трудовые возможности с инфраструктурой территории, не превращая региональную аналитику в рейтинг жителей.
+
+
+## 21 · Государственный контур
+
+- [Государственный интерфейс](integration/state-interface.md)
+- [Социальная защита и переходы](support/social-protection.md)
+- [Налоги, взносы и общественный вклад](economy/tax-and-contribution.md)
+- [Государственные программы развития](support/public-programs.md)
+
+Государственный контур определяет интерфейс между СТСетью и государственными функциями, сохраняя разделение полномочий, минимизацию данных и право субъекта на объяснение и пересмотр.
+
+
+## 22 · Информационная архитектура
+
+- [Информационная архитектура](architecture/information-architecture.md)
+- [Идентичность и согласие](privacy/identity-and-consent.md)
+- [Доверие и provenance](evidence/trust-and-provenance.md)
+- [Управление данными](privacy/data-governance.md)
+
+Информационный контур разделяет исходные данные, утверждения, сигналы, выводы и решения и ограничивает использование данных их конкретным назначением.
+
+
+## 23 · Техническое ядро
+
+- [Техническое ядро](architecture/technical-core.md)
+- [Permissions, consent и делегирование](privacy/permissions-and-consent.md)
+- [API и межсистемное взаимодействие](integration/api-and-interoperability.md)
+- [Формальные инварианты](verification/invariants.md)
+
+Технический контур превращает принципы СТСети в проверяемые события, состояния, полномочия, API-контракты и инварианты.
+
+
+## 24 · Формальный протокол
+
+- [Протокол событий](event/protocol.md)
+- [Модель сущностей](architecture/entity-model.md)
+- [Policy Engine](policy/engine.md)
+- [Тестовые сценарии](verification/test-scenarios.md)
+
+Формальный контур определяет события, сущности, политики доступа и проверяемые сценарии, связывая философские ограничения СТСети с исполнимой архитектурой.
+
+
+## 25 · Reconciliation, Human Review и Audit
+
+- [Граф зависимостей и reconciliation](decision/reconciliation-graph.md)
+- [Human Review](decision/human-review.md)
+- [Audit и наблюдаемость](audit/observability-architecture.md)
+- [Архитектурный review](architecture/review.md)
+
+Этот слой связывает provenance, policy decisions и исправления: ошибка в исходных данных может быть прослежена до зависимых решений, а высокоэффектные действия получают формализованный пересмотр.
+
+
+## 26 · State Machines и Safety Kernel
+
+- [State Machines](state/machines.md)
+- [Спецификация переходов](state/transition-spec.md)
+- [Safety Kernel](security/safety-kernel.md)
+- [Формальная верификация](verification/formal-verification.md)
+
+Этот слой превращает архитектурные инварианты в допустимые состояния, переходы, защитные проверки и формально проверяемые свойства.
+
+
+## 27 · Decision Lifecycle, Subject Control и Roadmap
+
+- [Жизненный цикл решения](decision/decision-lifecycle.md)
+- [Согласованность и конкурирующие изменения](architecture/consistency-model.md)
+- [Субъектный контроль](privacy/subject-control.md)
+- [Дорожная карта реализации](architecture/implementation-roadmap.md)
+
+Новый слой связывает state machines, policy decisions, human review, субъектный контроль и последовательную реализацию прототипа.
+
+
+## 28 · Machine Contracts и Invariants
+
+- [Машинные контракты](integration/schema-contract.md)
+- [Матрица Entity × Event × Guard × Invariant](architecture/entity-event-matrix.md)
+- [Federation Contract](integration/federation-contract.md)
+- [Формальные инварианты](verification/invariants.md)
+
+Этот слой фиксирует минимальные контракты данных, границы федерации и свойства, которые реализация не должна нарушать.
+
+
+## 29 · Migration Audit и Traceability
+
+- [Content-Level Audit](migration/content-audit.md)
+- [Migration Map](migration/map.md)
+- [Traceability Matrix](migration/traceability-matrix.md)
+- [Regression Suite](verification/regression-suite.md)
+
+Эти документы контролируют не только наличие исходных файлов, но и сохранение их смыслового содержания после декомпозиции.
+
+
+## 30 · Domain Layer
+
+Предметная модель вынесена в отдельный доменный слой:
+
+- [Domain README](domain/README.md)
+- [Subject](domain/subject.md)
+- [Opportunity](domain/opportunity.md)
+- [Engagement](domain/engagement.md)
+- [Evidence](domain/evidence.md)
+- [Development](domain/development.md)
+- [Support](domain/support.md)
+- [Employer](domain/employer.md)
+- [Regional Development](domain/regional-development.md)
+- [Reputation](domain/reputation.md)
+- [Self-Employment](domain/self-employment.md)
+
+Доменный слой не зависит от конкретной БД, UI или транспортного протокола.
+
+
+## 31 · Policy Layer
+
+- [Policy](policy/README.md)
+- [Authority](policy/authority.md)
+- [Data Access](policy/data-access.md)
+- [Recruitment](policy/recruitment.md)
+- [Development](policy/development.md)
+- [Support](policy/support.md)
+- [Regional Development](policy/regional-development.md)
+- [Federation](policy/federation.md)
+- [Human Review](policy/review.md)
+
+Policy отделён от Domain: сущности описывают предметную область, а Policy определяет допустимые действия в конкретном контексте.
+
+
+## 32 · Event Layer
+
+- [Event](event/README.md)
+- [Lifecycle](event/lifecycle.md)
+- [Types](event/types.md)
+- [Idempotency](event/idempotency.md)
+
+## 33 · Evidence Layer
+
+- [Evidence](evidence/README.md)
+- [Provenance](evidence/provenance.md)
+- [Verification](evidence/verification.md)
+- [Challenge](evidence/challenge.md)
+
+## 34 · Decision Layer
+
+- [Decision](decision/README.md)
+- [Lifecycle](decision/lifecycle.md)
+- [Impact Classification](decision/impact.md)
+- [Reconciliation](decision/reconciliation.md)
+
+
+## 35 · State Layer
+
+- [State](state/README.md)
+- [State Machines](state/machines.md)
+- [Subject](state/subject.md)
+- [Opportunity](state/opportunity.md)
+- [Engagement](state/engagement.md)
+- [Evidence](state/evidence.md)
+- [Decision](state/decision.md)
+- [Permission](state/permission.md)
+- [Dispute](state/dispute.md)
+
+## 36 · Action Layer
+
+- [Action](action/README.md)
+- [Reversibility](action/reversibility.md)
+- [Failure Handling](action/failure.md)
+
+State показывает текущую конфигурацию, Event сохраняет произошедшее, Decision определяет допустимое последствие, Action фиксирует его фактическое применение.
+
+
+## 37 · Audit Layer
+
+- [Audit](audit/README.md)
+- [Decision Log](audit/decision-log.md)
+- [Integrity](audit/integrity.md)
+- [Observability](audit/observability.md)
+
+## 38 · Privacy and Data Governance
+
+- [Privacy](privacy/README.md)
+- [Purpose](privacy/purpose.md)
+- [Retention](privacy/retention.md)
+- [Subject Rights](privacy/subject-rights.md)
+
+## 39 · Support Layer
+
+- [Support](support/README.md)
+- [Work Support](support/work-support.md)
+
+## 40 · Regional Layer
+
+- [Regional](regional/README.md)
+- [Regional Analytics](regional/analytics.md)
+
+
+## 41 · Security Layer
+
+- [Security](security/README.md)
+- [Authorization Enforcement](security/authorization-enforcement.md)
+- [Abuse Prevention](security/abuse-prevention.md)
+- [Incident Response](security/incident-response.md)
+
+## 42 · Verification Layer
+
+- [Verification](verification/README.md)
+- [Invariant Tests](verification/invariant-tests.md)
+- [State Tests](verification/state-tests.md)
+- [Policy Tests](verification/policy-tests.md)
+- [Migration Tests](verification/migration-tests.md)
+
+## 43 · Integration Layer
+
+- [Integration](integration/README.md)
+- [API Contract](integration/api-contract.md)
+- [Legacy Bridge](integration/legacy-bridge.md)
+
+Legacy Bridge существует только на период миграции и не создаёт второй канон.
