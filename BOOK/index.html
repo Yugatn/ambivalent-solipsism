@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Книга · Амбивалентный Солипсизм</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#02050a;--line:rgba(69,240,195,.16);--line2:rgba(69,240,195,.38);--text:#eef7f5;--muted:#91a7a7;--accent:#45f0c3}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}
+body{font-family:Manrope,system-ui,sans-serif;line-height:1.75;background:radial-gradient(circle at 50% 0,rgba(69,240,195,.07),transparent 34%),var(--bg)}
+.wrap{max-width:1050px;margin:auto;padding:30px 20px 80px}.back{color:var(--accent);text-decoration:none;font:12px JetBrains Mono,monospace}
+.eyebrow{margin-top:40px;color:var(--accent);font:11px JetBrains Mono,monospace;letter-spacing:.18em}
+h1,h2,h3{font-family:Unbounded,sans-serif;font-weight:500;line-height:1.25}h1{font-size:clamp(30px,6vw,58px);margin:12px 0 20px}h2{font-size:22px;margin-top:45px}h3{font-size:17px}
+.lead{max-width:820px;color:var(--muted);font-size:17px}.status{display:inline-block;margin-top:14px;padding:7px 11px;border:1px solid var(--line);border-radius:999px;color:var(--accent);font:11px JetBrains Mono,monospace}
+.panel{margin-top:30px;padding:24px;border:1px solid var(--line);border-radius:20px;background:rgba(7,17,15,.72)}
+.chapter{display:block;padding:12px 14px;margin:7px 0;border:1px solid transparent;border-radius:12px;color:var(--text);text-decoration:none}.chapter:hover{border-color:var(--line2);background:rgba(69,240,195,.05)}
+.number{display:inline-block;width:42px;color:var(--accent);font:11px JetBrains Mono,monospace}.tag{display:inline-block;margin:4px;padding:5px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font:11px JetBrains Mono,monospace}
+.notice{border-left:2px solid var(--accent);padding:14px 18px;background:rgba(69,240,195,.06);color:var(--muted)}
+#content{margin-top:42px}#content h1{font-size:34px}#content h2{font-size:22px}#content h3{font-size:17px}#content p,#content li{color:#d6e3e0}#content a{color:var(--accent)}
+.error{color:#ffb6b6}.footer{margin-top:60px;color:#718681;font:11px JetBrains Mono,monospace}
+@media(max-width:650px){.wrap{padding:22px 15px 60px}.panel{padding:17px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<a class="back" href="../">Главное меню</a>
+<div class="eyebrow">BOOK / OPEN RESEARCH EDITION</div>
+<h1>Амбивалентный Солипсизм</h1>
+<p class="lead">Рабочая редакция книги. Авторская философия, модели, гипотезы и исследовательские материалы собраны в единой структуре.</p>
+<div class="status" id="status">Загрузка содержания книги</div>
+
+<section class="panel">
+<h2>Маркировка материалов</h2>
+<span class="tag">[AS] авторская концепция</span>
+<span class="tag">[SCIENCE] научное утверждение</span>
+<span class="tag">[MODEL] модель</span>
+<span class="tag">[HYPOTHESIS] гипотеза</span>
+<span class="tag">[UNKNOWN] неизвестное</span>
+</section>
+
+<section class="panel">
+<h2>Архитектура книги</h2>
+<div id="chapters">Формирование списка глав…</div>
+</section>
+
+<section id="content">
+<div class="notice">Содержание README загружается непосредственно из репозитория.</div>
+</section>
+<footer class="footer">АМБИВАЛЕНТНЫЙ СОЛИПСИЗМ · КНИГА · СЛОЖНОСТЬ НЕ ОШИБКА · ДРУГОЙ РЕАЛЕН</footer>
+</main>
+
+<script>
+(function(){
+const chapterNames=[
+["00_STORY_X.md","00","Сюжет X"],["01_PERCEPTION_AND_SUBJECT.md","01","Восприятие и субъект"],["02_REALITY_MODEL_AND_RESIDUAL.md","02","Реальность: модель и остаток"],["03_SOCIAL_SUPERPOSITION.md","03","Социальная суперпозиция"],["04_THE_OTHER_AS_SUBJECT.md","04","Другой как субъект"],["04A_EXISTENCE_SUBJECT_AND_OTHER.md","04A","Существование, субъект и Другой"],["05_INDIVIDUALITY_AND_RIGHT_TO_EXIT.md","05","Индивидуальность и право на выход"],["06_LAW_OF_DEVELOPMENT.md","06","Закон развития"],["07_ETHICS_AND_HARM.md","07","Этика и вред"],["08_SOCIETY_AS_INTERCONNECTED_SYSTEM.md","08","Общество как взаимосвязанная система"],["09_POWER_INFORMATION_AND_PERCEPTION.md","09","Власть, информация и восприятие"],["10_AI_AND_SYMBIONT.md","10","ИИ и симбионт"],["11_CONSTITUTION.md","11","Конституция"],["12_ETHICS_OF_STATE_SERVICE.md","12","Этика государственной службы"],["13_CIVIL_SERVICE_SELECTION.md","13","Отбор на государственную службу"],["14_DIAGNOSTIC_MATRIX_STATE_SERVICE.md","14","Диагностическая матрица государственной службы"],["15_SEMANTIC_ECOLOGY.md","15","Семантическая экология"],["16_SEMANTIC_IMPACT_MATRIX.md","16","Матрица семантического воздействия"],["17_CINEMA_COMPLEMENTARITY.md","17","Кинодополняемость"],["18_SYSTEMIC_INTERDEPENDENCE_AND_SELF_CORRECTION.md","18","Системная взаимозависимость и самокоррекция"],["19_PICCS_LIMITED_RESPONSIBILITY.md","19","PICCS: ограниченная ответственность"],["20_ECONOMY_SOLIDARITY_AND_DEVELOPMENT.md","20","Экономика, солидарность и развитие"],["21_QUIET_ROOM_AND_COGNITIVE_SOVEREIGNTY.md","21","Тихая комната и когнитивный суверенитет"],["22_COMMUNICATION_AND_COGNITIVE_SAFETY.md","22","Коммуникация и когнитивная безопасность"],["23_ETHICALAUDIT_FORMALIZATION.md","23","EthicalAudit: формализация когнитивной безопасности"],["24_COMMUNICATION_ECOSYSTEM.md","24","Коммуникационная экосистема"],["25_RIGHT_TO_ERROR_AND_REVISION.md","25","Право на ошибку, изменение и пересмотр"],["26_TIME_MEMORY_AND_CHANGING_SUBJECT.md","26","Время, память и изменяющийся субъект"],["27_BODY_HEALTH_AND_SUBJECT.md","27","Тело, здоровье и границы субъекта"],["28_DEATH_FINALITY_AND_UNKNOWN.md","28","Смерть, конечность и неизвестность"],["29_RESIDUAL_AND_EPISTEMOLOGY_OF_UNKNOWN.md","29","Residual и эпистемология неизвестного"],["30_IMPERFECTNESS_IMPERATIVE.md","30","Императив Имперфектности"],["31_PRISON_REFORM.md","31","Тюремная реформа"],["32_BRAIN_AS_FRACTAL_AND_HUMAN_HISTORY.md","32","Мозг как фрактальная карта развития"],["33_FEAR_OF_DEATH_AND_GENERATIONAL_CONTINUITY.md","33","Страх смерти и непрерывность развития"],["34_SOCIAL_LABOR_NETWORK.md","34","Социальная трудовая сеть"],["35_PSY_TOOLS_AND_SUBJECT_MODEL.md","35","PSY-TOOLS и модель субъекта"]
+];
+document.getElementById("chapters").innerHTML=chapterNames.map(x=>'<a class="chapter" href="./'+encodeURI(x[0])+'"><span class="number">'+x[1]+'</span>'+x[2]+'</a>').join("");
+
+function md(s){
+s=s.replace(/\r/g,"");
+s=s.replace(/^### (.+)$/gm,"<h3>$1</h3>").replace(/^## (.+)$/gm,"<h2>$1</h2>").replace(/^# (.+)$/gm,"<h1>$1</h1>");
+s=s.replace(/^> (.+)$/gm,"<blockquote>$1</blockquote>");
+s=s.replace(/^[-*] (.+)$/gm,"<li>$1</li>");
+s=s.replace(/(?:<li>.*<\/li>\n?)+/g,function(m){return "<ul>"+m+"</ul>";});
+s=s.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\*([^*\n]+)\*/g,"<em>$1</em>");
+s=s.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2">$1</a>');
+return s.split(/\n{2,}/).map(function(p){return /^<(h1|h2|h3|ul|blockquote)/.test(p.trim())?p:"<p>"+p.replace(/\n/g,"<br>")+"</p>";}).join("\n");
+}
+fetch("./README.md?rev=20260922").then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.text();}).then(function(t){
+document.getElementById("content").innerHTML=md(t);
+document.getElementById("status").textContent="Содержание книги загружено";
+}).catch(function(e){
+document.getElementById("status").textContent="Не удалось загрузить содержание";
+document.getElementById("content").innerHTML='<div class="notice error">Файл книги не был получен браузером. Ошибка: '+e.message+'. Список глав выше остаётся доступным.</div>';
+});
+})();
+</script>
+</body>
+</html>
