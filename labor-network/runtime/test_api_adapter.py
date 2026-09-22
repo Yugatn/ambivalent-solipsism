@@ -11,7 +11,21 @@ from pilot_kernel import DurableDecision, DurableKernelStore, PilotKernel, recor
 
 
 class ApiAdapterTests(unittest.TestCase):
-    def test_http_request_uses_same_authorization_boundary(self):
+    def _post(self, server, payload):
+        body = json.dumps(payload).encode()
+        req = Request(
+            f"http://127.0.0.1:{server.server_port}/action",
+            data=body,
+            method="POST",
+        )
+        thread = Thread(target=server.handle_request)
+        thread.start()
+        with urlopen(req) as response:
+            result = json.loads(response.read())
+        thread.join()
+        return result
+
+    def test_http_request_uses_same_authorization_boundary_and_replay_guard(self):
         with tempfile.TemporaryDirectory() as d:
             store = DurableKernelStore(str(Path(d) / "state.json"))
             record_decision_durably(store, DurableDecision("http-1", True, "policy-v1", "completed"))
@@ -19,22 +33,23 @@ class ApiAdapterTests(unittest.TestCase):
             kernel.resolve_evidence()
             kernel.decide(permitted=True)
             server = HTTPServer(("127.0.0.1", 0), make_handler(kernel, store))
-            thread = Thread(target=server.handle_request)
-            thread.start()
-            payload = json.dumps({
-                "request_id": "http-req-1",
-                "decision_id": "http-1",
-                "policy_version": "policy-v1",
-                "review_state": "completed",
-                "permitted": True,
-                "action_type": "protected",
-            }).encode()
-            req = Request(f"http://127.0.0.1:{server.server_port}/action", data=payload, method="POST")
-            with urlopen(req) as response:
-                body = json.loads(response.read())
-            thread.join()
-            server.server_close()
-            self.assertTrue(body["executed"])
+            try:
+                payload = {
+                    "request_id": "http-req-1",
+                    "decision_id": "http-1",
+                    "policy_version": "policy-v1",
+                    "review_state": "completed",
+                    "permitted": True,
+                    "action_type": "protected",
+                }
+                first = self._post(server, payload)
+                second = self._post(server, payload)
+                self.assertTrue(first["executed"])
+                self.assertFalse(first["duplicate"])
+                self.assertFalse(second["executed"])
+                self.assertTrue(second["duplicate"])
+            finally:
+                server.server_close()
 
     def test_http_request_without_matching_decision_is_rejected(self):
         with tempfile.TemporaryDirectory() as d:
@@ -43,21 +58,28 @@ class ApiAdapterTests(unittest.TestCase):
             kernel.resolve_evidence()
             kernel.decide(permitted=True)
             server = HTTPServer(("127.0.0.1", 0), make_handler(kernel, store))
-            thread = Thread(target=server.handle_request)
-            thread.start()
-            payload = json.dumps({
-                "request_id": "http-req-2",
-                "decision_id": "missing",
-                "policy_version": "policy-v1",
-                "review_state": "completed",
-                "permitted": True,
-                "action_type": "protected",
-            }).encode()
-            req = Request(f"http://127.0.0.1:{server.server_port}/action", data=payload, method="POST")
-            with self.assertRaises(Exception):
-                urlopen(req)
-            thread.join()
-            server.server_close()
+            try:
+                payload = {
+                    "request_id": "http-req-2",
+                    "decision_id": "missing",
+                    "policy_version": "policy-v1",
+                    "review_state": "completed",
+                    "permitted": True,
+                    "action_type": "protected",
+                }
+                body = json.dumps(payload).encode()
+                req = Request(
+                    f"http://127.0.0.1:{server.server_port}/action",
+                    data=body,
+                    method="POST",
+                )
+                thread = Thread(target=server.handle_request)
+                thread.start()
+                with self.assertRaises(Exception):
+                    urlopen(req)
+                thread.join()
+            finally:
+                server.server_close()
 
 
 class ApiSecurityBoundaryTests(unittest.TestCase):
