@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0-draft",
+  "environment": {
+    "W": [
+      "remote_office_hybrid",
+      "individual_team",
+      "client_internal",
+      "regulated_uncertain",
+      "project_process",
+      "autonomy",
+      "pace"
+    ]
+  },
+  "values": {
+    "V": [
+      "autonomy",
+      "stability",
+      "income",
+      "meaning",
+      "mastery",
+      "recognition",
+      "balance",
+      "status",
+      "influence"
+    ]
+  },
+  "constraints": {
+    "C": [
+      "location",
+      "language",
+      "education",
+      "time",
+      "legal_requirements",
+      "digital_access",
+      "mobility"
+    ]
+  }
+}
