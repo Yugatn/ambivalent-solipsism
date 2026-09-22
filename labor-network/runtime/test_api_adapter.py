@@ -87,3 +87,51 @@ class ApiSecurityBoundaryTests(unittest.TestCase):
         a = {"decision_id": "d1", "permitted": True}
         b = {"decision_id": "d1", "permitted": False}
         self.assertNotEqual(request_fingerprint(a), request_fingerprint(b))
+
+
+class ReplayProtectionTests(unittest.TestCase):
+    def _payload(self):
+        return {
+            "request_id": "replay-1",
+            "decision_id": "replay-d1",
+            "policy_version": "policy-v1",
+            "review_state": "completed",
+            "permitted": True,
+            "action_type": "protected",
+        }
+
+    def test_identical_request_is_idempotent(self):
+        import tempfile
+        from pathlib import Path
+        from api_adapter import process_idempotent_action_request
+        from pilot_kernel import DurableDecision, DurableKernelStore, PilotKernel, record_decision_durably
+        with tempfile.TemporaryDirectory() as d:
+            store = DurableKernelStore(str(Path(d) / "state.json"))
+            record_decision_durably(store, DurableDecision("replay-d1", True, "policy-v1", "completed"))
+            kernel = PilotKernel()
+            kernel.resolve_evidence()
+            kernel.decide(permitted=True)
+            first = process_idempotent_action_request(kernel, store, self._payload())
+            second = process_idempotent_action_request(kernel, store, self._payload())
+            self.assertFalse(first["duplicate"])
+            self.assertTrue(second["duplicate"])
+            self.assertTrue(first["executed"])
+            self.assertFalse(second["executed"])
+
+    def test_changed_payload_is_not_same_request(self):
+        import tempfile
+        from pathlib import Path
+        from api_adapter import process_idempotent_action_request
+        from pilot_kernel import DurableDecision, DurableKernelStore, PilotKernel, record_decision_durably
+        with tempfile.TemporaryDirectory() as d:
+            store = DurableKernelStore(str(Path(d) / "state.json"))
+            record_decision_durably(store, DurableDecision("replay-d1", True, "policy-v1", "completed"))
+            kernel = PilotKernel()
+            kernel.resolve_evidence()
+            kernel.decide(permitted=True)
+            first = process_idempotent_action_request(kernel, store, self._payload())
+            changed = dict(self._payload())
+            changed["request_id"] = "replay-2"
+            second = process_idempotent_action_request(kernel, store, changed)
+            self.assertFalse(first["duplicate"])
+            self.assertFalse(second["duplicate"])
