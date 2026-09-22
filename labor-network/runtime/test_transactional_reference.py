@@ -97,8 +97,9 @@ class TransactionalReferenceTests(unittest.TestCase):
             for thread in threads:
                 thread.join()
 
+            self.assertEqual(len(results), 8)
             self.assertEqual(results.count("reserved"), 1)
-            self.assertEqual(results.count("reserved"), 7 + 1)
+            self.assertEqual(results.count("reserved"), 1)
 
     def test_interrupted_request_requires_explicit_outcome(self):
         with tempfile.TemporaryDirectory() as d:
