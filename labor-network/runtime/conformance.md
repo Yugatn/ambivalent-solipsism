@@ -26,34 +26,34 @@ The next conformance layer must map these same obligations to durable storage, A
 
 ## Durable boundary status
 
-The reference conformance layer now includes an append-only JSON persistence adapter for Event identity and two executable tests covering duplicate delivery and history across a new kernel instance.
+The reference conformance layer includes an append-only JSON persistence adapter for Event identity and executable tests covering duplicate delivery and history across a new kernel instance.
 
 | Boundary | Reference status | Production status |
 |---|---|---|
 | In-memory K01–K10 | covered | not certified |
 | Durable Event identity | covered | not certified |
 | Cross-instance duplicate suppression | covered | not certified |
-| Durable audit/history | not yet implemented | not certified |
-| Durable authorization/policy state | not yet implemented | not certified |
-| API/network boundary | not yet implemented | not certified |
+| Durable audit/history | covered | not certified |
+| Durable authorization/policy state | covered | not certified |
+| API/network boundary | covered | not certified |
 
 
 ## Durable decision and audit checkpoint
 
-The reference runtime now persists versioned Decision records and purpose-bound AuditRecord entries through the same pilot persistence adapter, while keeping their semantic roles distinct.
+The reference runtime persists versioned Decision records and purpose-bound AuditRecord entries through the same pilot persistence adapter, while keeping their semantic roles distinct.
 
 | Boundary | Reference status | Production status |
 |---|---|---|
 | Durable Decision + policy version | covered | not certified |
 | Decision / Audit separation | covered | not certified |
 | Purpose-bound audit record | covered | not certified |
-| Durable authorization/policy enforcement | partial | not certified |
-| API/network boundary | not yet implemented | not certified |
+| Durable authorization/policy enforcement | covered | not certified |
+| API/network boundary | covered | not certified |
 
 
 ## Durable authorization checkpoint
 
-The reference runtime now requires an explicit persisted Decision for protected execution. Authorization is denied when the Decision is missing, denied, bound to another policy version, or still requires review.
+The reference runtime requires an explicit persisted Decision for protected execution. Authorization is denied when the Decision is missing, denied, bound to another policy version, or still requires review.
 
 | Boundary | Reference status | Production status |
 |---|---|---|
@@ -61,12 +61,12 @@ The reference runtime now requires an explicit persisted Decision for protected 
 | Policy-version match | covered | not certified |
 | Review completion guard | covered | not certified |
 | Denied Decision blocks execution | covered | not certified |
-| API/network authorization boundary | not yet implemented | not certified |
+| API/network authorization boundary | covered | not certified |
 
 
 ## API boundary checkpoint
 
-The reference runtime now exposes a bounded ActionRequest entry point that delegates to the durable authorization boundary. The API-facing path cannot execute a protected Action without a matching persisted Decision, policy version and review state.
+The reference runtime exposes a bounded ActionRequest entry point that delegates to the durable authorization boundary. The API-facing path cannot execute a protected Action without a matching persisted Decision, policy version and review state.
 
 | Boundary | Reference status | Production status |
 |---|---|---|
@@ -79,7 +79,7 @@ The reference runtime now exposes a bounded ActionRequest entry point that deleg
 
 ## HTTP adapter checkpoint
 
-A minimal standard-library HTTP adapter now exposes /action and delegates to the existing ActionRequest authorization path. The adapter is intentionally a reference adapter: it does not claim transport authentication, TLS, production hardening, rate limiting or distributed deployment.
+A minimal standard-library HTTP adapter exposes /action and delegates to the existing ActionRequest authorization path. The adapter is intentionally a reference adapter: it does not claim transport authentication, TLS, production hardening, rate limiting or distributed deployment.
 
 | Boundary | Reference status | Production status |
 |---|---|---|
@@ -92,25 +92,29 @@ A minimal standard-library HTTP adapter now exposes /action and delegates to the
 
 ## API security boundary checkpoint
 
-The reference adapter now has explicit principal/authentication state and deterministic request fingerprints. These primitives prepare the boundary for replay protection and authenticated request handling; they do not constitute real credential verification or transport security.
+The reference adapter has explicit principal/authentication state and deterministic request fingerprints. These primitives do not constitute real credential verification or transport security.
 
 | Boundary | Reference status | Production status |
 |---|---|---|
 | Explicit authenticated/unauthenticated principal state | covered | not certified |
 | Deterministic request fingerprint | covered | not certified |
-| Replay prevention | prepared, not enforced | not certified |
+| Replay prevention | covered | not certified |
 | Real credential verification | not implemented | not certified |
 | TLS / transport security | not implemented | not certified |
 
 
 ## API replay/idempotency checkpoint
 
-The reference API path now persists a canonical request fingerprint before accepting a repeated request as new. An identical request is treated as a duplicate and does not execute a second protected Action. A changed payload receives a different fingerprint.
+The reference API path computes a canonical request fingerprint, checks it before protected execution, and records it after the request completes. A process-local lock makes this check-and-execute sequence atomic for concurrent callers sharing the same Python process. Identical requests therefore produce one non-duplicate result in the reference concurrency test; changed payloads receive different fingerprints.
+
+The lock is deliberately scoped as a reference boundary only. It does not provide cross-process or distributed atomicity, durable transactional semantics, or crash-safe reservation before execution.
 
 | Boundary | Reference status | Production status |
 |---|---|---|
 | Canonical request fingerprint | covered | not certified |
 | Duplicate API request detection | covered | not certified |
 | Duplicate protected execution prevention | covered | not certified |
-| Cross-process replay protection | reference persistence only | not certified |
+| Concurrent identical request race | covered in shared-process reference test | not certified |
+| Cross-process replay protection | not implemented | not certified |
+| Transactional reservation / crash recovery | not implemented | not certified |
 | Cryptographic request authentication | not implemented | not certified |
