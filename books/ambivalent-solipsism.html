@@ -887,15 +887,22 @@ main{width:min(790px,calc(100% - 34px));margin:auto;padding:38px 0 110px}.nav{di
 </main><script id="book-reader-v2-script">
 (function(){
 function initBookReader(){
- const root=document.getElementById('bookReaderV2'); if(!root)return;
- const stage=root.querySelector('.book-stage'), toc=root.querySelector('.reader-toc');
- const prev=root.querySelector('[data-book-prev]'), next=root.querySelector('[data-book-next]');
- const tocBtn=root.querySelector('[data-book-toc]'), label=root.querySelector('[data-book-chapter]');
+ const root=document.getElementById('bookReaderV2');
+ if(!root)return;
+ const stage=root.querySelector('.book-stage');
+ const toc=root.querySelector('.reader-toc');
+ const prev=root.querySelector('[data-book-prev]');
+ const next=root.querySelector('[data-book-next]');
+ const tocBtn=root.querySelector('[data-book-toc]');
+ const label=root.querySelector('[data-book-chapter]');
  const bar=root.querySelector('.reader-progress span');
  const chapters=[...document.querySelectorAll('.chapter')];
- if(!stage||!toc||!chapters.length)return;
- stage.innerHTML=''; toc.innerHTML='';
- const pages=[], chapterStarts=[];
+ if(!stage||!toc||!prev||!next||!tocBtn||!label||!bar||!chapters.length)return;
+
+ stage.innerHTML='';
+ toc.innerHTML='';
+ const pages=[];
+ const chapterStarts=[];
  const pageHeight=()=>window.matchMedia('(max-width:650px)').matches?680:760;
 
  function makePage(){
@@ -903,42 +910,53 @@ function initBookReader(){
    page.className='book-page-v2';
    page.style.height=pageHeight()+'px';
    page.style.minHeight=pageHeight()+'px';
+   page.style.boxSizing='border-box';
+   page.style.overflow='hidden';
    const content=document.createElement('div');
+   content.className='book-page-content';
    page.appendChild(content);
    stage.appendChild(page);
+   pages.push(page);
    return {page,content};
  }
+
  function fits(page){
-   return page.content.scrollHeight <= pageHeight()-4;
+   const content=page.querySelector('.book-page-content');
+   return !!content && content.scrollHeight <= pageHeight()-4;
  }
- function addNodeToPages(node, state){
+
+ function addNodeToPages(node,state){
    const clone=node.cloneNode(true);
    state.content.appendChild(clone);
-   if(fits(state.page)) return state;
+   if(fits(state.page))return state;
+
    state.content.removeChild(clone);
+
    if(state.content.children.length){
      state=makePage();
      state.content.appendChild(clone);
-     if(fits(state.page)) return state;
+     if(fits(state.page))return state;
+     state.content.removeChild(clone);
    }
-   // A single oversized paragraph/heading is split into text chunks.
-   state.content.removeChild(clone);
+
    const tag=(node.tagName||'DIV').toLowerCase();
    const text=node.textContent||'';
-   if(!text.trim()) return state;
+   if(!text.trim())return state;
+
    const words=text.split(/(\s+)/);
    let chunk=document.createElement(tag);
+   state.content.appendChild(chunk);
+
    for(const part of words){
      chunk.appendChild(document.createTextNode(part));
-     state.content.appendChild(chunk);
      if(!fits(state.page)){
-       state.content.removeChild(chunk);
+       chunk.removeChild(chunk.lastChild);
        if(chunk.textContent.trim()){
          state=makePage();
          chunk=document.createElement(tag);
-         chunk.appendChild(document.createTextNode(part));
          state.content.appendChild(chunk);
        }
+       chunk.appendChild(document.createTextNode(part));
      }
    }
    return state;
@@ -947,9 +965,14 @@ function initBookReader(){
  chapters.forEach((chapter,index)=>{
    chapterStarts.push(pages.length);
    let state=makePage();
-   [...chapter.children].forEach(node=>{ state=addNodeToPages(node,state); });
+
+   [...chapter.children].forEach(node=>{
+     state=addNodeToPages(node,state);
+   });
+
    chapter.setAttribute('aria-hidden','true');
    chapter.style.display='none';
+
    const first=chapter.querySelector('h2')?.textContent||('Глава '+(index+1));
    const b=document.createElement('button');
    b.type='button';
@@ -958,7 +981,7 @@ function initBookReader(){
    b.addEventListener('click',()=>showPage(chapterStarts[index]));
    toc.appendChild(b);
  });
- pages.push(...[...stage.querySelectorAll('.book-page-v2')]);
+
  pages.forEach((page,index)=>{
    page.dataset.index=index;
    const number=document.createElement('div');
@@ -966,57 +989,88 @@ function initBookReader(){
    number.textContent='СТРАНИЦА '+(index+1)+' / '+pages.length;
    page.appendChild(number);
  });
+
  let current=0;
+
  function chapterForPage(index){
    let found=0;
-   chapterStarts.forEach((p,i)=>{if(p<=index)found=i;});
+   chapterStarts.forEach((p,i)=>{
+     if(p<=index)found=i;
+   });
    return found;
  }
+
  function showPage(index){
    if(index<0||index>=pages.length)return;
    current=index;
    pages.forEach((p,i)=>p.classList.toggle('active',i===current));
-   const ci=chapterForPage(current), ch=chapters[ci];
-   label.textContent=(ch.querySelector('.chapter-number')?.textContent||('Глава '+(ci+1)))+' · '+(ch.querySelector('h2')?.textContent||'');
+
+   const ci=chapterForPage(current);
+   const ch=chapters[ci];
+   label.textContent=
+     (ch.querySelector('.chapter-number')?.textContent||('Глава '+(ci+1)))+
+     ' · '+
+     (ch.querySelector('h2')?.textContent||'');
+
    bar.style.width=((current+1)/pages.length*100)+'%';
-   prev.disabled=current===0; next.disabled=current===pages.length-1;
-   prev.setAttribute('aria-label','Предыдущая страница');
-   next.setAttribute('aria-label','Следующая страница');
+   prev.disabled=current===0;
+   next.disabled=current===pages.length-1;
+
    const target=ch.id||'';
-   if(location.hash!==('#'+target)) history.replaceState(null,'','#'+target);
+   if(target && location.hash!==('#'+target)){
+     history.replaceState(null,'','#'+target);
+   }
  }
+
  prev.addEventListener('click',()=>showPage(current-1));
  next.addEventListener('click',()=>showPage(current+1));
+
  tocBtn.addEventListener('click',()=>{
    const open=toc.classList.toggle('open');
    tocBtn.setAttribute('aria-expanded',open?'true':'false');
  });
+
  document.addEventListener('keydown',e=>{
    if(e.target.matches('input,textarea,select,button,a'))return;
    if(e.key==='ArrowLeft'||e.key==='PageUp')showPage(current-1);
-   if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ')showPage(current+1);
+   if(e.key==='ArrowRight'||e.key==='PageDown')showPage(current+1);
  });
+
  let touchX=null;
- stage.addEventListener('touchstart',e=>{touchX=e.changedTouches[0].clientX},{passive:true});
+ stage.addEventListener('touchstart',e=>{
+   touchX=e.changedTouches[0].clientX;
+ },{passive:true});
  stage.addEventListener('touchend',e=>{
    if(touchX===null)return;
-   const dx=e.changedTouches[0].clientX-touchX; touchX=null;
+   const dx=e.changedTouches[0].clientX-touchX;
+   touchX=null;
    if(Math.abs(dx)>55)showPage(current+(dx<0?1:-1));
  },{passive:true});
+
  history.scrollRestoration='manual';
+
  const requested=location.hash.match(/^#a(\d+)$/);
- const initialChapter=requested?chapters.findIndex(ch=>ch.id===location.hash.slice(1)):-1;
+ const initialChapter=requested
+   ?chapters.findIndex(ch=>ch.id===location.hash.slice(1))
+   :-1;
  const initial=initialChapter>=0?chapterStarts[initialChapter]:0;
+
  showPage(initial);
- window.addEventListener('resize',()=>{
-   // A resize changes the physical page height. Rebuild once so text never overflows.
-   if(Math.abs((parseInt(pages[0]?.style.height||0,10))-pageHeight())>1) location.reload();
- });
+
  if(initialChapter>=0){
-   const reader=document.getElementById('bookReaderV2');
-   window.scrollTo({top:reader.getBoundingClientRect().top+window.scrollY-12,behavior:'instant'});
+   requestAnimationFrame(()=>{
+     const reader=document.getElementById('bookReaderV2');
+     if(reader){
+       const top=reader.getBoundingClientRect().top+window.scrollY-12;
+       window.scrollTo({top,behavior:'auto'});
+     }
+   });
  }
 }
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initBookReader);else initBookReader();
+if(document.readyState==='loading'){
+ document.addEventListener('DOMContentLoaded',initBookReader,{once:true});
+}else{
+ initBookReader();
+}
 })();
 </script></body></html>
