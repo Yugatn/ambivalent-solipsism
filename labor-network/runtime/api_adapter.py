@@ -11,11 +11,24 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from threading import RLock
 
 from pilot_kernel import ActionRequest, DurableKernelStore, PilotKernel, handle_action_request
+from transactional_reference import RequestReservationLedger
 
 
 # Reference-only process lock. It prevents a check-then-execute race between
 # callers sharing this Python process. It is not distributed transactionality.
 _REQUEST_LOCK = RLock()
+_LEDGER_LOCK = RLock()
+_REQUEST_LEDGERS: dict[str, RequestReservationLedger] = {}
+
+
+def _request_ledger(store: DurableKernelStore) -> RequestReservationLedger:
+    path = str(store.path) + ".requests"
+    with _LEDGER_LOCK:
+        ledger = _REQUEST_LEDGERS.get(path)
+        if ledger is None:
+            ledger = RequestReservationLedger(path)
+            _REQUEST_LEDGERS[path] = ledger
+        return ledger
 
 
 def process_action_payload(
@@ -88,18 +101,39 @@ def process_idempotent_action_request(
     store: DurableKernelStore,
     payload: dict,
 ) -> dict:
-    """Atomically claim a request fingerprint within this reference process."""
+    """Reserve before execution so a crash cannot silently permit replay."""
     fingerprint = request_fingerprint(payload)
-    with _REQUEST_LOCK:
-        for record in store.load():
-            if record.get("request_fingerprint") == fingerprint:
-                return {
-                    "executed": False,
-                    "request_id": str(payload.get("request_id", "")),
-                    "duplicate": True,
-                }
+    ledger = _request_ledger(store)
 
-        result = process_action_payload(kernel, store, payload)
+    with _REQUEST_LOCK:
+        status = ledger.reserve(fingerprint, str(payload.get("request_id", "")))
+
+        if status == RequestReservationLedger.COMPLETED:
+            return {
+                "executed": False,
+                "request_id": str(payload.get("request_id", "")),
+                "duplicate": True,
+            }
+
+        if status != RequestReservationLedger.RESERVED:
+            return {
+                "executed": False,
+                "request_id": str(payload.get("request_id", "")),
+                "duplicate": True,
+                "recovery_required": status == RequestReservationLedger.EXECUTING,
+                "reservation_status": status,
+            }
+
+        ledger.begin_execution(fingerprint)
+        try:
+            result = process_action_payload(kernel, store, payload)
+        except Exception:
+            ledger.fail(fingerprint)
+            raise
+
+        ledger.complete(fingerprint)
+        # Preserve the existing request-fingerprint record for compatibility
+        # with the reference conformance tests and audit inspection.
         store.append({
             "request_fingerprint": fingerprint,
             "request_id": str(payload["request_id"]),
