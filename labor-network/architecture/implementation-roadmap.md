@@ -190,8 +190,6 @@ Phase 10, Formal Verification, is architecturally closed at the formalization-co
 
 The next implementation task is to instantiate the selected critical kernel in a formal language/model checker and connect its abstract states/events to executable implementation semantics.
 
-Current architectural sequence: Phase 0 Migration → Phase 1 Schema → Phase 2 State Machines → Phase 3 Event Engine → Phase 4 Projection → Phase 5 Provenance → Phase 6 Policy Engine / Impact Evaluation → Phase 7 Human Review → Phase 8 Audit / Observability → Phase 9 Federation → Phase 10 Formal Verification.
-
 
 ## Phase 10A checkpoint
 
@@ -217,4 +215,25 @@ Overall system readiness must not be inferred from the 77% architectural figure.
 
 The reference Critical Kernel now has executable conformance coverage for K01–K10: **10/10 = 100% reference-kernel coverage**. This is a bounded test-coverage metric, not a production-readiness percentage.
 
-The next implementation boundary is to reproduce the same conformance obligations across durable persistence, API/authorization boundaries, event processing and pilot infrastructure. Until those layers are tested, the runtime remains a reference implementation.
+The reference runtime has now advanced through durable Event identity, durable Decision and Audit records, persisted execution authorization, an ActionRequest API boundary, a minimal HTTP adapter, explicit API principal/fingerprint primitives, replay/idempotency protection, and a process-local concurrency guard for identical requests.
+
+The concurrency guard has an explicit scope: it serializes the check-and-execute sequence only for callers sharing the same reference Python process. Cross-process/distributed atomicity, crash-safe transactional reservation, real credential verification, TLS, rate limiting and production persistence remain open.
+
+### Runtime layer status
+
+| Layer | Reference status | Production status |
+|---|---|---|
+| Critical Kernel K01–K10 | covered | not certified |
+| Durable Event identity | covered | not certified |
+| Durable Decision / Audit | covered | not certified |
+| Durable execution authorization | covered | not certified |
+| ActionRequest API boundary | covered | not certified |
+| HTTP /action adapter | covered | not certified |
+| Principal / fingerprint primitives | covered | not certified |
+| Replay / idempotency | covered | not certified |
+| Concurrent identical-request guard | covered in shared-process test | not certified |
+| Cross-process/distributed atomicity | not implemented | not certified |
+| Crash-safe reservation | not implemented | not certified |
+| Real credential verification | not implemented | not certified |
+| TLS / transport hardening | not implemented | not certified |
+| Production database/transaction semantics | not implemented | not certified |
