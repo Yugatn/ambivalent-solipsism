@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Статус архитектурных контуров · Амбивалентный Солипсизм</title>
+<link rel="stylesheet" href="./assets/as-unified.css">
+<style>
+:root{--bg:#02050a;--t:#eef7f5;--m:#91a7a7;--a:#45f0c3;--b:rgba(69,240,195,.16)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font-family:system-ui,sans-serif}
+main{width:min(1050px,calc(100% - 30px));margin:auto;padding:55px 0 90px}
+.ey{font:11px monospace;color:#45f0c3aa;letter-spacing:.18em}
+h1{font-size:clamp(34px,6vw,64px);line-height:1.08;margin:12px 0 22px}
+h2{margin:45px 0 14px;font-size:26px}
+p,li{color:#c3d3d2;line-height:1.72}
+.lead{font-size:18px;max-width:880px}
+.panel{margin:26px 0;padding:22px;border:1px solid var(--b);border-radius:18px;background:rgba(7,16,21,.72)}
+.status{display:inline-block;padding:5px 9px;border:1px solid rgba(69,240,195,.22);border-radius:999px;color:var(--a);font:10px monospace;letter-spacing:.08em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}
+.card{padding:21px;border:1px solid var(--b);border-radius:18px;background:rgba(7,16,21,.68)}
+.card h3{margin:0 0 10px;font-size:18px}.card p{margin:0;font-size:14px}
+.back{display:inline-block;margin-top:45px;color:var(--a);text-decoration:none;font:11px monospace}
+code{color:#d7e7e4}
+</style>
+</head>
+<body>
+<main>
+<div class="ey">ARCHITECTURE · STATUS</div>
+<h1>Статус архитектурных контуров</h1>
+<p class="lead">Этот раздел фиксирует границу между концепцией, проектированием, прототипом, реализацией и проверкой. Наличие страницы, схемы, кода или модели не считается доказательством того, что соответствующая система работает в полном объёме.</p>
+
+<div class="panel">
+<span class="status">КАНОНИЧЕСКОЕ ПРАВИЛО</span>
+<p><strong>Заявление о системе не равно реализации системы.</strong> Реализация не равна независимой проверке. Результат проверки не равен доказательству соответствия реальности.</p>
+</div>
+
+<h2>Текущие контуры</h2>
+<div class="grid">
+<div class="card"><h3>SymbiontOS</h3><span class="status">КОНЦЕПЦИЯ</span><p>Исследовательская архитектура адаптивной вычислительной среды. В ней прорабатываются состояние, события, контекст, политики, идентичность, аудит и ограничения полномочий. Полноценная реализованная операционная среда в текущем контуре не подтверждена.</p></div>
+<div class="card"><h3>Eugene Messenger</h3><span class="status">АРХИТЕКТУРА</span><p>Исследовательская архитектура защищённой коммуникационной среды. Формализуются доверие, capability security, идентичность, протоколы, восстановление и связь с PICCS. Наличие спецификаций и моделей не подтверждает готовность работающего мессенджера.</p></div>
+<div class="card"><h3>PICCS</h3><span class="status">АРХИТЕКТУРНЫЙ КОНТУР</span><p>Мета-этическая и эпистемическая архитектура ограниченного вмешательства при радикальной неопределённости. Её задача не классифицировать ценность субъектов, а ограничивать собственную способность системы к необратимому воздействию.</p></div>
+<div class="card"><h3>EthicalAudit</h3><span class="status">ФОРМАЛИЗАЦИЯ</span><p>Rule Engine для обнаружения сигналов когнитивной небезопасности. Detection, aggregation и policy enforcement должны оставаться различными уровнями, а результат правила не должен автоматически становиться окончательным этическим решением.</p></div>
+</div>
+
+<h2>Состояния зрелости</h2>
+<div class="panel">
+<ol>
+<li><strong>CONCEPT</strong> — идея и её границы описаны.</li>
+<li><strong>ARCHITECTURE</strong> — определены компоненты, интерфейсы и ограничения.</li>
+<li><strong>PROTOTYPE</strong> — существует ограниченная реализация для исследования.</li>
+<li><strong>IMPLEMENTED</strong> — заявленная функция реализована в определённом контексте.</li>
+<li><strong>VERIFIED</strong> — конкретное свойство проверено определённым способом и с указанными ограничениями.</li>
+<li><strong>INDEPENDENTLY_REVIEWED</strong> — проверка проведена отдельным контуром с доступными доказательствами.</li>
+</ol>
+<p>Переход между состояниями не происходит автоматически. Особенно важно не заменять <code>NOT_TESTED</code> состоянием <code>FALSE</code> или <code>ABSENT</code>.</p>
+</div>
+
+<h2>Неизвестность остаётся отдельным состоянием</h2>
+<div class="grid">
+<div class="card"><h3>UNKNOWN ≠ ABSENT</h3><p>Отсутствие знания о свойстве не доказывает отсутствие самого свойства или объекта.</p></div>
+<div class="card"><h3>NOT_TESTED ≠ FALSE</h3><p>Непроверенное утверждение нельзя превращать в отрицательный результат только из-за отсутствия теста.</p></div>
+<div class="card"><h3>IMPLEMENTED ≠ VERIFIED</h3><p>Код может существовать, но конкретное требование всё ещё может оставаться непроверенным.</p></div>
+<div class="card"><h3>AGENT_ASSERTION ≠ PRIMARY_EVIDENCE</h3><p>Сообщение агента является свидетельством анализа, но не заменяет исходный код, измерение, тест или другой первичный источник.</p></div>
+</div>
+
+<h2>Human Gate</h2>
+<div class="panel">
+<p>Изменение канона, публикация сильного утверждения о реализации и переход критического компонента в более высокий статус требуют человеческого решения. Агент может обнаружить проблему, предложить архитектуру или подготовить изменение, но сама задача не является разрешением на действие.</p>
+<p><strong>TASK ≠ AUTHORIZATION.</strong> Сообщение, рекомендация или результат автоматического анализа также не создают полномочие на изменение канонического слоя.</p>
+</div>
+
+<h2>Следующий архитектурный шаг</h2>
+<p>Для дальнейшего развития экосистемы нужен общий контракт состояния данных. В психологических инструментах это особенно важно для перехода от самонаблюдения к <strong>SkillRecord</strong>, затем к PROF-MAP и далее к развитию профессиональных навыков. Непройденная или непросмотренная характеристика должна храниться как отдельное состояние, а не как искусственно присвоенное среднее значение.</p>
+<p>Тот же принцип переносится на SymbiontOS и Eugene Messenger: система должна хранить происхождение данных, степень проверки, контекст, ограничения и остаточную неопределённость.</p>
+
+<a class="back" href="./index.html">Вернуться в главное меню</a>
+</main>
+</body>
+</html>
