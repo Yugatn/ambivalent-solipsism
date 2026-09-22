@@ -79,12 +79,13 @@ The reference runtime exposes a bounded ActionRequest entry point that delegates
 
 ## HTTP adapter checkpoint
 
-A minimal standard-library HTTP adapter exposes /action and delegates to the existing ActionRequest authorization path. The adapter is intentionally a reference adapter: it does not claim transport authentication, TLS, production hardening, rate limiting or distributed deployment.
+A minimal standard-library HTTP adapter exposes /action and now routes that endpoint through the same reference replay/idempotency boundary before protected execution. The adapter is intentionally a reference adapter: it does not claim transport authentication, TLS, production hardening, rate limiting or distributed deployment.
 
 | Boundary | Reference status | Production status |
 |---|---|---|
 | HTTP request reaches existing authorization path | covered | not certified |
 | Missing persisted Decision rejected | covered | not certified |
+| HTTP duplicate request blocked from second execution | covered | not certified |
 | Direct API-to-Action bypass | not exposed by adapter | not certified |
 | Transport authentication | not implemented | not certified |
 | TLS / network hardening | not implemented | not certified |
@@ -118,3 +119,18 @@ The lock is deliberately scoped as a reference boundary only. It does not provid
 | Cross-process replay protection | not implemented | not certified |
 | Transactional reservation / crash recovery | not implemented | not certified |
 | Cryptographic request authentication | not implemented | not certified |
+
+
+## Pilot vertical-slice checkpoint
+
+The file test_vertical_slice.py now exercises one bounded reference path across durable Event identity, durable Decision, purpose-bound AuditRecord, execution authorization and replay protection. The test verifies that duplicate Event delivery is suppressed, a persisted Decision is required for execution, the AuditRecord remains separately persisted, and a repeated protected request does not execute twice.
+
+| Boundary | Reference status | Production status |
+|---|---|---|
+| Event persistence and duplicate suppression | covered | not certified |
+| Versioned Decision persistence | covered | not certified |
+| Purpose-bound AuditRecord | covered | not certified |
+| Decision-gated Action execution | covered | not certified |
+| Replay-protected Action request | covered | not certified |
+| Cross-layer vertical slice | covered | not certified |
+| Production pilot deployment | not implemented | not certified |
