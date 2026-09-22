@@ -179,3 +179,26 @@
 - `symbiont.os.audit` related_to `symbiont.os.uncertainty`
 - `symbiont.os.uncertainty` related_to `reality.residual`
 - `symbiont.os.uncertainty` related_to `ai.subjectivity`
+
+- `labor.infrastructure` — труд как участие в работоспособности и развитии общей инфраструктуры
+- `citizen.service` — гражданское участие в поддержании общего пространства развития
+- `state.service` — государственная служба как обслуживающая общественную инфраструктуру функция
+- `state.citizen.reciprocity` — взаимность гражданина и государства
+- `public.value` — общественная ценность труда, включая нематериальные и институциональные результаты
+- `civic.virtue` — труд и участие в общей инфраструктуре как высшая гражданская добродетель
+
+- `labor.infrastructure` related_to `social.organism.stability`
+- `labor.infrastructure` related_to `development.law`
+- `labor.infrastructure` related_to `temporal.inheritance`
+- `citizen.service` extends `labor.infrastructure`
+- `citizen.service` related_to `social.cell.human`
+- `state.service` related_to `labor.infrastructure`
+- `state.service` related_to `development.law`
+- `state.service` related_to `social.organism.stability`
+- `state.citizen.reciprocity` related_to `state.service`
+- `state.citizen.reciprocity` related_to `citizen.service`
+- `state.citizen.reciprocity` related_to `development.law`
+- `public.value` related_to `labor.infrastructure`
+- `public.value` related_to `social.organism.stability`
+- `civic.virtue` extends `citizen.service`
+- `civic.virtue` related_to `temporal.inheritance`
