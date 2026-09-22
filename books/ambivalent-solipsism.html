@@ -889,20 +889,15 @@ main{width:min(790px,calc(100% - 34px));margin:auto;padding:38px 0 110px}.nav{di
 function initBookReader(){
  const root=document.getElementById('bookReaderV2');
  if(!root)return;
- const stage=root.querySelector('.book-stage');
- const toc=root.querySelector('.reader-toc');
- const prev=root.querySelector('[data-book-prev]');
- const next=root.querySelector('[data-book-next]');
- const tocBtn=root.querySelector('[data-book-toc]');
- const label=root.querySelector('[data-book-chapter]');
+ const stage=root.querySelector('.book-stage'), toc=root.querySelector('.reader-toc');
+ const prev=root.querySelector('[data-book-prev]'), next=root.querySelector('[data-book-next]');
+ const tocBtn=root.querySelector('[data-book-toc]'), label=root.querySelector('[data-book-chapter]');
  const bar=root.querySelector('.reader-progress span');
  const chapters=[...document.querySelectorAll('.chapter')];
  if(!stage||!toc||!prev||!next||!tocBtn||!label||!bar||!chapters.length)return;
 
- stage.innerHTML='';
- toc.innerHTML='';
- const pages=[];
- const chapterStarts=[];
+ stage.innerHTML=''; toc.innerHTML='';
+ const pages=[], chapterStarts=[];
  const pageHeight=()=>window.matchMedia('(max-width:650px)').matches?680:760;
 
  function makePage(){
@@ -912,6 +907,13 @@ function initBookReader(){
    page.style.minHeight=pageHeight()+'px';
    page.style.boxSizing='border-box';
    page.style.overflow='hidden';
+   // The page must participate in layout while measuring. display:none makes
+   // scrollHeight zero and was the reason long chapters overflowed.
+   page.style.display='block';
+   page.style.visibility='hidden';
+   page.style.position='absolute';
+   page.style.left='-100000px';
+   page.style.top='0';
    const content=document.createElement('div');
    content.className='book-page-content';
    page.appendChild(content);
@@ -922,7 +924,7 @@ function initBookReader(){
 
  function fits(page){
    const content=page.querySelector('.book-page-content');
-   return !!content && content.scrollHeight <= pageHeight()-4;
+   return !!content && content.scrollHeight <= pageHeight()-8;
  }
 
  function addNodeToPages(node,state){
@@ -965,10 +967,7 @@ function initBookReader(){
  chapters.forEach((chapter,index)=>{
    chapterStarts.push(pages.length);
    let state=makePage();
-
-   [...chapter.children].forEach(node=>{
-     state=addNodeToPages(node,state);
-   });
+   [...chapter.children].forEach(node=>{state=addNodeToPages(node,state);});
 
    chapter.setAttribute('aria-hidden','true');
    chapter.style.display='none';
@@ -982,7 +981,13 @@ function initBookReader(){
    toc.appendChild(b);
  });
 
+ // Stop using the off-screen measurement styles after pagination is complete.
  pages.forEach((page,index)=>{
+   page.style.display='';
+   page.style.visibility='';
+   page.style.position='';
+   page.style.left='';
+   page.style.top='';
    page.dataset.index=index;
    const number=document.createElement('div');
    number.className='page-label-v2';
@@ -991,86 +996,56 @@ function initBookReader(){
  });
 
  let current=0;
-
  function chapterForPage(index){
    let found=0;
-   chapterStarts.forEach((p,i)=>{
-     if(p<=index)found=i;
-   });
+   chapterStarts.forEach((p,i)=>{if(p<=index)found=i;});
    return found;
  }
-
  function showPage(index){
    if(index<0||index>=pages.length)return;
    current=index;
    pages.forEach((p,i)=>p.classList.toggle('active',i===current));
-
-   const ci=chapterForPage(current);
-   const ch=chapters[ci];
-   label.textContent=
-     (ch.querySelector('.chapter-number')?.textContent||('Глава '+(ci+1)))+
-     ' · '+
-     (ch.querySelector('h2')?.textContent||'');
-
+   const ci=chapterForPage(current), ch=chapters[ci];
+   label.textContent=(ch.querySelector('.chapter-number')?.textContent||('Глава '+(ci+1)))+' · '+(ch.querySelector('h2')?.textContent||'');
    bar.style.width=((current+1)/pages.length*100)+'%';
    prev.disabled=current===0;
    next.disabled=current===pages.length-1;
-
    const target=ch.id||'';
-   if(target && location.hash!==('#'+target)){
-     history.replaceState(null,'','#'+target);
-   }
+   if(target && location.hash!==('#'+target))history.replaceState(null,'','#'+target);
  }
 
  prev.addEventListener('click',()=>showPage(current-1));
  next.addEventListener('click',()=>showPage(current+1));
-
  tocBtn.addEventListener('click',()=>{
    const open=toc.classList.toggle('open');
    tocBtn.setAttribute('aria-expanded',open?'true':'false');
  });
-
  document.addEventListener('keydown',e=>{
    if(e.target.matches('input,textarea,select,button,a'))return;
    if(e.key==='ArrowLeft'||e.key==='PageUp')showPage(current-1);
    if(e.key==='ArrowRight'||e.key==='PageDown')showPage(current+1);
  });
-
  let touchX=null;
- stage.addEventListener('touchstart',e=>{
-   touchX=e.changedTouches[0].clientX;
- },{passive:true});
+ stage.addEventListener('touchstart',e=>{touchX=e.changedTouches[0].clientX;},{passive:true});
  stage.addEventListener('touchend',e=>{
    if(touchX===null)return;
-   const dx=e.changedTouches[0].clientX-touchX;
-   touchX=null;
+   const dx=e.changedTouches[0].clientX-touchX; touchX=null;
    if(Math.abs(dx)>55)showPage(current+(dx<0?1:-1));
  },{passive:true});
 
  history.scrollRestoration='manual';
-
  const requested=location.hash.match(/^#a(\d+)$/);
- const initialChapter=requested
-   ?chapters.findIndex(ch=>ch.id===location.hash.slice(1))
-   :-1;
- const initial=initialChapter>=0?chapterStarts[initialChapter]:0;
-
- showPage(initial);
+ const initialChapter=requested?chapters.findIndex(ch=>ch.id===location.hash.slice(1)):-1;
+ showPage(initialChapter>=0?chapterStarts[initialChapter]:0);
 
  if(initialChapter>=0){
    requestAnimationFrame(()=>{
-     const reader=document.getElementById('bookReaderV2');
-     if(reader){
-       const top=reader.getBoundingClientRect().top+window.scrollY-12;
-       window.scrollTo({top,behavior:'auto'});
-     }
+     const top=root.getBoundingClientRect().top+window.scrollY-12;
+     window.scrollTo({top,behavior:'auto'});
    });
  }
 }
-if(document.readyState==='loading'){
- document.addEventListener('DOMContentLoaded',initBookReader,{once:true});
-}else{
- initBookReader();
-}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initBookReader,{once:true});
+else initBookReader();
 })();
 </script></body></html>
