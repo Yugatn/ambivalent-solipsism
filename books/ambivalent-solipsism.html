@@ -24,7 +24,7 @@ main{width:min(790px,calc(100% - 34px));margin:auto;padding:38px 0 110px}.nav{di
 .book-reader-v2 .reader-progress{height:2px;background:rgba(69,240,195,.08);border-radius:4px;overflow:hidden;flex:1}
 .book-reader-v2 .reader-progress span{display:block;height:100%;background:#45f0c3;width:0;transition:width .25s ease}
 .book-reader-v2 .book-stage{perspective:1800px;min-height:760px}
-.book-reader-v2 .book-page-v2{display:none;position:relative;width:min(860px,100%);min-height:760px;margin:0 auto;padding:clamp(44px,7vw,82px) clamp(28px,8vw,86px);background:#f5f0e5;color:#25231f;border-radius:3px;box-shadow:0 28px 70px rgba(0,0,0,.55),inset 0 0 0 1px rgba(60,50,35,.08);font-family:Georgia,"Times New Roman",serif;line-height:1.85}
+.book-reader-v2 .book-page-v2{display:none;position:relative;width:min(860px,100%);height:760px;min-height:760px;box-sizing:border-box;overflow:hidden;margin:0 auto;padding:clamp(44px,7vw,82px) clamp(28px,8vw,86px);background:#f5f0e5;color:#25231f;border-radius:3px;box-shadow:0 28px 70px rgba(0,0,0,.55),inset 0 0 0 1px rgba(60,50,35,.08);font-family:Georgia,"Times New Roman",serif;line-height:1.85}
 .book-reader-v2 .book-page-v2.active{display:block;animation:bookPageIn .28s ease}
 .book-reader-v2 .book-page-v2:before{content:"";position:absolute;inset:18px;border:1px solid rgba(70,55,35,.08);pointer-events:none}
 .book-reader-v2 .book-page-v2 h2{font-size:clamp(27px,4vw,43px);line-height:1.18;font-weight:500;margin:0 0 28px;color:#211f1b}
@@ -36,7 +36,7 @@ main{width:min(790px,calc(100% - 34px));margin:auto;padding:38px 0 110px}.nav{di
 .book-reader-v2 .reader-toc.open{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
 .book-reader-v2 .reader-toc button{padding:12px;text-align:left;color:#cfe0dc;background:rgba(69,240,195,.03);border:1px solid rgba(69,240,195,.12);border-radius:8px;cursor:pointer}
 @keyframes bookPageIn{from{opacity:.3;transform:rotateY(2deg) translateX(12px)}to{opacity:1;transform:none}}
-@media(max-width:650px){.book-reader-v2 .book-page-v2{min-height:680px;padding:42px 26px 64px}.book-reader-v2 .book-page-v2 p{font-size:16px}.book-reader-v2 .reader-toolbar{top:6px}.book-reader-v2 .reader-toolbar .progress-wrap{display:none}}
+@media(max-width:650px){.book-reader-v2 .book-page-v2{height:680px;min-height:680px;padding:42px 26px 64px}.book-reader-v2 .book-page-v2 p{font-size:16px}.book-reader-v2 .reader-toolbar{top:6px}.book-reader-v2 .reader-toolbar .progress-wrap{display:none}}
 </style></head>
 <body><main>
 <div class="nav"><a href="./index.html">КНИГИ</a><a href="../index.html">ГЛАВНОЕ МЕНЮ</a></div>
@@ -827,41 +827,95 @@ function initBookReader(){
  const chapters=[...document.querySelectorAll('.chapter')];
  if(!stage||!toc||!chapters.length)return;
  stage.innerHTML=''; toc.innerHTML='';
- const pages=[];
- chapters.forEach((chapter,index)=>{
+ const pages=[], chapterStarts=[];
+ const pageHeight=()=>window.matchMedia('(max-width:650px)').matches?680:760;
+
+ function makePage(){
    const page=document.createElement('article');
    page.className='book-page-v2';
-   page.dataset.index=index;
+   page.style.height=pageHeight()+'px';
+   page.style.minHeight=pageHeight()+'px';
    const content=document.createElement('div');
-   [...chapter.children].forEach(node=>content.appendChild(node.cloneNode(true)));
    page.appendChild(content);
-   const number=document.createElement('div');
-   number.className='page-label-v2';
-   number.textContent='СТРАНИЦА '+(index+1)+' / '+chapters.length;
-   page.appendChild(number);
-   stage.appendChild(page); pages.push(page);
-   const b=document.createElement('button');
-   b.type='button';
-   b.setAttribute('aria-label','Перейти к '+(chapter.querySelector('h2')?.textContent||('главе '+(index+1))));
-   b.textContent=chapter.querySelector('h2')?.textContent||('Глава '+(index+1));
-   b.addEventListener('click',()=>showPage(index));
-   toc.appendChild(b);
+   stage.appendChild(page);
+   return {page,content};
+ }
+ function fits(page){
+   return page.content.scrollHeight <= pageHeight()-4;
+ }
+ function addNodeToPages(node, state){
+   const clone=node.cloneNode(true);
+   state.content.appendChild(clone);
+   if(fits(state.page)) return state;
+   state.content.removeChild(clone);
+   if(state.content.children.length){
+     state=makePage();
+     state.content.appendChild(clone);
+     if(fits(state.page)) return state;
+   }
+   // A single oversized paragraph/heading is split into text chunks.
+   state.content.removeChild(clone);
+   const tag=(node.tagName||'DIV').toLowerCase();
+   const text=node.textContent||'';
+   if(!text.trim()) return state;
+   const words=text.split(/(\s+)/);
+   let chunk=document.createElement(tag);
+   for(const part of words){
+     chunk.appendChild(document.createTextNode(part));
+     state.content.appendChild(chunk);
+     if(!fits(state.page)){
+       state.content.removeChild(chunk);
+       if(chunk.textContent.trim()){
+         state=makePage();
+         chunk=document.createElement(tag);
+         chunk.appendChild(document.createTextNode(part));
+         state.content.appendChild(chunk);
+       }
+     }
+   }
+   return state;
+ }
+
+ chapters.forEach((chapter,index)=>{
+   chapterStarts.push(pages.length);
+   let state=makePage();
+   [...chapter.children].forEach(node=>{ state=addNodeToPages(node,state); });
    chapter.setAttribute('aria-hidden','true');
    chapter.style.display='none';
+   const first=chapter.querySelector('h2')?.textContent||('Глава '+(index+1));
+   const b=document.createElement('button');
+   b.type='button';
+   b.setAttribute('aria-label','Перейти к '+first);
+   b.textContent=first;
+   b.addEventListener('click',()=>showPage(chapterStarts[index]));
+   toc.appendChild(b);
+ });
+ pages.push(...[...stage.querySelectorAll('.book-page-v2')]);
+ pages.forEach((page,index)=>{
+   page.dataset.index=index;
+   const number=document.createElement('div');
+   number.className='page-label-v2';
+   number.textContent='СТРАНИЦА '+(index+1)+' / '+pages.length;
+   page.appendChild(number);
  });
  let current=0;
+ function chapterForPage(index){
+   let found=0;
+   chapterStarts.forEach((p,i)=>{if(p<=index)found=i;});
+   return found;
+ }
  function showPage(index){
    if(index<0||index>=pages.length)return;
    current=index;
    pages.forEach((p,i)=>p.classList.toggle('active',i===current));
-   const ch=chapters[current];
-   label.textContent=(ch.querySelector('.chapter-number')?.textContent||('Глава '+(current+1)))+' · '+(ch.querySelector('h2')?.textContent||'');
+   const ci=chapterForPage(current), ch=chapters[ci];
+   label.textContent=(ch.querySelector('.chapter-number')?.textContent||('Глава '+(ci+1)))+' · '+(ch.querySelector('h2')?.textContent||'');
    bar.style.width=((current+1)/pages.length*100)+'%';
    prev.disabled=current===0; next.disabled=current===pages.length-1;
-   prev.setAttribute('aria-label','Предыдущая глава');
-   next.setAttribute('aria-label','Следующая глава');
-   tocBtn.setAttribute('aria-expanded',toc.classList.contains('open')?'true':'false');
-   if(location.hash!==('#'+(ch.id||''))) history.replaceState(null,'',ch.id?('#'+ch.id):location.pathname);
+   prev.setAttribute('aria-label','Предыдущая страница');
+   next.setAttribute('aria-label','Следующая страница');
+   const target=ch.id||'';
+   if(location.hash!==('#'+target)) history.replaceState(null,'','#'+target);
  }
  prev.addEventListener('click',()=>showPage(current-1));
  next.addEventListener('click',()=>showPage(current+1));
@@ -871,21 +925,29 @@ function initBookReader(){
  });
  document.addEventListener('keydown',e=>{
    if(e.target.matches('input,textarea,select,button,a'))return;
-   if(e.key==='ArrowLeft')showPage(current-1);
-   if(e.key==='ArrowRight')showPage(current+1);
+   if(e.key==='ArrowLeft'||e.key==='PageUp')showPage(current-1);
+   if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ')showPage(current+1);
  });
  let touchX=null;
  stage.addEventListener('touchstart',e=>{touchX=e.changedTouches[0].clientX},{passive:true});
  stage.addEventListener('touchend',e=>{
    if(touchX===null)return;
    const dx=e.changedTouches[0].clientX-touchX; touchX=null;
-   if(Math.abs(dx)>55) showPage(current+(dx<0?1:-1));
+   if(Math.abs(dx)>55)showPage(current+(dx<0?1:-1));
  },{passive:true});
  history.scrollRestoration='manual';
  const requested=location.hash.match(/^#a(\d+)$/);
- const initial=requested?chapters.findIndex(ch=>ch.id===location.hash.slice(1)):-1;
- showPage(initial>=0?initial:0);
- if(initial>=0 && document.getElementById('bookReaderV2')) window.scrollTo({top:document.getElementById('bookReaderV2').getBoundingClientRect().top+window.scrollY-12,behavior:'instant'});
+ const initialChapter=requested?chapters.findIndex(ch=>ch.id===location.hash.slice(1)):-1;
+ const initial=initialChapter>=0?chapterStarts[initialChapter]:0;
+ showPage(initial);
+ window.addEventListener('resize',()=>{
+   // A resize changes the physical page height. Rebuild once so text never overflows.
+   if(Math.abs((parseInt(pages[0]?.style.height||0,10))-pageHeight())>1) location.reload();
+ });
+ if(initialChapter>=0){
+   const reader=document.getElementById('bookReaderV2');
+   window.scrollTo({top:reader.getBoundingClientRect().top+window.scrollY-12,behavior:'instant'});
+ }
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initBookReader);else initBookReader();
 })();
