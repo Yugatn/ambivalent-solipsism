@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 from threading import Thread
 
-from transactional_reference import ReferenceTransaction
+from transactional_reference import ReferenceTransaction, RequestReservationLedger
 
 
 class TransactionalReferenceTests(unittest.TestCase):
@@ -60,6 +60,45 @@ class TransactionalReferenceTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 with tx:
                     pass
+
+    def test_request_reservation_reaches_completed(self):
+        with tempfile.TemporaryDirectory() as d:
+            ledger = RequestReservationLedger(str(Path(d) / "requests.json"))
+            fingerprint = "fp-1"
+
+            self.assertEqual(ledger.reserve(fingerprint, "req-1"), "reserved")
+            self.assertEqual(ledger.begin_execution(fingerprint), "executing")
+            self.assertEqual(ledger.complete(fingerprint), "completed")
+            self.assertEqual(ledger.status(fingerprint), "completed")
+            self.assertEqual(ledger.reserve(fingerprint, "req-1"), "completed")
+
+    def test_executing_reservation_blocks_replay_after_restart(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d) / "requests.json"
+            first = RequestReservationLedger(str(path))
+            self.assertEqual(first.reserve("fp-crash", "req-crash"), "reserved")
+            self.assertEqual(first.begin_execution("fp-crash"), "executing")
+
+            restarted = RequestReservationLedger(str(path))
+            self.assertEqual(restarted.status("fp-crash"), "executing")
+            self.assertEqual(restarted.reserve("fp-crash", "req-crash"), "executing")
+
+    def test_concurrent_reservation_has_one_owner(self):
+        with tempfile.TemporaryDirectory() as d:
+            ledger = RequestReservationLedger(str(Path(d) / "requests.json"))
+            results = []
+
+            def worker():
+                results.append(ledger.reserve("fp-concurrent", "req"))
+
+            threads = [Thread(target=worker) for _ in range(8)]
+            for thread in threads:
+                thread.start()
+            for thread in threads:
+                thread.join()
+
+            self.assertEqual(results.count("reserved"), 1)
+            self.assertEqual(results.count("reserved"), 1)
 
 
 if __name__ == "__main__":
