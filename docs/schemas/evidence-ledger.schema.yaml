@@ -1,0 +1,15 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: Evidence Ledger Entry
+type: object
+required: [id, timestamp, evidence_type, claim, context]
+properties:
+  id: {type: string}
+  timestamp: {type: string}
+  evidence_type:
+    type: string
+    enum: [OBSERVED, DERIVED, CLAIMED, NOT_TESTED, CONFLICTED]
+  claim: {type: string}
+  context: {type: string}
+  source: {type: string}
+  reviewer: {type: string}
+  supersedes: {type: string}
