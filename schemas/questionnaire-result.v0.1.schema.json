@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "method_id",
+    "method_version",
+    "session_id",
+    "timestamp",
+    "answers"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "method_id": {
+      "type": "string"
+    },
+    "method_version": {
+      "type": "string"
+    },
+    "calculation_version": {
+      "type": "string"
+    },
+    "session_id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "source_commit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "research_status": {
+      "type": "string"
+    },
+    "answers": {
+      "type": "object"
+    },
+    "results": {
+      "type": "object"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
