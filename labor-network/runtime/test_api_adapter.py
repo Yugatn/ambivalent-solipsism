@@ -62,3 +62,28 @@ class ApiAdapterTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ApiSecurityBoundaryTests(unittest.TestCase):
+    def test_missing_identity_is_not_authenticated(self):
+        from api_adapter import authenticate_principal
+        principal = authenticate_principal({})
+        self.assertFalse(principal.authenticated)
+
+    def test_reference_identity_is_explicit(self):
+        from api_adapter import authenticate_principal
+        principal = authenticate_principal({"X-Principal-Token": "reference-user"})
+        self.assertTrue(principal.authenticated)
+        self.assertEqual(principal.principal_id, "reference-user")
+
+    def test_request_fingerprint_is_deterministic(self):
+        from api_adapter import request_fingerprint
+        a = {"decision_id": "d1", "permitted": True}
+        b = {"permitted": True, "decision_id": "d1"}
+        self.assertEqual(request_fingerprint(a), request_fingerprint(b))
+
+    def test_request_fingerprint_changes_when_payload_changes(self):
+        from api_adapter import request_fingerprint
+        a = {"decision_id": "d1", "permitted": True}
+        b = {"decision_id": "d1", "permitted": False}
+        self.assertNotEqual(request_fingerprint(a), request_fingerprint(b))
