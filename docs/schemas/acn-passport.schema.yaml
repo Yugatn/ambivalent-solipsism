@@ -1,0 +1,35 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: ACN Passport
+type: object
+required: [id, source, observation, uncertainty, status]
+properties:
+  id: {type: string}
+  source:
+    type: object
+    required: [type, title]
+    properties:
+      type: {type: string}
+      title: {type: string}
+      author: {type: string}
+  observation: {type: string}
+  links:
+    type: array
+    items:
+      type: object
+      required: [from, to, type]
+      properties:
+        from: {type: string}
+        to: {type: string}
+        type: {type: string}
+  lacuna:
+    type: object
+    properties:
+      type: {type: string}
+      description: {type: string}
+  uncertainty: {type: number, minimum: 0, maximum: 1}
+  alternatives:
+    type: array
+    items: {type: string}
+  status:
+    type: string
+    enum: [OBSERVED, DERIVED, CLAIMED, NOT_TESTED, CONFLICTED]
