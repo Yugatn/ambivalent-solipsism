@@ -77,3 +77,14 @@
 - `development.law` applies_to `ai.symbiotic_intelligence`
 - `ai.guardian_principle` extends `development.law`
 - `ai.guardian_principle` related_to `consciousness.continuity`
+
+- `subject.personality` — личность как исторически сформированный конструкт памяти, опыта и социальных ролей
+- `perception.projection` — феномен проекции и активное конструирование воспринимаемой реальности
+- `body.avatar` — тело как метафорический аватар, скафандр и биологический вычислительный комплекс
+
+- `subject.personality` related_to `subject.perception`
+- `subject.personality` related_to `society.superposition`
+- `perception.projection` related_to `reality.model`
+- `perception.projection` related_to `consciousness.information`
+- `body.avatar` related_to `subject.perception`
+- `body.avatar` related_to `consciousness.interface`
