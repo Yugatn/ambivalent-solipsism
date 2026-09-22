@@ -1,3 +1,4 @@
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -31,6 +32,34 @@ class TransactionalReferenceTests(unittest.TestCase):
             with tx:
                 tx.append({"kind": "event", "event_id": "e1"})
             self.assertEqual(tx.load(), [{"event_id": "e1", "kind": "event"}])
+
+    def test_recovery_completes_interrupted_commit_from_journal(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d) / "state.json"
+            journal = path.with_suffix(path.suffix + ".journal")
+            records = [{"kind": "event", "event_id": "e-recover"}]
+            journal.write_text(
+                json.dumps({"target": str(path), "records": records}),
+                encoding="utf-8",
+            )
+
+            tx = ReferenceTransaction(str(path))
+            with tx:
+                pass
+
+            self.assertEqual(tx.load(), records)
+            self.assertFalse(journal.exists())
+
+    def test_invalid_journal_is_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d) / "state.json"
+            journal = path.with_suffix(path.suffix + ".journal")
+            journal.write_text('{"records": "invalid"}', encoding="utf-8")
+
+            tx = ReferenceTransaction(str(path))
+            with self.assertRaises(ValueError):
+                with tx:
+                    pass
 
 
 if __name__ == "__main__":
