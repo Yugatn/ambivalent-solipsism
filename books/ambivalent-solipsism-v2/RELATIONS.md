@@ -136,3 +136,20 @@
 - `future.subjects` related_to `subject.other`
 - `future.subjects` related_to `development.law`
 - `future.subjects` related_to `mortality.generation`
+
+- `temporal.inheritance` — получение мира одним поколением и его передача следующему
+- `temporal.scale` — столетие как мысленный масштаб смены поколений
+- `posthumous.causality` — последствия действий, продолжающиеся после жизни автора
+- `future.possibility` — сохранение пространства развития будущих субъектов
+
+- `temporal.inheritance` related_to `mortality.generation`
+- `temporal.inheritance` related_to `future.subjects`
+- `temporal.inheritance` related_to `social.organism.stability`
+- `temporal.scale` related_to `mortality.generation`
+- `temporal.scale` related_to `subject.perception`
+- `posthumous.causality` related_to `mortality.body_horizon`
+- `posthumous.causality` related_to `development.law`
+- `posthumous.causality` related_to `social.organism.stability`
+- `future.possibility` related_to `future.subjects`
+- `future.possibility` related_to `development.law`
+- `future.possibility` related_to `reality.residual`
