@@ -766,7 +766,37 @@
         }
 
 
-        /* =====================================================
+        
+/* =====================================================
+   CONCEPT SPOILER
+===================================================== */
+
+.concept-spoiler {
+    width: min(980px, 92vw);
+    margin: 0 auto;
+    border: 1px solid rgba(69, 240, 195, .14);
+    border-radius: 18px;
+    background: rgba(5, 14, 19, .72);
+    overflow: hidden;
+    text-align: left;
+}
+
+.concept-spoiler > summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 17px 20px;
+    color: rgba(238, 247, 245, .88);
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.concept-spoiler > summary::-webkit-details-marker { display: none; }
+.concept-spoiler > summary::after { content: " · открыть"; color: rgba(69, 240, 195, .65); font-weight: 400; }
+.concept-spoiler[open] > summary::after { content: " · скрыть"; }
+.concept-spoiler .cards { padding: 24px; }
+
+/* =====================================================
            FOOTER
         ===================================================== */
 
@@ -1762,18 +1792,31 @@
 <section class="section"><div class="section-title"><div class="section-number">11 / SECTION</div><h2>Искусственный интеллект</h2></div>
 <div class="section-lead">ИИ рассматривается как действующая вычислительная система, способная усиливать человеческие возможности и одновременно создавать новые риски. Поэтому архитектура связывает полезность, ограничения, аудит, контекст и право на пересмотр.</div><div class="cards"><a class="card" href="./artificial-intelligence/"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">AI</div></div><div class="card-title">AI</div><div class="card-index">AI / 01</div></div><div class="description">Обзор роли ИИ в экосистеме AS: возможности, границы, безопасность, аудит и человеческий контроль.</div></a><a class="card" href="./psychology/"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">Ψ</div></div><div class="card-title">Психология</div><div class="card-index">PSY / 01</div></div><div class="description">Наука о Субъекте, закономерностях его проявления в материально-предметном мире и его свойствах.</div></a><a class="card" href="./ai/AI_GUARDIAN_LAYER.html"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">GUARD</div></div><div class="card-title">AI Guardian Layer</div><div class="card-index">AI / 02</div></div><div class="description">Защитный слой, проверяющий действия ИИ на контекст, потенциальный вред, соответствие ограничениям и возможность пересмотра.</div></a><a class="card" href="./ai/development-law-kernel.html"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">Δ</div></div><div class="card-title">Ядро Закона развития</div><div class="card-index">AI / 03</div></div><div class="description">Формализация Закона развития для вычислимых систем: субъект, действие, контекст, риск, ограничение и аудит.</div></a></div></section>
 
-<section class="section"><div class="section-title"><div class="section-number">12 / SECTION</div><h2>SymbiontOS</h2></div>
-<div class="section-lead">Экспериментальная операционная архитектура для адаптивных систем: события, идентичность, контекст, политики, обучение и аудит разделяются так, чтобы изменения оставались наблюдаемыми и проверяемыми.</div><div class="cards"><a class="card" href="./symbiontos/"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">OS</div></div><div class="card-title">SymbiontOS</div><div class="card-index">SYM / 01</div></div><div class="description">Архитектура адаптивной вычислительной среды поверх детерминированного execution substrate.</div></a><a class="card" href="./symbiontos/constitutional-kernel.html"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">§</div></div><div class="card-title">Конституционное ядро</div><div class="card-index">SYM / 02</div></div><div class="description">Машиночитаемый слой принципов, ограничений и проверяемых условий принятия решений.</div></a><a class="card" href="./symbiontos/audit.html"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">AUDIT</div></div><div class="card-title">Аудит</div><div class="card-index">SYM / 03</div></div><div class="description">Трассировка событий и решений с сохранением контекста, версии политики и возможности последующей проверки.</div></a></div></section>
+<section class="section">
+<div class="section-title"><div class="section-number">12 / SECTION</div><h2>SymbiontOS</h2></div>
+<div class="section-lead">Концептуальный и исследовательский контур адаптивной вычислительной среды. Публично раскрываются только материалы, статус которых отделён от факта реализации.</div>
+<details class="concept-spoiler">
+<summary>Открыть концептуальный раздел SymbiontOS</summary>
+<div class="cards">
+<a class="card" href="./symbiontos/"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">OS</div></div><div class="card-title">SymbiontOS</div><div class="card-index">SYM / 01</div></div><div class="description">Архитектура адаптивной вычислительной среды. Статус: исследовательская концепция, не заявленная как готовая операционная система.</div></a>
+<a class="card" href="./symbiontos/constitutional-kernel.html"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">§</div></div><div class="card-title">Конституционное ядро</div><div class="card-index">SYM / 02</div></div><div class="description">Концепция машиночитаемого слоя принципов и ограничений. Реализация и независимая верификация пока не подтверждены.</div></a>
+<a class="card" href="./symbiontos/audit.html"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">AUDIT</div></div><div class="card-title">Аудит</div><div class="card-index">SYM / 03</div></div><div class="description">Концепция трассировки событий и решений. Наличие страницы не означает наличие работающего контура.</div></a>
+</div>
+</details>
+</section>
 
 <section class="section">
 <div class="section-title"><div class="section-number">13 / SECTION</div><h2>Eugene Messenger</h2></div>
-<div class="section-lead">Инженерный проект защищённой коммуникационной среды. В центре находятся субъектность, доверительные границы, capability security, формальная проверка протоколов, восстановление и трассируемость заявлений о безопасности.</div>
+<div class="section-lead">Концепция защищённой коммуникационной среды, связанная с PICCS и SymbiontOS. До появления подтверждённой реализации раздел остаётся исследовательским.</div>
+<details class="concept-spoiler">
+<summary>Открыть концептуальный раздел Eugene Messenger</summary>
 <div class="cards">
-<a class="card" href="./eugene-messenger/"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">EM</div></div><div class="card-title">Eugene Messenger</div><div class="card-index">EM / 01</div></div><div class="description">Главная архитектура защищённой коммуникационной среды и её границы безопасности.</div></a>
-<a class="card" href="./eugene-messenger/specification-registry.html"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">SPEC</div></div><div class="card-title">Specification Registry</div><div class="card-index">EM / 02</div></div><div class="description">Реестр security claims с привязкой к спецификациям, моделям, тестам и остаточным рискам.</div></a>
-<a class="card" href="./eugene-messenger/assurance-case.html"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">AC</div></div><div class="card-title">Assurance Case</div><div class="card-index">EM / 03</div></div><div class="description">Доказательная структура, связывающая утверждения безопасности с моделями, тестами и свидетельствами.</div></a>
-<a class="card" href="./eugene-messenger/tla-models.html"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">TLA</div></div><div class="card-title">TLA+ Models</div><div class="card-index">EM / 04</div></div><div class="description">Формальные модели состояний и counterexample-driven проверки протоколов.</div></a>
-</div></section>
+<a class="card" href="./eugene-messenger/"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">EM</div></div><div class="card-title">Eugene Messenger</div><div class="card-index">EM / 01</div></div><div class="description">Архитектура коммуникационной среды. Статус: исследовательская архитектура, а не подтверждённый работающий мессенджер.</div></a>
+<a class="card" href="./eugene-messenger/specification-registry.html"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">SPEC</div></div><div class="card-title">Specification Registry</div><div class="card-index">EM / 02</div></div><div class="description">Реестр заявлений безопасности и их проверяемых оснований. Наличие реестра не подтверждает реализацию заявленных свойств.</div></a>
+<a class="card" href="./eugene-messenger/tla-models.html"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">TLA</div></div><div class="card-title">TLA+ Models</div><div class="card-index">EM / 04</div></div><div class="description">Формальные модели протоколов и состояний. Модель не является доказательством безопасности всей системы.</div></a>
+</div>
+</details>
+</section>
 
 <section class="section"><div class="section-title"><div class="section-number">14 / SECTION</div><h2>Симуляции</h2></div>
 <div class="section-lead">Вычислительные модели для проверки гипотез до внедрения. Симуляция не считается доказательством сама по себе: её задача — обнаруживать зависимости, крайние случаи, противоречия и вопросы для дальнейшей проверки.</div><div class="cards"><a class="card" href="./simulations/"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">SIM</div></div><div class="card-title">Симуляции</div><div class="card-index">SIM / 01</div></div><div class="description">Каталог экспериментальных моделей и результатов моделирования.</div></a><a class="card" href="./simulations/media-impact.html"><div class="card-content"><div class="icon"><div class="icon-matrix"></div><div class="icon-symbol">MEDIA</div></div><div class="card-title">Воздействие медиа</div><div class="card-index">SIM / 02</div></div><div class="description">Модель анализа того, как информационный контекст может менять внимание, интерпретацию и поведение.</div></a></div></section>
