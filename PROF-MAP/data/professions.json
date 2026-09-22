@@ -1,0 +1,193 @@
+{
+  "version": "0.2.0-seed",
+  "status": "model_draft",
+  "note": "Models are prototypes and must be reviewed before use.",
+  "professions": [
+    {
+      "id": "customer_support_specialist",
+      "name": "Специалист поддержки",
+      "profile": {
+        "EMP": {
+          "target": 4,
+          "weight": 1.4
+        },
+        "COM": {
+          "target": 3.8,
+          "weight": 1.3
+        },
+        "DIG": {
+          "target": 3.4,
+          "weight": 1
+        },
+        "RES": {
+          "target": 3.7,
+          "weight": 1.2
+        },
+        "ORG": {
+          "target": 3.5,
+          "weight": 1
+        }
+      },
+      "environment": {
+        "clients": true,
+        "team": true,
+        "remote": "possible",
+        "regulated": "medium"
+      },
+      "skills": [
+        "CRM",
+        "written_communication",
+        "conflict_management",
+        "product_knowledge"
+      ]
+    },
+    {
+      "id": "content_manager",
+      "name": "Контент-менеджер",
+      "profile": {
+        "COM": {
+          "target": 3.6,
+          "weight": 1.1
+        },
+        "DIG": {
+          "target": 3.8,
+          "weight": 1.1
+        },
+        "CREA": {
+          "target": 4,
+          "weight": 1.3
+        },
+        "ORG": {
+          "target": 3.6,
+          "weight": 1
+        },
+        "ADAPT": {
+          "target": 3.7,
+          "weight": 1
+        }
+      },
+      "environment": {
+        "clients": "mixed",
+        "team": true,
+        "remote": "possible",
+        "regulated": "low"
+      },
+      "skills": [
+        "content_management",
+        "written_communication",
+        "cms",
+        "basic_analytics"
+      ]
+    },
+    {
+      "id": "project_coordinator",
+      "name": "Координатор проектов",
+      "profile": {
+        "COORD": {
+          "target": 4,
+          "weight": 1.4
+        },
+        "ORG": {
+          "target": 4,
+          "weight": 1.3
+        },
+        "COM": {
+          "target": 3.8,
+          "weight": 1.2
+        },
+        "INI": {
+          "target": 3.5,
+          "weight": 1
+        },
+        "ADAPT": {
+          "target": 3.7,
+          "weight": 1
+        }
+      },
+      "environment": {
+        "clients": "mixed",
+        "team": true,
+        "remote": "possible",
+        "regulated": "medium"
+      },
+      "skills": [
+        "task_tracking",
+        "stakeholder_communication",
+        "documentation",
+        "planning"
+      ]
+    },
+    {
+      "id": "data_assistant",
+      "name": "Ассистент по работе с данными",
+      "profile": {
+        "AN": {
+          "target": 3.9,
+          "weight": 1.3
+        },
+        "DIG": {
+          "target": 4,
+          "weight": 1.3
+        },
+        "ORG": {
+          "target": 3.7,
+          "weight": 1.1
+        },
+        "LRN": {
+          "target": 3.7,
+          "weight": 1
+        }
+      },
+      "environment": {
+        "clients": false,
+        "team": "possible",
+        "remote": "possible",
+        "regulated": "medium"
+      },
+      "skills": [
+        "spreadsheets",
+        "data_quality",
+        "documentation",
+        "basic_data_analysis"
+      ]
+    },
+    {
+      "id": "ai_content_specialist",
+      "name": "AI-контент специалист",
+      "profile": {
+        "AI": {
+          "target": 4,
+          "weight": 1.4
+        },
+        "CREA": {
+          "target": 4.1,
+          "weight": 1.3
+        },
+        "COM": {
+          "target": 3.7,
+          "weight": 1
+        },
+        "DIG": {
+          "target": 3.7,
+          "weight": 1
+        },
+        "ADAPT": {
+          "target": 4,
+          "weight": 1.1
+        }
+      },
+      "environment": {
+        "clients": "mixed",
+        "team": "possible",
+        "remote": "possible",
+        "regulated": "low"
+      },
+      "skills": [
+        "prompting",
+        "content_editing",
+        "verification",
+        "content_workflow"
+      ]
+    }
+  ]
+}
