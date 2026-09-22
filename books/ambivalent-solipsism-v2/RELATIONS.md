@@ -20,6 +20,7 @@
 - `ethics.piccs` — PICCS
 - `engineering.symbiontos` — SymbiontOS
 - `engineering.eugene_messenger` — Eugene Messenger
+- `life.prompt` — жизнь как метафорический промпт, заданный до рождения
 
 ## Типы связей
 
@@ -47,6 +48,10 @@
 - `ethics.piccs` applies_to `reality.residual`
 - `engineering.symbiontos` implements philosophical and methodological implications only where formalization is justified
 - `engineering.eugene_messenger` related_to `ai.symbiotic_intelligence`
+- `life.prompt` related_to `subject.perception`
+- `life.prompt` related_to `consciousness.interface`
+- `life.prompt` related_to `development.law`
+- `life.prompt` related_to `ai.model`
 
 ## Ограничение
 
