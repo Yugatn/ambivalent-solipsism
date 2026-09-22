@@ -6,7 +6,7 @@ Status: DEFERRED / DESIGN NOTE
 
 Future version of the Cattell 16PF-style research instrument may add controlled visual scenes to selected questions. The respondent would answer after observing a standardized scene rather than only reading an abstract verbal statement.
 
-The visual stimulus should function as an additional elicitation layer, not as a claim that images reveal hidden personality automatically.
+The visual stimulus should function as an additional verification and elicitation layer. It supplements the verbal item and is designed to test whether the response remains stable when the same construct is presented with contextual visual information. It is not an alternative to the verbal item and does not independently reveal hidden personality.
 
 ## Why this can be useful
 
@@ -19,10 +19,10 @@ Do NOT describe this as a validated projective test until empirical validation e
 ## Proposed architecture
 
 1. Baseline verbal 16PF-style item.
-2. Optional visual-scene variant.
-3. Same construct or factor target.
+2. The same item receives a controlled visual scene as a supplementary stimulus.
+3. The scene targets the same construct or factor and must not encode the expected answer.
 4. Response captured separately as VERBAL_RESPONSE and SCENE_RESPONSE.
-5. Compare convergence/divergence.
+5. Compare convergence/divergence as a verification signal.
 6. Preserve uncertainty and context.
 7. Never infer a hidden trait from the image alone.
 
@@ -38,10 +38,11 @@ The scene must not secretly encode the expected answer through obvious visual cu
 
 Possible experimental conditions:
 
-- verbal only;
-- scene only;
-- verbal + scene;
-- repeated scene with altered context.
+- verbal item first, then the same item with supplementary scene;
+- verbal item plus scene in the same presentation;
+- repeated item with controlled scene-context variation.
+
+The scene is not a replacement condition in the production version; it is an additional stimulus for verification.
 
 Potential measurements:
 
