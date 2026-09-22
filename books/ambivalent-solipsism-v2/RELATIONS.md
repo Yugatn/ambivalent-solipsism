@@ -56,3 +56,8 @@
 ## Ограничение
 
 Связь в графе не является доказательством истинности связанного положения. Она фиксирует отношение внутри модели книги.
+
+- `consciousness.prenatal_perception` related_to `subject.perception`
+- `consciousness.prenatal_perception` related_to `consciousness.interface`
+- `consciousness.prenatal_perception` related_to `society.superposition`
+- `consciousness.prenatal_perception` related_to `life.prompt`
