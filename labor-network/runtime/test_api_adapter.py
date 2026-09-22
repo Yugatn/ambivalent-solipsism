@@ -5,6 +5,7 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 from threading import Thread
 from http.server import HTTPServer
+from unittest.mock import patch
 
 from api_adapter import make_handler
 from pilot_kernel import DurableDecision, DurableKernelStore, PilotKernel, record_decision_durably
@@ -179,6 +180,27 @@ class ReplayProtectionTests(unittest.TestCase):
                 record for record in store.load()
                 if "request_fingerprint" in record
             ]), 1)
+        finally:
+            d.cleanup()
+
+    def test_interrupted_execution_blocks_replay(self):
+        from api_adapter import process_idempotent_action_request
+        d, store, kernel = self._prepared()
+        payload = self._payload()
+        try:
+            def interrupted_action(kernel_arg, store_arg, payload_arg):
+                kernel_arg.execute()
+                raise RuntimeError("simulated process interruption")
+
+            with patch("api_adapter.process_action_payload", side_effect=interrupted_action):
+                with self.assertRaises(RuntimeError):
+                    process_idempotent_action_request(kernel, store, payload)
+
+            second = process_idempotent_action_request(kernel, store, payload)
+            self.assertTrue(second["duplicate"])
+            self.assertTrue(second["recovery_required"])
+            self.assertEqual(second["reservation_status"], "executing")
+            self.assertEqual(kernel.action.value, "executed")
         finally:
             d.cleanup()
 
