@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "title",
+    "version",
+    "questions"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "research_status": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "text"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "single",
+              "multiple",
+              "scale",
+              "text",
+              "number",
+              "yesno",
+              "date"
+            ]
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dimension": {
+            "type": "string"
+          },
+          "reverse": {
+            "type": "boolean"
+          },
+          "score": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}
