@@ -61,3 +61,8 @@
 - `consciousness.prenatal_perception` related_to `consciousness.interface`
 - `consciousness.prenatal_perception` related_to `society.superposition`
 - `consciousness.prenatal_perception` related_to `life.prompt`
+
+- `consciousness.continuity` related_to `consciousness.prenatal_perception`
+- `consciousness.continuity` related_to `consciousness.interface`
+- `consciousness.continuity` related_to `subject.perception`
+- `consciousness.continuity` extends `reality.residual`
