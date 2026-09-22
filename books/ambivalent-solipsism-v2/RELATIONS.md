@@ -66,3 +66,9 @@
 - `consciousness.continuity` related_to `consciousness.interface`
 - `consciousness.continuity` related_to `subject.perception`
 - `consciousness.continuity` extends `reality.residual`
+
+- `consciousness.rebirth_recursion` related_to `consciousness.continuity`
+- `consciousness.rebirth_recursion` related_to `consciousness.prenatal_perception`
+- `consciousness.rebirth_recursion` related_to `society.superposition`
+- `consciousness.rebirth_recursion` related_to `life.prompt`
+- `consciousness.rebirth_recursion` related_to `reality.residual`
