@@ -142,6 +142,17 @@ Threads: https://www.threads.com/@yugatneo
 
 Полная структура экосистемы описана в [Единой навигации](ECOSYSTEM_NAVIGATION.md).
 
+
+### Обучающий центр
+
+Практический раздел для освоения цифровых инструментов: видеомонтаж, офисные приложения, таблицы, графика и дизайн.
+
+- [Обучающий центр](education/index.md)
+- [Видеомонтаж](education/video/index.md)
+- [Офис и таблицы](education/office/index.md)
+- [Графика и дизайн](education/graphics/index.md)
+- [Справочник горячих клавиш](education/hotkeys/index.md)
+
 ## Существующие технические и прикладные слои
 
 ### Cinema Catharsis
