@@ -44,7 +44,7 @@ def make_handler(kernel: PilotKernel, store: DurableKernelStore) -> type[BaseHTT
             try:
                 length = int(self.headers.get("Content-Length", "0"))
                 payload = json.loads(self.rfile.read(length).decode("utf-8"))
-                result = process_action_payload(kernel, store, payload)
+                result = process_idempotent_action_request(kernel, store, payload)
                 body = json.dumps(result).encode("utf-8")
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json")
