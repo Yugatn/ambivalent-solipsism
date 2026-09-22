@@ -6,8 +6,8 @@ Its purpose is to prove that an external request enters the same authorization p
 from __future__ import annotations
 
 import json
+from dataclasses import dataclass
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from typing import Callable
 
 from pilot_kernel import ActionRequest, DurableKernelStore, PilotKernel, handle_action_request
 
@@ -84,18 +84,19 @@ def process_idempotent_action_request(
 ) -> dict:
     """Persist request identity before protected execution."""
     fingerprint = request_fingerprint(payload)
-    for record in store.load():
-        if record.get("request_fingerprint") == fingerprint:
-            return {
-                "executed": False,
-                "request_id": str(payload.get("request_id", "")),
-                "duplicate": True,
-            }
+    with store.transaction():
+        for record in store.load():
+            if record.get("request_fingerprint") == fingerprint:
+                return {
+                    "executed": False,
+                    "request_id": str(payload.get("request_id", "")),
+                    "duplicate": True,
+                }
 
-    result = process_action_payload(kernel, store, payload)
-    store.append({
-        "request_fingerprint": fingerprint,
-        "request_id": str(payload["request_id"]),
-        "result": str(result["executed"]).lower(),
-    })
-    return {**result, "duplicate": False}
+        result = process_action_payload(kernel, store, payload)
+        store.append({
+            "request_fingerprint": fingerprint,
+            "request_id": str(payload["request_id"]),
+            "result": str(result["executed"]).lower(),
+        })
+        return {**result, "duplicate": False}
