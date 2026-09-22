@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Тест Юджина · Амбивалентный солипсизм</title>
+<style>
+:root{--bg:#02050a;--panel:#071015;--text:#eef7f5;--muted:#9aacab;--accent:#45f0c3;--line:rgba(69,240,195,.18)}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,rgba(69,240,195,.08),transparent 35%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.65}
+main{width:min(920px,calc(100% - 28px));margin:auto;padding:24px 0 90px}
+nav{display:flex;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:16px}a{color:var(--muted);text-decoration:none;font:11px monospace;letter-spacing:.06em}a:hover{color:var(--accent)}
+.ey{margin-top:55px;color:#45f0c3aa;font:11px monospace;letter-spacing:.18em}.title{font-size:clamp(40px,8vw,72px);line-height:1;margin:12px 0 20px;font-weight:500}.lead{font-size:18px;color:#c2d1cf;max-width:820px}
+.note,.question,.result-card{background:rgba(7,16,21,.84);border:1px solid var(--line);border-radius:20px}.note{padding:20px;margin:25px 0;color:#b7c7c4}.note strong{color:var(--accent)}
+#test{margin-top:35px}.progress{height:4px;background:#0c171a;border-radius:10px;overflow:hidden;margin:20px 0 35px}.progress span{display:block;height:100%;background:var(--accent);width:0;transition:.25s}
+.question{padding:25px}.qnum{font:10px monospace;color:#45f0c3aa;letter-spacing:.15em}.qtext{font-size:21px;line-height:1.5;margin:13px 0 25px}.options{display:grid;gap:10px}.option{display:flex;align-items:center;gap:12px;padding:15px;border:1px solid rgba(69,240,195,.12);border-radius:14px;background:#050b0e;color:#cbd8d6;cursor:pointer}.option:hover{border-color:rgba(69,240,195,.4)}.option input{accent-color:#45f0c3;width:18px;height:18px}.buttons{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.btn{border:1px solid var(--line);background:#08161a;color:#d9e7e4;padding:12px 18px;border-radius:12px;cursor:pointer}.btn.primary{border-color:rgba(69,240,195,.5);color:var(--accent)}.hidden{display:none!important}
+.results{display:grid;gap:14px}.result-card{padding:22px}.result-head{display:flex;justify-content:space-between;gap:15px;align-items:baseline}.score{font:24px monospace;color:var(--accent)}.bar{height:7px;background:#0b171a;border-radius:10px;overflow:hidden;margin:12px 0}.bar span{display:block;height:100%;background:var(--accent)}.muted{color:#9fb0ad}.small{font-size:13px;color:#93a4a1}
+.formula{padding:20px;border:1px solid rgba(69,240,195,.25);border-radius:18px;text-align:center;font-size:20px;margin:25px 0;background:#071317}
+footer{margin-top:60px;color:#53625f;font:9px monospace;letter-spacing:.12em}
+</style>
+</head>
+<body>
+<main>
+<nav><a href="../">АМБИВАЛЕНТНЫЙ СОЛИПСИЗМ</a><a href="./">ЧЕЛОВЕК</a><a href="../development-law/">ЗАКОН РАЗВИТИЯ</a></nav>
+<div class="ey">EUGENE TEST · AUTHORIAL RESEARCH INSTRUMENT</div>
+<h1 class="title">Тест Юджина</h1>
+<p class="lead">Исследовательский инструмент для изучения способов, которыми человек строит модель себя, другого, реальности, неопределённости и собственного развития.</p>
+<div class="note"><strong>Статус.</strong> Это авторская исследовательская методика Амбивалентного Солипсизма. Она не является клинической диагностикой и не устанавливает «истинную личность» человека. Результат описывает только структуру ответов в этой версии теста.</div>
+<div class="note"><strong>Как отвечать.</strong> Выберите степень согласия с каждым утверждением. Не стремитесь получить «правильный» профиль: в тесте нет общего показателя хорошего или плохого человека.</div>
+<div id="test">
+<div class="progress"><span id="progress"></span></div>
+<div id="question"></div>
+</div>
+<section id="result" class="hidden">
+<h2>Профиль ответа</h2>
+<p class="muted">Здесь нет единой итоговой оценки. Каждая шкала описывает отдельное направление ответов.</p>
+<div class="formula">Результат = профиль отдельных измерений + структура ответов + ограничения модели</div>
+<div id="results" class="results"></div>
+<div class="note" id="meta"></div>
+<button class="btn primary" onclick="restart()">Пройти заново</button>
+</section>
+<footer>AMBIVALENT SOLIPSISM · EUGENE TEST · RESEARCH VERSION 0.1</footer>
+</main>
+<script>
+const SCALE=[
+["subject","Субъектность","Насколько человек удерживает различие между собственным переживанием и полной картиной реальности.","subject"],
+["other","Реальность другого","Насколько человек учитывает самостоятельность перспектив и опыта других субъектов.","other"],
+["uncertainty","Работа с неопределённостью","Способность оставлять неизвестное неизвестным и не заменять пробел предположением.","uncertainty"],
+["revision","Пересмотр модели","Готовность изменять собственное объяснение при появлении новых данных.","revision"],
+["autonomy","Когнитивная автономия","Способность отделять собственное решение от внешнего давления и информационного потока.","autonomy"],
+["development","Развитие и границы","Способность одновременно учитывать собственное развитие, развитие другого и границы вмешательства.","development"]
+];
+const ITEMS=[
+["subject","Я могу считать своё переживание реальным, не считая его полной картиной происходящего.",1],
+["other","Если человек видит ситуацию иначе, это ещё не означает, что один из нас обязательно ничего не понимает.",1],
+["uncertainty","Если данных недостаточно, мне легче оставить вопрос открытым, чем заполнить пробел наиболее правдоподобной версией.",1],
+["revision","Когда новая информация противоречит моей модели, я сначала проверяю, не требует ли модель пересмотра.",1],
+["autonomy","Я могу изменить своё решение после размышления, даже если окружающие уже ожидают от меня другого решения.",1],
+["development","Свобода человека имеет границу там, где его действие существенно и необоснованно блокирует здоровье или развитие другого.",1],
+["subject","Если я уверен в своём объяснении, дополнительные перспективы обычно уже не нужны.",-1],
+["other","Другого человека можно достаточно полно понять по нескольким его наиболее заметным поступкам.",-1],
+["uncertainty","Если объект невозможно сейчас проверить, практичнее считать, что его нет.",-1],
+["revision","Если объяснение хорошо работало раньше, противоречащие ему новые данные чаще всего можно не учитывать.",-1],
+["autonomy","Большое количество одинаковых сообщений само по себе убеждает меня, что утверждение, скорее всего, верно.",-1],
+["development","Если моя цель важна для меня, интересы другого человека должны отступить независимо от последствий.",-1],
+["subject","Я различаю то, что непосредственно наблюдал, и то, что вывел из наблюдения.",1],
+["other","Даже близкий человек сохраняет часть внутреннего мира, который мне недоступен непосредственно.",1],
+["uncertainty","Фраза «не проверено» для меня отличается от фразы «ложно».",1],
+["revision","Я способен одновременно сохранять рабочую гипотезу и признавать, что она может оказаться неполной.",1],
+["autonomy","Перед важным решением я стараюсь понять, что именно является моим основанием для выбора, а что пришло извне.",1],
+["development","Ограничение действия другого должно иметь основание и быть соразмерным возможному вреду.",1],
+["subject","Описание моего поведения в определённой ситуации уже достаточно, чтобы точно описать меня как человека.",-1],
+["other","Если я не понимаю мотив другого, наиболее вероятное объяснение можно принять как установленный факт.",-1],
+["uncertainty","Неизвестность обычно раздражает меня настолько, что я предпочитаю быстро выбрать любую версию.",-1],
+["revision","Признать ошибочность собственной модели для меня важнее, чем сохранить её непротиворечивой любой ценой.",1],
+["autonomy","Технологическая система может лучше меня решить, какой жизненный выбор мне следует сделать, если она анализирует больше данных.",-1],
+["development","Помощь человеку и принятие решения вместо него — не одно и то же.",1],
+["subject","Я могу описывать себя разными способами в зависимости от ситуации, не считая один из них единственно настоящим.",1],
+["other","В конфликте я стараюсь учитывать не только свою версию событий, но и то, какие данные доступны другой стороне.",1],
+["uncertainty","Я различаю отсутствие доступа к информации и доказательство отсутствия самого объекта.",1],
+["revision","Если две независимые проверки расходятся с моей первоначальной версией, я считаю это основанием заново исследовать вопрос.",1],
+["autonomy","Даже полезную рекомендацию системы я рассматриваю как материал для решения, а не как автоматическое разрешение действовать.",1],
+["development","При выборе между собственным удобством и существенным развитием другого человека я учитываю последствия для обеих сторон.",1]
+];
+let index=0,answers=[];
+const labels=["Совершенно не согласен","Скорее не согласен","Не уверен / зависит от ситуации","Скорее согласен","Полностью согласен"];
+function render(){
+ const item=ITEMS[index], el=document.getElementById("question");
+ el.innerHTML='<div class="question"><div class="qnum">ВОПРОС '+(index+1)+' / '+ITEMS.length+'</div><div class="qtext">'+item[0].toUpperCase().replace("SUBJECT","СУБЪЕКТНОСТЬ").replace("OTHER","ДРУГОЙ").replace("UNCERTAINTY","НЕОПРЕДЕЛЁННОСТЬ").replace("REVISION","ПЕРЕСМОТР").replace("AUTONOMY","АВТОНОМИЯ").replace("DEVELOPMENT","РАЗВИТИЕ")+'</div><div class="qtext" style="font-size:19px">'+item[1]+'</div><div class="options">'+labels.map((x,i)=>'<label class="option"><input type="radio" name="answer" value="'+(i+1)+'"><span>'+x+'</span></label>').join("")+'</div><div class="buttons">'+(index?'<button class="btn" onclick="prev()">Назад</button>':'<span></span>')+'<button class="btn primary" onclick="next()">'+(index===ITEMS.length-1?'Завершить':'Далее')+'</button></div></div>';
+ document.getElementById("progress").style.width=((index)/ITEMS.length*100)+"%";
+ if(answers[index]) document.querySelector('input[value="'+answers[index]+'"]').checked=true;
+}
+function next(){
+ const selected=document.querySelector('input[name="answer"]:checked');
+ if(!selected){alert("Выберите один вариант ответа.");return}
+ answers[index]=+selected.value;
+ if(index<ITEMS.length-1){index++;render()}else finish();
+}
+function prev(){if(index>0){index--;render()}}
+function finish(){
+ const scores={};SCALE.forEach(s=>scores[s[0]]=0);
+ const counts={};SCALE.forEach(s=>counts[s[0]]=0);
+ ITEMS.forEach((it,i)=>{const v=answers[i];if(!v)return;const d=it[0], dir=it[2];scores[d]+=dir>0?v:6-v;counts[d]++});
+ const box=document.getElementById("results");box.innerHTML="";
+ SCALE.forEach(s=>{const max=counts[s[0]]*5,min=counts[s[0]]*1,raw=scores[s[0]],pct=max===min?0:Math.round((raw-min)/(max-min)*100);const c=document.createElement("div");c.className="result-card";c.innerHTML='<div class="result-head"><strong>'+s[1]+'</strong><span class="score">'+pct+'%</span></div><div class="bar"><span style="width:'+pct+'%"></span></div><p>'+s[2]+'</p><p class="small">Получено '+raw+' из '+max+' возможных баллов по этой версии шкалы. Это экспериментальный профиль, а не нормативная оценка.</p>';box.appendChild(c)});
+ document.getElementById("meta").innerHTML="<strong>Версия:</strong> Eugene Test 0.1 · 30 вопросов · 6 исследовательских измерений.<br><strong>Расчёт:</strong> пятибалльная шкала с обратным кодированием отдельных утверждений. Единого суммарного балла нет.<br><strong>Ограничение:</strong> психометрическая валидность, нормативы и диагностическая применимость этой авторской версии не установлены.";
+ document.getElementById("test").classList.add("hidden");document.getElementById("result").classList.remove("hidden");document.getElementById("progress").style.width="100%";
+ localStorage.setItem("eugene-test-v01",JSON.stringify({method_id:"eugene-test",method_version:"0.1",calculation_version:"0.1",result_schema_version:"0.1",timestamp:new Date().toISOString(),answers}));
+}
+function restart(){index=0;answers=[];document.getElementById("result").classList.add("hidden");document.getElementById("test").classList.remove("hidden");render();window.scrollTo({top:0,behavior:"smooth"})}
+render();
+</script>
+</body>
+</html>
