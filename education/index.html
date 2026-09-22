@@ -1,1 +1,112 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Обучающий центр</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="./style.css"></head><body><main class="wrap"><a class="back" href="../">← Главное меню</a><header class="hero"><div class="eyebrow">EDUCATION / HUB</div><h1>Обучающий центр</h1><p>Практическая база проекта: видеомонтаж, офисные инструменты, таблицы, графика, дизайн и программирование. Каждый раздел ведёт на самостоятельную рабочую страницу.</p></header><section class="grid"><a class="card" href="./video/"><div class="num">EDU / 01</div><div class="icon">▶</div><h2>Видеомонтаж</h2><p>CapCut, DaVinci Resolve, Premiere Pro, звук, цвет и экспорт.</p></a><a class="card" href="./office/"><div class="num">EDU / 02</div><div class="icon">▦</div><h2>Офис и таблицы</h2><p>Excel, Google Таблицы, документы, формулы и рабочие сценарии.</p></a><a class="card" href="./graphics/"><div class="num">EDU / 03</div><div class="icon">◇</div><h2>Графика и дизайн</h2><p>Photoshop, Illustrator, Figma, Krita и визуальные рабочие процессы.</p></a><a class="card" href="./programming/"><div class="num">EDU / 04</div><div class="icon">{ }</div><h2>Программирование</h2><p>Языки выбираются по задаче: Python, JavaScript, TypeScript, Dart, Swift, Kotlin, Rust, Go и SQL.</p></a><a class="card" href="./hotkeys/"><div class="num">EDU / 05</div><div class="icon">⌘</div><h2>Горячие клавиши</h2><p>Единый справочник для Windows и macOS с пояснением контекста применения.</p></a></section><section class="section"><h2>Как устроен урок</h2><div class="grid"><div class="lesson"><h3>01 · Действие</h3><p>Определяем конкретный результат, который должен получить ученик.</p></div><div class="lesson"><h3>02 · Шаги</h3><p>Даем короткую последовательность действий и объясняем логику каждого шага.</p></div><div class="lesson"><h3>03 · Клавиша</h3><p>Показываем сочетание клавиш отдельно для Windows и macOS, когда это применимо.</p></div><div class="lesson"><h3>04 · Практика</h3><p>Закрепляем приём небольшим упражнением или мини-проектом.</p></div></div></section><section class="section"><h2>Редакционный принцип</h2><div class="notice">В публичных текстах проекта стрелочные символы и схемы со стрелками не используются. Связи, последовательности и причинность описываются словами: «сначала», «затем», «после этого», «это приводит к», «в результате», «связь между». Это правило применяется к учебным материалам и книге.</div></section><footer class="footer">АМБИВАЛЕНТНЫЙ СОЛИПСИЗМ · ОБУЧЕНИЕ · СЛОЖНОСТЬ НЕ ОШИБКА · ДРУГОЙ РЕАЛЕН</footer></main></body></html>
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Обучающий центр · Амбивалентный Солипсизм</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css?v=20260922">
+</head>
+<body>
+<main class="wrap">
+<a class="back" href="../">Главное меню</a>
+
+<header class="hero">
+<div class="eyebrow">EDUCATION / HUB</div>
+<h1>Обучающий центр</h1>
+<p>Практическая база проекта: видеомонтаж, офисные инструменты, таблицы, графика, дизайн и программирование. Здесь можно выбрать направление, открыть учебный маршрут и перейти к рабочему разделу.</p>
+<div class="status" id="pageStatus" role="status">Обучающий центр загружен</div>
+</header>
+
+<section class="tools" aria-label="Навигация по обучению">
+<label class="search">
+<span>Поиск</span>
+<input id="searchInput" type="search" placeholder="Например: Python, Excel, видео" autocomplete="off">
+</label>
+<div class="filters" role="group" aria-label="Фильтр направлений">
+<button class="filter active" type="button" data-filter="all">Все</button>
+<button class="filter" type="button" data-filter="media">Медиа</button>
+<button class="filter" type="button" data-filter="office">Офис</button>
+<button class="filter" type="button" data-filter="design">Дизайн</button>
+<button class="filter" type="button" data-filter="code">Код</button>
+</div>
+</section>
+
+<section class="grid" id="courseGrid" aria-live="polite">
+<a class="card" data-category="media" data-search="видеомонтаж capcut davinci resolve premiere pro звук цвет экспорт" href="./video/">
+<div class="num">EDU / 01</div><div class="icon">VIDEO</div><h2>Видеомонтаж</h2><p>CapCut, DaVinci Resolve, Premiere Pro, звук, цвет и экспорт.</p><span class="open">Открыть учебный маршрут</span>
+</a>
+<a class="card" data-category="office" data-search="excel google таблицы документы формулы данные офис" href="./office/">
+<div class="num">EDU / 02</div><div class="icon">DATA</div><h2>Офис и таблицы</h2><p>Excel, Google Таблицы, документы, формулы и рабочие сценарии.</p><span class="open">Открыть учебный маршрут</span>
+</a>
+<a class="card" data-category="design" data-search="photoshop illustrator figma krita графика дизайн интерфейс" href="./graphics/">
+<div class="num">EDU / 03</div><div class="icon">DESIGN</div><h2>Графика и дизайн</h2><p>Photoshop, Illustrator, Figma, Krita и визуальные рабочие процессы.</p><span class="open">Открыть учебный маршрут</span>
+</a>
+<a class="card" data-category="code" data-search="python javascript typescript dart swift kotlin rust go sql программирование" href="./programming/">
+<div class="num">EDU / 04</div><div class="icon">CODE</div><h2>Программирование</h2><p>Язык выбирается по задаче: Python, JavaScript, TypeScript, Dart, Swift, Kotlin, Rust, Go и SQL.</p><span class="open">Открыть учебный маршрут</span>
+</a>
+<a class="card" data-category="office" data-search="горячие клавиши windows macos shortcuts приложения" href="./hotkeys/">
+<div class="num">EDU / 05</div><div class="icon">KEYS</div><h2>Горячие клавиши</h2><p>Единый справочник для Windows и macOS с пояснением контекста применения.</p><span class="open">Открыть справочник</span>
+</a>
+</section>
+
+<div class="empty" id="emptyState" hidden>По этому запросу учебных разделов не найдено.</div>
+
+<section class="section">
+<h2>Как устроен урок</h2>
+<div class="grid">
+<details class="lesson" open><summary>01 · Результат</summary><p>Сначала определяется конкретный результат, который должен получить ученик.</p></details>
+<details class="lesson"><summary>02 · Шаги</summary><p>Затем даётся короткая последовательность действий с объяснением логики каждого шага.</p></details>
+<details class="lesson"><summary>03 · Инструмент</summary><p>Для каждого действия указывается программа, функция или сочетание клавиш, если это применимо.</p></details>
+<details class="lesson"><summary>04 · Практика</summary><p>После объяснения приём закрепляется упражнением или небольшим реальным проектом.</p></details>
+</div>
+</section>
+
+<section class="section">
+<h2>Редакционный принцип</h2>
+<div class="notice">В публичных текстах проекта стрелочные символы и схемы со стрелками не используются. Связи, последовательности и причинность описываются словами: «сначала», «затем», «после этого», «это приводит к», «в результате», «связь между». Это правило применяется к учебным материалам и книге.</div>
+</section>
+
+<footer class="footer">АМБИВАЛЕНТНЫЙ СОЛИПСИЗМ · ОБУЧЕНИЕ · СЛОЖНОСТЬ НЕ ОШИБКА · ДРУГОЙ РЕАЛЕН</footer>
+</main>
+
+<script>
+(function () {
+  const input = document.getElementById('searchInput');
+  const cards = Array.from(document.querySelectorAll('.card'));
+  const filters = Array.from(document.querySelectorAll('.filter'));
+  const empty = document.getElementById('emptyState');
+  const status = document.getElementById('pageStatus');
+  let active = 'all';
+
+  function render() {
+    const query = input.value.trim().toLowerCase();
+    let visible = 0;
+    cards.forEach(function (card) {
+      const matchesCategory = active === 'all' || card.dataset.category === active;
+      const matchesQuery = !query || card.dataset.search.includes(query);
+      const show = matchesCategory && matchesQuery;
+      card.hidden = !show;
+      if (show) visible++;
+    });
+    empty.hidden = visible !== 0;
+    status.textContent = visible + ' учебных разделов доступно';
+  }
+
+  filters.forEach(function (button) {
+    button.addEventListener('click', function () {
+      filters.forEach(function (item) { item.classList.remove('active'); });
+      button.classList.add('active');
+      active = button.dataset.filter;
+      render();
+    });
+  });
+
+  input.addEventListener('input', render);
+  render();
+})();
+</script>
+</body>
+</html>
