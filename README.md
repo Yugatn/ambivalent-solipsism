@@ -152,6 +152,7 @@ Threads: https://www.threads.com/@yugatneo
 - [Офис и таблицы](education/office/index.md)
 - [Графика и дизайн](education/graphics/index.md)
 - [Справочник горячих клавиш](education/hotkeys/index.md)
+- [Программирование](education/programming/index.md)
 
 ## Существующие технические и прикладные слои
 
