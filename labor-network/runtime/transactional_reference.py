@@ -32,6 +32,7 @@ class ReferenceTransaction:
         return json.loads(self.path.read_text(encoding="utf-8"))
 
     def _write_atomic(self, records: list[Dict[str, str]]) -> None:
+        self.path.parent.mkdir(parents=True, exist_ok=True)
         temporary = self.path.with_suffix(self.path.suffix + ".tmp")
         temporary.write_text(
             json.dumps(records, sort_keys=True),
@@ -69,3 +70,96 @@ class ReferenceTransaction:
                 return False
         self.append({"claim_key": key, "claim_value": value})
         return True
+
+
+class RequestReservationLedger:
+    """Durable request reservation state for reference idempotency.
+
+    A reservation is persisted before protected execution. If execution reaches
+    the terminal callback, the reservation becomes completed. If the process
+    disappears after execution but before completion, the durable state remains
+    executing, so a replay is blocked rather than silently executing twice.
+
+    Recovery of an executing request is deliberately explicit. The reference
+    layer does not guess whether an external side effect happened.
+    """
+
+    RESERVED = "reserved"
+    EXECUTING = "executing"
+    COMPLETED = "completed"
+    FAILED = "failed"
+
+    def __init__(self, path: str):
+        self.transaction = ReferenceTransaction(path)
+        self._lock = RLock()
+
+    def _record(self, fingerprint: str) -> Dict[str, str] | None:
+        records = self.transaction.load()
+        matches = [
+            record for record in records
+            if record.get("fingerprint") == fingerprint
+        ]
+        return matches[-1] if matches else None
+
+    def reserve(self, fingerprint: str, request_id: str) -> str:
+        with self._lock, self.transaction:
+            record = self._record(fingerprint)
+            if record is not None:
+                return record["status"]
+            self.transaction.append({
+                "fingerprint": fingerprint,
+                "request_id": request_id,
+                "status": self.RESERVED,
+            })
+            return self.RESERVED
+
+    def begin_execution(self, fingerprint: str) -> str:
+        with self._lock, self.transaction:
+            record = self._record(fingerprint)
+            if record is None:
+                raise ValueError("request is not reserved")
+            if record["status"] != self.RESERVED:
+                return record["status"]
+            self.transaction.append({
+                "fingerprint": fingerprint,
+                "request_id": record["request_id"],
+                "status": self.EXECUTING,
+            })
+            return self.EXECUTING
+
+    def complete(self, fingerprint: str) -> str:
+        with self._lock, self.transaction:
+            record = self._record(fingerprint)
+            if record is None:
+                raise ValueError("request is not reserved")
+            if record["status"] == self.COMPLETED:
+                return self.COMPLETED
+            if record["status"] != self.EXECUTING:
+                raise ValueError("request is not executing")
+            self.transaction.append({
+                "fingerprint": fingerprint,
+                "request_id": record["request_id"],
+                "status": self.COMPLETED,
+            })
+            return self.COMPLETED
+
+    def fail(self, fingerprint: str) -> str:
+        with self._lock, self.transaction:
+            record = self._record(fingerprint)
+            if record is None:
+                raise ValueError("request is not reserved")
+            if record["status"] == self.FAILED:
+                return self.FAILED
+            if record["status"] == self.COMPLETED:
+                return self.COMPLETED
+            self.transaction.append({
+                "fingerprint": fingerprint,
+                "request_id": record["request_id"],
+                "status": self.FAILED,
+            })
+            return self.FAILED
+
+    def status(self, fingerprint: str) -> str | None:
+        with self._lock, self.transaction:
+            record = self._record(fingerprint)
+            return None if record is None else record["status"]
