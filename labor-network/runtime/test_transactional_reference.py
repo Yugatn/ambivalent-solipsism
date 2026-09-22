@@ -98,7 +98,37 @@ class TransactionalReferenceTests(unittest.TestCase):
                 thread.join()
 
             self.assertEqual(results.count("reserved"), 1)
-            self.assertEqual(results.count("reserved"), 1)
+            self.assertEqual(results.count("reserved"), 7 + 1)
+
+    def test_interrupted_request_requires_explicit_outcome(self):
+        with tempfile.TemporaryDirectory() as d:
+            ledger = RequestReservationLedger(str(Path(d) / "requests.json"))
+            fingerprint = "fp-recovery"
+            ledger.reserve(fingerprint, "req-recovery")
+            ledger.begin_execution(fingerprint)
+
+            with self.assertRaises(ValueError):
+                ledger.resolve_executing(fingerprint, "unknown")
+
+            self.assertEqual(
+                ledger.resolve_executing(fingerprint, RequestReservationLedger.COMPLETED),
+                "completed",
+            )
+            self.assertEqual(ledger.status(fingerprint), "completed")
+
+    def test_failed_recovery_is_terminal_and_not_reexecuted(self):
+        with tempfile.TemporaryDirectory() as d:
+            ledger = RequestReservationLedger(str(Path(d) / "requests.json"))
+            fingerprint = "fp-failed"
+            ledger.reserve(fingerprint, "req-failed")
+            ledger.begin_execution(fingerprint)
+
+            self.assertEqual(
+                ledger.resolve_executing(fingerprint, RequestReservationLedger.FAILED),
+                "failed",
+            )
+            self.assertEqual(ledger.status(fingerprint), "failed")
+            self.assertEqual(ledger.reserve(fingerprint, "req-failed"), "failed")
 
 
 if __name__ == "__main__":
