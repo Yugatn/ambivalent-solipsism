@@ -101,3 +101,16 @@ The reference adapter now has explicit principal/authentication state and determ
 | Replay prevention | prepared, not enforced | not certified |
 | Real credential verification | not implemented | not certified |
 | TLS / transport security | not implemented | not certified |
+
+
+## API replay/idempotency checkpoint
+
+The reference API path now persists a canonical request fingerprint before accepting a repeated request as new. An identical request is treated as a duplicate and does not execute a second protected Action. A changed payload receives a different fingerprint.
+
+| Boundary | Reference status | Production status |
+|---|---|---|
+| Canonical request fingerprint | covered | not certified |
+| Duplicate API request detection | covered | not certified |
+| Duplicate protected execution prevention | covered | not certified |
+| Cross-process replay protection | reference persistence only | not certified |
+| Cryptographic request authentication | not implemented | not certified |
