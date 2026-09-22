@@ -79,6 +79,7 @@
 35. [33 — Страх смерти и непрерывность развития](./33_FEAR_OF_DEATH_AND_GENERATIONAL_CONTINUITY.md)
 36. [34 — Социальная трудовая сеть](./34_SOCIAL_LABOR_NETWORK.md)
 37. [35 — PSY-TOOLS и модель субъекта](./35_PSY_TOOLS_AND_SUBJECT_MODEL.md)
+38. [36 — Сознательность, полутранс и автоматические слои субъекта](./36_CONSCIOUSNESS_SEMI_TRANCE_AND_AUTOMATIC_LAYERS.md)
 
 ## Логика расширения
 
