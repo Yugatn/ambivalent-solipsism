@@ -1,0 +1,68 @@
+{
+  "schema_version": "0.1",
+  "methods": [
+    {
+      "id": "cattell-16pf-style",
+      "title": "Кеттелл · 16 факторов",
+      "route": "./cattell/",
+      "status": "research-adapted",
+      "export": true
+    },
+    {
+      "id": "gerchikov-25-adapted",
+      "title": "Мотивация по Герчикову",
+      "route": "./gerchikov/",
+      "status": "research-adapted",
+      "export": true
+    },
+    {
+      "id": "dellinger",
+      "title": "Психогеометрический тест Деллингера",
+      "route": "./dellinger/",
+      "status": "research",
+      "export": true
+    },
+    {
+      "id": "belov-temperament",
+      "title": "Формула темперамента Белова",
+      "route": "./dellinger/temperament-belov.html",
+      "status": "self-observation",
+      "export": true
+    },
+    {
+      "id": "luscher",
+      "title": "Цветовой тест",
+      "route": "./luscher/",
+      "status": "research-adapted",
+      "export": true
+    },
+    {
+      "id": "eugene-test",
+      "title": "Тест Юджина",
+      "route": "./human/eugene-test.html",
+      "status": "authorial-research",
+      "export": true
+    },
+    {
+      "id": "wheel-balance",
+      "title": "Колесо Баланса",
+      "route": "./wheel/",
+      "status": "self-reflection",
+      "export": true
+    },
+    {
+      "id": "family-wheel",
+      "title": "Колесо Баланса семьи",
+      "route": "./wheel/family/",
+      "status": "self-reflection",
+      "export": true
+    },
+    {
+      "id": "skills-reflection",
+      "title": "Skills Reflection",
+      "route": "./skills/",
+      "status": "self-reflection",
+      "export": true
+    }
+  ]
+}
