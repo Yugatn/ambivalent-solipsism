@@ -10,19 +10,20 @@
 
 ## Архитектура раздела
 
-- [Принципы](principles.md)
-- [Субъект и мотивация](subject-and-motivation.md)
-- [Профессиональный профиль](professional-profile.md)
-- [Профессиональная история](professional-history.md)
-- [Работодатель и вакансии](employer-and-recruitment.md)
-- [Условия труда и обратная связь](work-conditions.md)
-- [Репутация и доверие](reputation.md)
-- [Proof of Development](proof-of-development.md)
-- [Региональный вклад и социальные программы](regional-development.md)
-- [Самозанятые и профессиональные услуги](self-employed.md)
-- [Образование и PROF-MAP](education-and-prof-map.md)
-- [Безопасность и государственная интеграция](privacy-and-state-integration.md)
-- [Техническая архитектура и интерфейс](architecture.md)
+- [Принципы](governance/principles.md)
+- [Субъект и мотивация](domain/subject-and-motivation.md)
+- [Профессиональный профиль](domain/professional-profile.md)
+- [Профессиональная история](domain/professional-history.md)
+- [Работодатель и вакансии](domain/employer-and-recruitment.md)
+- [Условия труда и обратная связь](domain/work-conditions.md)
+- [Репутация и доверие](domain/reputation.md)
+- [Proof of Development](domain/proof-of-development.md)
+- [Региональный вклад и социальные программы](regional/development.md)
+- [Самозанятые и профессиональные услуги](domain/self-employed.md)
+- [Образование и PROF-MAP](domain/education-and-prof-map.md)
+- [Безопасность и государственная интеграция](privacy/state-integration.md)
+- [Техническая архитектура](architecture/overview.md)
+- [Фонд солидарности](support/solidarity-fund-model.md)
 
 ## Четыре уровня
 
