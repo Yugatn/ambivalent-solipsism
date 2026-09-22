@@ -88,3 +88,34 @@
 - `perception.projection` related_to `consciousness.information`
 - `body.avatar` related_to `subject.perception`
 - `body.avatar` related_to `consciousness.interface`
+
+
+- `perception.cave` — пещера как граница доступного субъекту восприятия
+- `social.myelin` — интернет как функциональная аналогия нового коммуникационного слоя социальной нервной системы
+- `social.organism.stability` — Закон устойчивости системы
+- `social.cell.human` — человек как аналог клетки социального организма
+- `social.ideology.dna` — идеология как смысловая ДНК социального организма
+- `social.octopus` — человечество как распределённая система с локальными центрами обработки
+- `brain.fractal_history` — мозг как фрактальная карта исторической непрерывности
+- `cosmology.cellular_world` — клеточная космологическая гипотеза
+- `epistemology.majority` — большинство не является критерием истины
+
+- `perception.cave` related_to `subject.perception`
+- `perception.cave` related_to `reality.model`
+- `social.myelin` related_to `consciousness.information`
+- `social.myelin` related_to `social.organism.stability`
+- `social.organism.stability` extends `development.law`
+- `social.organism.stability` related_to `social.cell.human`
+- `social.cell.human` related_to `subject.perception`
+- `social.cell.human` related_to `subject.other`
+- `social.ideology.dna` related_to `social.cell.human`
+- `social.ideology.dna` related_to `social.organism.stability`
+- `social.octopus` related_to `social.cell.human`
+- `social.octopus` related_to `social.myelin`
+- `brain.fractal_history` related_to `subject.perception`
+- `brain.fractal_history` related_to `consciousness.information`
+- `brain.fractal_history` related_to `cosmology.cellular_world`
+- `cosmology.cellular_world` related_to `reality.residual`
+- `cosmology.cellular_world` related_to `brain.fractal_history`
+- `epistemology.majority` related_to `reality.residual`
+- `epistemology.majority` related_to `development.law`
