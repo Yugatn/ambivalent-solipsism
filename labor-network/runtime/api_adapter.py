@@ -75,3 +75,27 @@ def request_fingerprint(payload: dict) -> str:
     import hashlib
     canonical = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(canonical).hexdigest()
+
+
+def process_idempotent_action_request(
+    kernel: PilotKernel,
+    store: DurableKernelStore,
+    payload: dict,
+) -> dict:
+    """Persist request identity before protected execution."""
+    fingerprint = request_fingerprint(payload)
+    for record in store.load():
+        if record.get("request_fingerprint") == fingerprint:
+            return {
+                "executed": False,
+                "request_id": str(payload.get("request_id", "")),
+                "duplicate": True,
+            }
+
+    result = process_action_payload(kernel, store, payload)
+    store.append({
+        "request_fingerprint": fingerprint,
+        "request_id": str(payload["request_id"]),
+        "result": str(result["executed"]).lower(),
+    })
+    return {**result, "duplicate": False}
