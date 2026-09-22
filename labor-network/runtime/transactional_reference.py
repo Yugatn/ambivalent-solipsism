@@ -159,6 +159,27 @@ class RequestReservationLedger:
             })
             return self.FAILED
 
+    def resolve_executing(self, fingerprint: str, outcome: str) -> str:
+        """Resolve an interrupted request only from an explicit external outcome.
+
+        The caller must establish whether the protected side effect completed.
+        This method does not infer the outcome from local process state.
+        """
+        if outcome not in {self.COMPLETED, self.FAILED}:
+            raise ValueError("outcome must be completed or failed")
+        with self._lock, self.transaction:
+            record = self._record(fingerprint)
+            if record is None:
+                raise ValueError("request is not reserved")
+            if record["status"] != self.EXECUTING:
+                raise ValueError("request is not executing")
+            self.transaction.append({
+                "fingerprint": fingerprint,
+                "request_id": record["request_id"],
+                "status": outcome,
+            })
+            return outcome
+
     def status(self, fingerprint: str) -> str | None:
         with self._lock, self.transaction:
             record = self._record(fingerprint)
