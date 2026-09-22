@@ -72,3 +72,8 @@
 - `consciousness.rebirth_recursion` related_to `society.superposition`
 - `consciousness.rebirth_recursion` related_to `life.prompt`
 - `consciousness.rebirth_recursion` related_to `reality.residual`
+
+- `development.law` applies_to `ai.model`
+- `development.law` applies_to `ai.symbiotic_intelligence`
+- `ai.guardian_principle` extends `development.law`
+- `ai.guardian_principle` related_to `consciousness.continuity`
