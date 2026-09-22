@@ -60,10 +60,6 @@ class ApiAdapterTests(unittest.TestCase):
             server.server_close()
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class ApiSecurityBoundaryTests(unittest.TestCase):
     def test_missing_identity_is_not_authenticated(self):
         from api_adapter import authenticate_principal
@@ -100,38 +96,70 @@ class ReplayProtectionTests(unittest.TestCase):
             "action_type": "protected",
         }
 
+    def _prepared(self):
+        d = tempfile.TemporaryDirectory()
+        store = DurableKernelStore(str(Path(d.name) / "state.json"))
+        record_decision_durably(store, DurableDecision("replay-d1", True, "policy-v1", "completed"))
+        kernel = PilotKernel()
+        kernel.resolve_evidence()
+        kernel.decide(permitted=True)
+        return d, store, kernel
+
     def test_identical_request_is_idempotent(self):
-        import tempfile
-        from pathlib import Path
         from api_adapter import process_idempotent_action_request
-        from pilot_kernel import DurableDecision, DurableKernelStore, PilotKernel, record_decision_durably
-        with tempfile.TemporaryDirectory() as d:
-            store = DurableKernelStore(str(Path(d) / "state.json"))
-            record_decision_durably(store, DurableDecision("replay-d1", True, "policy-v1", "completed"))
-            kernel = PilotKernel()
-            kernel.resolve_evidence()
-            kernel.decide(permitted=True)
+        d, store, kernel = self._prepared()
+        try:
             first = process_idempotent_action_request(kernel, store, self._payload())
             second = process_idempotent_action_request(kernel, store, self._payload())
             self.assertFalse(first["duplicate"])
             self.assertTrue(second["duplicate"])
             self.assertTrue(first["executed"])
             self.assertFalse(second["executed"])
+        finally:
+            d.cleanup()
 
     def test_changed_payload_is_not_same_request(self):
-        import tempfile
-        from pathlib import Path
         from api_adapter import process_idempotent_action_request
-        from pilot_kernel import DurableDecision, DurableKernelStore, PilotKernel, record_decision_durably
-        with tempfile.TemporaryDirectory() as d:
-            store = DurableKernelStore(str(Path(d) / "state.json"))
-            record_decision_durably(store, DurableDecision("replay-d1", True, "policy-v1", "completed"))
-            kernel = PilotKernel()
-            kernel.resolve_evidence()
-            kernel.decide(permitted=True)
+        d, store, kernel = self._prepared()
+        try:
             first = process_idempotent_action_request(kernel, store, self._payload())
             changed = dict(self._payload())
             changed["request_id"] = "replay-2"
             second = process_idempotent_action_request(kernel, store, changed)
             self.assertFalse(first["duplicate"])
             self.assertFalse(second["duplicate"])
+        finally:
+            d.cleanup()
+
+    def test_concurrent_identical_requests_have_one_non_duplicate(self):
+        from api_adapter import process_idempotent_action_request
+        d, store, kernel = self._prepared()
+        try:
+            results = []
+            workers = [
+                Thread(
+                    target=lambda: results.append(
+                        process_idempotent_action_request(kernel, store, self._payload())
+                    )
+                )
+                for _ in range(8)
+            ]
+            for worker in workers:
+                worker.start()
+            for worker in workers:
+                worker.join()
+
+            self.assertEqual(len(results), 8)
+            self.assertEqual(sum(1 for result in results if not result["duplicate"]), 1)
+            self.assertEqual(sum(1 for result in results if result["duplicate"]), 7)
+            self.assertEqual(sum(1 for result in results if result["executed"]), 1)
+            self.assertEqual(len([
+                record for record in store.load()
+                if "request_fingerprint" in record
+            ]), 1)
+        finally:
+            d.cleanup()
+
+
+if __name__ == "__main__":
+    unittest.main()
