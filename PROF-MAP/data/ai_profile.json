@@ -1,0 +1,30 @@
+{
+  "version": "0.2.0-draft",
+  "subscales": [
+    {
+      "id": "literacy",
+      "name": "AI literacy",
+      "definition": "Понимание возможностей, ограничений и типичных рисков AI."
+    },
+    {
+      "id": "prompting",
+      "name": "Prompting",
+      "definition": "Способность формулировать задачу, контекст, ограничения и ожидаемый формат результата."
+    },
+    {
+      "id": "verification",
+      "name": "Verification",
+      "definition": "Склонность проверять результат AI и замечать возможные ошибки."
+    },
+    {
+      "id": "automation_openness",
+      "name": "Automation openness",
+      "definition": "Готовность рассматривать автоматизацию рутинных задач."
+    },
+    {
+      "id": "workflow_redesign",
+      "name": "Workflow redesign",
+      "definition": "Готовность перестраивать рабочий процесс с учётом взаимодействия человека и AI."
+    }
+  ]
+}
