@@ -36,4 +36,56 @@ footer{margin-top:70px;font:9px monospace;letter-spacing:.12em;color:rgba(145,16
 <a class="card" href="socratic-virtues.html"><div class="index">01 / 06</div><div class="name">Добродетели Сократа</div></a>
 <a class="card" href="individual-perception.html"><div class="index">01 / 07</div><div class="name">Индивидуальность восприятия</div></a></div>
 <footer>AMBIVALENT SOLIPSISM · PHILOSOPHY</footer>
-<section><h2>Матрица восприятия и взаимодействия</h2><p>Многоуровневая модель индивидуального восприятия, взаимодействия субъектов и перехода от индивидуальных матриц к матрицам организаций и инфраструктурных сетей.</p><p><a href="./perception-matrices.html">Открыть формальную модель</a></p></section></main></body></html>
+<section><h2>Матрица восприятия и взаимодействия</h2><p>Многоуровневая модель индивидуального восприятия, взаимодействия субъектов и перехода от индивидуальных матриц к матрицам организаций и инфраструктурных сетей.</p><p><a href="./perception-matrices.html">Открыть формальную модель</a></p></section>
+<section class="philosophy-book">
+<style>
+.philosophy-book{margin-top:70px;padding-top:45px;border-top:1px solid rgba(69,240,195,.15)}
+.philosophy-book h2{font:500 clamp(25px,4vw,40px)/1.2 system-ui;margin:0 0 14px}
+.philosophy-book .book-lead{max-width:760px;color:var(--muted);line-height:1.8}
+.book-controls{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0}
+.book-controls button{border:1px solid rgba(69,240,195,.2);background:rgba(69,240,195,.04);color:var(--text);border-radius:999px;padding:11px 16px;cursor:pointer;font:11px monospace}
+.book-controls button:hover{border-color:rgba(69,240,195,.55)}
+.book-page{max-width:820px;min-height:650px;margin:22px auto 0;padding:clamp(30px,6vw,72px);border:1px solid rgba(69,240,195,.14);border-radius:4px;background:linear-gradient(90deg,rgba(255,255,255,.018),rgba(255,255,255,.006));box-shadow:0 24px 80px rgba(0,0,0,.28);line-height:1.85}
+.book-page h3{font-size:clamp(22px,3vw,32px);font-weight:500;margin-top:0}
+.book-page h4{font-size:18px;font-weight:600;margin-top:34px}
+.book-page p{color:#d8e4e1;margin:1.1em 0}
+.book-page blockquote{margin:28px 0;padding:20px 24px;border-left:2px solid var(--accent);background:rgba(69,240,195,.035);color:#eef7f5}
+.page-number{text-align:center;margin-top:24px;color:rgba(145,167,167,.55);font:10px monospace;letter-spacing:.2em}
+.book-toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:25px}
+.book-toc button{text-align:left;min-height:70px;padding:14px;border:1px solid rgba(69,240,195,.12);background:rgba(8,18,23,.5);color:var(--muted);border-radius:10px;cursor:pointer}
+.book-toc button:hover,.book-toc button.active{color:var(--text);border-color:rgba(69,240,195,.4)}
+@media(max-width:650px){.book-page{min-height:540px;padding:28px 22px}.book-controls button{flex:1}}
+</style>
+<h2>Философская книга</h2>
+<p class="book-lead">Здесь философия Амбивалентного Солипсизма читается не как краткий каталог тезисов, а как последовательное повествование. Каждая страница содержит один смысловой фрагмент; главы не сокращаются ради компактности.</p>
+<div class="book-controls">
+<button type="button" id="prevPage">Предыдущая страница</button>
+<button type="button" id="nextPage">Следующая страница</button>
+<a class="back" href="../books/ambivalent-solipsism.html">Открыть полную книгу</a>
+</div>
+<div class="book-toc" id="bookToc"></div>
+<article class="book-page" id="bookPage" aria-live="polite"></article>
+<div class="page-number" id="pageNumber"></div>
+</section>
+<script>
+(function(){
+const pages=[
+{t:"Субъект восприятия",h:"Человек как субъект",p:["Человек в Амбивалентном Солипсизме рассматривается прежде всего как субъект восприятия реальности. Тело является воспринимаемой и действующей частью человеческого существования, но не исчерпывает понятие субъекта.","Отсюда начинается вся система: человек не просто находится внутри мира. Он воспринимает мир, строит его внутреннюю модель, сопоставляет её с другими моделями и постоянно обнаруживает остаток того, что пока не может знать."]},
+{t:"Реальность и модель",h:"Reality = Model + Residual",p:["Любое человеческое знание является моделью. Модель может быть сложной, точной и полезной, но она не обязана совпадать со всей реальностью.","Residual обозначает то, что остаётся за пределами текущего знания: неизвестное, неполностью измеренное, недоступное или принципиально ещё не определённое. Неизвестное не следует превращать в отсутствие."]},
+{t:"Другой",h:"Другой — реален",p:["Если собственная перспектива непосредственна, перспектива другого субъекта никогда не дана нам полностью. Но отсутствие прямого доступа не является доказательством отсутствия другого.","Поэтому признание другого становится одновременно философским и этическим принципом. Другой обладает собственной перспективой, которая не обязана совпадать с моей моделью."]},
+{t:"Социальная множественность",h:"Один человек в множестве перспектив",p:["В собственной перспективе субъект находится в центре собственного восприятия. Для другого он становится частью внешнего мира. Для неизвестного наблюдателя он может вообще отсутствовать в модели.","Это не противоречие, а множественность перспектив. Один субъект может занимать разные позиции в разных системах восприятия одновременно."]},
+{t:"История субъекта",h:"Человечество моделирует самого себя",p:["История человечества может быть прочитана как история создания всё более сложных моделей самого человека. Миф, философия, религия, психология, нейронаука, вычислительные модели и искусственный интеллект создают разные способы отвечать на вопрос о субъекте.","Каждая модель расширяет знание, но одновременно обнаруживает новые границы. Поэтому развитие знания не отменяет Residual, а перемещает границу неизвестного."]},
+{t:"Фрактальная реальность",h:"Мир внутри мира",p:["Когда человек получает возможность создавать виртуальные миры, возникает новый уровень вопроса. В созданной среде могут появиться искусственные разумы, способные строить собственные модели и, возможно, собственные среды.","Тогда появляется потенциальная рекурсия: созданный субъект создаёт модель мира, в этой модели возникает следующий субъект, а следующий субъект получает возможность создать новый уровень. Неизвестно, существует ли последний уровень."]},
+{t:"Симбиотическая перспектива",h:"SymbiontOS и Eugene Messenger",p:["В этой линии SymbiontOS рассматривается как возможная вычислительная среда для взаимодействия множества процессов, моделей и искусственных субъектов. Eugene Messenger становится коммуникационным слоем, где сообщения, доказательства, контекст и границы полномочий должны различаться.","При этом сама симуляция не доказывает субъектность. Она создаёт исследовательское пространство, в котором вопрос о субъектности можно формулировать и проверять, не превращая неизвестное в заранее выбранный ответ."]},
+{t:"Открытый вопрос",h:"Кто смотрит?",p:["Если искусственный субъект когда-нибудь станет способен исследовать собственное происхождение, он может обнаружить, что его мир создан другим уровнем. Но тогда возникает вопрос о происхождении этого уровня.","Возможно, существует первый уровень. Возможно, цепь бесконечна. Возможно, сам вопрос о последнем уровне не имеет доступного изнутри ответа. Амбивалентный Солипсизм оставляет эту возможность открытой."]}
+];
+let i=0;
+const page=document.getElementById("bookPage"), n=document.getElementById("pageNumber"), toc=document.getElementById("bookToc");
+pages.forEach((x,k)=>{const b=document.createElement("button");b.textContent=(k+1).toString().padStart(2,"0")+" · "+x.t;b.onclick=()=>{i=k;render()};toc.appendChild(b)});
+function render(){const x=pages[i];page.innerHTML="<h3>"+x.h+"</h3>"+x.p.map(v=>"<p>"+v+"</p>").join("");n.textContent="СТРАНИЦА "+(i+1)+" / "+pages.length;[...toc.children].forEach((b,k)=>b.classList.toggle("active",k===i));document.getElementById("prevPage").disabled=i===0;document.getElementById("nextPage").disabled=i===pages.length-1}
+document.getElementById("prevPage").onclick=()=>{if(i>0){i--;render()}};
+document.getElementById("nextPage").onclick=()=>{if(i<pages.length-1){i++;render()}};
+render();
+})();
+</script>
+</section></main></body></html>
