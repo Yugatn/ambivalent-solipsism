@@ -88,3 +88,16 @@ A minimal standard-library HTTP adapter now exposes /action and delegates to the
 | Direct API-to-Action bypass | not exposed by adapter | not certified |
 | Transport authentication | not implemented | not certified |
 | TLS / network hardening | not implemented | not certified |
+
+
+## API security boundary checkpoint
+
+The reference adapter now has explicit principal/authentication state and deterministic request fingerprints. These primitives prepare the boundary for replay protection and authenticated request handling; they do not constitute real credential verification or transport security.
+
+| Boundary | Reference status | Production status |
+|---|---|---|
+| Explicit authenticated/unauthenticated principal state | covered | not certified |
+| Deterministic request fingerprint | covered | not certified |
+| Replay prevention | prepared, not enforced | not certified |
+| Real credential verification | not implemented | not certified |
+| TLS / transport security | not implemented | not certified |
