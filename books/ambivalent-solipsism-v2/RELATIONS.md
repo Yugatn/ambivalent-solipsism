@@ -202,3 +202,26 @@
 - `public.value` related_to `social.organism.stability`
 - `civic.virtue` extends `citizen.service`
 - `civic.virtue` related_to `temporal.inheritance`
+
+- `money.exchange_energy` — деньги как организационная форма энергии обмена
+- `money.circulation` — циркуляция ресурсов между участниками социальной системы
+- `oligarchiat` — системная концентрация ресурса и влияния
+- `oligarchiat.pathology` — онкологическая метафора самоусиливающегося ресурсного контура
+- `resource.accumulation` — накопление как потенциальный резерв или ограничение циркуляции
+- `economic.feedback` — обратная связь между накоплением ресурса и развитием системы
+
+- `money.exchange_energy` related_to `labor.infrastructure`
+- `money.exchange_energy` related_to `social.organism.stability`
+- `money.exchange_energy` related_to `public.value`
+- `money.circulation` related_to `social.organism.stability`
+- `money.circulation` related_to `development.law`
+- `oligarchiat` related_to `money.exchange_energy`
+- `oligarchiat` related_to `resource.accumulation`
+- `oligarchiat.pathology` related_to `social.organism.stability`
+- `oligarchiat.pathology` related_to `oligarchiat`
+- `oligarchiat.pathology` related_to `social.organism.cancer`
+- `resource.accumulation` related_to `money.circulation`
+- `resource.accumulation` related_to `social.organism.stability`
+- `economic.feedback` related_to `state.citizen.reciprocity`
+- `economic.feedback` related_to `development.law`
+- `economic.feedback` related_to `social.organism.stability`
