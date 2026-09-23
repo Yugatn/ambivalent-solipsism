@@ -91,6 +91,7 @@
 40. [38 — Внешнее и внутреннее: пределы восприятия](./38_EXTERNAL_AND_INTERNAL_PERCEPTION.md)
 41. [39 — Семья, солидарность и структура общества](./39_FAMILY_SOLIDARITY_AND_SOCIAL_STRUCTURE.md)
 42. [40 — СТСеть: единая инфраструктура доверия и развития](./40_ST_NETWORK_TRUST_AND_DEVELOPMENT.md)
+43. [41 — Эволюционная глубина: от древней нервной системы к миру с ИИ](./41_EVOLUTIONARY_DEPTH_AND_AI_WORLD.md)
 
 ## Логика расширения
 
