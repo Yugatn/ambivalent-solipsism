@@ -88,7 +88,8 @@
 37. [35 — PSY-TOOLS и модель субъекта](./35_PSY_TOOLS_AND_SUBJECT_MODEL.md)
 38. [36 — Сознательность, полутранс и автоматические слои субъекта](./36_CONSCIOUSNESS_SEMI_TRANCE_AND_AUTOMATIC_LAYERS.md)
 39. [37 — Игра, восприятие и развитие](./37_GAME_PLAY_PERCEPTION_AND_DEVELOPMENT.md)
-39. [38 — Внешнее и внутреннее: пределы восприятия](./38_EXTERNAL_AND_INTERNAL_PERCEPTION.md)
+40. [38 — Внешнее и внутреннее: пределы восприятия](./38_EXTERNAL_AND_INTERNAL_PERCEPTION.md)
+41. [39 — Семья, солидарность и структура общества](./39_FAMILY_SOLIDARITY_AND_SOCIAL_STRUCTURE.md)
 
 ## Логика расширения
 
