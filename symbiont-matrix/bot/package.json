@@ -1,0 +1,9 @@
+{
+  "name": "symbiont-matrix-courier",
+  "private": true,
+  "version": "0.1.0",
+  "dependencies": {
+    "mineflayer": "^4.33.0",
+    "ws": "^8.18.3"
+  }
+}
