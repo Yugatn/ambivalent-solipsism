@@ -1,6 +1,7 @@
 """Minimal event-to-evidence runtime."""
 import asyncio, json, os, signal, time, uuid
-import websockets
+from websockets.asyncio.server import serve
+from websockets.exceptions import ConnectionClosed
 from .ledger import EvidenceLedger
 from .rules import RuleEngine
 from .schemas import Event, Evidence, hash_payload
@@ -42,12 +43,12 @@ class Runtime:
                     print(f"[runtime] {event.event_type} node={event.node_id} evidence={ev.evidence_id[:8]}")
                 except (json.JSONDecodeError, KeyError, ValueError) as exc:
                     print(f"[runtime] rejected event: {exc}")
-        except websockets.ConnectionClosed:
+        except ConnectionClosed:
             pass
 
     async def run(self):
         print(f"[runtime] listening on {WS_HOST}:{WS_PORT}")
-        async with websockets.serve(self.handle_client, WS_HOST, WS_PORT):
+        async with serve(self.handle_client, WS_HOST, WS_PORT):
             while not self._shutdown:
                 await asyncio.sleep(0.25)
 
