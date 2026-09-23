@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EvidenceRecord",
+  "type": "object",
+  "required": ["evidence_id", "node_id", "issued_at", "lamport_clock", "payload_hash", "payload", "prev_hash", "signature"],
+  "properties": {
+    "evidence_id": {"type": "string", "minLength": 1},
+    "node_id": {"type": "string", "minLength": 1},
+    "issued_at": {"type": "integer", "minimum": 0},
+    "lamport_clock": {"type": "integer", "minimum": 1},
+    "prev_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "payload_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "payload": {"type": "object"},
+    "signature": {"type": "string"},
+    "supersedes": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}
