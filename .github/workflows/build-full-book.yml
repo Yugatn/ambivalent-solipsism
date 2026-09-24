@@ -1,65 +1,126 @@
 name: Build full book
+
 on:
   push:
     paths-ignore:
       - 'BOOK/AMBIVALENT_SOLIPSISM_FULL.md'
+
 permissions:
   contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Assemble full Markdown book
+
+      - name: Assemble canonical full Markdown book
         shell: bash
         run: |
           set -euo pipefail
+
           out="BOOK/AMBIVALENT_SOLIPSISM_FULL.md"
           tmp="${out}.tmp"
+
+          chapters=(
+            "00_DEFINITIONS.md"
+            "03_SOCIAL_SUPERPOSITION.md"
+            "01_PERCEPTION_AND_SUBJECT.md"
+            "02_REALITY_MODEL_AND_RESIDUAL.md"
+            "04A_EXISTENCE_SUBJECT_AND_OTHER.md"
+            "04_THE_OTHER_AS_SUBJECT.md"
+            "05_INDIVIDUALITY_AND_RIGHT_TO_EXIT.md"
+            "06_LAW_OF_DEVELOPMENT.md"
+            "07_ETHICS_AND_HARM.md"
+            "08_SOCIETY_AS_INTERCONNECTED_SYSTEM.md"
+            "09_POWER_INFORMATION_AND_PERCEPTION.md"
+            "10_AI_AND_SYMBIONT.md"
+            "11_CONSTITUTION.md"
+            "12_ETHICS_OF_STATE_SERVICE.md"
+            "13_CIVIL_SERVICE_SELECTION.md"
+            "14_DIAGNOSTIC_MATRIX_STATE_SERVICE.md"
+            "15_SEMANTIC_ECOLOGY.md"
+            "16_SEMANTIC_IMPACT_MATRIX.md"
+            "17_CINEMA_COMPLEMENTARITY.md"
+            "18_SYSTEMIC_INTERDEPENDENCE_AND_SELF_CORRECTION.md"
+            "19_PICCS_LIMITED_RESPONSIBILITY.md"
+            "20_ECONOMY_SOLIDARITY_AND_DEVELOPMENT.md"
+            "21_QUIET_ROOM_AND_COGNITIVE_SOVEREIGNTY.md"
+            "22_COMMUNICATION_AND_COGNITIVE_SAFETY.md"
+            "23_ETHICALAUDIT_FORMALIZATION.md"
+            "24_COMMUNICATION_ECOSYSTEM.md"
+            "25_DYNAMIC_DEVELOPMENT_ECONOMY.md"
+            "25_RIGHT_TO_ERROR_AND_REVISION.md"
+            "26_TIME_MEMORY_AND_CHANGING_SUBJECT.md"
+            "27_BODY_HEALTH_AND_SUBJECT.md"
+            "28_DEATH_FINALITY_AND_UNKNOWN.md"
+            "29_RESIDUAL_AND_EPISTEMOLOGY_OF_UNKNOWN.md"
+            "30_IMPERFECTNESS_IMPERATIVE.md"
+            "31A_GOST_MINIMUM_PRISON_NUTRITION.md"
+            "31_PRISON_REFORM.md"
+            "32_BRAIN_AS_FRACTAL_AND_HUMAN_HISTORY.md"
+            "33_FEAR_OF_DEATH_AND_GENERATIONAL_CONTINUITY.md"
+            "34_SOCIAL_LABOR_NETWORK.md"
+            "35_PSY_TOOLS_AND_SUBJECT_MODEL.md"
+            "36_CONSCIOUSNESS_SEMI_TRANCE_AND_AUTOMATIC_LAYERS.md"
+            "37_GAME_PLAY_PERCEPTION_AND_DEVELOPMENT.md"
+            "38_EXTERNAL_AND_INTERNAL_PERCEPTION.md"
+            "39_FAMILY_SOLIDARITY_AND_SOCIAL_STRUCTURE.md"
+            "40_ST_NETWORK_TRUST_AND_DEVELOPMENT.md"
+            "41_EVOLUTIONARY_DEPTH_AND_AI_WORLD.md"
+            "00_STORY_X.md"
+          )
+
           {
             printf '%s\n\n' '# Амбивалентный Солипсизм — полная книга'
-            printf '%s\n\n' 'Сводная каноническая редакция корпуса BOOK. Исходные материалы не удаляются и остаются отдельными файлами.'
-            printf '%s\n\n' 'Сложность — не ошибка. Другой — реален.'
-            printf '%s\n\n' '## Содержание корпуса'
-            find BOOK -maxdepth 1 -type f -name '*.md' ! -name 'AMBIVALENT_SOLIPSISM_FULL.md' -printf '%f\n' | sort | while read -r f; do printf '%s\n' "- $f"; done
-            printf '\n---\n\n'
-            find BOOK -maxdepth 1 -type f -name '*.md' ! -name 'AMBIVALENT_SOLIPSISM_FULL.md' -printf '%f\n' | sort | while read -r f; do
-              printf '\n# Материал: %s\n\n' "$f"
-              cat "BOOK/$f"
-              printf '\n\n---\n\n'
+            printf '%s\n\n' '**Автор: Югатн**'
+            printf '%s\n\n' '**Сложность — не ошибка. Другой — реален.**'
+            printf '%s\n\n' 'Это собранная каноническая редакция книги. Каждая глава одновременно сохраняется в отдельном файле BOOK/. Полный файл предназначен для чтения в GitHub Preview и не является заменой исходных глав.'
+            printf '%s\n\n' '---'
+            printf '%s\n\n' '## Содержание'
+            for f in "${chapters[@]}"; do
+              if [ -f "BOOK/$f" ]; then
+                title=$(sed -n '1s/^# //p' "BOOK/$f" | head -n1)
+                if [ -z "$title" ]; then title="$f"; fi
+                printf '%s\n' "- [$title](#$f)"
+              fi
             done
-            cat <<'KINODOPO'
-# Принцип кинодополняемости
+            printf '\n---\n\n'
 
-## Статус принципа
+            for f in "${chapters[@]}"; do
+              if [ -f "BOOK/$f" ]; then
+                printf '\n---\n\n'
+                cat "BOOK/$f"
+                printf '\n\n'
+              fi
+            done
 
-Принцип кинодополняемости является частью философской и исследовательской архитектуры Амбивалентного Солипсизма. Он рассматривает художественное произведение как дополнительный контекст для исследования философской проблемы, а не как доказательство самой теории.
+            printf '\n---\n\n# Приложение. Корпусные и резервные материалы\n\n'
+            printf '%s\n\n' 'Следующие файлы не входят в линейное чтение основных глав, но сохраняются в полном корпусе для аудита, резервирования и проверки происхождения материала.'
 
-## Смысл
-
-Кино может моделировать субъектность, память, идентичность, восприятие, власть, искусственный интеллект, вложенные миры и другие проблемы таким способом, который невозможно полностью передать абстрактным теоретическим текстом. Художественное произведение добавляет к философской модели особый способ переживания и представления проблемы.
-
-При этом произведение остаётся произведением искусства. Сходство сюжета с философской гипотезой не превращает художественный сюжет в научное доказательство.
-
-## Граница интерпретации
-
-При анализе фильма необходимо разделять то, что утверждает произведение, философскую интерпретацию, научно установленный факт, гипотезу и аналогию.
-
-Поэтому принцип кинодополняемости не подтверждает существование симуляции, искусственной субъектности или иных метафизических положений. Он расширяет пространство исследования, сохраняя границы между художественным образом, философской моделью и эмпирическим знанием.
-
-## Связь с Амбивалентным Солипсизмом
-
-Кино становится дополнительной картой человеческих вопросов. Оно позволяет исследовать, как человек представляет другого субъекта, ограниченность собственной модели реальности, изменение памяти, границы идентичности и возможные отношения между человеком и искусственным интеллектом.
-
-Таким образом, кинодополняемость расширяет книгу, но не закрывает Residual. Художественный образ может открыть новый вопрос, но не обязан давать окончательный ответ.
-KINODOPO
+            for f in $(find BOOK -maxdepth 1 -type f -name '*.md' -printf '%f\n' | sort); do
+              skip=0
+              for c in "${chapters[@]}"; do
+                [ "$f" = "$c" ] && skip=1 && break
+              done
+              [ "$f" = "AMBIVALENT_SOLIPSISM_FULL.md" ] && skip=1
+              if [ "$skip" -eq 0 ]; then
+                printf '\n## Корпусный файл: %s\n\n' "$f"
+                cat "BOOK/$f"
+                printf '\n\n'
+              fi
+            done
           } > "$tmp"
+
           mv "$tmp" "$out"
+
       - name: Commit generated book
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add BOOK/AMBIVALENT_SOLIPSISM_FULL.md
           git diff --cached --quiet && exit 0
-          git commit -m 'Build complete Markdown edition of the book'
+          git commit -m 'Assemble canonical full book by chapters'
           git push
