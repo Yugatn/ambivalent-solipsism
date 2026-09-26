@@ -28,6 +28,8 @@
 
 ## Новые документы
 
+- [Нейрокоммунизм и общество как нейросеть](BOOK/NEUROCOMMUNISM_AND_SOCIAL_NEURAL_NETWORK.md)
+
 - [07. Восприятие, социальная суперпозиция и граница смерти](docs/07-perception-social-superposition-death.md)
 - [25. Динамическая экономика Закона развития](BOOK/25_DYNAMIC_DEVELOPMENT_ECONOMY.md)
 - [Symbiont: admission, развитие агентов и Guardian Layer](ARCHITECTURE/SYMBIONT_AGENT_ADMISSION_AND_DEVELOPMENT.md)
