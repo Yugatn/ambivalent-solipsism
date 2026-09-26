@@ -45,6 +45,8 @@
 
 1. [00 — Сюжет X](./00_STORY_X.md)
 2. [01 — Восприятие и субъект](./01_PERCEPTION_AND_SUBJECT.md)
+3. [01A — Бытие, сознание, тело и мысль](./01A_BEING_CONSCIOUSNESS_BODY_AND_THOUGHT.md)
+4. [01B — От субъекта к обществу: фрактальная организация реальности](./01B_FROM_SUBJECT_TO_SOCIAL_SYSTEM.md)
 3. [02 — Реальность: модель и остаток](./02_REALITY_MODEL_AND_RESIDUAL.md)
 4. [03 — Социальная суперпозиция](./03_SOCIAL_SUPERPOSITION.md)
 5. [04 — Другой как субъект](./04_THE_OTHER_AS_SUBJECT.md)
