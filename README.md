@@ -41,6 +41,8 @@ ORES не объявляется математическим доказател
 
 ## Новые документы
 
+- [ORES: каузальная модельная зависимость fairness и двухканальная оценка](DEVELOPMENT/ORES_CAUSAL_FAIRNESS_AND_MODEL_DEPENDENCE.md)
+
 - [ORES: минимальная модель с несколькими аттракторами и observers](DEVELOPMENT/ORES_MINIMAL_MULTI_ATTRACTOR_OBSERVERS.md)
 - [ORES: воспроизводимый конечный observer experiment](EXPERIMENTS/ORES_MINIMAL_OBSERVER_EXPERIMENT.py)
 
