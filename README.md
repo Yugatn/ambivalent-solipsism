@@ -41,6 +41,8 @@ ORES не объявляется математическим доказател
 
 ## Новые документы
 
+- [ORES: минимальное ядро SCM и IntervCat](DEVELOPMENT/ORES_SCM_INTERVCAT_MINIMAL_CORE.md)
+
 - [ORES: каузальная модельная зависимость fairness и двухканальная оценка](DEVELOPMENT/ORES_CAUSAL_FAIRNESS_AND_MODEL_DEPENDENCE.md)
 
 - [ORES: минимальная модель с несколькими аттракторами и observers](DEVELOPMENT/ORES_MINIMAL_MULTI_ATTRACTOR_OBSERVERS.md)
