@@ -53,6 +53,7 @@ ORES не объявляется математическим доказател
 - [ORES: устойчивость, сопряжённость и observer quotient](DEVELOPMENT/ORES_ATTRACTOR_TRANSFER_AND_OBSERVER_QUOTIENT.md)
 - [Нейрокоммунизм и общество как нейросеть](BOOK/NEUROCOMMUNISM_AND_SOCIAL_NEURAL_NETWORK.md)
 - [07. Восприятие, социальная суперпозиция и граница смерти](docs/07-perception-social-superposition-death.md)
+- [Пещера наблюдателя и искусственный интеллект](docs/07-perception-social-superposition-death.md#16-пещера-наблюдателя-и-искусственный-интеллект)
 - [25. Динамическая экономика Закона развития](BOOK/25_DYNAMIC_DEVELOPMENT_ECONOMY.md)
 - [Symbiont: admission, развитие агентов и Guardian Layer](ARCHITECTURE/SYMBIONT_AGENT_ADMISSION_AND_DEVELOPMENT.md)
 - [Symbiont Formal Core](ARCHITECTURE/SYMBIONT_FORMAL_CORE.md)
