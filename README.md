@@ -41,6 +41,8 @@ ORES не объявляется математическим доказател
 
 ## Новые документы
 
+- [ORES: минимальная модель с несколькими аттракторами и observers](DEVELOPMENT/ORES_MINIMAL_MULTI_ATTRACTOR_OBSERVERS.md)
+
 - [ORES: формальная архитектура observer-relative semantic dynamics](DEVELOPMENT/ORES_FORMAL_SEMANTIC_DYNAMICS.md)
 - [DynSys_agent: минимальная 2-категория агентных динамических систем](DEVELOPMENT/DYNSYS_AGENT_2CATEGORY.md)
 - [ORES: устойчивость, сопряжённость и observer quotient](DEVELOPMENT/ORES_ATTRACTOR_TRANSFER_AND_OBSERVER_QUOTIENT.md)
