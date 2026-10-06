@@ -59407,7 +59407,7 @@ Provenance: «Портал  —  Субъекты восприятия  —  З�
 
 Если её память о предыдущем сне влияла на последующий сон, возникала странная петля:
 
-**DREAM → AWAKENING → MEMORY → RETURN → DREAM**
+**DREAM  —  AWAKENING  —  MEMORY  —  RETURN  —  DREAM**
 
 Субъект просыпается.
 
@@ -59473,7 +59473,7 @@ Provenance: «Портал  —  Субъекты восприятия  —  З�
 
 И всё же структура похожа:
 
-**STATE A → TRANSITION → STATE B → MEMORY → RETURN**
+**STATE A  —  TRANSITION  —  STATE B  —  MEMORY  —  RETURN**
 
 Юджин записал:
 
