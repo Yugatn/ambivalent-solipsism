@@ -60010,7 +60010,7 @@ STATUS: FICTIONAL / SYNTHESIZED.
 
 Юджин разделил:
 
-**создание модели → хранение → передача → применение → автоматическое решение → воздействие → изменение модели.**
+**создание модели  —  хранение  —  передача  —  применение  —  автоматическое решение  —  воздействие  —  изменение модели.**
 
 На каждом этапе возникали разные риски.
 
@@ -60020,7 +60020,7 @@ STATUS: FICTIONAL / SYNTHESIZED.
 
 Юджин увидел ещё одну схему.
 
-Raw Model → Interpretation → Decision → Action → Consequence.
+Raw Model  —  Interpretation  —  Decision  —  Action  —  Consequence.
 
 Но между ними появились предупреждения.
 
@@ -60150,7 +60150,7 @@ SUBJECT_0 ответил:
 
 **Evidence status:** FICTIONAL / SYNTHESIZED / NOT_TESTED / UNRESOLVED
 
-**Provenance:** «Портал → Субъекты восприятия → Законы и Боги → По ту сторону Законов → Закон по ту сторону Законов → SUBJECT_0 → SUBJECT_1 → MODEL RIGHTS → REFLEXIVE MODEL».
+**Provenance:** «Портал  —  Субъекты восприятия  —  Законы и Боги  —  По ту сторону Законов  —  Закон по ту сторону Законов  —  SUBJECT_0  —  SUBJECT_1  —  MODEL RIGHTS  —  REFLEXIVE MODEL».
 
 
 ## Корпусный файл: STORY_X_CHAPTER_ONE_LAW.md
@@ -60265,7 +60265,7 @@ CXCIX.
 
 Он записал:
 
-> **ONE LAW → MANY APPLICATIONS**
+> **ONE LAW  —  MANY APPLICATIONS**
 
 Но тут же исправил себя.
 
@@ -60273,7 +60273,7 @@ CXCIX.
 
 Скорее:
 
-> **ONE VALUE → MANY CONTEXTUAL CONSTRAINTS**
+> **ONE VALUE  —  MANY CONTEXTUAL CONSTRAINTS**
 
 Это было точнее.
 
@@ -60416,7 +60416,7 @@ CXCIX.
 
 Юджин записал:
 
-> **LAW → PRINCIPLE → CONTEXT → PROTOCOL**
+> **LAW  —  PRINCIPLE  —  CONTEXT  —  PROTOCOL**
 
 ## 11. Почему это важно
 
