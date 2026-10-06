@@ -108,7 +108,7 @@ CXCIX.
 
 Он записал:
 
-> **ONE LAW → MANY APPLICATIONS**
+> **ONE LAW  —  MANY APPLICATIONS**
 
 Но тут же исправил себя.
 
@@ -116,7 +116,7 @@ CXCIX.
 
 Скорее:
 
-> **ONE VALUE → MANY CONTEXTUAL CONSTRAINTS**
+> **ONE VALUE  —  MANY CONTEXTUAL CONSTRAINTS**
 
 Это было точнее.
 
@@ -259,7 +259,7 @@ CXCIX.
 
 Юджин записал:
 
-> **LAW → PRINCIPLE → CONTEXT → PROTOCOL**
+> **LAW  —  PRINCIPLE  —  CONTEXT  —  PROTOCOL**
 
 ## 11. Почему это важно
 
