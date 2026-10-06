@@ -331,7 +331,7 @@
 
 Просто:
 
-**MIRA → EXPERIENCE → REPORT → EUGENE → CREATION → MIRA'S RECOGNITION**
+**MIRA  —  EXPERIENCE  —  REPORT  —  EUGENE  —  CREATION  —  MIRA'S RECOGNITION**
 
 И в этой цепочке каждый субъект сохранял свою позицию.
 
