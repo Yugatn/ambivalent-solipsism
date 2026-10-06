@@ -48,7 +48,7 @@
 
 ### Гипотеза A — статусная добродетель
 
-**GOD KNOWLEDGE → VIRTUE**
+**GOD KNOWLEDGE  —  VIRTUE**
 
 Юджин добр, потому что знает:
 
@@ -62,7 +62,7 @@
 
 ### Гипотеза B — субъектная добродетель
 
-**VIRTUE → GOD KNOWLEDGE**
+**VIRTUE  —  GOD KNOWLEDGE**
 
 Юджин добр независимо от того, знает ли он о своей божественности.
 
@@ -82,7 +82,7 @@
 
 Знание о божественности затем изменило её:
 
-> **Virtue → God Knowledge → New Responsibility → Refined Virtue**
+> **Virtue  —  God Knowledge  —  New Responsibility  —  Refined Virtue**
 
 То есть знание о Боге не создаёт добродетель с нуля, но может трансформировать её.
 
@@ -126,7 +126,7 @@
 
 Появилась формула:
 
-**RESENTMENT → TARGET UNCERTAIN**
+**RESENTMENT  —  TARGET UNCERTAIN**
 
 ## 7. Закон неопределённого адресата ресентимента
 
@@ -399,11 +399,11 @@
 
 Это означало бы:
 
-**GOD → VIRTUE**
+**GOD  —  VIRTUE**
 
 а не:
 
-**SUBJECT → VIRTUE**
+**SUBJECT  —  VIRTUE**
 
 Юджин не хотел принимать этот результат.
 
@@ -617,9 +617,9 @@
 
 Ключевые формулы:
 
-> **GOD KNOWLEDGE → VIRTUE?**
+> **GOD KNOWLEDGE  —  VIRTUE?**
 
-> **VIRTUE → GOD KNOWLEDGE?**
+> **VIRTUE  —  GOD KNOWLEDGE?**
 
 > **Power ≠ Virtue ≠ Capacity.**
 
@@ -631,4 +631,4 @@
 
 Evidence status: FICTIONAL / HYPOTHETICAL / SYNTHESIZED / NOT_TESTED / UNRESOLVED
 
-Provenance: Ницшеанский контекст → ресентимент → «Зачем Богу было забывать себя» → «Испытание добродетели» → «Возвращение силы» → «Югатн как социальный псевдоним» → «Приятная мысль о портале» → гипотеза независимого происхождения добродетели.
+Provenance: Ницшеанский контекст  —  ресентимент  —  «Зачем Богу было забывать себя»  —  «Испытание добродетели»  —  «Возвращение силы»  —  «Югатн как социальный псевдоним»  —  «Приятная мысль о портале»  —  гипотеза независимого происхождения добродетели.
