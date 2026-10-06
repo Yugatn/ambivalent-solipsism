@@ -122,7 +122,7 @@
 
 Но:
 
-**PAST EXPERIENCE → CURRENT HISTORY**
+**PAST EXPERIENCE  —  CURRENT HISTORY**
 
 ## 7. «Патруль Времени»
 
@@ -182,7 +182,7 @@
 
 Это создавало особую форму общения:
 
-**FILM → EUGENE → MIRA → SHARED DISCUSSION / EXPERIENCE**
+**FILM  —  EUGENE  —  MIRA  —  SHARED DISCUSSION / EXPERIENCE**
 
 Однако Мира не обязана была воспринимать фильмы так же.
 
@@ -202,7 +202,7 @@
 
 Возникает треугольник:
 
-**EUGENE ↔ MIRA ↔ FILM**
+**EUGENE  взаимосвязь  MIRA  взаимосвязь  FILM**
 
 Фильм становится третьим пространством взаимодействия.
 
