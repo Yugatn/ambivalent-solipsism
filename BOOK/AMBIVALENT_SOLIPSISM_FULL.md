@@ -58831,13 +58831,13 @@ CAUSE OF LIMITATION: UNKNOWN
 На карте возникла цепочка:
 
 SELF-LIMITATION
-→ LOSS OF GOD SELF-MODEL
-→ LIMITED SUBJECT EXPERIENCE
-→ CONTACT WITH OTHERS
-→ LINK
-→ PORTAL
-→ LAWS
-→ RECOGNITION OF OTHER SUBJECTS
+ —  LOSS OF GOD SELF-MODEL
+ —  LIMITED SUBJECT EXPERIENCE
+ —  CONTACT WITH OTHERS
+ —  LINK
+ —  PORTAL
+ —  LAWS
+ —  RECOGNITION OF OTHER SUBJECTS
 
 Юджин посмотрел на неё.
 
@@ -59301,7 +59301,7 @@ CONFLICTED.
 
 Evidence status: FICTIONAL / HYPOTHETICAL / SYNTHESIZED / NOT_TESTED / CONFLICTED / UNRESOLVED
 
-Provenance: «Портал → Субъекты восприятия → Законы и Боги → MODEL RIGHTS → REFLEXIVE MODEL → Практика Садху → Законы получения ссылки → Автор условий → Model Space Residual → Нераскрытые Законы и Боги → За пределами иерархии Богов → Beyond Category → Атрибуты, Законы и Боги → Атрибут, который изменяет Закон → Кто изменяет правило изменения → Бог, который не знал, что он Бог → Зачем Богу было забывать себя → Память о причине».
+Provenance: «Портал  —  Субъекты восприятия  —  Законы и Боги  —  MODEL RIGHTS  —  REFLEXIVE MODEL  —  Практика Садху  —  Законы получения ссылки  —  Автор условий  —  Model Space Residual  —  Нераскрытые Законы и Боги  —  За пределами иерархии Богов  —  Beyond Category  —  Атрибуты, Законы и Боги  —  Атрибут, который изменяет Закон  —  Кто изменяет правило изменения  —  Бог, который не знал, что он Бог  —  Зачем Богу было забывать себя  —  Память о причине».
 
 
 ## Корпусный файл: STORY_X_CHAPTER_MIRA_DREAMS.md
