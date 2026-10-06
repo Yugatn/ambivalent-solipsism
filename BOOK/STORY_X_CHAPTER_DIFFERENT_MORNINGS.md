@@ -56,7 +56,7 @@
 
 Возникает последовательность:
 
-**MIRA DREAM → MIRA AWAKENING → MIRA REPORT → EUGENE HEARS → EUGENE CREATES**
+**MIRA DREAM  —  MIRA AWAKENING  —  MIRA REPORT  —  EUGENE HEARS  —  EUGENE CREATES**
 
 Это важнее, чем кажется.
 
