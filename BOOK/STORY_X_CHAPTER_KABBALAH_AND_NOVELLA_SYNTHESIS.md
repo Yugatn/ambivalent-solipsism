@@ -271,7 +271,7 @@
 
 но:
 
-> **NEW QUESTION → NEW SEARCH SPACE**
+> **NEW QUESTION  —  NEW SEARCH SPACE**
 
 Это и было тем, что Югатн называл ключом.
 
@@ -491,7 +491,7 @@
 
 **NEW QUESTION ≠ NEW FACT**
 
-**NEW QUESTION → NEW SEARCH SPACE**
+**NEW QUESTION  —  NEW SEARCH SPACE**
 
 **OTHER SUBJECT ≠ MODEL OF OTHER SUBJECT**
 
