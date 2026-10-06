@@ -53,6 +53,7 @@ ORES не объявляется математическим доказател
 - [ORES: минимальная модель с несколькими аттракторами и observers](DEVELOPMENT/ORES_MINIMAL_MULTI_ATTRACTOR_OBSERVERS.md)
 - [ORES: воспроизводимый конечный observer experiment](EXPERIMENTS/ORES_MINIMAL_OBSERVER_EXPERIMENT.py)
 - [ORES: непрерывная многoаттракторная модель](DEVELOPMENT/ORES_CONTINUOUS_MULTI_ATTRACTOR_MODEL.md)
+- [ORES: observer factor theorem](DEVELOPMENT/ORES_OBSERVER_FACTOR_THEOREM.md)
 - [ORES: воспроизводимый непрерывный experiment](EXPERIMENTS/ORES_CONTINUOUS_MULTI_ATTRACTOR.py)
 
 - [ORES: формальная архитектура observer-relative semantic dynamics](DEVELOPMENT/ORES_FORMAL_SEMANTIC_DYNAMICS.md)
