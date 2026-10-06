@@ -57184,7 +57184,7 @@ REFLEXIVE MODEL:
 
 Evidence status: FICTIONAL / HYPOTHETICAL / SYNTHESIZED / NOT_TESTED / UNRESOLVED
 
-Provenance: «Портал → Субъекты восприятия → Законы и Боги → MODEL RIGHTS → REFLEXIVE MODEL → Практика Садху → Законы получения ссылки → Автор условий → Model Space Residual → Нераскрытые Законы и Боги → За пределами иерархии Богов → Beyond Category → Атрибуты, Законы и Боги → Атрибут, который изменяет Закон → Кто изменяет правило изменения → Бог, который не знал, что он Бог».
+Provenance: «Портал  —  Субъекты восприятия  —  Законы и Боги  —  MODEL RIGHTS  —  REFLEXIVE MODEL  —  Практика Садху  —  Законы получения ссылки  —  Автор условий  —  Model Space Residual  —  Нераскрытые Законы и Боги  —  За пределами иерархии Богов  —  Beyond Category  —  Атрибуты, Законы и Боги  —  Атрибут, который изменяет Закон  —  Кто изменяет правило изменения  —  Бог, который не знал, что он Бог».
 
 
 ## Корпусный файл: STORY_X_CHAPTER_IDEOLOGY_OF_PEACE.md
