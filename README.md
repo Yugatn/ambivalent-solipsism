@@ -39,6 +39,7 @@
 
 - [DynSys_agent: минимальная 2-категория агентных динамических систем](DEVELOPMENT/DYNSYS_AGENT_2CATEGORY.md)
 - [ORES: устойчивость, сопряжённость и observer quotient](DEVELOPMENT/ORES_ATTRACTOR_TRANSFER_AND_OBSERVER_QUOTIENT.md)
+- [ORES: ограниченная различимость наблюдателя и слой Interp](DEVELOPMENT/ORES_OBSERVER_CAPACITY_AND_INTERP.md)
 
 Новая стадия формализации вводит минимальную топологическую динамику, строгую постановку переноса аттрактора при сопряжении и observer quotient через fibres наблюдения. Это позволяет отделить аттрактор исходной динамики, его наблюдаемый образ и аттрактор динамики observer-space.
 
