@@ -47,6 +47,9 @@ ORES не объявляется математическим доказател
 
 ## Новые документы
 
+- [Амбивалентный Солипсизм и ORES: философия, нейронаука и развитие человека](DEVELOPMENT/AS_ORES_PHILOSOPHY_NEUROSCIENCE_AND_HUMAN_DEVELOPMENT.md) — синтез философского ядра, границ нейробиологических аналогий, педагогического влияния и разделения аналитики среды и нормативных решений.
+
+
 - [ORES: минимальное ядро SCM и IntervCat](DEVELOPMENT/ORES_SCM_INTERVCAT_MINIMAL_CORE.md)
 
 - [ORES: каузальная модельная зависимость fairness и двухканальная оценка](DEVELOPMENT/ORES_CAUSAL_FAIRNESS_AND_MODEL_DEPENDENCE.md)
