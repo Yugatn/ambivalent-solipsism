@@ -30,6 +30,8 @@ CRITIQUE, контраргументы, ошибки, альтернативны
 ### Технология
 PICCS, EthicalAudit, AI Guardian Layer, assurance, formalization, SymbiontOS и архитектура AI-агентов.
 
+Техническая спецификация: [EthicalAudit v0.4](DEVELOPMENT/ETHICALAUDIT_V0_4.md).
+
 ### Проекты
 Eugene Messenger, Social Labor Network, транспорт, инфраструктура и другие прикладные системы.
 
