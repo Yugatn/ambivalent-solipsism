@@ -71,6 +71,7 @@ ORES не объявляется математическим доказател
 - [28. Развитие Субъекта и инфраструктурный вклад](BOOK/28_SUBJECT_DEVELOPMENT_AND_INFRASTRUCTURE_CONTRIBUTION.md)
 - [29. Добродетель гражданина и общая инфраструктура](BOOK/29_CITIZEN_VIRTUE_AND_COMMON_INFRASTRUCTURE.md)
 - [30. Общая инфраструктура как коллективная нервная система](BOOK/30_INFRASTRUCTURE_AS_COLLECTIVE_NERVOUS_SYSTEM.md)
+- [31. «Мира»: рефлексивная симуляция, интериоризация и солидарность](BOOK/31_MIRA_REFLEXIVE_SIMULATION_AND_INTERIORIZATION.md)
 
 ## META-Λ: формализация ATG и конфликтов инвариантов
 
