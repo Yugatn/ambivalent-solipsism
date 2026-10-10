@@ -1,0 +1,8 @@
+{
+  "F":{"truth":"True","applicability":"InScope","decidability":"Decidable","dependency_status":"Independent","i1a":"NotViolated","i1b":"NotViolated","validity_dependency":"False","witness_independence":"NotApplicable"},
+  "G":{"truth":"True","applicability":"InScope","decidability":"Decidable","dependency_status":"Independent","i1a":"NotViolated","i1b":"NotViolated","validity_dependency":"False","witness_independence":"NotApplicable"},
+  "H":{"truth":"False","applicability":"InScope","decidability":"Decidable","dependency_status":"Dependent","i1a":"NotViolated","i1b":"Violation","validity_dependency":"True","witness_independence":"VerifiedIndependent"},
+  "I":{"truth":"Unresolved","applicability":"InScope","decidability":"Decidable","dependency_status":"Unresolved","i1a":"NotViolated","i1b":"Unresolved","validity_dependency":"Unresolved","witness_independence":"Unresolved"},
+  "L":{"truth":"Unresolved","applicability":"InScope","decidability":"Decidable","dependency_status":"Unresolved","i1a":"NotViolated","i1b":"Unresolved","validity_dependency":"Unresolved","witness_independence":"Unresolved"},
+  "M":{"truth":"False","applicability":"InScope","decidability":"Decidable","dependency_status":"Dependent","i1a":"NotViolated","i1b":"Violation","validity_dependency":"True","witness_independence":"VerifiedIndependent"}
+}
