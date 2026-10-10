@@ -47,15 +47,12 @@ ORES не объявляется математическим доказател
 ## Новые документы
 
 - [ORES: минимальное ядро SCM и IntervCat](DEVELOPMENT/ORES_SCM_INTERVCAT_MINIMAL_CORE.md)
-
 - [ORES: каузальная модельная зависимость fairness и двухканальная оценка](DEVELOPMENT/ORES_CAUSAL_FAIRNESS_AND_MODEL_DEPENDENCE.md)
-
 - [ORES: минимальная модель с несколькими аттракторами и observers](DEVELOPMENT/ORES_MINIMAL_MULTI_ATTRACTOR_OBSERVERS.md)
 - [ORES: воспроизводимый конечный observer experiment](EXPERIMENTS/ORES_MINIMAL_OBSERVER_EXPERIMENT.py)
 - [ORES: непрерывная многoаттракторная модель](DEVELOPMENT/ORES_CONTINUOUS_MULTI_ATTRACTOR_MODEL.md)
 - [ORES: observer factor theorem](DEVELOPMENT/ORES_OBSERVER_FACTOR_THEOREM.md)
 - [ORES: воспроизводимый непрерывный experiment](EXPERIMENTS/ORES_CONTINUOUS_MULTI_ATTRACTOR.py)
-
 - [ORES: формальная архитектура observer-relative semantic dynamics](DEVELOPMENT/ORES_FORMAL_SEMANTIC_DYNAMICS.md)
 - [DynSys_agent: минимальная 2-категория агентных динамических систем](DEVELOPMENT/DYNSYS_AGENT_2CATEGORY.md)
 - [ORES: устойчивость, сопряжённость и observer quotient](DEVELOPMENT/ORES_ATTRACTOR_TRANSFER_AND_OBSERVER_QUOTIENT.md)
@@ -71,6 +68,12 @@ ORES не объявляется математическим доказател
 - [28. Развитие Субъекта и инфраструктурный вклад](BOOK/28_SUBJECT_DEVELOPMENT_AND_INFRASTRUCTURE_CONTRIBUTION.md)
 - [29. Добродетель гражданина и общая инфраструктура](BOOK/29_CITIZEN_VIRTUE_AND_COMMON_INFRASTRUCTURE.md)
 - [30. Общая инфраструктура как коллективная нервная система](BOOK/30_INFRASTRUCTURE_AS_COLLECTIVE_NERVOUS_SYSTEM.md)
+- [31. Принцип Кинодополняемости Югатна](BOOK/31_PRINCIPLE_OF_CINEMATIC_COMPLEMENTARITY.md)
+- [SHAW-SIM / SCP: Распределённая обсерватория медиа-рисков](DEVELOPMENT/SHAW_SIM_SCP_DISTRIBUTED_MEDIA_RISK_OBSERVATORY.md)
+
+## SHAW-SIM / SCP: эпистемические ограничения
+
+SCP описывается как исследовательская обсерватория, а не как цензор или универсальный детектор вреда. Система различает наблюдаемые характеристики произведения, экспертные интерпретации и эмпирические данные об ассоциациях. Корреляция сама по себе не доказывает причинность; отсутствие надёжных данных должно отображаться как неопределённость или нехватка данных. Архитектура предусматривает прозрачность методик, возможность оспаривания, минимизацию данных и право на выход, но не объявляется доказанно безопасной до независимых проверок и добровольных пилотов.
 
 ## META-Λ: формализация ATG и конфликтов инвариантов
 
