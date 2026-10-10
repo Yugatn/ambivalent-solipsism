@@ -48,15 +48,12 @@ ORES не объявляется математическим доказател
 ## Новые документы
 
 - [ORES: минимальное ядро SCM и IntervCat](DEVELOPMENT/ORES_SCM_INTERVCAT_MINIMAL_CORE.md)
-
 - [ORES: каузальная модельная зависимость fairness и двухканальная оценка](DEVELOPMENT/ORES_CAUSAL_FAIRNESS_AND_MODEL_DEPENDENCE.md)
-
 - [ORES: минимальная модель с несколькими аттракторами и observers](DEVELOPMENT/ORES_MINIMAL_MULTI_ATTRACTOR_OBSERVERS.md)
 - [ORES: воспроизводимый конечный observer experiment](EXPERIMENTS/ORES_MINIMAL_OBSERVER_EXPERIMENT.py)
 - [ORES: непрерывная многoаттракторная модель](DEVELOPMENT/ORES_CONTINUOUS_MULTI_ATTRACTOR_MODEL.md)
 - [ORES: observer factor theorem](DEVELOPMENT/ORES_OBSERVER_FACTOR_THEOREM.md)
 - [ORES: воспроизводимый непрерывный experiment](EXPERIMENTS/ORES_CONTINUOUS_MULTI_ATTRACTOR.py)
-
 - [ORES: формальная архитектура observer-relative semantic dynamics](DEVELOPMENT/ORES_FORMAL_SEMANTIC_DYNAMICS.md)
 - [DynSys_agent: минимальная 2-категория агентных динамических систем](DEVELOPMENT/DYNSYS_AGENT_2CATEGORY.md)
 - [ORES: устойчивость, сопряжённость и observer quotient](DEVELOPMENT/ORES_ATTRACTOR_TRANSFER_AND_OBSERVER_QUOTIENT.md)
@@ -94,3 +91,11 @@ ATG и TIC являются исследовательской формализ�
 Перед любым изменением репозитория необходимо сначала прочитать [DEVELOPMENT/START_HERE.md](DEVELOPMENT/START_HERE.md), а затем проверить связанные материалы. Этот файл является первой точкой входа для работы над книгой и концепцией.
 
 **Ключевое правило:** в готовом тексте книги все взаимосвязи, процессы и причинные последовательности должны быть описаны словами. Стрелки и стрелочные схемы не используются как замена объяснению.
+
+## Архитектура «Миры»: эпистемика и действие
+
+Новая сводная спецификация фиксирует выводы о динамическом эпистемическом поле, контроле памяти и причинности, границах применимости, упорядочивании несравнимых действий, фиксации исполнения и удержании пространства допустимых действий.
+
+- [Мира: эпистемическая архитектура действия в условиях неопределённости](DEVELOPMENT/MIRA_EPISTEMIC_ACTION_ARCHITECTURE.md)
+
+Документ является исследовательской архитектурой для дальнейшего прототипирования, а не утверждением о доказанной безопасности или сознании программного агента.
