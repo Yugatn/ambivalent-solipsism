@@ -96,16 +96,26 @@ class ViolationSignal:
     evidence: tuple[str, ...] = ()
     rule_version: str = "0.1"
 
+    def __post_init__(self):
+        if not 0.0 <= self.confidence <= 1.0:
+            raise ValueError("confidence must be in [0.0, 1.0]")
+
 @dataclass(frozen=True)
 class AuditDiagnostic:
     component: str
     code: str
     message: str
 
+class AuditStatus(str, Enum):
+    COMPLETE = "complete"
+    INCOMPLETE = "incomplete"
+    FAILED = "failed"
+
 @dataclass(frozen=True)
 class AuditResult:
     signals: tuple[ViolationSignal, ...] = ()
     diagnostics: tuple[AuditDiagnostic, ...] = ()
+    status: AuditStatus = AuditStatus.COMPLETE
     normalizer_version: str = "0.1"
     ruleset_version: str = "0.1"
 
@@ -227,6 +237,7 @@ class RuleEngine:
         return AuditResult(
             signals=tuple(signals),
             diagnostics=tuple(diagnostics),
+            status=(AuditStatus.INCOMPLETE if diagnostics else AuditStatus.COMPLETE),
             ruleset_version=self.ruleset_version,
         )
 ```
