@@ -469,9 +469,30 @@ footer{margin-top:65px;color:#526460;font:10px ui-monospace,monospace}
 (async function(){
   const graph=document.getElementById('acn-graph'), detail=document.getElementById('acn-detail');
   const status=document.getElementById('acn-status'), type=document.getElementById('acn-type'), search=document.getElementById('acn-search'), mode=document.getElementById('acn-mode');
-  const colors={'канон':'#45f0c3','авторское свидетельство':'#8de8d0','интерпретация':'#5ca8ff','гипотеза':'#f0a35a','личная ассоциация':'#89959a'}; const clusterColors={'cryosleep':'#8b9cf6','simulation':'#42c7b5','identity':'#f27b8a','ai_cosmos':'#f0b35a'}; const clusterLabels=(data.clusters||{});
+  const colors={'канон':'#45f0c3','авторское свидетельство':'#8de8d0','интерпретация':'#5ca8ff','гипотеза':'#f0a35a','личная ассоциация':'#89959a'}; const clusterColors={'cryosleep':'#8b9cf6','simulation':'#42c7b5','identity':'#f27b8a','ai_cosmos':'#f0b35a'}; 
   try{
-    const data=await fetch('./acn-data.json').then(r=>{if(!r.ok)throw new Error('data');return r.json()});
+    const raw=await fetch('./acn-data.json').then(r=>{if(!r.ok)throw new Error('data');return r.json()});
+    // Адаптер для реальной схемы acn-data.json: nodes + edges.
+    // Не преобразует интерпретационную связь в канон.
+    const byId=new Map((raw.nodes||[]).map(n=>[n.id,n]));
+    const translated={canon:'канон',interpretation:'интерпретация',hypothesis:'гипотеза',personal_association:'личная ассоциация'};
+    const data={cards:(raw.edges||[]).flatMap(e=>{
+      const a=byId.get(e.from),b=byId.get(e.to);
+      if(!a||!b)return [];
+      return [{
+        id:e.id,
+        source:{title:a.source.title,year:a.source.year},
+        context:{title:b.source.title,year:b.source.year,transfer:e.basis||a.transferred||'',effect:a.effect||''},
+        lacuna:{types:a.lacuna_types||[],question:e.lacuna||a.lacuna?.question||''},
+        status:translated[e.epistemic_status]||'гипотеза',
+        epistemic_weight:e.causality==='not_established'?'причинность не установлена':'контекстуальный перенос',
+        basis:[e.basis||''],
+        residual:e.residual||a.residual?.primary_question||'Неизвестное сохраняется',
+        false_completeness_risk:a.false_completeness||'medium',
+        clusters:['identity']
+      }];
+    }),clusters:{}};
+
     const types=[...new Set(data.cards.flatMap(c=>c.lacuna.types))].sort();
     types.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;type.appendChild(o)});
     const nodesMap=new Map();
