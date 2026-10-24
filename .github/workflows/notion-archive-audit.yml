@@ -1,0 +1,37 @@
+name: Ambivalent Solipsism - Notion archive audit
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '25 5 * * 0'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+      NOTION_PARENT_PAGE_ID: "403d1323-8599-818c-8df9-c8e3b6330393"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check script syntax
+        run: python3 -m py_compile tools/notion_archive_audit.py
+      - name: Check repository secret
+        run: |
+          if [ -z "$NOTION_TOKEN" ]; then
+            echo "Set NOTION_TOKEN in this repository's Actions secrets and share the Ambivalent Solipsism archive with that integration." >&2
+            exit 1
+          fi
+      - name: Audit source archive (read-only)
+        run: python3 tools/notion_archive_audit.py
+      - name: Upload findings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ambivalent-solipsism-notion-audit
+          path: notion-audit-output/
+          if-no-files-found: ignore
+          retention-days: 30
