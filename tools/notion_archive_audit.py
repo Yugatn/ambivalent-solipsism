@@ -22,7 +22,7 @@ ROOT = os.getenv("NOTION_PARENT_PAGE_ID", "403d1323-8599-818c-8df9-c8e3b6330393"
 TOKEN = os.getenv("NOTION_TOKEN", "")
 API = "https://api.notion.com/v1"
 SOURCE = re.compile(
-    r"https?://(?:www\.)?github\.com/Yugatn/ambivalent-solipsism/blob/[^/\s]+/([^\s)<>\]\\\"']+)",
+    r"https?://(?:www\\.)?github\\.com/Yugatn/ambivalent-solipsism/blob/[^/\\s]+/([^\\s)>\\]]+)",
     re.I,
 )
 
