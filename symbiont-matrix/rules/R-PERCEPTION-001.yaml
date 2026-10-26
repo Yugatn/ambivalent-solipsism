@@ -1,0 +1,31 @@
+rule_id: R-PERCEPTION-001
+description: Record observed position events.
+scope: observation
+epistemic:
+  fact_layer: position_from_bot
+  model_layer: world_state
+  inference_layer: event_record
+  verdict: DERIVED
+when:
+  event_type: OBSERVATION_POSITION
+then:
+  verdict: PASS
+  severity: low
+  evidence: [event.payload.x, event.payload.y, event.payload.z]
+
+---
+rule_id: R-PERCEPTION-002
+description: Flag explicitly reported positions outside provisional bounds.
+scope: observation
+epistemic:
+  fact_layer: position_from_bot
+  model_layer: provisional_bounds
+  inference_layer: bounds_check
+  verdict: DERIVED
+when:
+  event_type: OBSERVATION_POSITION
+  payload.bounds_status: OUTSIDE
+then:
+  verdict: REVIEW
+  severity: low
+  evidence: [event.payload.x, event.payload.y, event.payload.z]

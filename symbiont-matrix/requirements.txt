@@ -1,0 +1,4 @@
+PyYAML>=6.0,<7
+jsonschema>=4.20,<5
+websockets>=17,<18
+pytest>=8,<9
