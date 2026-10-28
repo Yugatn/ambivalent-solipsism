@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "protected_paths": [
+    "BOOK/32_BRAIN_AS_FRACTAL_AND_HUMAN_HISTORY.md",
+    "BOOK/EDITORIAL_CONTRACT_2026_10_27.md"
+  ],
+  "protected_prefixes": [
+    "ARCHIVE/",
+    "ORIGINALS/"
+  ],
+  "high_risk_deletion_lines": 15,
+  "high_risk_deletion_ratio": 0.1,
+  "require_author_approval_for": [
+    "canon_change",
+    "delete_original",
+    "publish",
+    "approve_chapter",
+    "merge_high_risk"
+  ],
+  "editorial_paths": [
+    "BOOK/"
+  ],
+  "technical_marker_regex": "\\[(?:AS|MODEL|HYPOTHESIS|SCIENCE)\\]|\\b(?:CLAIMED|NOT_TESTED|OBSERVED|DERIVED|CONFLICTED|UNKNOWN)\\b"
+}
