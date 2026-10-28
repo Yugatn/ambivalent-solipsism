@@ -1,0 +1,26 @@
+name: BookGuard editorial checks
+on:
+  pull_request:
+    paths:
+      - 'BOOK/**'
+      - 'ARCHIVE/**'
+      - 'ORIGINALS/**'
+      - '.bookguard/**'
+      - 'scripts/bookguard_check.py'
+      - '.github/workflows/bookguard.yml'
+permissions:
+  contents: read
+jobs:
+  editorial-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check editorial changes against base
+        env:
+          BOOKGUARD_BASE: origin/${{ github.base_ref }}
+        run: python scripts/bookguard_check.py
