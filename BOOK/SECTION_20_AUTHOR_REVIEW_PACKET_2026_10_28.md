@@ -12,6 +12,7 @@
 - Матрица 14 тезисов и оснований: `BOOK/SECTION_20_CLAIM_EVIDENCE_MATRIX_2026_10_28.md`.
 - Библиография: `BOOK/SECTION_20_BIBLIOGRAPHY_FOR_REVIEW_2026_10_28.md` (12 позиций; предварительная научная привязка).
 - Реестр научных и редакционных проверок: `BOOK/RESEARCH_SECTION_20_SCIENCE_AUDIT_2026_10_28.md`.
+- Протокол заключительной корректуры: `BOOK/SECTION_20_FINAL_COPYEDIT_PROTOCOL_2026_10_28.md`.
 - Авторский исходник: `BOOK/32_BRAIN_AS_FRACTAL_AND_HUMAN_HISTORY.md`, а также архив исходной короткой рукописи в Notion. Не заменять их чистовой редакцией.
 
 ## 2. Что изменено редакционно
