@@ -1,4 +1,4 @@
-"""Tests for the arithmetic checks; run: python3 -m unittest tools/test_check_reform_2_1.py
+"""Tests for the arithmetic checks; run from PROJECTS/unified-transport: python3 tools/test_check_reform_2_1.py
 
 This test suite uses only the Python standard library and no live transport data.
 """
