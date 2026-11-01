@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Открытый демонстрационный калькулятор параметров маршрута, электропотребления и финансового разрыва единой транспортной сети.">
+<title>Калькулятор транспортного маршрута · Единая транспортная сеть</title>
+<style>
+:root{color-scheme:dark;--bg:#05090b;--panel:#0d1719;--line:#23413d;--fg:#e6f4ef;--muted:#aac6c0;--green:#63e1bb;--red:#ffd4c9}
+*{box-sizing:border-box}
+body{margin:0;min-width:0;background:radial-gradient(circle at 60% -10%,#12302b 0,transparent 47%),var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+a{color:var(--green)}a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+main{width:min(1080px,calc(100% - 32px));margin:0 auto;padding:40px 0 80px}
+.nav{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:55px;font-size:13px}
+.tag{font:12px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.18em;color:var(--green);text-transform:uppercase}
+h1{font-size:clamp(32px,5vw,58px);line-height:1.13;letter-spacing:-.04em;font-weight:650;margin:18px 0}
+h2{font-size:22px;line-height:1.3;margin:0 0 19px}
+p{color:var(--muted);max-width:850px}
+.lead{font-size:18px}
+.note{border-left:3px solid var(--green);background:#0b2220;padding:14px 19px;margin:26px 0 34px;color:var(--fg);border-radius:0 10px 10px 0}
+.columns{display:grid;grid-template-columns:1.1fr .9fr;align-items:start;gap:20px}
+fieldset{border:0;padding:0;margin:0 0 27px}
+legend{font-size:17px;font-weight:650;color:var(--fg);padding:0 0 14px}
+.panel{border:1px solid var(--line);border-radius:15px;padding:25px;background:var(--panel)}
+.inputs{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.field{display:flex;flex-direction:column;gap:6px}
+label{font-size:13px;line-height:1.35;color:var(--muted)}
+input{width:100%;border:1px solid #39605b;border-radius:8px;background:#071113;color:var(--fg);font:inherit;padding:10px 12px;min-height:44px}
+input:focus{border-color:var(--green)}
+.buttons{display:flex;flex-wrap:wrap;gap:12px}
+button{font:inherit;font-weight:650;cursor:pointer;border:1px solid var(--green);border-radius:8px;padding:11px 16px;min-height:44px;background:var(--green);color:#08211b}
+button.secondary{background:transparent;color:var(--green)}
+.results{display:grid;gap:12px}
+.result{padding:17px 18px;border:1px solid var(--line);border-radius:10px;background:#071113}
+.result span{display:block;color:var(--muted);font-size:12px}
+.result strong{display:block;color:var(--fg);font-size:clamp(23px,3vw,30px);font-variant-numeric:tabular-nums;letter-spacing:-.025em;margin:5px 0}
+.result small{color:var(--muted);font-size:11px}
+.results .accent{border-color:#41785e;background:#0d251d}
+.results .accent strong{color:var(--green)}
+.status{font-size:13px;min-height:24px;color:var(--muted);margin:14px 0 0}
+.status.error{color:var(--red)}
+.fineprint{font-size:13px;line-height:1.7;color:var(--muted)}
+.formula{background:#071113;border:1px solid var(--line);border-radius:10px;padding:19px 22px;margin-top:23px;font-size:14px;color:var(--muted)}
+.formula code{color:var(--green);overflow-wrap:anywhere}
+.bottom{border-top:1px solid var(--line);margin-top:42px;padding-top:22px;color:var(--muted);font-size:13px}
+@media(max-width:850px){.columns{grid-template-columns:1fr}.inputs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:490px){.inputs{grid-template-columns:1fr}.panel{padding:19px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
+</style>
+</head>
+<body><main>
+<nav class="nav" aria-label="Навигация"><a href="./">← Транспортная сеть</a><a href="https://github.com/Yugatn/ambivalent-solipsism/blob/main/PROJECTS/unified-transport/technical-spec.md">Техническая архитектура</a><a href="https://github.com/Yugatn/ambivalent-solipsism/blob/main/PROJECTS/unified-transport/pilot-and-kpi.md">Протокол пилота</a></nav>
+<div class="tag">TRANSPORT · EXPERIMENTAL MODEL 0.1</div>
+<h1>Расчёт маршрута<br>и бюджета</h1>
+<p class="lead">Открытая демонстрационная модель для предварительного сравнения сценариев. Все исходные числа ниже условные: они не описывают реальный маршрут и не заменяют транспортное или энергетическое ТЭО.</p>
+<div class="note">Выводы являются арифметикой заданных допущений. Здесь нет телеметрии, исторических пассажиропотоков, оценки полной стоимости жизненного цикла и прогноза на основе ИИ.</div>
+<div class="columns">
+<section class="panel" aria-label="Входные параметры">
+<form id="scenario">
+<fieldset><legend>Маршрут и движение</legend><div class="inputs">
+<div class="field"><label for="length">Длина в одну сторону, км</label><input id="length" type="number" min="0.1" max="10000" step="0.1" value="12" required></div>
+<div class="field"><label for="oneway">Время в одну сторону, мин</label><input id="oneway" type="number" min="1" max="1440" step="1" value="36" required></div>
+<div class="field"><label for="layover">Суммарный отстой за круг, мин</label><input id="layover" type="number" min="0" max="1440" step="1" value="12" required></div>
+<div class="field"><label for="headway">Интервал по направлению, мин</label><input id="headway" type="number" min="1" max="1440" step="1" value="12" required></div>
+<div class="field"><label for="hours">Часов движения в сутки</label><input id="hours" type="number" min="1" max="24" step="0.5" value="16" required></div>
+<div class="field"><label for="availability">Готовность парка, %</label><input id="availability" type="number" min="1" max="100" step="1" value="90" required></div>
+<div class="field"><label for="reserve">Дополнительный резерв, %</label><input id="reserve" type="number" min="0" max="100" step="1" value="15" required></div>
+</div></fieldset>
+<fieldset><legend>Энергия и бюджет</legend><div class="inputs">
+<div class="field"><label for="energyIntensity">Удельный расход, кВт·ч/км</label><input id="energyIntensity" type="number" min="0" max="200" step="0.01" value="1.3" required></div>
+<div class="field"><label for="energyPrice">Цена энергии, ₽/кВт·ч</label><input id="energyPrice" type="number" min="0" max="100000" step="0.01" value="10" required></div>
+<div class="field"><label for="operatingDaily">Все эксплуатационные затраты, ₽/день</label><input id="operatingDaily" type="number" min="0" max="1000000000000" step="1" value="300000" required></div>
+<div class="field"><label for="fareMonthly">Относимая к маршруту выручка за условные 30 дней, ₽</label><input id="fareMonthly" type="number" min="0" max="1000000000000" step="1" value="1500000" required></div>
+<div class="field"><label for="subsidyDaily">Дополнительный трансферт, ₽/день</label><input id="subsidyDaily" type="number" min="0" max="1000000000000" step="1" value="200000" required></div>
+</div></fieldset>
+<div class="buttons"><button type="submit">Пересчитать</button><button class="secondary" type="button" id="reset">Сбросить пример</button></div>
+<p id="status" class="status" role="status" aria-live="polite"></p>
+</form>
+</section>
+<section class="panel" aria-labelledby="result-title">
+<h2 id="result-title">Результаты сценария</h2>
+<div class="results">
+<div class="result"><span>Оборотный цикл маршрута</span><strong id="roundtrip">—</strong><small>Два плеча и суммарный отстой</small></div>
+<div class="result"><span>Транспорт в одновременной работе</span><strong id="active">—</strong><small>Округлено вверх по интервалу</small></div>
+<div class="result accent"><span>Ориентир закупочного парка</span><strong id="fleet">—</strong><small>С резервом и коэффициентом технической готовности</small></div>
+<div class="result"><span>Общий пробег, км/сутки</span><strong id="km">—</strong><small>При ровном интервале на обоих направлениях</small></div>
+<div class="result"><span>Расход электроэнергии, кВт·ч/сутки</span><strong id="kwh">—</strong><small>Не учитывает реальное зарядное окно и температуру</small></div>
+<div class="result"><span>Расходы на электроэнергию, ₽/сутки</span><strong id="energyCost">—</strong><small>Часть общих эксплуатационных затрат, не прибавлять второй раз</small></div>
+<div class="result accent"><span>Непокрытый бюджет, ₽/сутки</span><strong id="gap">—</strong><small>Если значение отрицательно — условный остаток средств</small></div>
+</div>
+<div class="formula"><strong>Формулы модели</strong><br><code>Цикл = 2 × время плеча + отстой</code><br><code>Активный парк = ceil(цикл / интервал)</code><br><code>Парк = ceil((активный + резерв) / готовность)</code><br><code>Пробег ≈ 2 × км плеча × часы × 60 / интервал</code><br><code>Разрыв = все затраты − (30-дневная выручка / 30) − трансферт</code></div>
+</section>
+</div>
+<section class="bottom">
+<p><strong>Ограничения:</strong> интервалы считаются одинаковыми в обе стороны в течение всего дня; модель не учитывает фактическую вместимость, пассажирские ожидания, графики водителей, пробки, холостой пробег, скорость зарядки, парковые ограничения и амортизацию. Наличие резерва и коэффициента готовности одновременно задаёт консервативный запас, а не оптимальный размер закупки.</p>
+<p>Расчёт не отправляет параметры на сервер, не сохраняет персональные данные и работает без библиотек. Для планирования реальных вложений используйте <a href="https://github.com/Yugatn/ambivalent-solipsism/blob/main/PROJECTS/unified-transport/pilot-and-kpi.md">протокол пилота</a> и полноценное технико-экономическое обоснование.</p>
+</section>
+</main>
+<script>
+(() => {
+"use strict";
+const form = document.getElementById("scenario");
+const status = document.getElementById("status");
+const fields = ["length","oneway","layover","headway","hours","availability","reserve","energyIntensity","energyPrice","operatingDaily","fareMonthly","subsidyDaily"];
+const fmt = new Intl.NumberFormat("ru-RU",{maximumFractionDigits:1});
+const value = id => Number(document.getElementById(id).value);
+function calculate(){
+  status.className = "status";
+  if(!form.reportValidity()){status.textContent="Проверь значения в полях.";status.classList.add("error");return;}
+  const p = Object.fromEntries(fields.map(k=>[k,value(k)]));
+  if(Object.values(p).some(x=>!Number.isFinite(x)) || p.length<=0 || p.oneway<=0 || p.headway<=0 || p.hours<=0 || p.availability<=0 || p.availability>100 || p.reserve<0){
+    status.textContent="Недопустимые параметры расчёта.";status.classList.add("error");return;
+  }
+  const roundtrip=2*p.oneway+p.layover;
+  const active=Math.ceil(roundtrip/p.headway);
+  const standby=Math.ceil(active*p.reserve/100);
+  const fleet=Math.ceil((active+standby)/(p.availability/100));
+  const km=2*p.length*(p.hours*60/p.headway);
+  const kwh=km*p.energyIntensity;
+  const energyCost=kwh*p.energyPrice;
+  const gap=p.operatingDaily-p.fareMonthly/30-p.subsidyDaily;
+  const result={roundtrip:[roundtrip," мин"],active:[active," ед."],fleet:[fleet," ед."],km:[km," км"],kwh:[kwh," кВт·ч"],energyCost:[energyCost," ₽"],gap:[gap," ₽"]};
+  for(const [id,[num,unit]] of Object.entries(result)){
+    if(!Number.isFinite(num)){status.textContent="Результат за пределами допустимого диапазона.";status.classList.add("error");return;}
+    document.getElementById(id).textContent=fmt.format(num)+unit;
+  }
+  status.textContent=energyCost>p.operatingDaily?"Предупреждение: расчётная стоимость энергии выше введённых совокупных затрат. Проверь допущения.":"Пример рассчитан локально; фактические показатели не проверялись.";
+  if(energyCost>p.operatingDaily)status.classList.add("error");
+}
+form.addEventListener("submit",e=>{e.preventDefault();calculate();});
+document.getElementById("reset").addEventListener("click",()=>{form.reset();calculate();});
+calculate();
+})();
+</script>
+</body></html>
