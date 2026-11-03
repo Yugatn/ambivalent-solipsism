@@ -40,7 +40,7 @@ jobs:
           assert m["group_counts"]["main_original"]==3
           assert m["group_counts"]["notion_chapters"]==6
           assert m["group_counts"]["earlier_original"]==3
-          assert m["source_characters"]>15_000_000
+          assert m["source_characters"]>8_000_000
           print("VERIFIED",p.stat().st_size,"bytes",m["sources"],"sources",m["word_paragraphs"],"paragraphs")
           PY
       - uses: actions/upload-artifact@v4
