@@ -1,0 +1,61 @@
+name: Complete Ambivalent Solipsism Word backup (streaming)
+
+on:
+  push:
+    branches:
+      - backup/as-word-snapshot-stream-2026-11-04
+    paths:
+      - .github/workflows/as_word_streaming.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install python-docx==1.2.0 lxml==5.4.0
+      - name: Create large DOCX without losing source files
+        run: python tools/export_as_word_streaming.py
+      - name: Check all source groups and zipped document
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json,zipfile,pathlib
+          p=pathlib.Path("exports/AMBIVALENTNY_SOLIPSIZM_POLNOE_SOBRANIE_2026_11_04.docx")
+          m=json.loads(pathlib.Path("exports/AMBIVALENTNY_SOLIPSIZM_REESTR_2026_11_04.json").read_text())
+          with zipfile.ZipFile(p) as z:
+              assert z.testzip() is None
+              assert "word/document.xml" in z.namelist()
+          assert m["sources"]>=668,m["sources"]
+          assert m["group_counts"]["main_original"]==3
+          assert m["group_counts"]["notion_chapters"]==6
+          assert m["group_counts"]["earlier_original"]==3
+          assert m["source_characters"]>15_000_000
+          print("VERIFIED",p.stat().st_size,"bytes",m["sources"],"sources",m["word_paragraphs"],"paragraphs")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: as-complete-word-2026-11-04
+          path: |
+            exports/AMBIVALENTNY_SOLIPSIZM_POLNOE_SOBRANIE_2026_11_04.docx
+            exports/AMBIVALENTNY_SOLIPSIZM_REESTR_2026_11_04.json
+          retention-days: 90
+          if-no-files-found: error
+      - name: Persist in backup branch
+        run: |
+          git config user.name "Book Backup Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f exports/AMBIVALENTNY_SOLIPSIZM_POLNOE_SOBRANIE_2026_11_04.docx
+          git add -f exports/AMBIVALENTNY_SOLIPSIZM_REESTR_2026_11_04.json
+          git commit -m "backup: complete verified Word text snapshot"
+          git push origin HEAD:backup/as-word-snapshot-stream-2026-11-04
