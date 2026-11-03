@@ -1,0 +1,68 @@
+name: Complete Ambivalent Solipsism Word backup
+
+on:
+  push:
+    branches:
+      - backup/as-word-snapshot-2026-11-04
+    paths:
+      - .github/workflows/as_full_word_backup.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  assemble:
+    name: Assemble and verify complete text corpus
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install DOCX library
+        run: python -m pip install python-docx==1.2.0
+      - name: Build full text backup
+        run: python tools/export_ambivalent_solipsism_full_word.py
+      - name: Verify Word archive and source manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, pathlib, zipfile
+          folder=pathlib.Path("exports")
+          docx=folder/"AMBIVALENTNY_SOLIPSIZM_POLNOE_RABOCHEE_SOBRANIE_2026_11_04.docx"
+          man=folder/"AMBIVALENTNY_SOLIPSIZM_REESTR_ISKHODNIKOV_2026_11_04.json"
+          data=json.loads(man.read_text(encoding="utf-8"))
+          with zipfile.ZipFile(docx) as z:
+              assert z.testzip() is None
+              assert "word/document.xml" in z.namelist()
+          assert data["source_files"] >= 668, data["source_files"]
+          assert data["group_counts"]["original"] == 3
+          assert data["group_counts"]["notion_working"] == 6
+          assert data["group_counts"]["earlier"] == 3
+          assert data["characters_in_sources"] > 10_000_000
+          print("VERIFIED", docx.stat().st_size, "bytes;", data["source_files"], "sources")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ambivalent-solipsism-full-word-2026-11-04
+          path: |
+            exports/AMBIVALENTNY_SOLIPSIZM_POLNOE_RABOCHEE_SOBRANIE_2026_11_04.docx
+            exports/AMBIVALENTNY_SOLIPSIZM_REESTR_ISKHODNIKOV_2026_11_04.json
+          retention-days: 90
+          if-no-files-found: error
+      - name: Persist verified backup on dedicated GitHub branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "Ambivalent Solipsism Backup Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f exports/AMBIVALENTNY_SOLIPSIZM_POLNOE_RABOCHEE_SOBRANIE_2026_11_04.docx
+          git add -f exports/AMBIVALENTNY_SOLIPSIZM_REESTR_ISKHODNIKOV_2026_11_04.json
+          git commit -m "backup: persist complete Ambivalent Solipsism Word snapshot"
+          git push origin HEAD:backup/as-word-snapshot-2026-11-04
