@@ -27,10 +27,32 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Prepare public artifact without the retired Story X pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          dest="$RUNNER_TEMP/approved-pages"
+          mkdir -p "$dest"
+          rsync -a \
+            --exclude='/.git/' \
+            --exclude='/.github/' \
+            --exclude='/story-x/' \
+            --exclude='/BOOK/00_STORY_X.*' \
+            --exclude='/BOOK/STORY_X_*' \
+            ./ "$dest/"
+          test ! -e "$dest/story-x/index.html"
+          test ! -e "$dest/story-x/artifacts.html"
+          test ! -e "$dest/BOOK/00_STORY_X.html"
+          test ! -e "$dest/BOOK/00_STORY_X.md"
+          if find "$dest/BOOK" -maxdepth 1 -name 'STORY_X_*' | grep -q .; then
+            echo "Story X draft leaked into public artifact" >&2
+            exit 1
+          fi
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./
+          path: ${{ runner.temp }}/approved-pages
 
       - name: Deploy
         id: deployment
